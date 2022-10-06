@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Occasion extends Model
 {
     use HasFactory;
+
+    public function occasionEvents() {
+        return $this->hasMany(OccasionEvent::class);
+    }
+    public function occasionEventsReviews() {
+        return $this->hasMany(OccasionEventReviews::class);
+    }
+
 }
