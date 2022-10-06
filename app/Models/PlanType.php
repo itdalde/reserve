@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PlanType extends Model
 {
     use HasFactory;
+    public function transaction() {
+        return $this->belongsTo(Transaction::class);
+    }
 }

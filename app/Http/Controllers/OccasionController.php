@@ -15,9 +15,13 @@ class OccasionController extends Controller
     public function index(Request $request)
     {
         if($request->search) {
-            $occasions = Occasion::where('name','like','%'.$request->search.'%')->get()->toArray();
+            $occasions = Occasion::where('name','like','%'.$request->search.'%')
+                ->with('occasionEvents','occasionEventsReviews','transactions','transactions.user','transactions.status','transactions.plan')
+                ->get()->toArray();
         } else {
-            $occasions = Occasion::all()->toArray();
+            $occasions = Occasion::all()
+                ->with('occasionEvents','occasionEventsReviews','transactions','transactions.user','transactions.status','transactions.plan')
+                ->toArray();
         }
         if ($request->expectsJson()) {
             return response()->json([

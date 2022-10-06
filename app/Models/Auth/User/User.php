@@ -5,6 +5,7 @@ namespace App\Models\Auth\User;
 use App\Models\Auth\User\Traits\Ables\Protectable;
 use App\Models\Auth\User\Traits\Attributes\UserAttributes;
 use App\Models\OccasionEventReviews;
+use App\Models\Transaction;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -97,5 +98,8 @@ class User extends Authenticatable
 
     public function occasionEventReviews() {
         return $this->hasMany(OccasionEventReviews::class);
+    }
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
     }
 }

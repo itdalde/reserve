@@ -15,5 +15,8 @@ class Occasion extends Model
     public function occasionEventsReviews() {
         return $this->hasMany(OccasionEventReviews::class);
     }
+    public function transactions() {
+        return $this->hasMany(Transaction::class);
+    }
 
 }
