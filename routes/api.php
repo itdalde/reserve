@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\OccasionController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Http\Request;
 
 /*
@@ -24,6 +25,7 @@ Route::group(['prefix' => 'v1','middleware' => ['cors']], function () {
     Route::get('/occasions', [OccasionController::class,'index'])->name('occasions.list.api');
 });
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function() {
+    Route::get('/transactions', [TransactionController::class,'index'])->name('transactions.list.api');
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
     Route::get('/me', 'Auth\ApiAuthController@me')->name('me.api');
     Route::get('/users', [UserController::class,'userList'])->name('users.list.api');

@@ -48,7 +48,7 @@ class ApiAuthController extends Controller
         if (config('auth.users.default_role')) {
             $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
         }
-        $user->notify(new ConfirmEmail());
+//        $user->notify(new ConfirmEmail());
         $response = ['message' => 'Successfully created. Please check your email to confirm'];
         return response()->json($response,200);
     }
@@ -64,15 +64,23 @@ class ApiAuthController extends Controller
     }
 
     public function login (Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string',
-        ]);
+        $data = $request->all();
+        $validatorRule['password'] = 'required|string';
+        if(isset($data['phone'])) {
+            $validatorRule['phone'] = 'required|string|max:255';
+            $searchKey = 'phone_number';
+            $search = $request->email;
+        } else {
+            $validatorRule['email'] = 'required|string|email|max:255';
+            $searchKey = 'email';
+            $search = $request->email;
+        }
+        $validator = Validator::make($data, $validatorRule);
         if ($validator->fails())
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $user = User::where('email', $request->email)->first();
+        $user = User::where($searchKey, $search)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 if (config('auth.users.confirm_email') && !$user->confirmed) {

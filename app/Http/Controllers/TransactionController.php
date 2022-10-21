@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Occasion;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,25 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if(!$request->user_id) {
+            return response()->json([
+                "status"    => "error" ,
+                "message"  => ''
+            ]);
+        }
+        $transactions = Transaction::where('user_id',$request->user_id)
+            ->with('user','status','plan')
+            ->get()->toArray();
+        if ($request->expectsJson()) {
+            return response()->json([
+                "status"    => "success" ,
+                "response"  => [
+                    "data"  => $transactions
+                ]
+            ]);
+        }
     }
 
     /**
