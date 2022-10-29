@@ -35,7 +35,7 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto active" href="/">Home</a></li>
+                    <li><a class="nav-link scrollto " href="/#about">Home</a></li>
                     <li><a class="nav-link scrollto" href="#services">What We Offer</a></li>
                     <li><a class="nav-link scrollto " href="#portfolio">For service providers</a></li>
                     <li><a class="nav-link " href="#"><span class="btn bg-orange" style="color: white;
