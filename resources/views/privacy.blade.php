@@ -1,713 +1,684 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-<style>
-    @import url(http://fonts.googleapis.com/css?family=Roboto);
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    * {
-        font-family: 'Roboto', sans-serif;
-    }
+    <title>{{ config('app.name') }}</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-    body {
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABZ0RVh0Q3JlYXRpb24gVGltZQAxMC8yOS8xMiKqq3kAAAAcdEVYdFNvZnR3YXJlAEFkb2JlIEZpcmV3b3JrcyBDUzVxteM2AAABHklEQVRIib2Vyw6EIAxFW5idr///Qx9sfG3pLEyJ3tAwi5EmBqRo7vHawiEEERHS6x7MTMxMVv6+z3tPMUYSkfTM/R0fEaG2bbMv+Gc4nZzn+dN4HAcREa3r+hi3bcuu68jLskhVIlW073tWaYlQ9+F9IpqmSfq+fwskhdO/AwmUTJXrOuaRQNeRkOd5lq7rXmS5InmERKoER/QMvUAPlZDHcZRhGN4CSeGY+aHMqgcks5RrHv/eeh455x5KrMq2yHQdibDO6ncG/KZWL7M8xDyS1/MIO0NJqdULLS81X6/X6aR0nqBSJcPeZnlZrzN477NKURn2Nus8sjzmEII0TfMiyxUuxphVWjpJkbx0btUnshRihVv70Bv8ItXq6Asoi/ZiCbU6YgAAAABJRU5ErkJggg==);
-    }
+    <link href="{{ asset('assets/landing/img/favicon.ico') }}" rel="icon">
+    <link href="{{ asset('assets/landing/img/favicon.ico') }}" rel="apple-touch-icon">
 
-    .error-template {
-        padding: 40px 15px;
-        text-align: center;
-    }
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
-    .error-actions {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
+    <link href="{{ asset('assets/landing/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
 
-    .error-actions .btn {
-        margin-right: 10px;
-    }
+        <div class="logo me-auto">
+            <a href="/"><img src="{{ asset('assets/landing/img/Logo.png') }}" alt="" class="img-fluid"></a>
+        </div>
 
-    .message-box h1 {
-        color: #252932;
-        font-size: 98px;
-        font-weight: 700;
-        line-height: 98px;
-        text-shadow: rgba(61, 61, 61, 0.3) 1px 1px, rgba(61, 61, 61, 0.2) 2px 2px, rgba(61, 61, 61, 0.3) 3px 3px;
-    }
-</style>
-<div class="container">
-    <div class="row" style="margin-top: 128px;">
-        <div class="col-md-12">
-            <!DOCTYPE html>
-            <html>
-            <body>
-            <article>
-                <style>
-                    [data-custom-class='body'], [data-custom-class='body'] * {
-                        background: transparent !important;
-                    }
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto" href="/">Home</a></li>
+                <li><a class="nav-link scrollto" href="/?#services">What We Offer</a></li>
+                <li><a class="nav-link scrollto " href="/?#portfolio">For service providers</a></li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+    </div>
+</header><!-- End Header -->
 
-                    [data-custom-class='title'], [data-custom-class='title'] * {
-                        font-family: Arial !important;
-                        font-size: 26px !important;
-                        color: #000000 !important;
-                    }
+<main id="main">
+    <p class="p-2" style="margin-top: 3em;">
+    </p>
 
-                    [data-custom-class='subtitle'], [data-custom-class='subtitle'] * {
-                        font-family: Arial !important;
-                        color: #595959 !important;
-                        font-size: 14px !important;
-                    }
+    <div class=" sub-section-bg">
+        <h3 style="margin-left: 122px" class="pt-3 text-white" data-aos="fade-up">Privacy Policy</h3>
+    </div>
+    <!-- ======= Privacy Section ======= -->
+    <section id="privacy" class="privacy" data-aos="zoom-in">
+        <div class="container" style="margin-top: -44px;">
 
-                    [data-custom-class='heading_1'], [data-custom-class='heading_1'] * {
-                        font-family: Arial !important;
-                        font-size: 19px !important;
-                        color: #000000 !important;
-                    }
-
-                    [data-custom-class='heading_2'], [data-custom-class='heading_2'] * {
-                        font-family: Arial !important;
-                        font-size: 17px !important;
-                        color: #000000 !important;
-                    }
-
-                    [data-custom-class='body_text'], [data-custom-class='body_text'] * {
-                        color: #595959 !important;
-                        font-size: 14px !important;
-                        font-family: Arial !important;
-                    }
-
-                    [data-custom-class='link'], [data-custom-class='link'] * {
-                        color: #3030F1 !important;
-                        font-size: 14px !important;
-                        font-family: Arial !important;
-                        word-break: break-word !important;
-                    }
-                </style>
-
-                <div data-custom-class="body">
-                    <div><strong><span style="font-size: 26px;"><span
-                                    data-custom-class="title">PRIVACY NOTICE</span></span></strong></div>
-                    <div><br></div>
-                    <div><span style="color: rgb(127, 127, 127);"><strong><span style="font-size: 15px;"><span
-                                        data-custom-class="subtitle">Last updated <bdt
-                                            class="question">October 05, 2022</bdt></span></span></strong></span></div>
-                    <div><br></div>
-                    <div><br></div>
+            <div data-custom-class="body">
+                <div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
+                            style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">This privacy notice for <bdt
+                                    class="question">__________</bdt><span style="color: rgb(89, 89, 89);"><span
+                                        data-custom-class="body_text"><bdt
+                                            class="block-component"></bdt></span></span> (<bdt
+                                    class="block-component"></bdt>"<bdt
+                                    class="block-component"></bdt><strong>Company</strong><bdt
+                                    class="statement-end-if-in-editor"></bdt>," "<strong>we</strong>," "<strong>us</strong>," or "<strong>our</strong>"<bdt
+                                    class="statement-end-if-in-editor"></bdt></span><span
+                                data-custom-class="body_text">), describes how and why we might collect, store, use, and/or share (<bdt
+                                    class="block-component"></bdt>"<strong>process</strong>"<bdt
+                                    class="statement-end-if-in-editor"></bdt>) your information when you use our services (<bdt
+                                    class="block-component"></bdt>"<strong>Services</strong>"<bdt
+                                    class="statement-end-if-in-editor"></bdt>), such as when you:</span></span></span><span
+                        style="font-size: 15px;"><span style="color: rgb(127, 127, 127);"><span
+                                data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
+                                        data-custom-class="body_text"><bdt
+                                            class="block-component"></bdt></span></span></span></span></span></div>
+                <ul>
+                    <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text">Visit our website<bdt
+                                        class="block-component"></bdt> at <bdt class="question"><a
+                                            href="https://reservegcc.com/" target="_blank" data-custom-class="link">https://reservegcc.com/</a></bdt><span
+                                        style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span
+                                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                                        style="color: rgb(89, 89, 89);"><bdt
+                                                            class="statement-end-if-in-editor">, or any website of ours that links to this privacy notice</bdt></span></span></span></span></span></span></span></span>
+                    </li>
+                </ul>
+                <div>
+                    <bdt class="block-component"><span style="font-size: 15px;"><span style="font-size: 15px;"><span
+                                    style="color: rgb(127, 127, 127);"><span data-custom-class="body_text"><span
+                                            style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><bdt
+                                                    class="block-component"></bdt></span></span></span></span></span></span>
+                    </bdt>
+                </div>
+                <ul>
+                    <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text">Download and use<bdt
+                                        class="block-component"></bdt> our mobile application<bdt
+                                        class="block-component"></bdt> (<bdt class="question">reservegcc)<span
+                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                    data-custom-class="body_text"><span
+                                                        style="font-size: 15px;"><span
+                                                            style="color: rgb(89, 89, 89);"><span
+                                                                data-custom-class="body_text"><span
+                                                                    style="font-size: 15px;"><span
+                                                                        style="color: rgb(89, 89, 89);"><bdt
+                                                                            class="statement-end-if-in-editor">,</bdt></span></span></span></span></span></span></span></span></bdt></span><span
+                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                            style="color: rgb(89, 89, 89);"><span
+                                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                                        style="color: rgb(89, 89, 89);"><bdt
+                                                            class="statement-end-if-in-editor"><bdt
+                                                                class="block-component"> or any other application of ours that links to this privacy notice</bdt></bdt></span></span></span></span></span></span></span></span>
+                    </li>
+                </ul>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            style="color: rgb(127, 127, 127);"><span data-custom-class="body_text"><span
+                                    style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><bdt
+                                            class="block-component"></bdt></span></span></span></span></span></div>
+                <ul>
+                    <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text">Engage with us in other related ways, including any sales, marketing, or events<span
+                                        style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span
+                                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                                        style="color: rgb(89, 89, 89);"><bdt
+                                                            class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span>
+                    </li>
+                </ul>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            style="color: rgb(127, 127, 127);"><span data-custom-class="body_text"><strong>Questions or concerns?&nbsp;</strong>Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <bdt
+                                    class="question">__________</bdt>.</span></span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><strong><span style="font-size: 15px;"><span
+                                data-custom-class="heading_1">SUMMARY OF KEY POINTS</span></span></strong></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong><em>This summary provides key points from our privacy notice, but you can find out more details about any of these topics by clicking the link following each key point or by using our table of contents below to find the section you are looking for. You can also click&nbsp;</em></strong></span></span><a
+                        data-custom-class="link" href="#toc"><span style="font-size: 15px;"><span
+                                data-custom-class="body_text"><strong><em>here</em></strong></span></span></a><span
+                        style="font-size: 15px;"><span data-custom-class="body_text"><strong><em>&nbsp;to go directly to our table of contents.</em></strong></span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>What personal information do we process?</strong> When you visit, use, or navigate our Services, we may process personal information depending on how you interact with <bdt
+                                class="block-component"></bdt><bdt class="question">__________</bdt><bdt
+                                class="statement-end-if-in-editor"></bdt> and the Services, the choices you make, and the products and features you use. Click&nbsp;</span></span><a
+                        data-custom-class="link" href="#personalinfo"><span style="font-size: 15px;"><span
+                                data-custom-class="body_text">here</span></span></a><span
+                        style="font-size: 15px;"><span
+                            data-custom-class="body_text">&nbsp;to learn more.</span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>Do we process any sensitive personal information?</strong> <bdt
+                                class="block-component"></bdt>We do not process sensitive personal information.<bdt
+                                class="else-block"></bdt></span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>Do we receive any information from third parties?</strong> <bdt
+                                class="block-component"></bdt>We do not receive any information from third parties.<bdt
+                                class="else-block"></bdt></span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>How do we process your information?</strong> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so. Click&nbsp;</span></span><a
+                        data-custom-class="link" href="#infouse"><span style="font-size: 15px;"><span
+                                data-custom-class="body_text">here</span></span></a><span
+                        style="font-size: 15px;"><span
+                            data-custom-class="body_text">&nbsp;to learn more.</span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>In what situations and with which <bdt
+                                    class="block-component"></bdt>parties do we share personal information?</strong> We may share information in specific situations and with specific <bdt
+                                class="block-component"></bdt>third parties. Click&nbsp;</span></span><a
+                        data-custom-class="link" href="#whoshare"><span style="font-size: 15px;"><span
+                                data-custom-class="body_text">here</span></span></a><span
+                        style="font-size: 15px;"><span data-custom-class="body_text">&nbsp;to learn more.<bdt
+                                class="block-component"></bdt></span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>What are your rights?</strong> Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information. Click&nbsp;</span></span><a
+                        data-custom-class="link" href="#privacyrights"><span style="font-size: 15px;"><span
+                                data-custom-class="body_text">here</span></span></a><span
+                        style="font-size: 15px;"><span
+                            data-custom-class="body_text">&nbsp;to learn more.</span></span></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>How do you exercise your rights?</strong> The easiest way to exercise your rights is by filling out our data subject request form available <bdt
+                                class="block-component"></bdt></span></span><a data-custom-class="link"
+                                                                               href="https://app.termly.io/notify/b19d00a0-ba26-447d-a34e-02a5836e8ff3"
+                                                                               rel="noopener noreferrer"
+                                                                               target="_blank"><span
+                            style="font-size: 15px;"><span data-custom-class="body_text">here</span></span></a><span
+                        style="font-size: 15px;"><span data-custom-class="body_text"><bdt
+                                class="statement-end-if-in-editor"></bdt>, or by contacting us. We will consider and act upon any request in accordance with applicable data protection laws.</span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span data-custom-class="body_text">Want to learn more about what <bdt
+                                class="block-component"></bdt><bdt class="question">__________</bdt><bdt
+                                class="statement-end-if-in-editor"></bdt> does with any information we collect? Click&nbsp;</span></span><a
+                        data-custom-class="link" href="#toc"><span style="font-size: 15px;"><span
+                                data-custom-class="body_text">here</span></span></a><span
+                        style="font-size: 15px;"><span
+                            data-custom-class="body_text">&nbsp;to review the notice in full.</span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><br></div>
+                <div id="toc" style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            style="color: rgb(127, 127, 127);"><span style="color: rgb(0, 0, 0);"><strong><span
+                                        data-custom-class="heading_1">TABLE OF CONTENTS</span></strong></span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#infocollect"><span
+                                style="color: rgb(89, 89, 89);">1. WHAT INFORMATION DO WE COLLECT?</span></a></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#infouse"><span
+                                style="color: rgb(89, 89, 89);">2. HOW DO WE PROCESS YOUR INFORMATION?<bdt
+                                    class="block-component"></bdt></span></a></span></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><a
+                                data-custom-class="link" href="#whoshare">3. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</a></span><span
+                            data-custom-class="body_text"><bdt class="block-component"></bdt></span><span
+                            style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><bdt
+                                            class="block-component"></bdt></span></span></span></span></span></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#cookies"><span
+                                style="color: rgb(89, 89, 89);">4. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</span></a><span
+                            style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><bdt
+                                            class="statement-end-if-in-editor"></bdt></span></span><span
+                                    data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
+                                            style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);"><bdt
+                                                    class="block-component"></bdt></span></span></span></span></span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#sociallogins"><span
+                                style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);"><span
+                                        style="color: rgb(89, 89, 89);">5. HOW DO WE HANDLE YOUR SOCIAL LOGINS?</span></span></span></a><span
+                            style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
+                                            style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);"><bdt
+                                                    class="statement-end-if-in-editor"></bdt></span></span><bdt
+                                            class="block-component"></bdt></span></span></span></span></span></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#inforetain"><span
+                                style="color: rgb(89, 89, 89);">6. HOW LONG DO WE KEEP YOUR INFORMATION?</span></a><span
+                            style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
+                                            style="color: rgb(89, 89, 89);"><bdt class="block-component"></bdt><bdt
+                                                class="block-component"></bdt></span></span></span></span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><a
+                                data-custom-class="link"
+                                href="#privacyrights">7. WHAT ARE YOUR PRIVACY RIGHTS?</a></span></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#DNT"><span
+                                style="color: rgb(89, 89, 89);">8. CONTROLS FOR DO-NOT-TRACK FEATURES</span></a></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#caresidents"><span
+                                style="color: rgb(89, 89, 89);">9. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</span></a></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
+                                                                                 href="#policyupdates"><span
+                                style="color: rgb(89, 89, 89);">10. DO WE MAKE UPDATES TO THIS NOTICE?</span></a></span>
+                </div>
+                <div style="line-height: 1.5;"><a data-custom-class="link" href="#contact"><span
+                            style="color: rgb(89, 89, 89); font-size: 15px;">11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</span></a>
+                </div>
+                <div style="line-height: 1.5;"><a data-custom-class="link" href="#request"><span
+                            style="color: rgb(89, 89, 89);">12. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</span></a>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div id="infocollect" style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
+                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span id="control"
+                                                                                           style="color: rgb(0, 0, 0);"><strong><span
+                                                data-custom-class="heading_1">1. WHAT INFORMATION DO WE COLLECT?</span></strong></span></span></span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div id="personalinfo" style="line-height: 1.5;"><span data-custom-class="heading_2"
+                                                                       style="color: rgb(0, 0, 0);"><span
+                            style="font-size: 15px;"><strong>Personal information you disclose to us</strong></span></span>
+                </div>
+                <div>
                     <div><br></div>
                     <div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
-                                style="color: rgb(89, 89, 89); font-size: 15px;"><span data-custom-class="body_text">This privacy notice for <bdt
-                                        class="question">__________</bdt><span style="color: rgb(89, 89, 89);"><span
-                                            data-custom-class="body_text"><bdt
-                                                class="block-component"></bdt></span></span> (<bdt
-                                        class="block-component"></bdt>"<bdt class="block-component"></bdt><strong>Company</strong><bdt
-                                        class="statement-end-if-in-editor"></bdt>," "<strong>we</strong>," "<strong>us</strong>," or "<strong>our</strong>"<bdt
-                                        class="statement-end-if-in-editor"></bdt></span><span
-                                    data-custom-class="body_text">), describes how and why we might collect, store, use, and/or share (<bdt
-                                        class="block-component"></bdt>"<strong>process</strong>"<bdt
-                                        class="statement-end-if-in-editor"></bdt>) your information when you use our services (<bdt
-                                        class="block-component"></bdt>"<strong>Services</strong>"<bdt
-                                        class="statement-end-if-in-editor"></bdt>), such as when you:</span></span></span><span
-                            style="font-size: 15px;"><span style="color: rgb(127, 127, 127);"><span
-                                    data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
-                                            data-custom-class="body_text"><bdt
-                                                class="block-component"></bdt></span></span></span></span></span></div>
-                    <ul>
-                        <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text">Visit our website<bdt
-                                            class="block-component"></bdt> at <bdt class="question"><a
-                                                href="https://reservegcc.com/" target="_blank" data-custom-class="link">https://reservegcc.com/</a></bdt><span
-                                            style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span
-                                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                            style="color: rgb(89, 89, 89);"><bdt
-                                                                class="statement-end-if-in-editor">, or any website of ours that links to this privacy notice</bdt></span></span></span></span></span></span></span></span>
-                        </li>
-                    </ul>
-                    <div>
-                        <bdt class="block-component"><span style="font-size: 15px;"><span style="font-size: 15px;"><span
-                                        style="color: rgb(127, 127, 127);"><span data-custom-class="body_text"><span
-                                                style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><bdt
-                                                        class="block-component"></bdt></span></span></span></span></span></span>
-                        </bdt>
-                    </div>
-                    <ul>
-                        <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text">Download and use<bdt
-                                            class="block-component"></bdt> our mobile application<bdt
-                                            class="block-component"></bdt> (<bdt class="question">reservegcc)<span
-                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                        data-custom-class="body_text"><span
-                                                            style="font-size: 15px;"><span
-                                                                style="color: rgb(89, 89, 89);"><span
-                                                                    data-custom-class="body_text"><span
-                                                                        style="font-size: 15px;"><span
-                                                                            style="color: rgb(89, 89, 89);"><bdt
-                                                                                class="statement-end-if-in-editor">,</bdt></span></span></span></span></span></span></span></span></bdt></span><span
-                                        data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                style="color: rgb(89, 89, 89);"><span
-                                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                            style="color: rgb(89, 89, 89);"><bdt
-                                                                class="statement-end-if-in-editor"><bdt
-                                                                    class="block-component"> or any other application of ours that links to this privacy notice</bdt></bdt></span></span></span></span></span></span></span></span>
-                        </li>
-                    </ul>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                style="color: rgb(127, 127, 127);"><span data-custom-class="body_text"><span
-                                        style="color: rgb(89, 89, 89);"><span data-custom-class="body_text"><bdt
-                                                class="block-component"></bdt></span></span></span></span></span></div>
-                    <ul>
-                        <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text">Engage with us in other related ways, including any sales, marketing, or events<span
-                                            style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span
-                                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                            style="color: rgb(89, 89, 89);"><bdt
-                                                                class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span>
-                        </li>
-                    </ul>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                style="color: rgb(127, 127, 127);"><span data-custom-class="body_text"><strong>Questions or concerns?&nbsp;</strong>Reading this privacy notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <bdt
-                                        class="question">__________</bdt>.</span></span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><strong><span style="font-size: 15px;"><span
-                                    data-custom-class="heading_1">SUMMARY OF KEY POINTS</span></span></strong></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong><em>This summary provides key points from our privacy notice, but you can find out more details about any of these topics by clicking the link following each key point or by using our table of contents below to find the section you are looking for. You can also click&nbsp;</em></strong></span></span><a
-                            data-custom-class="link" href="#toc"><span style="font-size: 15px;"><span
-                                    data-custom-class="body_text"><strong><em>here</em></strong></span></span></a><span
-                            style="font-size: 15px;"><span data-custom-class="body_text"><strong><em>&nbsp;to go directly to our table of contents.</em></strong></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>What personal information do we process?</strong> When you visit, use, or navigate our Services, we may process personal information depending on how you interact with <bdt
-                                    class="block-component"></bdt><bdt class="question">__________</bdt><bdt
-                                    class="statement-end-if-in-editor"></bdt> and the Services, the choices you make, and the products and features you use. Click&nbsp;</span></span><a
-                            data-custom-class="link" href="#personalinfo"><span style="font-size: 15px;"><span
-                                    data-custom-class="body_text">here</span></span></a><span
-                            style="font-size: 15px;"><span
-                                data-custom-class="body_text">&nbsp;to learn more.</span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>Do we process any sensitive personal information?</strong> <bdt
-                                    class="block-component"></bdt>We do not process sensitive personal information.<bdt
-                                    class="else-block"></bdt></span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>Do we receive any information from third parties?</strong> <bdt
-                                    class="block-component"></bdt>We do not receive any information from third parties.<bdt
-                                    class="else-block"></bdt></span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>How do we process your information?</strong> We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent. We process your information only when we have a valid legal reason to do so. Click&nbsp;</span></span><a
-                            data-custom-class="link" href="#infouse"><span style="font-size: 15px;"><span
-                                    data-custom-class="body_text">here</span></span></a><span
-                            style="font-size: 15px;"><span
-                                data-custom-class="body_text">&nbsp;to learn more.</span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>In what situations and with which <bdt
-                                        class="block-component"></bdt>parties do we share personal information?</strong> We may share information in specific situations and with specific <bdt
-                                    class="block-component"></bdt>third parties. Click&nbsp;</span></span><a
-                            data-custom-class="link" href="#whoshare"><span style="font-size: 15px;"><span
-                                    data-custom-class="body_text">here</span></span></a><span
-                            style="font-size: 15px;"><span data-custom-class="body_text">&nbsp;to learn more.<bdt
-                                    class="block-component"></bdt></span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>What are your rights?</strong> Depending on where you are located geographically, the applicable privacy law may mean you have certain rights regarding your personal information. Click&nbsp;</span></span><a
-                            data-custom-class="link" href="#privacyrights"><span style="font-size: 15px;"><span
-                                    data-custom-class="body_text">here</span></span></a><span
-                            style="font-size: 15px;"><span
-                                data-custom-class="body_text">&nbsp;to learn more.</span></span></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>How do you exercise your rights?</strong> The easiest way to exercise your rights is by filling out our data subject request form available <bdt
-                                    class="block-component"></bdt></span></span><a data-custom-class="link"
-                                                                                   href="https://app.termly.io/notify/b19d00a0-ba26-447d-a34e-02a5836e8ff3"
-                                                                                   rel="noopener noreferrer"
-                                                                                   target="_blank"><span
-                                style="font-size: 15px;"><span data-custom-class="body_text">here</span></span></a><span
-                            style="font-size: 15px;"><span data-custom-class="body_text"><bdt
-                                    class="statement-end-if-in-editor"></bdt>, or by contacting us. We will consider and act upon any request in accordance with applicable data protection laws.</span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span data-custom-class="body_text">Want to learn more about what <bdt
-                                    class="block-component"></bdt><bdt class="question">__________</bdt><bdt
-                                    class="statement-end-if-in-editor"></bdt> does with any information we collect? Click&nbsp;</span></span><a
-                            data-custom-class="link" href="#toc"><span style="font-size: 15px;"><span
-                                    data-custom-class="body_text">here</span></span></a><span
-                            style="font-size: 15px;"><span data-custom-class="body_text">&nbsp;to review the notice in full.</span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div id="toc" style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                style="color: rgb(127, 127, 127);"><span style="color: rgb(0, 0, 0);"><strong><span
-                                            data-custom-class="heading_1">TABLE OF CONTENTS</span></strong></span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#infocollect"><span
-                                    style="color: rgb(89, 89, 89);">1. WHAT INFORMATION DO WE COLLECT?</span></a></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#infouse"><span
-                                    style="color: rgb(89, 89, 89);">2. HOW DO WE PROCESS YOUR INFORMATION?<bdt
-                                        class="block-component"></bdt></span></a></span></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><a
-                                    data-custom-class="link" href="#whoshare">3. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</a></span><span
-                                data-custom-class="body_text"><bdt class="block-component"></bdt></span><span
-                                style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><bdt
-                                                class="block-component"></bdt></span></span></span></span></span></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#cookies"><span
-                                    style="color: rgb(89, 89, 89);">4. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</span></a><span
-                                style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><bdt
-                                                class="statement-end-if-in-editor"></bdt></span></span><span
-                                        data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
-                                                style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);"><bdt
-                                                        class="block-component"></bdt></span></span></span></span></span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#sociallogins"><span
-                                    style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);"><span
-                                            style="color: rgb(89, 89, 89);">5. HOW DO WE HANDLE YOUR SOCIAL LOGINS?</span></span></span></a><span
-                                style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
-                                                style="color: rgb(89, 89, 89);"><span style="color: rgb(89, 89, 89);"><bdt
-                                                        class="statement-end-if-in-editor"></bdt></span></span><bdt
-                                                class="block-component"></bdt></span></span></span></span></span></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#inforetain"><span
-                                    style="color: rgb(89, 89, 89);">6. HOW LONG DO WE KEEP YOUR INFORMATION?</span></a><span
-                                style="color: rgb(127, 127, 127);"><span style="color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="color: rgb(89, 89, 89);"><span
-                                                style="color: rgb(89, 89, 89);"><bdt class="block-component"></bdt><bdt
-                                                    class="block-component"></bdt></span></span></span></span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><a
-                                    data-custom-class="link" href="#privacyrights">7. WHAT ARE YOUR PRIVACY RIGHTS?</a></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#DNT"><span
-                                    style="color: rgb(89, 89, 89);">8. CONTROLS FOR DO-NOT-TRACK FEATURES</span></a></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#caresidents"><span
-                                    style="color: rgb(89, 89, 89);">9. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</span></a></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><a data-custom-class="link"
-                                                                                     href="#policyupdates"><span
-                                    style="color: rgb(89, 89, 89);">10. DO WE MAKE UPDATES TO THIS NOTICE?</span></a></span>
-                    </div>
-                    <div style="line-height: 1.5;"><a data-custom-class="link" href="#contact"><span
-                                style="color: rgb(89, 89, 89); font-size: 15px;">11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</span></a>
-                    </div>
-                    <div style="line-height: 1.5;"><a data-custom-class="link" href="#request"><span
-                                style="color: rgb(89, 89, 89);">12. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</span></a>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div id="infocollect" style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span id="control"
-                                                                                               style="color: rgb(0, 0, 0);"><strong><span
-                                                    data-custom-class="heading_1">1. WHAT INFORMATION DO WE COLLECT?</span></strong></span></span></span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div id="personalinfo" style="line-height: 1.5;"><span data-custom-class="heading_2"
-                                                                           style="color: rgb(0, 0, 0);"><span
-                                style="font-size: 15px;"><strong>Personal information you disclose to us</strong></span></span>
-                    </div>
-                    <div>
-                        <div><br></div>
-                        <div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
-                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                        data-custom-class="body_text"><span
+                                    data-custom-class="body_text"><span
+                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    data-custom-class="body_text"><strong><em>In Short:</em></strong></span></span></span></span><span
-                                        data-custom-class="body_text"><span
+                                                data-custom-class="body_text"><strong><em>In Short:</em></strong></span></span></span></span><span
+                                    data-custom-class="body_text"><span
+                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    data-custom-class="body_text"><strong><em>&nbsp;</em></strong><em>We collect personal information that you provide to us.</em></span></span></span></span></span></span>
-                        </div>
+                                                data-custom-class="body_text"><strong><em>&nbsp;</em></strong><em>We collect personal information that you provide to us.</em></span></span></span></span></span></span>
                     </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                style="font-size: 15px; color: rgb(89, 89, 89);"><span data-custom-class="body_text">We collect personal information that you voluntarily provide to us when you <span
-                                        style="font-size: 15px;"><bdt class="block-component"></bdt></span>register on the Services,&nbsp;</span><span
-                                    style="font-size: 15px;"><span data-custom-class="body_text"><span
-                                            style="font-size: 15px;"><bdt
-                                                class="statement-end-if-in-editor"></bdt></span></span><span
-                                        data-custom-class="body_text">express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</span></span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><span style="font-size: 15px;"><bdt
-                                            class="block-component"></bdt></span></span></span></span></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><strong>Personal Information Provided by You.</strong> The personal information that we collect depends on the context of your interactions with us and the Services, the choices you make, and the products and features you use. The personal information we collect may include the following:<span
-                                        style="font-size: 15px;"><span data-custom-class="body_text"><bdt
-                                                class="forloop-component"></bdt></span></span></span></span></span>
-                    </div>
-                    <ul>
-                        <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                data-custom-class="body_text"><bdt class="question">phone numbers</bdt></span></span></span></span></span>
-                        </li>
-                    </ul>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                            data-custom-class="body_text"><bdt
-                                                class="forloop-component"></bdt></span></span></span></span></span>
-                    </div>
-                    <ul>
-                        <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                data-custom-class="body_text"><bdt
-                                                    class="question">names</bdt></span></span></span></span></span></li>
-                    </ul>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                            data-custom-class="body_text"><bdt
-                                                class="forloop-component"></bdt></span></span></span></span></span>
-                    </div>
-                    <ul>
-                        <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                        data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                data-custom-class="body_text"><bdt
-                                                    class="question">email addresses</bdt></span></span></span></span></span>
-                        </li>
-                    </ul>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                            data-custom-class="body_text"><bdt
-                                                class="forloop-component"></bdt></span><span
-                                            data-custom-class="body_text"><bdt class="statement-end-if-in-editor"></bdt></span></span></span></span></span>
-                    </div>
-                    <div id="sensitiveinfo" style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                data-custom-class="body_text"><strong>Sensitive Information.</strong> <bdt
-                                    class="block-component"></bdt>We do not process sensitive information.</span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px;"><span data-custom-class="body_text"><bdt
-                                    class="else-block"></bdt></span></span><span
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span data-custom-class="body_text">We collect personal information that you voluntarily provide to us when you <span
+                                    style="font-size: 15px;"><bdt class="block-component"></bdt></span>register on the Services,&nbsp;</span><span
+                                style="font-size: 15px;"><span data-custom-class="body_text"><span
+                                        style="font-size: 15px;"><bdt
+                                            class="statement-end-if-in-editor"></bdt></span></span><span
+                                    data-custom-class="body_text">express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</span></span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><span style="font-size: 15px;"><bdt
+                                        class="block-component"></bdt></span></span></span></span></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><strong>Personal Information Provided by You.</strong> The personal information that we collect depends on the context of your interactions with us and the Services, the choices you make, and the products and features you use. The personal information we collect may include the following:<span
+                                    style="font-size: 15px;"><span data-custom-class="body_text"><bdt
+                                            class="forloop-component"></bdt></span></span></span></span></span>
+                </div>
+                <ul>
+                    <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                     data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                            data-custom-class="body_text"><bdt class="block-component"><bdt
-                                                    class="block-component"></bdt></bdt></span></span></span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                            data-custom-class="body_text"><bdt
+                                                class="question">phone numbers</bdt></span></span></span></span></span>
+                    </li>
+                </ul>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                        data-custom-class="body_text"><bdt
+                                            class="forloop-component"></bdt></span></span></span></span></span>
+                </div>
+                <ul>
+                    <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><strong>Social Media Login Data.&nbsp;</strong>We may provide you with the option to register with us using your existing social media account details, like your Facebook, Twitter, or other social media account. If you choose to register in this way, we will collect the information described in the section called <bdt
-                                        class="block-component"></bdt>"<bdt
-                                        class="statement-end-if-in-editor"></bdt><span style="font-size: 15px;"><span
-                                            data-custom-class="body_text"><span style="font-size: 15px;"><span
-                                                    style="color: rgb(89, 89, 89);"><a data-custom-class="link"
-                                                                                       href="#sociallogins">HOW DO WE HANDLE YOUR SOCIAL LOGINS?</a></span></span></span></span><bdt
-                                        class="block-component"></bdt>"<bdt class="statement-end-if-in-editor"></bdt> below.</span></span></span>
-                    </div>
-                    <div style="line-height: 1.5;"><br></div>
-                    <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                            data-custom-class="body_text"><bdt
+                                                class="question">names</bdt></span></span></span></span></span></li>
+                </ul>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                        data-custom-class="body_text"><bdt
+                                            class="forloop-component"></bdt></span></span></span></span></span>
+                </div>
+                <ul>
+                    <li style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                    data-custom-class="body_text"><span style="font-size: 15px;"><bdt
-                                            class="statement-end-if-in-editor"><bdt
-                                                class="statement-end-if-in-editor"></bdt></bdt></span></span></span></span>
-                        <bdt class="block-component">
-                            <bdt class="block-component"></bdt>
-                        </bdt>
-                    </div>
-                    <div style="line-height: 1.5;"><span data-custom-class="body_text"><span
-                                style="font-size: 15px;"><strong>Application Data.</strong> If you use our application(s), we also may collect the following information if you choose to provide us with access or permission:<bdt
-                                    class="block-component"></bdt></span></span>
+                                    data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                            data-custom-class="body_text"><bdt
+                                                class="question">email addresses</bdt></span></span></span></span></span>
+                    </li>
+                </ul>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                        data-custom-class="body_text"><bdt
+                                            class="forloop-component"></bdt></span><span
+                                        data-custom-class="body_text"><bdt
+                                            class="statement-end-if-in-editor"></bdt></span></span></span></span></span>
+                </div>
+                <div id="sensitiveinfo" style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                            data-custom-class="body_text"><strong>Sensitive Information.</strong> <bdt
+                                class="block-component"></bdt>We do not process sensitive information.</span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span data-custom-class="body_text"><bdt
+                                class="else-block"></bdt></span></span><span
+                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                        data-custom-class="body_text"><bdt class="block-component"><bdt
+                                                class="block-component"></bdt></bdt></span></span></span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><strong>Social Media Login Data.&nbsp;</strong>We may provide you with the option to register with us using your existing social media account details, like your Facebook, Twitter, or other social media account. If you choose to register in this way, we will collect the information described in the section called <bdt
+                                    class="block-component"></bdt>"<bdt
+                                    class="statement-end-if-in-editor"></bdt><span style="font-size: 15px;"><span
+                                        data-custom-class="body_text"><span style="font-size: 15px;"><span
+                                                style="color: rgb(89, 89, 89);"><a data-custom-class="link"
+                                                                                   href="#sociallogins">HOW DO WE HANDLE YOUR SOCIAL LOGINS?</a></span></span></span></span><bdt
+                                    class="block-component"></bdt>"<bdt class="statement-end-if-in-editor"></bdt> below.</span></span></span>
+                </div>
+                <div style="line-height: 1.5;"><br></div>
+                <div style="line-height: 1.5;"><span style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                data-custom-class="body_text"><span style="font-size: 15px;"><bdt
+                                        class="statement-end-if-in-editor"><bdt
+                                            class="statement-end-if-in-editor"></bdt></bdt></span></span></span></span>
+                    <bdt class="block-component">
+                        <bdt class="block-component"></bdt>
+                    </bdt>
+                </div>
+                <div style="line-height: 1.5;"><span data-custom-class="body_text"><span
+                            style="font-size: 15px;"><strong>Application Data.</strong> If you use our application(s), we also may collect the following information if you choose to provide us with access or permission:<bdt
+                                class="block-component"></bdt></span></span>
+                    <div style="line-height: 1.5;">
+                        <bdt class="block-component"><span style="font-size: 15px;"><span
+                                    data-custom-class="body_text"></span></span></bdt>
                         <div style="line-height: 1.5;">
                             <bdt class="block-component"><span style="font-size: 15px;"><span
                                         data-custom-class="body_text"></span></span></bdt>
                             <div style="line-height: 1.5;">
                                 <bdt class="block-component"><span style="font-size: 15px;"><span
                                             data-custom-class="body_text"></span></span></bdt>
-                                <div style="line-height: 1.5;">
-                                    <bdt class="block-component"><span style="font-size: 15px;"><span
-                                                data-custom-class="body_text"></span></span></bdt>
-                                </div>
-                                <ul>
-                                    <li style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                                data-custom-class="body_text"><em>Push Notifications.</em> We may request to send you push notifications regarding your account or certain features of the application(s). If you wish to opt out from receiving these types of communications, you may turn them off in your device's settings.<bdt
-                                                    class="statement-end-if-in-editor"></bdt></span></span></li>
-                                </ul>
-                                <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
-                                            data-custom-class="body_text">This information is primarily needed to maintain the security and operation of our application(s), for troubleshooting, and for our internal analytics and reporting purposes.</span></span>
-                                </div>
-                                <div style="line-height: 1.5;"><br></div>
-                                <div style="line-height: 1.5;">
-                                    <bdt class="statement-end-if-in-editor"><span style="font-size: 15px;"><span
-                                                data-custom-class="body_text"></span></span></bdt>
-                                </div>
-                                <div style="line-height: 1.5;"><span
+                            </div>
+                            <ul>
+                                <li style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                                            data-custom-class="body_text"><em>Push Notifications.</em> We may request to send you push notifications regarding your account or certain features of the application(s). If you wish to opt out from receiving these types of communications, you may turn them off in your device's settings.<bdt
+                                                class="statement-end-if-in-editor"></bdt></span></span></li>
+                            </ul>
+                            <div style="line-height: 1.5;"><span style="font-size: 15px;"><span
+                                        data-custom-class="body_text">This information is primarily needed to maintain the security and operation of our application(s), for troubleshooting, and for our internal analytics and reporting purposes.</span></span>
+                            </div>
+                            <div style="line-height: 1.5;"><br></div>
+                            <div style="line-height: 1.5;">
+                                <bdt class="statement-end-if-in-editor"><span style="font-size: 15px;"><span
+                                            data-custom-class="body_text"></span></span></bdt>
+                            </div>
+                            <div style="line-height: 1.5;"><span
+                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                data-custom-class="body_text">All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</span></span></span>
-                                </div>
-                                <div style="line-height: 1.5;"><br></div>
-                                <div style="line-height: 1.5;"><span
+                                            data-custom-class="body_text">All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</span></span></span>
+                            </div>
+                            <div style="line-height: 1.5;"><br></div>
+                            <div style="line-height: 1.5;"><span
+                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                data-custom-class="body_text"><bdt class="block-component"></bdt></span><span
-                                                data-custom-class="body_text"><span
-                                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                        data-custom-class="body_text"><span
-                                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                data-custom-class="body_text"><bdt
-                                                                    class="statement-end-if-in-editor"><bdt
-                                                                        class="block-component"></bdt></bdt></span></span></span></span></span></span></span><span
-                                        style="font-size: 15px;"><span data-custom-class="body_text"><bdt
-                                                class="block-component"></bdt></span></span></div>
-                                <div id="infouse" style="line-height: 1.5;"><span
-                                        style="color: rgb(127, 127, 127);"><span
-                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span id="control"
-                                                                                                           style="color: rgb(0, 0, 0);"><strong><span
-                                                                data-custom-class="heading_1">2. HOW DO WE PROCESS YOUR INFORMATION?</span></strong></span></span></span></span></span>
-                                </div>
-                                <div>
-                                    <div style="line-height: 1.5;"><br></div>
-                                    <div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
+                                            data-custom-class="body_text"><bdt
+                                                class="block-component"></bdt></span><span
+                                            data-custom-class="body_text"><span
                                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                     data-custom-class="body_text"><span
-                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                data-custom-class="body_text"><strong><em>In Short:&nbsp;</em></strong><em>We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent.</em></span></span></span></span></span></span>
-                                    </div>
-                                </div>
+                                                        style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                            data-custom-class="body_text"><bdt
+                                                                class="statement-end-if-in-editor"><bdt
+                                                                    class="block-component"></bdt></bdt></span></span></span></span></span></span></span><span
+                                    style="font-size: 15px;"><span data-custom-class="body_text"><bdt
+                                            class="block-component"></bdt></span></span></div>
+                            <div id="infouse" style="line-height: 1.5;"><span
+                                    style="color: rgb(127, 127, 127);"><span
+                                        style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span id="control"
+                                                                                                       style="color: rgb(0, 0, 0);"><strong><span
+                                                            data-custom-class="heading_1">2. HOW DO WE PROCESS YOUR INFORMATION?</span></strong></span></span></span></span></span>
+                            </div>
+                            <div>
                                 <div style="line-height: 1.5;"><br></div>
+                                <div style="line-height: 1.5;"><span style="color: rgb(127, 127, 127);"><span
+                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                data-custom-class="body_text"><span
+                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                            data-custom-class="body_text"><strong><em>In Short:&nbsp;</em></strong><em>We process your information to provide, improve, and administer our Services, communicate with you, for security and fraud prevention, and to comply with law. We may also process your information for other purposes with your consent.</em></span></span></span></span></span></span>
+                                </div>
+                            </div>
+                            <div style="line-height: 1.5;"><br></div>
+                            <div style="line-height: 1.5;"><span
+                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                            data-custom-class="body_text"><strong>We process your personal information for a variety of reasons, depending on how you interact with our Services, including:</strong><bdt
+                                                class="block-component"></bdt></span></span></span></div>
+                            <ul>
+                                <li style="line-height: 1.5;"><span
+                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                data-custom-class="body_text"><strong>To facilitate account creation and authentication and otherwise manage user accounts.&nbsp;</strong>We may process your information so you can create and log in to your account, as well as keep your account in working order.<span
+                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                            data-custom-class="body_text"><span
+                                                                style="font-size: 15px;"><span
+                                                                    style="color: rgb(89, 89, 89);"><span
+                                                                        data-custom-class="body_text"><span
+                                                                            style="font-size: 15px;"><span
+                                                                                style="color: rgb(89, 89, 89);"><span
+                                                                                    data-custom-class="body_text"><bdt
+                                                                                        class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
+                                </li>
+                            </ul>
+                            <div style="line-height: 1.5;"><span
+                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                            data-custom-class="body_text"><bdt
+                                                class="block-component"></bdt></span></span></span>
                                 <div style="line-height: 1.5;"><span
                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                data-custom-class="body_text"><strong>We process your personal information for a variety of reasons, depending on how you interact with our Services, including:</strong><bdt
-                                                    class="block-component"></bdt></span></span></span></div>
-                                <ul>
-                                    <li style="line-height: 1.5;"><span
+                                                data-custom-class="body_text"><bdt
+                                                    class="block-component"></bdt></span></span></span>
+                                    <div style="line-height: 1.5;"><span
                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    data-custom-class="body_text"><strong>To facilitate account creation and authentication and otherwise manage user accounts.&nbsp;</strong>We may process your information so you can create and log in to your account, as well as keep your account in working order.<span
-                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                    data-custom-class="body_text"><bdt
+                                                        class="block-component"></bdt></span></span></span></div>
+                                    <ul>
+                                        <li style="line-height: 1.5;"><span
+                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                        data-custom-class="body_text"><strong>To respond to user inquiries/offer support to users.&nbsp;</strong>We may process your information to respond to your inquiries and solve any potential issues you might have with the requested service.<span
                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                data-custom-class="body_text"><span
-                                                                    style="font-size: 15px;"><span
-                                                                        style="color: rgb(89, 89, 89);"><span
-                                                                            data-custom-class="body_text"><span
-                                                                                style="font-size: 15px;"><span
-                                                                                    style="color: rgb(89, 89, 89);"><span
-                                                                                        data-custom-class="body_text"><bdt
-                                                                                            class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
-                                    </li>
-                                </ul>
-                                <div style="line-height: 1.5;"><span
-                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                data-custom-class="body_text"><bdt class="block-component"></bdt></span></span></span>
+                                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                                    data-custom-class="body_text"><span
+                                                                        style="font-size: 15px;"><span
+                                                                            style="color: rgb(89, 89, 89);"><span
+                                                                                data-custom-class="body_text"><span
+                                                                                    style="font-size: 15px;"><span
+                                                                                        style="color: rgb(89, 89, 89);"><span
+                                                                                            data-custom-class="body_text"><bdt
+                                                                                                class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
+                                        </li>
+                                    </ul>
                                     <div style="line-height: 1.5;"><span
                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                     data-custom-class="body_text"><bdt
                                                         class="block-component"></bdt></span></span></span>
-                                        <div style="line-height: 1.5;"><span
-                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                        data-custom-class="body_text"><bdt
-                                                            class="block-component"></bdt></span></span></span></div>
-                                        <ul>
-                                            <li style="line-height: 1.5;"><span
-                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                            data-custom-class="body_text"><strong>To respond to user inquiries/offer support to users.&nbsp;</strong>We may process your information to respond to your inquiries and solve any potential issues you might have with the requested service.<span
-                                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                        data-custom-class="body_text"><span
-                                                                            style="font-size: 15px;"><span
-                                                                                style="color: rgb(89, 89, 89);"><span
-                                                                                    data-custom-class="body_text"><span
-                                                                                        style="font-size: 15px;"><span
-                                                                                            style="color: rgb(89, 89, 89);"><span
-                                                                                                data-custom-class="body_text"><bdt
-                                                                                                    class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
-                                            </li>
-                                        </ul>
-                                        <div style="line-height: 1.5;"><span
-                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                        data-custom-class="body_text"><bdt
-                                                            class="block-component"></bdt></span></span></span>
+                                        <div style="line-height: 1.5;">
+                                            <bdt class="block-component"><span style="font-size: 15px;"></span>
+                                            </bdt>
                                             <div style="line-height: 1.5;">
                                                 <bdt class="block-component"><span style="font-size: 15px;"></span>
                                                 </bdt>
                                                 <div style="line-height: 1.5;">
-                                                    <bdt class="block-component"><span style="font-size: 15px;"></span>
-                                                    </bdt>
+                                                    <bdt class="block-component"><span
+                                                            style="font-size: 15px;"></span></bdt>
                                                     <div style="line-height: 1.5;">
                                                         <bdt class="block-component"><span
-                                                                style="font-size: 15px;"></span></bdt>
+                                                                style="font-size: 15px;"><span
+                                                                    data-custom-class="body_text"></span></span>
+                                                        </bdt>
+                                                        <p style="font-size: 15px; line-height: 1.5;">
+                                                            <bdt class="block-component"><span
+                                                                    style="font-size: 15px;"></span></bdt>
+                                                        </p>
+                                                        <p style="font-size: 15px; line-height: 1.5;">
+                                                            <bdt class="block-component"><span
+                                                                    style="font-size: 15px;"></span></bdt>
+                                                        </p>
+                                                        <p style="font-size: 15px; line-height: 1.5;">
+                                                            <bdt class="block-component"></bdt>
+                                                        </p>
+                                                        <p style="font-size: 15px; line-height: 1.5;">
+                                                            <bdt class="block-component"></bdt>
+                                                        </p>
                                                         <div style="line-height: 1.5;">
-                                                            <bdt class="block-component"><span style="font-size: 15px;"><span
-                                                                        data-custom-class="body_text"></span></span>
-                                                            </bdt>
-                                                            <p style="font-size: 15px; line-height: 1.5;">
-                                                                <bdt class="block-component"><span
-                                                                        style="font-size: 15px;"></span></bdt>
-                                                            </p>
-                                                            <p style="font-size: 15px; line-height: 1.5;">
-                                                                <bdt class="block-component"><span
-                                                                        style="font-size: 15px;"></span></bdt>
-                                                            </p>
-                                                            <p style="font-size: 15px; line-height: 1.5;">
-                                                                <bdt class="block-component"></bdt>
-                                                            </p>
-                                                            <p style="font-size: 15px; line-height: 1.5;">
-                                                                <bdt class="block-component"></bdt>
-                                                            </p>
+                                                            <bdt class="block-component"><span
+                                                                    style="font-size: 15px;"></span></bdt>
                                                             <div style="line-height: 1.5;">
                                                                 <bdt class="block-component"><span
                                                                         style="font-size: 15px;"></span></bdt>
                                                                 <div style="line-height: 1.5;">
                                                                     <bdt class="block-component"><span
                                                                             style="font-size: 15px;"></span></bdt>
-                                                                    <div style="line-height: 1.5;">
-                                                                        <bdt class="block-component"><span
-                                                                                style="font-size: 15px;"></span></bdt>
-                                                                        <div style="line-height: 1.5;"><span
-                                                                                style="font-size: 15px;"><bdt
-                                                                                    class="block-component"><span
-                                                                                        data-custom-class="body_text"></span></bdt></span>
+                                                                    <div style="line-height: 1.5;"><span
+                                                                            style="font-size: 15px;"><bdt
+                                                                                class="block-component"><span
+                                                                                    data-custom-class="body_text"></span></bdt></span>
+                                                                        <div style="line-height: 1.5;">
+                                                                            <bdt class="block-component"><span
+                                                                                    style="font-size: 15px;"><span
+                                                                                        data-custom-class="body_text"></span></span>
+                                                                            </bdt>
                                                                             <div style="line-height: 1.5;">
                                                                                 <bdt class="block-component"><span
                                                                                         style="font-size: 15px;"><span
                                                                                             data-custom-class="body_text"></span></span>
                                                                                 </bdt>
                                                                                 <div style="line-height: 1.5;">
-                                                                                    <bdt class="block-component"><span
-                                                                                            style="font-size: 15px;"><span
-                                                                                                data-custom-class="body_text"></span></span>
-                                                                                    </bdt>
-                                                                                    <div style="line-height: 1.5;">
-                                                                                        <bdt class="block-component">
+                                                                                    <bdt class="block-component">
                                                                                             <span
                                                                                                 style="font-size: 15px;"><span
                                                                                                     data-custom-class="body_text"></span></span>
-                                                                                        </bdt>
-                                                                                        <div style="line-height: 1.5;">
-                                                                                            <bdt
-                                                                                                class="block-component">
+                                                                                    </bdt>
+                                                                                    <div style="line-height: 1.5;">
+                                                                                        <bdt
+                                                                                            class="block-component">
                                                                                                 <span
                                                                                                     style="font-size: 15px;"><span
                                                                                                         data-custom-class="body_text"></span></span>
+                                                                                        </bdt>
+                                                                                        <div
+                                                                                            style="line-height: 1.5;">
+                                                                                            <bdt
+                                                                                                class="block-component">
+                                                                                                    <span
+                                                                                                        style="font-size: 15px;"><span
+                                                                                                            data-custom-class="body_text"></span></span>
                                                                                             </bdt>
                                                                                             <div
                                                                                                 style="line-height: 1.5;">
                                                                                                 <bdt
                                                                                                     class="block-component">
-                                                                                                    <span
-                                                                                                        style="font-size: 15px;"><span
-                                                                                                            data-custom-class="body_text"></span></span>
+                                                                                                        <span
+                                                                                                            style="font-size: 15px;"><span
+                                                                                                                data-custom-class="body_text"></span></span>
                                                                                                 </bdt>
                                                                                                 <div
                                                                                                     style="line-height: 1.5;">
                                                                                                     <bdt
                                                                                                         class="block-component">
-                                                                                                        <span
-                                                                                                            style="font-size: 15px;"><span
-                                                                                                                data-custom-class="body_text"></span></span>
+                                                                                                            <span
+                                                                                                                style="font-size: 15px;"><span
+                                                                                                                    data-custom-class="body_text"></span></span>
                                                                                                     </bdt>
                                                                                                     <div
                                                                                                         style="line-height: 1.5;">
                                                                                                         <bdt
                                                                                                             class="block-component">
-                                                                                                            <span
-                                                                                                                style="font-size: 15px;"><span
-                                                                                                                    data-custom-class="body_text"></span></span>
+                                                                                                                <span
+                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                        data-custom-class="body_text"></span></span>
                                                                                                         </bdt>
                                                                                                         <div
                                                                                                             style="line-height: 1.5;">
                                                                                                             <bdt
                                                                                                                 class="block-component">
-                                                                                                                <span
-                                                                                                                    style="font-size: 15px;"><span
-                                                                                                                        data-custom-class="body_text"></span></span>
+                                                                                                                    <span
+                                                                                                                        style="font-size: 15px;"><span
+                                                                                                                            data-custom-class="body_text"></span></span>
                                                                                                             </bdt>
                                                                                                             <div
                                                                                                                 style="line-height: 1.5;">
                                                                                                                 <bdt
                                                                                                                     class="block-component">
-                                                                                                                    <span
-                                                                                                                        style="font-size: 15px;"><span
-                                                                                                                            data-custom-class="body_text"></span></span>
+                                                                                                                        <span
+                                                                                                                            style="font-size: 15px;"><span
+                                                                                                                                data-custom-class="body_text"></span></span>
                                                                                                                 </bdt>
                                                                                                                 <div
                                                                                                                     style="line-height: 1.5;">
                                                                                                                     <bdt
                                                                                                                         class="block-component">
-                                                                                                                        <span
-                                                                                                                            style="font-size: 15px;"><span
-                                                                                                                                data-custom-class="body_text"></span></span>
+                                                                                                                            <span
+                                                                                                                                style="font-size: 15px;"><span
+                                                                                                                                    data-custom-class="body_text"></span></span>
                                                                                                                     </bdt>
                                                                                                                     <div
                                                                                                                         style="line-height: 1.5;">
                                                                                                                         <bdt
                                                                                                                             class="block-component">
-                                                                                                                            <span
-                                                                                                                                style="font-size: 15px;"><span
-                                                                                                                                    data-custom-class="body_text"></span></span>
+                                                                                                                                <span
+                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                        data-custom-class="body_text"></span></span>
                                                                                                                         </bdt>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
-                                                                                                                            <bdt
-                                                                                                                                class="block-component">
+                                                                                                                        <bdt
+                                                                                                                            class="block-component">
                                                                                                                                 <span
                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                         data-custom-class="body_text"></span></span>
-                                                                                                                            </bdt>
-                                                                                                                            <bdt
-                                                                                                                                class="block-component">
+                                                                                                                        </bdt>
+                                                                                                                        <bdt
+                                                                                                                            class="block-component">
                                                                                                                                 <span
                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                         data-custom-class="body_text"></span></span>
-                                                                                                                            </bdt>
-                                                                                                                            <bdt
-                                                                                                                                class="block-component">
+                                                                                                                        </bdt>
+                                                                                                                        <bdt
+                                                                                                                            class="block-component">
                                                                                                                                 <span
                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                         data-custom-class="body_text"></span></span>
-                                                                                                                            </bdt>
-                                                                                                                            <bdt
-                                                                                                                                class="block-component">
-                                                                                                                                <span
-                                                                                                                                    style="font-size: 15px;"><span
-                                                                                                                                        data-custom-class="body_text"></span></span>
-                                                                                                                            </bdt>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
-                                                                                                                            <br>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            id="whoshare"
-                                                                                                                            style="line-height: 1.5;">
+                                                                                                                        </bdt>
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
+                                                                                                                        <br>
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        id="whoshare"
+                                                                                                                        style="line-height: 1.5;">
                                                                                                                             <span
                                                                                                                                 style="color: rgb(127, 127, 127);"><span
                                                                                                                                     style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -716,115 +687,115 @@
                                                                                                                                                 id="control"
                                                                                                                                                 style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                         data-custom-class="heading_1">3. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?</span></strong></span></span></span></span></span>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
-                                                                                                                            <br>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
+                                                                                                                        <br>
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
                                                                                                                             <span
                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                         data-custom-class="body_text"><strong><em>In Short:</em></strong><em>&nbsp;We may share information in specific situations described in this section and/or with the following <bdt
                                                                                                                                                 class="block-component"></bdt>third parties.</em></span></span></span>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
                                                                                                                             <span
                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                             class="block-component"></bdt></span></span></span>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
-                                                                                                                            <br>
-                                                                                                                        </div>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
+                                                                                                                        <br>
+                                                                                                                    </div>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
                                                                                                                             <span
                                                                                                                                 style="font-size: 15px;"><span
                                                                                                                                     data-custom-class="body_text">We <bdt
                                                                                                                                         class="block-component"></bdt>may need to share your personal information in the following situations:</span></span>
-                                                                                                                        </div>
-                                                                                                                        <ul>
-                                                                                                                            <li style="line-height: 1.5;">
+                                                                                                                    </div>
+                                                                                                                    <ul>
+                                                                                                                        <li style="line-height: 1.5;">
                                                                                                                                 <span
                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                         data-custom-class="body_text"><strong>Business Transfers.</strong> We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.</span></span>
-                                                                                                                            </li>
-                                                                                                                        </ul>
-                                                                                                                        <div
-                                                                                                                            style="line-height: 1.5;">
+                                                                                                                        </li>
+                                                                                                                    </ul>
+                                                                                                                    <div
+                                                                                                                        style="line-height: 1.5;">
                                                                                                                             <span
                                                                                                                                 style="font-size: 15px;"><span
                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                         class="block-component"></bdt></span></span>
-                                                                                                                            <div
-                                                                                                                                style="line-height: 1.5;">
+                                                                                                                        <div
+                                                                                                                            style="line-height: 1.5;">
                                                                                                                                 <span
                                                                                                                                     style="font-size: 15px;"><bdt
                                                                                                                                         class="block-component"><span
                                                                                                                                             data-custom-class="body_text"></span></bdt></span>
+                                                                                                                            <div
+                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                <bdt
+                                                                                                                                    class="block-component">
+                                                                                                                                        <span
+                                                                                                                                            style="font-size: 15px;"><span
+                                                                                                                                                data-custom-class="body_text"></span></span>
+                                                                                                                                </bdt>
                                                                                                                                 <div
                                                                                                                                     style="line-height: 1.5;">
                                                                                                                                     <bdt
                                                                                                                                         class="block-component">
-                                                                                                                                        <span
-                                                                                                                                            style="font-size: 15px;"><span
-                                                                                                                                                data-custom-class="body_text"></span></span>
+                                                                                                                                            <span
+                                                                                                                                                style="font-size: 15px;"><span
+                                                                                                                                                    data-custom-class="body_text"></span></span>
                                                                                                                                     </bdt>
                                                                                                                                     <div
                                                                                                                                         style="line-height: 1.5;">
                                                                                                                                         <bdt
                                                                                                                                             class="block-component">
-                                                                                                                                            <span
-                                                                                                                                                style="font-size: 15px;"><span
-                                                                                                                                                    data-custom-class="body_text"></span></span>
+                                                                                                                                                <span
+                                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                                        data-custom-class="body_text"></span></span>
+                                                                                                                                        </bdt>
+                                                                                                                                        <span
+                                                                                                                                            data-custom-class="body_text"><span
+                                                                                                                                                style="font-size: 15px;"><bdt
+                                                                                                                                                    class="block-component"></bdt></span></span>
+                                                                                                                                        <bdt
+                                                                                                                                            class="statement-end-if-in-editor">
+                                                                                                                                                <span
+                                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                                        data-custom-class="body_text"></span></span>
                                                                                                                                         </bdt>
                                                                                                                                         <div
                                                                                                                                             style="line-height: 1.5;">
                                                                                                                                             <bdt
                                                                                                                                                 class="block-component">
-                                                                                                                                                <span
-                                                                                                                                                    style="font-size: 15px;"><span
-                                                                                                                                                        data-custom-class="body_text"></span></span>
-                                                                                                                                            </bdt>
-                                                                                                                                            <span
-                                                                                                                                                data-custom-class="body_text"><span
-                                                                                                                                                    style="font-size: 15px;"><bdt
-                                                                                                                                                        class="block-component"></bdt></span></span>
-                                                                                                                                            <bdt
-                                                                                                                                                class="statement-end-if-in-editor">
-                                                                                                                                                <span
-                                                                                                                                                    style="font-size: 15px;"><span
-                                                                                                                                                        data-custom-class="body_text"></span></span>
-                                                                                                                                            </bdt>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <bdt
-                                                                                                                                                    class="block-component">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px;"><span
                                                                                                                                                             data-custom-class="body_text"></span></span>
-                                                                                                                                                </bdt>
-                                                                                                                                                <span
-                                                                                                                                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                        style="font-size: 15px;"><span
-                                                                                                                                                            style="color: rgb(89, 89, 89);"><span
-                                                                                                                                                                style="font-size: 15px;"><span
-                                                                                                                                                                    style="color: rgb(89, 89, 89);"><bdt
-                                                                                                                                                                        class="block-component"><span
-                                                                                                                                                                            data-custom-class="heading_1"></span></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="cookies"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </bdt>
+                                                                                                                                            <span
+                                                                                                                                                style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                                        style="color: rgb(89, 89, 89);"><span
+                                                                                                                                                            style="font-size: 15px;"><span
+                                                                                                                                                                style="color: rgb(89, 89, 89);"><bdt
+                                                                                                                                                                    class="block-component"><span
+                                                                                                                                                                        data-custom-class="heading_1"></span></bdt></span></span></span></span></span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="cookies"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -833,24 +804,24 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">4. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong><em>In Short:</em></strong><em>&nbsp;We may use cookies and other tracking technologies to collect and store your information.</em></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -875,14 +846,14 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="sociallogins"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="sociallogins"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -891,24 +862,24 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">5. HOW DO WE HANDLE YOUR SOCIAL LOGINS?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong><em>In Short:&nbsp;</em></strong><em>If you choose to register or log in to our services using a social media account, we may have access to certain information about you.</em></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -917,13 +888,13 @@
                                                                                                                                                                     style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -941,14 +912,14 @@
                                                                                                                                                                                                 class="block-component"><span
                                                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                                                         class="block-component"></bdt></span></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="inforetain"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="inforetain"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -957,26 +928,26 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">6. HOW LONG DO WE KEEP YOUR INFORMATION?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong><em>In Short:&nbsp;</em></strong><em>We keep your information for as long as necessary to <bdt
                                                                                                                                                                     class="block-component"></bdt>fulfill<bdt
                                                                                                                                                                     class="statement-end-if-in-editor"></bdt> the purposes outlined in this privacy notice unless otherwise required by law.</em></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -991,13 +962,13 @@
                                                                                                                                                                     style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="else-block"></bdt></span></span></span>.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1009,14 +980,14 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="privacyrights"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="privacyrights"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -1025,13 +996,13 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">7. WHAT ARE YOUR PRIVACY RIGHTS?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1043,14 +1014,14 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px;"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);">&nbsp;</span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1065,13 +1036,13 @@
                                                                                                                                                                                     rel="noopener noreferrer"
                                                                                                                                                                                     target="_blank"><span
                                                                                                                                                                                         style="font-size: 15px;">https://ec.europa.eu/justice/data-protection/bodies/authorities/index_en.htm</span></a></span></span></span></span></span>.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1086,14 +1057,14 @@
                                                                                                                                                                                         href="https://www.edoeb.admin.ch/edoeb/en/home.html"
                                                                                                                                                                                         rel="noopener noreferrer"
                                                                                                                                                                                         target="_blank">https://www.edoeb.admin.ch/edoeb/en/home.html</a></span></span></span></span></span></span>.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="withdrawconsent"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="withdrawconsent"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1102,110 +1073,110 @@
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> you have the right to withdraw your consent at any time. You can withdraw your consent at any time by contacting us by using the contact details provided in the section <bdt
                                                                                                                                                                 class="block-component"></bdt>"<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt></span></span></span><a
-                                                                                                                                                    data-custom-class="link"
-                                                                                                                                                    href="#contact"><span
-                                                                                                                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                                data-custom-class="body_text">HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</span></span></span></a><span
+                                                                                                                                                data-custom-class="link"
+                                                                                                                                                href="#contact"><span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                            data-custom-class="body_text"><bdt
-                                                                                                                                                                class="block-component"></bdt>"<bdt
-                                                                                                                                                                class="statement-end-if-in-editor"></bdt> below<bdt
-                                                                                                                                                                class="block-component"></bdt>.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                            data-custom-class="body_text">HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</span></span></span></a><span
+                                                                                                                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                                                                                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
+                                                                                                                                                        data-custom-class="body_text"><bdt
+                                                                                                                                                            class="block-component"></bdt>"<bdt
+                                                                                                                                                            class="statement-end-if-in-editor"></bdt> below<bdt
+                                                                                                                                                            class="block-component"></bdt>.</span></span></span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                         data-custom-class="body_text">However, please note that this will not affect the lawfulness of the processing before its withdrawal nor,<bdt
                                                                                                                                                             class="block-component"></bdt> when applicable law allows,<bdt
                                                                                                                                                             class="statement-end-if-in-editor"></bdt> will it affect the processing of your personal information conducted in reliance on lawful processing grounds other than consent.<bdt
                                                                                                                                                             class="block-component"></bdt></span></span>
-                                                                                                                                                <bdt
-                                                                                                                                                    class="block-component">
+                                                                                                                                            <bdt
+                                                                                                                                                class="block-component">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px;"><span
                                                                                                                                                             data-custom-class="body_text"></span></span>
-                                                                                                                                                </bdt>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </bdt>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                         data-custom-class="heading_2"><strong>Account Information</strong></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     data-custom-class="body_text"><span
                                                                                                                                                         style="font-size: 15px;">If you would at any time like to review or change the information in your account or terminate your account, you can:<bdt
                                                                                                                                                             class="forloop-component"></bdt></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         data-custom-class="body_text"><span
                                                                                                                                                             style="font-size: 15px;"><bdt
                                                                                                                                                                 class="question">Log in to your account settings and update your user account.</bdt></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     data-custom-class="body_text"><span
                                                                                                                                                         style="font-size: 15px;"><bdt
                                                                                                                                                             class="forloop-component"></bdt></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                         data-custom-class="body_text">Upon your request to terminate your account, we will deactivate or delete your account and information from our active databases. However, we may retain some information in our files to prevent fraud, troubleshoot problems, assist with any investigations, enforce our legal terms and/or comply with applicable legal requirements.</span></span>
-                                                                                                                                                <bdt
-                                                                                                                                                    class="statement-end-if-in-editor">
+                                                                                                                                            <bdt
+                                                                                                                                                class="statement-end-if-in-editor">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px;"><span
                                                                                                                                                             data-custom-class="body_text"></span></span>
-                                                                                                                                                </bdt>
-                                                                                                                                                <span
+                                                                                                                                            </bdt>
+                                                                                                                                            <span
+                                                                                                                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                            data-custom-class="body_text"><span
-                                                                                                                                                                style="font-size: 15px;"><span
-                                                                                                                                                                    style="color: rgb(89, 89, 89);"><span
-                                                                                                                                                                        style="font-size: 15px;"><span
-                                                                                                                                                                            style="color: rgb(89, 89, 89);"><span
-                                                                                                                                                                                data-custom-class="body_text"><span
-                                                                                                                                                                                    style="font-size: 15px;"><span
-                                                                                                                                                                                        style="color: rgb(89, 89, 89);"><bdt
-                                                                                                                                                                                            class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                <bdt
-                                                                                                                                                    class="block-component">
+                                                                                                                                                        data-custom-class="body_text"><span
+                                                                                                                                                            style="font-size: 15px;"><span
+                                                                                                                                                                style="color: rgb(89, 89, 89);"><span
+                                                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                                                        style="color: rgb(89, 89, 89);"><span
+                                                                                                                                                                            data-custom-class="body_text"><span
+                                                                                                                                                                                style="font-size: 15px;"><span
+                                                                                                                                                                                    style="color: rgb(89, 89, 89);"><bdt
+                                                                                                                                                                                        class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span>
+                                                                                                                                            <bdt
+                                                                                                                                                class="block-component">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px;"><span
                                                                                                                                                             data-custom-class="body_text"></span></span>
-                                                                                                                                                </bdt>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="DNT"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </bdt>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="DNT"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -1214,13 +1185,13 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">8. CONTROLS FOR DO-NOT-TRACK FEATURES</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1231,14 +1202,14 @@
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> and implementing DNT signals has been <bdt
                                                                                                                                                                 class="block-component"></bdt>finalized<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt>. As such, we do not currently respond to DNT browser signals or any other mechanism that automatically communicates your choice not to be tracked online. If a standard for online tracking is adopted that we must follow in the future, we will inform you about that practice in a revised version of this privacy notice.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="caresidents"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="caresidents"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -1247,37 +1218,37 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">9. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong><em>In Short:&nbsp;</em></strong><em>Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information.</em></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">California Civil Code Section 1798.83, also known as the <bdt
                                                                                                                                                                 class="block-component"></bdt>"Shine The Light"<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> law, permits our users who are California residents to request and obtain from us, once a year and free of charge, information about categories of personal information (if any) we disclosed to third parties for direct marketing purposes and the names and addresses of all third parties with which we shared personal information in the immediately preceding calendar year. If you are a California resident and would like to make such a request, please submit your request in writing to us using the contact information provided below.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1287,24 +1258,24 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     data-custom-class="heading_2"
                                                                                                                                                     style="color: rgb(0, 0, 0);"><span
                                                                                                                                                         style="font-size: 15px;"><strong>CCPA Privacy Notice</strong></span></span>
-                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div>
                                                                                                                                             <div>
-                                                                                                                                                <div>
-                                                                                                                                                    <br>
-                                                                                                                                                </div>
-                                                                                                                                                <div
-                                                                                                                                                    style="line-height: 1.5;">
+                                                                                                                                                <br>
+                                                                                                                                            </div>
+                                                                                                                                            <div
+                                                                                                                                                style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="color: rgb(127, 127, 127);"><span
                                                                                                                                                             style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -1314,69 +1285,69 @@
                                                                                                                                                                             data-custom-class="body_text">The California Code of Regulations defines a <bdt
                                                                                                                                                                                 class="block-component"></bdt>"resident"<bdt
                                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> as:</span></span></span></span></span></span>
-                                                                                                                                                </div>
                                                                                                                                             </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5; margin-left: 20px;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5; margin-left: 20px;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">(1) every individual who is in the State of California for other than a temporary or transitory purpose and</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5; margin-left: 20px;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5; margin-left: 20px;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">(2) every individual who is domiciled in the State of California who is outside the State of California for a temporary or transitory purpose</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">All other individuals are defined as <bdt
                                                                                                                                                                 class="block-component"></bdt>"non-residents."<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">If this definition of <bdt
                                                                                                                                                                 class="block-component"></bdt>"resident"<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> applies to you, we must adhere to certain rights and obligations regarding your personal information.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong>What categories of personal information do we collect?</strong></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1384,452 +1355,452 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <table
-                                                                                                                                                style="width: 100%;">
-                                                                                                                                                <tbody>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <table
+                                                                                                                                            style="width: 100%;">
+                                                                                                                                            <tbody>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
                                                                                                                                                         <span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     data-custom-class="body_text"><strong>Category</strong></span></span></span>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-top: 1px solid black; border-right: 1px solid black;">
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-top: 1px solid black; border-right: 1px solid black;">
                                                                                                                                                         <span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     data-custom-class="body_text"><strong>Examples</strong></span></span></span>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; border-right: 1px solid black; border-top: 1px solid black; text-align: center;">
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; border-right: 1px solid black; border-top: 1px solid black; text-align: center;">
                                                                                                                                                         <span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     data-custom-class="body_text"><strong>Collected</strong></span></span></span>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">A. Identifiers</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-top: 1px solid black; border-right: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-top: 1px solid black; border-right: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Contact details, such as real name, alias, postal address, telephone or mobile contact number, unique personal identifier, online identifier, Internet Protocol address, email address, and account name</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; vertical-align: middle; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; vertical-align: middle; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">B. Personal information categories listed in the California Customer Records statute</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Name, contact information, education, employment, employment history, and financial information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">C. Protected classification characteristics under California or federal law</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Gender and date of birth</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">D. Commercial information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Transaction information, purchase history, financial details, and payment information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">E. Biometric information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Fingerprints and voiceprints</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">F. Internet or other similar network activity</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Browsing history, search history, online <bdt
                                                                                                                                                                             class="block-component"></bdt>behavior<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt>, interest data, and interactions with our and other websites, applications, systems, and advertisements</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">G. Geolocation data</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Device location</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">H. Audio, electronic, visual, thermal, olfactory, or similar information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Images and audio, video or call recordings created in connection with our business activities</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="width: 33.8274%; border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">I. Professional or employment-related information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 51.4385%; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Business contact details in order to provide you our Services at a business level or job title, work history, and professional qualifications if you apply for a job with us</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="width: 14.9084%; text-align: center; border-right: 1px solid black; border-top: 1px solid black;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black; width: 33.8274%;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="border-left: 1px solid black; border-right: 1px solid black; border-top: 1px solid black; width: 33.8274%;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">J. Education Information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="border-right: 1px solid black; border-top: 1px solid black; width: 51.4385%;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="border-right: 1px solid black; border-top: 1px solid black; width: 51.4385%;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Student records and directory information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="text-align: center; border-right: 1px solid black; border-top: 1px solid black; width: 14.9084%;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="text-align: center; border-right: 1px solid black; border-top: 1px solid black; width: 14.9084%;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                <tr>
-                                                                                                                                                    <td style="border-width: 1px; border-color: black; border-style: solid; width: 33.8274%;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            <tr>
+                                                                                                                                                <td style="border-width: 1px; border-color: black; border-style: solid; width: 33.8274%;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">K. Inferences drawn from other personal information</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="border-bottom: 1px solid black; border-top: 1px solid black; border-right: 1px solid black; width: 51.4385%;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="border-bottom: 1px solid black; border-top: 1px solid black; border-right: 1px solid black; width: 51.4385%;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">Inferences drawn from any of the collected personal information listed above to create a profile or summary about, for example, an individual’s preferences and characteristics</span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                    <td style="text-align: center; border-right: 1px solid black; border-bottom: 1px solid black; border-top: 1px solid black; width: 14.9084%;">
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                                <td style="text-align: center; border-right: 1px solid black; border-bottom: 1px solid black; border-top: 1px solid black; width: 14.9084%;">
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
                                                                                                                                                             <span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1837,26 +1808,26 @@
                                                                                                                                                                             class="block-component"></bdt>NO<bdt
                                                                                                                                                                             class="statement-end-if-in-editor"><span
                                                                                                                                                                                 data-custom-class="body_text"></span></bdt></span></span></span>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div
-                                                                                                                                                            style="line-height: 1.5;">
-                                                                                                                                                            <br>
-                                                                                                                                                        </div>
-                                                                                                                                                    </td>
-                                                                                                                                                </tr>
-                                                                                                                                                </tbody>
-                                                                                                                                            </table>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <bdt
-                                                                                                                                                    class="block-component"></bdt>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                    </div>
+                                                                                                                                                    <div
+                                                                                                                                                        style="line-height: 1.5;">
+                                                                                                                                                        <br>
+                                                                                                                                                    </div>
+                                                                                                                                                </td>
+                                                                                                                                            </tr>
+                                                                                                                                            </tbody>
+                                                                                                                                        </table>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <bdt
+                                                                                                                                                class="block-component"></bdt>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1867,9 +1838,9 @@
                                                                                                                                                                             style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                 data-custom-class="body_text"><bdt
                                                                                                                                                                                     class="block-component"></bdt></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1886,9 +1857,9 @@
                                                                                                                                                                                                     style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1899,9 +1870,9 @@
                                                                                                                                                                             style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                 data-custom-class="body_text"><bdt
                                                                                                                                                                                     class="block-component"></bdt></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1918,9 +1889,9 @@
                                                                                                                                                                                                     style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1931,9 +1902,9 @@
                                                                                                                                                                             style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                 data-custom-class="body_text"><bdt
                                                                                                                                                                                     class="block-component"></bdt></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1950,21 +1921,21 @@
                                                                                                                                                                                                     style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong>How do we use and share your personal information?</strong></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -1972,26 +1943,26 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span><span
+                                                                                                                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                            data-custom-class="body_text"><span
+                                                                                                                                                        data-custom-class="body_text"><span
+                                                                                                                                                            style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                                    style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                                        data-custom-class="body_text">More information about our data collection and sharing practices can be found in this privacy notice<bdt
-                                                                                                                                                                            class="block-component"></bdt>.</span></span></span></span><span
-                                                                                                                                                            data-custom-class="body_text"><span
-                                                                                                                                                                style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                    data-custom-class="body_text"><span
-                                                                                                                                                                        style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                            data-custom-class="body_text"><bdt
-                                                                                                                                                                                class="block-component"></bdt></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                                    data-custom-class="body_text">More information about our data collection and sharing practices can be found in this privacy notice<bdt
+                                                                                                                                                                        class="block-component"></bdt>.</span></span></span></span><span
+                                                                                                                                                        data-custom-class="body_text"><span
+                                                                                                                                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                data-custom-class="body_text"><span
+                                                                                                                                                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                        data-custom-class="body_text"><bdt
+                                                                                                                                                                            class="block-component"></bdt></span></span></span></span></span></span></span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2004,14 +1975,14 @@
                                                                                                                                                                         class="block-component"></bdt><bdt
                                                                                                                                                                         class="block-component"><span
                                                                                                                                                                             data-custom-class="body_text"></span></bdt></span></span></span></span></span><span
-                                                                                                                                                    data-custom-class="body_text">or by referring to the contact details at the bottom of this document.</span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                data-custom-class="body_text">or by referring to the contact details at the bottom of this document.</span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2022,35 +1993,35 @@
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> agent does not submit proof that they have been validly <bdt
                                                                                                                                                                 class="block-component"></bdt>authorized<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> to act on your behalf.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong>Will your information be shared with anyone else?</strong></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">We may disclose your personal information with our service providers pursuant to a written contract between us and each service provider. Each service provider is a for-profit entity that processes the information on our behalf.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2060,13 +2031,13 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2085,61 +2056,61 @@
                                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                                         class="statement-end-if-in-editor"></bdt></span></span></span></span><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span><span
-                                                                                                                                                    data-custom-class="body_text"><span
-                                                                                                                                                        style="color: rgb(0, 0, 0);"><span
-                                                                                                                                                            data-custom-class="body_text"><bdt
-                                                                                                                                                                class="block-component"></bdt></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                data-custom-class="body_text"><span
+                                                                                                                                                    style="color: rgb(0, 0, 0);"><span
+                                                                                                                                                        data-custom-class="body_text"><bdt
+                                                                                                                                                            class="block-component"></bdt></span></span></span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><strong>Your rights with respect to your personal data</strong></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><u>Right to request deletion of the data — Request to delete</u></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">You can ask for the deletion of your personal information. If you ask us to delete your personal information, we will respect your request and delete your personal information, subject to certain exceptions provided by law, such as (but not limited to) the exercise by another consumer of his or her right to free speech, our compliance requirements resulting from a legal obligation, or any processing that may be required to protect against illegal activities.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><u>Right to be informed — Request to know</u></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2153,9 +2124,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2167,9 +2138,9 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2183,9 +2154,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2197,9 +2168,9 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2213,9 +2184,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2227,9 +2198,9 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2243,9 +2214,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2257,9 +2228,9 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2273,9 +2244,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2287,9 +2258,9 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2303,9 +2274,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2317,9 +2288,9 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2333,9 +2304,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2347,84 +2318,84 @@
                                                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                                                         data-custom-class="body_text"><bdt
                                                                                                                                                                                             class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">In accordance with applicable law, we are not obligated to provide or delete consumer information that is de-identified in response to a consumer request or to re-identify individual data to verify a consumer request.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><u>Right to Non-Discrimination for the Exercise of a Consumer’s Privacy Rights</u></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">We will not discriminate against you if you exercise your privacy rights.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><u>Verification process</u></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">Upon receiving your request, we will need to verify your identity to determine you are the same person about whom we have the information in our system. These verification efforts require us to ask you to provide information so that we can match it with information you have previously provided us. For instance, depending on the type of request you submit, we may ask you to provide certain information so that we can match the information you provide with the information we already have on file, or we may contact you through a communication method (e.g.<bdt
                                                                                                                                                                 class="block-component"></bdt>,<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> phone or email) that you have previously provided to us. We may also use other verification methods as the circumstances dictate.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">We will only use personal information provided in your request to verify your identity or authority to make the request. To the extent possible, we will avoid requesting additional information from you for the purposes of verification. However, if we cannot verify your identity from the information already maintained by us, we may request that you provide additional information for the purposes of verifying your identity and for security or fraud-prevention purposes. We will delete such additionally provided information as soon as we finish verifying you.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><u>Other privacy rights</u></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div>
+                                                                                                                                        </div>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2438,9 +2409,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2455,9 +2426,9 @@
                                                                                                                                                                                                 style="font-size: 15px;"><span
                                                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                                                         class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2471,9 +2442,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2488,9 +2459,9 @@
                                                                                                                                                                                                 style="font-size: 15px;"><span
                                                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                                                         class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2504,9 +2475,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2527,9 +2498,9 @@
                                                                                                                                                                                                 style="font-size: 15px;"><span
                                                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                                                         class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div>
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div>
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2543,9 +2514,9 @@
                                                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
                                                                                                                                                                                             data-custom-class="body_text"><bdt
                                                                                                                                                                                                 class="block-component"></bdt></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <ul>
-                                                                                                                                                <li style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <ul>
+                                                                                                                                            <li style="line-height: 1.5;">
                                                                                                                                                     <span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2560,10 +2531,10 @@
                                                                                                                                                                                                 style="font-size: 15px;"><span
                                                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                                                         class="statement-end-if-in-editor"></bdt></span></span></span></span></span></span></span></span></span></span></span></span>
-                                                                                                                                                </li>
-                                                                                                                                            </ul>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                            </li>
+                                                                                                                                        </ul>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2578,31 +2549,31 @@
                                                                                                                                                                             class="block-component"></bdt><bdt
                                                                                                                                                                             class="block-component"><span
                                                                                                                                                                                 data-custom-class="body_text"></span></bdt></span></span></span></span></span></span><span
-                                                                                                                                                    data-custom-class="body_text">or by referring to the contact details at the bottom of this document. If you have a complaint about how we handle your data, we would like to hear from you.</span><span
-                                                                                                                                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                        data-custom-class="body_text"><bdt
-                                                                                                                                                            class="block-component"><bdt
-                                                                                                                                                                class="block-component"><span
+                                                                                                                                                data-custom-class="body_text">or by referring to the contact details at the bottom of this document. If you have a complaint about how we handle your data, we would like to hear from you.</span><span
+                                                                                                                                                style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                    data-custom-class="body_text"><bdt
+                                                                                                                                                        class="block-component"><bdt
+                                                                                                                                                            class="block-component"><span
+                                                                                                                                                                style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                                        style="font-size: 15px; color: rgb(89, 89, 89);"><span
-                                                                                                                                                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                                data-custom-class="body_text"><span
-                                                                                                                                                                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                                        data-custom-class="body_text"><span
-                                                                                                                                                                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                                                data-custom-class="body_text"><span
-                                                                                                                                                                                                    style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                                                        data-custom-class="body_text"><bdt
-                                                                                                                                                                                                            class="statement-end-if-in-editor"><bdt
-                                                                                                                                                                                                                class="statement-end-if-in-editor"></bdt></bdt></span></span></span></span></span></span></span></span></span></span></bdt></bdt></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="policyupdates"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                                        style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                            data-custom-class="body_text"><span
+                                                                                                                                                                                style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                                    data-custom-class="body_text"><span
+                                                                                                                                                                                        style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                                            data-custom-class="body_text"><span
+                                                                                                                                                                                                style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                                                    data-custom-class="body_text"><bdt
+                                                                                                                                                                                                        class="statement-end-if-in-editor"><bdt
+                                                                                                                                                                                                            class="statement-end-if-in-editor"></bdt></bdt></span></span></span></span></span></span></span></span></span></span></bdt></bdt></span></span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="policyupdates"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -2611,38 +2582,38 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">10. DO WE MAKE UPDATES TO THIS NOTICE?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text"><em><strong>In Short:&nbsp;</strong>Yes, we will update this notice as necessary to stay compliant with relevant laws.</em></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                             data-custom-class="body_text">We may update this privacy notice from time to time. The updated version will be indicated by an updated <bdt
                                                                                                                                                                 class="block-component"></bdt>"Revised"<bdt
                                                                                                                                                                 class="statement-end-if-in-editor"></bdt> date and the updated version will be effective as soon as it is accessible. If we make material changes to this privacy notice, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification. We encourage you to review this privacy notice frequently to be informed of how we are protecting your information.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="contact"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="contact"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -2651,13 +2622,13 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2670,13 +2641,13 @@
                                                                                                                                                                 style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                                         data-custom-class="body_text">&nbsp;or by post to:</span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2690,9 +2661,9 @@
                                                                                                                                                                 style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                     data-custom-class="body_text"><bdt
                                                                                                                                                                         class="block-component"></bdt></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                         data-custom-class="body_text"><bdt
@@ -2700,9 +2671,9 @@
                                                                                                                                                             style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                 style="font-size: 15px;"><bdt
                                                                                                                                                                     class="block-component"></bdt></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px;"><span
                                                                                                                                                         data-custom-class="body_text"><bdt
@@ -2716,31 +2687,31 @@
                                                                                                                                                             style="color: rgb(89, 89, 89);"><span
                                                                                                                                                                 style="font-size: 15px;"><bdt
                                                                                                                                                                     class="statement-end-if-in-editor"></bdt></span></span></span></span><span
-                                                                                                                                                    data-custom-class="body_text"><span
-                                                                                                                                                        style="font-size: 15px;"><span
-                                                                                                                                                            data-custom-class="body_text"><span
-                                                                                                                                                                style="color: rgb(89, 89, 89);"><bdt
-                                                                                                                                                                    class="statement-end-if-in-editor"><span
-                                                                                                                                                                        style="color: rgb(89, 89, 89);"><span
-                                                                                                                                                                            style="font-size: 15px;"><span
-                                                                                                                                                                                data-custom-class="body_text"><bdt
-                                                                                                                                                                                    class="block-component"><bdt
-                                                                                                                                                                                        class="block-component"></bdt></bdt></span></span></span></bdt></span></span></span><span
-                                                                                                                                                        style="font-size: 15px;"><span
-                                                                                                                                                            data-custom-class="body_text"><span
-                                                                                                                                                                style="color: rgb(89, 89, 89); font-size: 15px;"><span
-                                                                                                                                                                    style="font-size: 15px;"><span
-                                                                                                                                                                        data-custom-class="body_text"><bdt
-                                                                                                                                                                            class="statement-end-if-in-editor"><bdt
-                                                                                                                                                                                class="block-component"></bdt></bdt></span></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                id="request"
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                                data-custom-class="body_text"><span
+                                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                                        data-custom-class="body_text"><span
+                                                                                                                                                            style="color: rgb(89, 89, 89);"><bdt
+                                                                                                                                                                class="statement-end-if-in-editor"><span
+                                                                                                                                                                    style="color: rgb(89, 89, 89);"><span
+                                                                                                                                                                        style="font-size: 15px;"><span
+                                                                                                                                                                            data-custom-class="body_text"><bdt
+                                                                                                                                                                                class="block-component"><bdt
+                                                                                                                                                                                    class="block-component"></bdt></bdt></span></span></span></bdt></span></span></span><span
+                                                                                                                                                    style="font-size: 15px;"><span
+                                                                                                                                                        data-custom-class="body_text"><span
+                                                                                                                                                            style="color: rgb(89, 89, 89); font-size: 15px;"><span
+                                                                                                                                                                style="font-size: 15px;"><span
+                                                                                                                                                                    data-custom-class="body_text"><bdt
+                                                                                                                                                                        class="statement-end-if-in-editor"><bdt
+                                                                                                                                                                            class="block-component"></bdt></bdt></span></span></span></span></span></span>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            id="request"
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="color: rgb(127, 127, 127);"><span
                                                                                                                                                         style="color: rgb(89, 89, 89); font-size: 15px;"><span
@@ -2749,13 +2720,13 @@
                                                                                                                                                                     id="control"
                                                                                                                                                                     style="color: rgb(0, 0, 0);"><strong><span
                                                                                                                                                                             data-custom-class="heading_1">12. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?</span></strong></span></span></span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
-                                                                                                                                                <br>
-                                                                                                                                            </div>
-                                                                                                                                            <div
-                                                                                                                                                style="line-height: 1.5;">
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
+                                                                                                                                            <br>
+                                                                                                                                        </div>
+                                                                                                                                        <div
+                                                                                                                                            style="line-height: 1.5;">
                                                                                                                                                 <span
                                                                                                                                                     style="font-size: 15px; color: rgb(89, 89, 89);"><span
                                                                                                                                                         style="font-size: 15px; color: rgb(89, 89, 89);"><span
@@ -2774,25 +2745,24 @@
                                                                                                                                                                 data-custom-class="body_text"><bdt
                                                                                                                                                                     class="statement-end-if-in-editor"></bdt></span></span><span
                                                                                                                                                             data-custom-class="body_text">.</span></span></span>
-                                                                                                                                            </div>
-                                                                                                                                            <style>
-                                                                                                                                                ul {
-                                                                                                                                                    list-style-type: square;
-                                                                                                                                                }
-
-                                                                                                                                                ul > li > ul {
-                                                                                                                                                    list-style-type: circle;
-                                                                                                                                                }
-
-                                                                                                                                                ul > li > ul > li > ul {
-                                                                                                                                                    list-style-type: square;
-                                                                                                                                                }
-
-                                                                                                                                                ol li {
-                                                                                                                                                    font-family: Arial;
-                                                                                                                                                }
-                                                                                                                                            </style>
                                                                                                                                         </div>
+                                                                                                                                        <style>
+                                                                                                                                            ul {
+                                                                                                                                                list-style-type: square;
+                                                                                                                                            }
+
+                                                                                                                                            ul > li > ul {
+                                                                                                                                                list-style-type: circle;
+                                                                                                                                            }
+
+                                                                                                                                            ul > li > ul > li > ul {
+                                                                                                                                                list-style-type: square;
+                                                                                                                                            }
+
+                                                                                                                                            ol li {
+                                                                                                                                                font-family: Arial;
+                                                                                                                                            }
+                                                                                                                                        </style>
                                                                                                                                     </div>
                                                                                                                                 </div>
                                                                                                                             </div>
@@ -2823,11 +2793,67 @@
                         </div>
                     </div>
                 </div>
-            </article>
-
-            </body>
-            </html>
+            </div>
 
         </div>
+    </section><!-- End Privacy Section -->
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="container d-flex align-items-center">
+
+                    <div class="logo me-auto">
+                        <a href="index.html"><img src="{{ asset('assets/landing/img/Logo.png') }}" alt=""
+                                                  class="img-fluid"></a>
+                    </div>
+
+                    <nav id="navbar" class="navbar order-last order-lg-0">
+                        <ul>
+                            <li><a class="nav-link" href="{{route('terms-condition')}}">Terms and Conditions</a></li>
+                            <li><a class="nav-link" href="{{route('privacy')}}">Privacy Policy</a></li>
+                            <li><a class="nav-link" href="{{route('faq')}}">FAQs</a></li>
+                            <li><a class="nav-link" href="{{route('help')}}">Help</a></li>
+                        </ul>
+                        <i class="bi bi-list mobile-nav-toggle"></i>
+                    </nav><!-- .navbar -->
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <img src="{{asset('assets/landing/img/Line 4.png')}}" alt="Line 4">
+    <div class="container">
+        <div class="d-flex flex-column">
+            <div class="p-2 mx-auto">
+                <div class="header-social-links d-flex align-items-center">
+                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+            <div class="copyright text-white">Terms and Conditions and Privacy Policy | ©2022 reservecc.com.All Rights
+                Reserved
+            </div>
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<!-- Vendor JS Files -->
+<script src="{{ asset('assets/landing/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('assets/landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/landing/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/landing/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/landing/vendor/php-email-form/validate.js') }}"></script>
+
+<!-- Template Main JS File -->
+<script src="{{ asset('assets/landing/js/main.js') }}"></script>
+</body>
+</html>

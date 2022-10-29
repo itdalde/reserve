@@ -70,8 +70,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 
 Route::get('/', 'HomeController@index');
-Route::get('/privacy', 'HomeController@privacy');
-Route::get('/terms-condition', 'HomeController@termsCondition');
+Route::get('/privacy', 'HomeController@privacy')->name('privacy');
+Route::get('/terms-condition', 'HomeController@termsCondition')->name('terms-condition');
+Route::get('/faq', 'HomeController@faq')->name('faq');
+Route::get('/help', 'HomeController@help')->name('help');
 /**
  * Membership
  */

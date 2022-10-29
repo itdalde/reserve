@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index','privacy','termsCondition']]);
+        $this->middleware('auth', ['except' => ['index','privacy','termsCondition','faq','help']]);
     }
 
     /**
@@ -23,8 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        return view('welcome');
-        return view('maintenance');
+        return view('welcome');
     }
     public function privacy()
     {
@@ -33,5 +32,11 @@ class HomeController extends Controller
     public function termsCondition()
     {
         return view('terms');
+    }
+    public function faq() {
+        return view('faq');
+    }
+    public function help() {
+        return view('help');
     }
 }
