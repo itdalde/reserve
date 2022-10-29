@@ -122,9 +122,9 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
+        $this->guard()->logout();
         if (config('auth.users.confirm_email') && !$user->confirmed) {
 
-            $this->guard()->logout();
 
             $user->notify(new ConfirmEmail());
 
