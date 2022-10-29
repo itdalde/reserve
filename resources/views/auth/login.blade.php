@@ -3,78 +3,77 @@
 @section('body_class','login')
 
 @section('content')
-    <div>
-        <div class="login_wrapper">
-            <div class="animate form login_form">
-                <section class="login_content">
-                    {{ Form::open(['route' => 'login']) }}
-                        <h1>{{ __('views.auth.login.header') }}</h1>
+    <div class="mx-auto login-main">
+        <img class="auth-img-top" src="{{asset('assets/auth/img/login-img-top.png')}}" alt="login-img-top">
+        <div class="container">
+            <div class="row mx-auto mt-5" style="width: 34em;">
 
-                        <div>
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                   placeholder="{{ __('views.auth.login.input_0') }}" required autofocus>
-                        </div>
-                        <div>
-                            <input id="password" type="password" class="form-control" name="password"
-                                   placeholder="{{ __('views.auth.login.input_1') }}" required>
-                        </div>
-                        <div class="checkbox al_left">
-                            <label>
-                                <input type="checkbox"
-                                       name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('views.auth.login.input_2') }}
-                            </label>
-                        </div>
+                <div class="p-2 text-center">
+                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
 
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                </div>
+                <div class="p-2 mt-5">
+                    <div class="card" >
+                        <div class="card-body p-5">
 
-                        @if (!$errors->isEmpty())
-                            <div class="alert alert-danger" role="alert">
-                                {!! $errors->first() !!}
-                            </div>
-                        @endif
+                            <h4 >Service provider Log in</h4>
+                            <div class="login_content">
+                                {{ Form::open(['route' => 'login']) }}
+                                <div>
+                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                           placeholder="{{ __('views.auth.login.input_0') }}" required autofocus>
+                                </div>
+                                <div>
+                                    <input id="password" type="password" class="form-control" name="password"
+                                           placeholder="{{ __('views.auth.login.input_1') }}" required>
+                                </div>
+                                <div class="checkbox al_left">
+                                    <label>
+                                        <input type="checkbox"
+                                               name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('views.auth.login.input_2') }}
+                                    </label>
+                                </div>
 
-                        <div>
-                            <button class="btn btn-default submit" type="submit">{{ __('views.auth.login.action_0') }}</button>
-                            <a class="reset_pass" href="{{ route('password.request') }}">
-                                {{ __('views.auth.login.action_1') }}
-                            </a>
-                        </div>
+                                @if (session('status'))
+                                    <div class="alert alert-success">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif
 
-                        <div class="clearfix"></div>
-
-                        <div class="separator">
-                            <span>{{ __('views.auth.login.message_0') }}</span>
-                            <div>
-                                <a href="{{ route('social.redirect', ['google']) }}" class="btn btn-success btn-google">
-                                    <i class="fa fa-google"></i>
-                                    Google
-                                </a>
-                            </div>
-                        </div>
-
-                        @if(config('auth.users.registration'))
-                            <div class="separator">
-                                <p class="change_link">{{ __('views.auth.login.message_1') }}
-                                    <a href="{{ route('register') }}" class="to_register"> {{ __('views.auth.login.action_2') }} </a>
-                                </p>
-
-                                <div class="clearfix"></div>
-                                <br/>
+                                @if (!$errors->isEmpty())
+                                    <div class="alert alert-danger" role="alert">
+                                        {!! $errors->first() !!}
+                                    </div>
+                                @endif
 
                                 <div>
-                                    <div class="h1">{{ config('app.name') }}</div>
-                                    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('views.auth.login.copyright') }}</p>
+                                    <button class="btn btn-default submit w-100 bg-orange text-white" type="submit">Service provider Log in</button>
+
                                 </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="separator">
+                                    <div>
+                                        <a class="btn btn-default submit w-100 to_register" href="{{ route('register') }}" > Service provider Sign up </a>
+
+                                    </div>
+                                </div>
+                                <div class="text-left">
+
+                                    <a class="reset_pass text-left" href="{{ route('password.request') }}">
+                                        {{ __('views.auth.login.action_1') }}
+                                    </a>
+                                </div>
+                                {{ Form::close() }}
                             </div>
-                        @endif
-                    {{ Form::close() }}
-                </section>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <img class="auth-img-bottom" src="{{asset('assets/auth/img/login-bottom-img.png')}}" alt="login-bottom-img.png">
     </div>
 @endsection
 

@@ -10175,17 +10175,17 @@ button.close {
 
 
 html , body{
-	
+
  height:100%;
- 
+
 }
- 
+
 .full-width {
-	
+
  width:100%;
- 
+
  }
- 
+
 .full-height{
  height:100%;
  }
@@ -13655,11 +13655,19 @@ form:after {
 }
 .login_content {
     margin: 0 auto;
-    padding: 25px 0 0;
     position: relative;
     text-align: center;
     text-shadow: 0 1px 0 #fff;
     min-width: 280px
+}
+.auth-img-top {
+    opacity: 0.1;
+    float: left;
+    position: absolute;
+}
+.auth-img-bottom {
+    float: right;
+    margin-top: -16em;
 }
 .login_content a,
 .login_content .btn-default:hover {
@@ -13752,7 +13760,11 @@ form:after {
 .login_content div .reset_pass {
     margin-top: 13px !important;
     margin-right: 39px;
-    float: right
+    float: left
+}
+.to_register {
+    color: orange;
+    border: 1px solid #f96924;
 }
 .separator {
     border-top: 1px solid #D8D8D8;
@@ -14415,7 +14427,7 @@ ul.notifications {
 table thead .checkbox { margin-top:-7px;margin-top:-21px; }
 table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 */
-			
+
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{
