@@ -81,16 +81,15 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code' => Uuid::uuid4(),
-            'confirmed' => false
+            'confirmed' => true
         ]);
-
-       Company::create([
-            'name' => $data['company_name'],
-            'user_id' => $user->id,
-            'email' => $data['company_description'],
-        ]);
+        $company = new Company();
+        $company->name = $data['company_name'];
+        $company->user_id = $user->id;
+        $company->description = $data['company_description'];
+        $company->save();
         if (config('auth.users.default_role')) {
-            $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
+            $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
         }
 
         return $user;
