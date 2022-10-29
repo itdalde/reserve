@@ -32,9 +32,15 @@ h6 {
   font-family: "Poppins", sans-serif;
 }
 .btn-orange {
-    background: #D97C37;
-color: #ffffff;
+    color: #ffffff;
+    background-color: #D97C37;
+    border-color: #db6915;
 }
+.btn-orange:hover {
+     color: #ffffff;
+     background-color: #e09863;
+     border-color: #db6915;
+ }
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/

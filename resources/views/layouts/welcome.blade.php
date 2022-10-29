@@ -140,18 +140,44 @@
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left">
                         <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-dashboard.png')}}" alt="portfolio-dashboard">
+                            <h3>Simple UI</h3>
+                            <p>We understand that using software to manage your business can be a bit daunting so we created a platform with a very simple and straightforward UI for your convenience.</p>
+                        </div>
+                        <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-notes.png')}}" alt="portfolio-notes">
+                            <h3>Fast and easy registration</h3>
+                            <p>Our registration process is as easy as clicking the “service provider registration” button and filling in some information so we can contact you and confirm your application.</p>
+                        </div>
+                        <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-cards.png')}}" alt="portfolio-cards">
+
+                        </div>
+                        <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-line-graph.png')}}" alt="portfolio-line-graph">
 
                         </div>
                     </div>
                     <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left">
                         <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-computer.png')}}" alt="portfolio-computer">
+                        </div>
+                        <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-graph.png')}}" alt="portfolio-graph">
+                            <h3>FSimple earning and statistics tracking</h3>
+                            <p>It is very easy to never lose track of your services and how well they are performing.</p>
+                        </div>
+                        <div class="content pt-4 pt-lg-0">
+                            <img src="{{asset('assets/landing/img/portfolio-pie.png')}}" alt="portfolio-pie">
+                            <h3>Efficient optimization tips and hints</h3>
+                            <p>Reserve provides you with occassional relevant summaries of how well your company and specific services are doing.</p>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <div class="d-flex flex-column">
                         <div class="p-2">Register now and become a verified service provider</div>
-                        <div class="p-2"><a class="btn btn-orange" href="{{ route('register') }}">Register as a service provider</a></div>
+                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">Register as a service provider</a></div>
                     </div>
                 </div>
 
