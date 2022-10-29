@@ -33,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/success-register';
 
     /**
      * Create a new controller instance.
@@ -128,7 +128,7 @@ class RegisterController extends Controller
 
             $user->notify(new ConfirmEmail());
 
-            return redirect(route('login'));
+            return redirect(route('success-register'));
         }
     }
 }

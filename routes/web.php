@@ -74,4 +74,5 @@ Route::get('/privacy', 'HomeController@privacy')->name('privacy');
 Route::get('/terms-condition', 'HomeController@termsCondition')->name('terms-condition');
 Route::get('/faq', 'HomeController@faq')->name('faq');
 Route::get('/help', 'HomeController@help')->name('help');
+Route::get('/success-register', 'HomeController@successRegister')->name('success-register');
 
