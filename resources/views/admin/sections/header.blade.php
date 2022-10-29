@@ -9,7 +9,7 @@
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <img src="{{ auth()->user()->avatar }}" alt="">{{ auth()->user()->name }}
+                        <img src="{{ auth()->user()->avatar }}" alt="">{{ auth()->user()->first_name ?? auth()->user()->company->name }}
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -21,7 +21,6 @@
                     </ul>
                 </li>
 
-                <li class="guided-tour"><span>Start Tour</span></li>
             </ul>
         </nav>
     </div>

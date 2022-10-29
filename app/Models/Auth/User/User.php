@@ -4,6 +4,7 @@ namespace App\Models\Auth\User;
 
 use App\Models\Auth\User\Traits\Ables\Protectable;
 use App\Models\Auth\User\Traits\Attributes\UserAttributes;
+use App\Models\Company;
 use App\Models\OccasionEventReviews;
 use App\Models\Transaction;
 use Illuminate\Notifications\Notifiable;
@@ -101,5 +102,8 @@ class User extends Authenticatable
     }
     public function transactions() {
         return $this->hasMany(Transaction::class);
+    }
+    public function company() {
+        return $this->hasOne(Company::class);
     }
 }

@@ -10175,17 +10175,17 @@ button.close {
 
 
 html , body{
-	
+
  height:100%;
- 
+
 }
- 
+
 .full-width {
-	
+
  width:100%;
- 
+
  }
- 
+
 .full-height{
  height:100%;
  }
@@ -10319,7 +10319,7 @@ html , body{
     padding: 0 0 4px 0
 }
 .left_col {
-    background: #2A3F54
+    background: #fcfcfc
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
@@ -10419,7 +10419,7 @@ html , body{
 }
 .menu_section h3 {
     padding-left: 15px;
-    color: #fff;
+    color: #090909;
     text-transform: uppercase;
     letter-spacing: .5px;
     font-weight: bold;
@@ -10535,7 +10535,7 @@ body .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
-    background: #2A3F54;
+    background: #fffcfc;
     border-radius: 0;
     height: 57px
 }
@@ -10667,7 +10667,7 @@ body .container.body .right_col {
 }
 body {
     color: #73879C;
-    background: #2A3F54;
+    background: #ffffff;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -10903,7 +10903,7 @@ a:focus {
     margin-bottom: 6px
 }
 .nav.side-menu>li>a:hover {
-    color: #F2F5F7 !important
+    color: #070707 !important
 }
 .nav.side-menu>li>a:hover,
 .nav>li>a:focus {
@@ -10946,7 +10946,7 @@ a:focus {
 }
 .nav.side-menu>li>a,
 .nav.child_menu>li>a {
-    color: #E7E7E7;
+    color: #0e0e0e;
     font-weight: 500
 }
 .nav.child_menu li li:hover,
@@ -10955,7 +10955,7 @@ a:focus {
 }
 .nav.child_menu li li a:hover,
 .nav.child_menu li li a.active {
-    color: #fff
+    color: #111111
 }
 .nav>li>a {
     position: relative;
@@ -14415,7 +14415,7 @@ ul.notifications {
 table thead .checkbox { margin-top:-7px;margin-top:-21px; }
 table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 */
-			
+
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{
