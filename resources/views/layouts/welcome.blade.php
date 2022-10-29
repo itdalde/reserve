@@ -38,12 +38,16 @@
                     <li><a class="nav-link scrollto active" href="/">Home</a></li>
                     <li><a class="nav-link scrollto" href="#services">What We Offer</a></li>
                     <li><a class="nav-link scrollto " href="#portfolio">For service providers</a></li>
-                    <li><a class="nav-link" href="#">Download for free</a></li>
+                    <li><a class="nav-link " href="#"><span class="btn bg-orange" style="color: white;
+    background-color: orange;
+    border-color: orange;">
+                                Download for free
+                            </span></a></li>
                      @if (Route::has('login'))
                             @if (!Auth::check())
                                 @if(config('auth.users.registration'))
                                  @endif
-                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">{{ __('views.welcome.login') }}</a></li>
+                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">Service Provider Log In</a></li>
                             @else
                                 @if(auth()->user()->hasRole('administrator'))
                                 <li><a class="nav-link scrollto " href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a></li>
