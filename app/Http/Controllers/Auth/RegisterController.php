@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Auth\Role\Role;
+use App\Models\Company;
 use App\Notifications\Auth\ConfirmEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -53,7 +54,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $rules = [
-            'first_name' => 'required|max:255',
+            'company_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ];
@@ -75,14 +76,19 @@ class RegisterController extends Controller
     {
         /** @var  $user User */
         $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
+            'first_name' => $data['company_name'],
+            'last_name' => '',
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code' => Uuid::uuid4(),
             'confirmed' => false
         ]);
 
+       Company::create([
+            'name' => $data['company_name'],
+            'user_id' => $user->id,
+            'email' => $data['company_description'],
+        ]);
         if (config('auth.users.default_role')) {
             $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
         }
