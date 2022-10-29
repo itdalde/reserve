@@ -151,7 +151,7 @@
                 <div class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <div class="d-flex flex-column">
                         <div class="p-2">Register now and become a verified service provider</div>
-                        <div class="p-2"><a href="{{ route('register') }}">Register as a service provider</a></div>
+                        <div class="p-2"><a class="btn btn-orange" href="{{ route('register') }}">Register as a service provider</a></div>
                     </div>
                 </div>
 
