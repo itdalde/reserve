@@ -69,6 +69,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 });
 
 
+Route::resource('services', 'ServiceController');
+Route::resource('orders', 'OrderController');
+Route::resource('helps', 'HelpController');
 Route::get('/', 'HomeController@index');
 Route::get('/privacy', 'HomeController@privacy')->name('privacy');
 Route::get('/terms-condition', 'HomeController@termsCondition')->name('terms-condition');

@@ -1,0 +1,41 @@
+.bg-light {
+ background: #F2F1F0 !important;
+}
+.navbar-vertical {
+    background-color: #ffffff;
+    border-right: 1px solid #e0e0e0;
+}
+.navbar-vertical .navbar-nav .nav-item .nav-link.active {
+    color: #030303;
+}
+.ml-15px {
+    margin-right: 15px;
+}
+
+.navbar-vertical .navbar-nav .nav-item .nav-link:hover {
+
+    color: #030303;
+}
+
+.company-logo {
+    width: 187px;
+    height: 100% !important;
+}
+.card-bg-green {
+    background: #CAFFD9;
+}
+.card-bg-purple {
+    background: #F4E5FF;
+}
+.card-bg-blue{
+    background: #C5F4FF;
+}
+.card-bg-orange{
+    background: #FFF1E7;
+}
+.btn-warning{
+    background: #D28F5D;
+}
+.bg-light-blue{
+    background: #9EBEEA;
+}
