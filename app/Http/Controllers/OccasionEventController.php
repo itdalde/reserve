@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\OccasionEventInterface;
 use App\Models\OccasionEvent;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class OccasionEventController extends Controller
 {
+    private OccasionEventInterface $occasionEventRepository;
+
+    public function __construct(OccasionEventInterface $occasionEventRepository)
+    {
+        $this->occasionEventRepository = $occasionEventRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -82,4 +93,50 @@ class OccasionEventController extends Controller
     {
         //
     }
+
+    /**
+     * Create Event
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createOrder(Request $request): JsonResponse
+    {
+
+        return response()->json([
+            'status' => 'success',
+            'code' => 201,
+            'response' => [
+                'data' => $request->request
+            ]
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getEvents(Request $request): JsonResponse
+    {
+        $occasion = $this->occasionEventRepository->getEvents();
+
+        return response()->json([
+            'status' => 'success',
+            'response' => [
+                'data' => json_decode($occasion)
+            ]
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function deleteEvent(Request $request): JsonResponse
+    {
+       $eventId = $request->route('id');
+       $this->occasionEventRepository->deleteEvent($eventId);
+       return response()->json(null, ResponseAlias::HTTP_NO_CONTENT);
+    }
+
 }
