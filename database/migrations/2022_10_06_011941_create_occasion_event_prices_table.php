@@ -17,7 +17,13 @@ class CreateOccasionEventPricesTable extends Migration
             $table->id();
             $table->integer('occasion_id')->unsigned();
             $table->integer('plan_id')->unsigned();
-            $table->float('price')->default(0);
+            $table->enum('service_unit', ['per_person', 'per_pax'])->default('per_person');
+            $table->float('service_price')->default(0);
+            $table->string('package')->nullable();
+            $table->integer('min_capacity')->nullable()->default(0);
+            $table->integer('max_capacity')->nullable()->default(0);
+            $table->string('package_details')->nullable();
+            $table->float('package_price')->default(0);
             $table->tinyInteger('active')->default(0)->unsigned();
             $table->timestamps();
             $table->softDeletes();

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auth\User\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MembershipController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin', ['except' => ['index', 'failed', 'clearValidationCache']]);
+        $this->middleware('admin', ['except' => ['index', 'failed', 'clearValidationCache', 'getMembers']]);
     }
 
     public function index(Request $request)
@@ -77,5 +78,21 @@ class MembershipController extends Controller
         if ($user->protectionValidation) $user->protectionValidation->delete();
 
         return redirect($request->get('dest', '/'));
+    }
+
+    /**
+     * This will return all members
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getMembers(Request $request): JsonResponse
+    {
+        $members = User::all()->toJson();
+        return response()->json([
+            "status"    => "success" ,
+            "response"  => [
+                "data"  => json_decode($members, true)
+            ]
+        ]);
     }
 }
