@@ -1,4 +1,4 @@
-wsaavc <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
@@ -58,56 +58,55 @@ wsaavc <!DOCTYPE html>
             <ul class="faq-list">
 
                 <li>
-                    <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">How can you guarantee the quality of my order?
+                        <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq1" class="collapse" data-bs-parent=".faq-list">
                         <p>
-                            Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                            We simply guarantee that any detail mention at the time of order
+                            will be fulfilled. If it was not, we will take action to resolve the
+                            issue.
                         </p>
                     </div>
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Can I cancel my order?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq2" class="collapse" data-bs-parent=".faq-list">
                         <p>
-                            Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                        </p>
+                            An order can be cancelled while it is still in pending status.
+                            Once an order is accepted you need to contact our customer
+                            service to investigate each case.</p>
                     </div>
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">What payment methods you accept? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq3" class="collapse" data-bs-parent=".faq-list">
                         <p>
-                            Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+                            We accept various methods including credit cards, local debit
+                            cards, Apple pay, Google pay and soon cash.
                         </p>
                     </div>
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Why my order is not accepted immediately? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq4" class="collapse" data-bs-parent=".faq-list">
                         <p>
-                            Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                        </p>
+                            When you place an order, it undergo multiple stages to be
+                            completed. Order acceptance period vary depending on how big
+                            the order is. If your order is not accepted nor declined within 24
+                            hours of placing the order, please reach out to us.</p>
                     </div>
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Where can I talk to customer service? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq5" class="collapse" data-bs-parent=".faq-list">
                         <p>
-                            Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-                        </p>
-                    </div>
-                </li>
-
-                <li>
-                    <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                    <div id="faq6" class="collapse" data-bs-parent=".faq-list">
-                        <p>
-                            Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
-                        </p>
+                            We take customer satisfaction very seriously, please reach out to
+                            your Vbutler and they will take care of you. If you don’t have
+                            one yet send us an email at contactus@reservegcc.com.</p>
                     </div>
                 </li>
 
