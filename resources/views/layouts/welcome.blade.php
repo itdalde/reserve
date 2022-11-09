@@ -37,7 +37,7 @@
                 <ul>
                     <li><a class="nav-link scrollto " href="/#about">Home</a></li>
                     <li><a class="nav-link scrollto" href="#services">What We Offer</a></li>
-                    <li><a class="nav-link scrollto " href="#portfolio">For service providers</a></li>
+                    <li><a class="nav-link scrollto " href="#portfolio">For vendors</a></li>
                     <li><a class="nav-link " href="#"><span class="btn bg-orange" style="color: white;
     background-color: orange;
     border-color: orange;">
@@ -47,7 +47,7 @@
                             @if (!Auth::check())
                                 @if(config('auth.users.registration'))
                                  @endif
-                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">Service Provider Log In</a></li>
+                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">vendor Log In</a></li>
                             @else
                                 @if(auth()->user()->hasRole('administrator'))
                                 <li><a class="nav-link scrollto " href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a></li>
@@ -73,7 +73,7 @@
                         <div class="content pt-4 pt-lg-0">
                             <h3>Reserve is your one stop shop for quality services</h3>
                             <p>
-                                We are is an online platform where the best service providers offer up their services at competitive rates.
+                                We are is an online platform where the best vendors offer up their services at competitive rates.
                             </p>
                             <div class="d-flex justify-content-center" style=" margin-top: 20em;">
                                 <a class="p-2 m-2" href="#">
@@ -96,13 +96,9 @@
         <section id="services" class="services section-bg">
             <div class="container">
 
-                <div class="service-section-title" data-aos="fade-up">
-                    <h2>Some of our service providers</h2>
-                    <img src="{{asset('assets/landing/img/service-img.png')}}" alt="service-img">
-                </div>
                 <img src="{{asset('assets/landing/img/service-border.png')}}" alt="service-border" style="margin-top: 8em;">
                 <div class="section-title" data-aos="fade-up" style="margin-top: 3em;">
-                    <h3>What we offer</h3>
+                    <h3>How it works</h3>
                 </div>
 
                 <div class="row">
@@ -110,7 +106,7 @@
                         <div class="icon-box icon-box-pink">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-1.png')}}" alt="service-3"></div>
                             <h4 class="title"><a href="">A wide range of services for all occasions</a></h4>
-                            <p class="description">Explore and pick from any of our many service providers for single service or occasions.</p>
+                            <p class="description">Explore and pick from any of our many vendors for single service or occasions.</p>
                         </div>
                     </div>
 
@@ -118,7 +114,7 @@
                         <div class="icon-box icon-box-cyan">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-2.png')}}" alt="service-3"></div>
                             <h4 class="title"><a href="">Very easy-to-use app and process</a></h4>
-                            <p class="description">Choose what you need, add it to cart and create an agreement between single or multiple service providers.</p>
+                            <p class="description">Choose what you need, add it to cart and create an agreement between single or multiple vendors.</p>
                         </div>
                     </div>
 
@@ -137,8 +133,8 @@
             <div class="container">
 
                 <div class="section-title" data-aos="fade-up">
-                    <h2>Join our platform as a service provider</h2>
-                    <p>Are you a service provider or a company that would like to join our platform and deliver the best to our users?</p>
+                    <h2>Join our platform as a vendor</h2>
+                    <p>Are you a vendor or a company that would like to join our platform and deliver the best to our users?</p>
                 </div>
 
                 <div class="row">
@@ -151,7 +147,7 @@
                         <div class="content pt-4 pt-lg-0 p-5">
                             <img src="{{asset('assets/landing/img/portfolio-notes.png')}}" alt="portfolio-notes">
                             <h3>Fast and easy registration</h3>
-                            <p>Our registration process is as easy as clicking the “service provider registration” button and filling in some information so we can contact you and confirm your application.</p>
+                            <p>Our registration process is as easy as clicking the “vendor registration” button and filling in some information so we can contact you and confirm your application.</p>
                         </div>
                         <div class="content pt-4 pt-lg-0 p-5">
                             <img src="{{asset('assets/landing/img/portfolio-cards.png')}}" alt="portfolio-cards">
@@ -180,8 +176,7 @@
                 </div>
                 <div class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <div class="d-flex flex-column">
-                        <div class="p-2">Register now and become a verified service provider</div>
-                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">Register as a service provider</a></div>
+                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">Register as a vendor</a></div>
                     </div>
                 </div>
 
@@ -201,7 +196,7 @@
                     <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-left">
                         <div class="d-flex flex-column">
                             <div class="p-2">
-                                <h3>Download our app now  to start ordering premium services!</h3>
+                                <h3>Download a World of Hospitality</h3>
                             </div>
                             <div class="p-2">
                                 <div class="d-flex flex-row" >

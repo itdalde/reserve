@@ -27,8 +27,6 @@
         <div class="d-flex flex-column">
             <div class="p-2 mx-auto">
                 <div class="header-social-links d-flex align-items-center">
-                    <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                     <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 </div>
             </div>
