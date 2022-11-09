@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OccasionEvent extends Model
 {
@@ -11,5 +12,10 @@ class OccasionEvent extends Model
 
     public function occasion() {
         return $this->belongsTo(Occasion::class);
+    }
+
+    public function occasionEventPrice(): HasMany
+    {
+        return $this->hasMany(OccasionEventPrice::class);
     }
 }
