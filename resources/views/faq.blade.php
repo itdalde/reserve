@@ -58,9 +58,9 @@
             <ul class="faq-list">
 
                 <li>
-                    <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">How can you guarantee the quality of my order?
+                    <div data-bs-toggle="collapse" class="collapsed question" href="#faq1" aria-expanded="true">How can you guarantee the quality of my order?
                         <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                    <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+                    <div id="faq1" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             We simply guarantee that any detail mention at the time of order
                             will be fulfilled. If it was not, we will take action to resolve the
@@ -70,8 +70,8 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Can I cancel my order?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                    <div id="faq2" class="collapse" data-bs-parent=".faq-list">
+                    <div data-bs-toggle="collapse" href="#faq2" class="collapsed question"  aria-expanded="true">Can I cancel my order?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div id="faq2" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             An order can be cancelled while it is still in pending status.
                             Once an order is accepted you need to contact our customer
@@ -80,8 +80,8 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">What payment methods you accept? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                    <div id="faq3" class="collapse" data-bs-parent=".faq-list">
+                    <div data-bs-toggle="collapse" href="#faq3" class="collapsed question"  aria-expanded="true">What payment methods you accept? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div id="faq3" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             We accept various methods including credit cards, local debit
                             cards, Apple pay, Google pay and soon cash.
@@ -90,8 +90,8 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Why my order is not accepted immediately? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                    <div id="faq4" class="collapse" data-bs-parent=".faq-list">
+                    <div data-bs-toggle="collapse" href="#faq4" class="collapsed question"  aria-expanded="true">Why my order is not accepted immediately? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div id="faq4" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             When you place an order, it undergo multiple stages to be
                             completed. Order acceptance period vary depending on how big
@@ -101,8 +101,8 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Where can I talk to customer service? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-                    <div id="faq5" class="collapse" data-bs-parent=".faq-list">
+                    <div data-bs-toggle="collapse" href="#faq5" class="collapsed question"  aria-expanded="true">Where can I talk to customer service? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div id="faq5" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             We take customer satisfaction very seriously, please reach out to
                             your Vbutler and they will take care of you. If you don’t have
