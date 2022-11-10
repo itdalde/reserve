@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\HomeInterface;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private HomeInterface $homeRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(
+        HomeInterface $homeRepository
+    ) {
+        $this->homeRepository = $homeRepository;
+
         $this->middleware('auth', ['except' => ['index','privacy','termsCondition','faq','help','successRegister']]);
     }
 

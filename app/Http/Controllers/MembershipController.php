@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\MembershipInterface;
 use App\Models\Auth\User\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MembershipController extends Controller
 {
-    public function __construct()
+    public MembershipInterface $membershipRepository;
+    public function __construct(
+        MembershipInterface $membershipRepository
+    )
     {
+        $this->membershipRepository = $membershipRepository;
+
         $this->middleware('admin', ['except' => ['index', 'failed', 'clearValidationCache', 'getMembers']]);
     }
 

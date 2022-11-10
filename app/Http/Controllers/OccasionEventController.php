@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\OccasionEventInterface;
+use App\Interfaces\OccasionEventPriceInterface;
 use App\Models\OccasionEvent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,12 +13,15 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 class OccasionEventController extends Controller
 {
     private OccasionEventInterface $occasionEventRepository;
+    private OccasionEventPriceInterface $occasionEventPriceRepository;
 
     public function __construct(
         OccasionEventInterface $occasionEventRepository,
+        OccasionEventPriceInterface $occasionEventPriceRepository,
     )
     {
         $this->occasionEventRepository = $occasionEventRepository;
+        $this->occasionEventPriceRepository = $occasionEventPriceRepository;
     }
 
     /**
@@ -121,6 +125,11 @@ class OccasionEventController extends Controller
     public function getEvents(Request $request): JsonResponse
     {
         $occasion = $this->occasionEventRepository->getEvents();
+
+        foreach ($occasion as $key)
+        {
+            $price_plan = $this->occasionEventPriceRepository->getEventPriceById($key->occasion_id);
+        }
 
         return response()->json([
             'status' => 'success',

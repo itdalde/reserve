@@ -8,8 +8,8 @@ use App\Models\OccasionEventPrice;
 class OccasionEventPriceRepository implements OccasionEventPriceInterface
 {
 
-    public function getEventPriceById($eventId)
+    public function getEventPriceById($occasion_id)
     {
-        return OccasionEventPrice::where('occasion_id', $eventId)->first();
+       return OccasionEventPrice::where('occasion_id', $occasion_id);
     }
 }

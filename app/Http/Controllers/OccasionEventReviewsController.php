@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\OccasionEventReviewsInterface;
 use App\Models\OccasionEventReviews;
 use Illuminate\Http\Request;
 
 class OccasionEventReviewsController extends Controller
 {
+
+    private OccasionEventReviewsInterface $occasionEventReviewsRepository;
+
+    public function __construct(
+        OccasionEventReviewsInterface $occasionEventReviewsRepository
+    ) {
+        $this->occasionEventReviewsRepository = $occasionEventReviewsRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *

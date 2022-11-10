@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ServiceInterface;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+    private ServiceInterface $serviceRepository;
+
+    public function __construct(
+        ServiceInterface $serviceRepository
+    ) {
+        $this->serviceRepository = $serviceRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *

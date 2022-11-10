@@ -5,6 +5,6 @@ namespace App\Interfaces;
 interface OccasionEventPriceInterface
 {
 
-    public function getEventPriceById($eventId);
+    public function getEventPriceById($occasion_id);
 
 }
