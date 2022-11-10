@@ -14,10 +14,17 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
          $this->call(UsersSeeder::class);
          $this->call(RolesSeeder::class);
          $this->call(UsersRolesSeeder::class);
+
+         $this->call(
+             [
+                 OccasionEventSeeder::class,
+                 OccasionEventPriceSeeder::class
+             ]
+         );
     }
 }

@@ -2,14 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\OccasionEvent;
+use App\Models\OccasionEventPrice;
 use Database\Traits\DisableForeignKeys;
 use Database\Traits\TruncateTable;
 use Illuminate\Database\Seeder;
 
-class OccasionEventSeeder extends Seeder
+class OccasionEventPriceSeeder extends Seeder
 {
-
     use DisableForeignKeys, TruncateTable;
     /**
      * Run the database seeds.
@@ -18,8 +17,7 @@ class OccasionEventSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        $this->truncate('occasion_events');
-        OccasionEvent::factory()->times(10)->create();
+        $this->truncate('occasion_event_prices');
+        OccasionEventPrice::factory()->times(10)->create();
     }
 }

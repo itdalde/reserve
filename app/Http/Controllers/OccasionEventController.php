@@ -13,7 +13,9 @@ class OccasionEventController extends Controller
 {
     private OccasionEventInterface $occasionEventRepository;
 
-    public function __construct(OccasionEventInterface $occasionEventRepository)
+    public function __construct(
+        OccasionEventInterface $occasionEventRepository,
+    )
     {
         $this->occasionEventRepository = $occasionEventRepository;
     }
