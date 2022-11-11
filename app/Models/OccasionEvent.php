@@ -23,6 +23,10 @@ class OccasionEvent extends Model
     {
     }
 
+    public static function where(string $string, $eventId)
+    {
+    }
+
     public function occasion(): BelongsTo
     {
         return $this->belongsTo(Occasion::class);

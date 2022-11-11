@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\TransactionInterface;
 use App\Models\Occasion;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    private TransactionInterface $transactionRepository;
+    public function __construct(
+        TransactionInterface $transactionRepository
+    ) {
+        $this->transactionRepository = $transactionRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OccasionEventRequest;
 use App\Interfaces\OccasionEventInterface;
+use App\Interfaces\OccasionEventPriceInterface;
 use App\Models\OccasionEvent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class OccasionEventController extends Controller
 {
     private OccasionEventInterface $occasionEventRepository;
+    private OccasionEventPriceInterface $occasionEventPriceRepository;
 
-    public function __construct(OccasionEventInterface $occasionEventRepository)
+    public function __construct(
+        OccasionEventInterface $occasionEventRepository,
+        OccasionEventPriceInterface $occasionEventPriceRepository,
+    )
     {
         $this->occasionEventRepository = $occasionEventRepository;
+        $this->occasionEventPriceRepository = $occasionEventPriceRepository;
     }
 
     /**
@@ -97,19 +105,20 @@ class OccasionEventController extends Controller
     /**
      * Create Event
      *
-     * @param Request $request
+     * @param OccasionEventRequest $request
      * @return JsonResponse
      */
-    public function createOrder(Request $request): JsonResponse
+    public function createOrder(OccasionEventRequest $request): JsonResponse
     {
+        $request->validated();
 
-        return response()->json([
-            'status' => 'success',
-            'code' => 201,
-            'response' => [
-                'data' => $request->request
-            ]
-        ]);
+        $event = $this->occasionEventRepository->createEvents($request->all());
+
+        if (!$event) {
+            $error = 'Unable to create events';
+            return sendError($error, '', 409);
+        }
+        return sendResponse($event, 'Created Successfully!', 201);
     }
 
     /**
@@ -120,12 +129,11 @@ class OccasionEventController extends Controller
     {
         $occasion = $this->occasionEventRepository->getEvents();
 
-        return response()->json([
-            'status' => 'success',
-            'response' => [
-                'data' => json_decode($occasion)
-            ]
-        ]);
+        foreach ($occasion as $key)
+        {
+            $price_plan = $this->occasionEventPriceRepository->getEventPriceById($key->occasion_id);
+        }
+        return sendResponse(json_decode($occasion), 'Events Collection');
     }
 
     /**

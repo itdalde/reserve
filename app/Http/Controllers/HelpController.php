@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\HelpInterface;
 use App\Models\Inquiries;
 use App\Models\InquiryAttachments;
 use Illuminate\Http\Request;
@@ -9,6 +10,13 @@ use Illuminate\Support\Facades\Storage;
 
 class HelpController extends Controller
 {
+    private HelpInterface $helpRepository;
+    public function __construct(
+        HelpInterface $helpRepository
+    ) {
+        $this->helpRepository = $helpRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
