@@ -39,3 +39,10 @@
 .bg-light-blue{
     background: #9EBEEA;
 }
+.input-group-text {
+    background: white;
+    border-right: none;
+}
+.input-group input {
+    border-left: none;
+}

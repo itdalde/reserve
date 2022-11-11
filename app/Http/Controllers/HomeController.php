@@ -21,9 +21,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('welcome');
+        if($request->get('test')) {
+            return view('welcome');
+        }
+        return view('maintenance');
     }
     public function privacy()
     {

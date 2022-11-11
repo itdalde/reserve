@@ -20,7 +20,7 @@
 </div>
 @include('layouts.includes.footer_scripts')
 
-@yield('content_javascript')
 @include('layouts.includes.modal')
+@yield('content_javascript')
 </body>
 </html>

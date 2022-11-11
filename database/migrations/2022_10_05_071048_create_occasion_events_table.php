@@ -15,7 +15,7 @@ class CreateOccasionEventsTable extends Migration
     {
         Schema::create('occasion_events', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('address_1')->nullable();
@@ -27,7 +27,8 @@ class CreateOccasionEventsTable extends Migration
             $table->string('country')->nullable();
             $table->string('max_capacity')->nullable();
             $table->string('min_capacity')->nullable();
-            $table->string('availability_date')->nullable();
+            $table->string('availability_start_date')->nullable();
+            $table->string('availability_end_date')->nullable();
             $table->string('availability_time_in')->nullable();
             $table->string('availability_time_out')->nullable();
             $table->tinyInteger('active')->default(0)->unsigned();

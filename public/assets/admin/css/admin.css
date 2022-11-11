@@ -14433,3 +14433,10 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
     margin-top: 20px;
     cursor: pointer;
 }
+.input-group-text {
+    background: white;
+    border-right: none;
+}
+.input-group input {
+    border-left: none;
+}

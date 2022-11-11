@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOccasionEventReviewsTable extends Migration
+class CreateServiceTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateOccasionEventReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('occasion_event_reviews', function (Blueprint $table) {
+        Schema::create('service_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_event_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('rate')->default(0);
+            $table->string('name')->nullable();
+            $table->tinyInteger('active')->default(0)->unsigned();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +29,6 @@ class CreateOccasionEventReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('occasion_event_reviews');
+        Schema::dropIfExists('service_types');
     }
 }
