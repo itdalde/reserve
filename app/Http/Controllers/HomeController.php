@@ -7,17 +7,12 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    private HomeInterface $homeRepository;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(
-        HomeInterface $homeRepository
-    ) {
-        $this->homeRepository = $homeRepository;
-
+    public function __construct() {
         $this->middleware('auth', ['except' => ['index','privacy','termsCondition','faq','help','successRegister']]);
     }
 
