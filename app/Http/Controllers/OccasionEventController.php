@@ -8,6 +8,7 @@ use App\Models\OccasionEvent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class OccasionEventController extends Controller
@@ -108,14 +109,26 @@ class OccasionEventController extends Controller
      */
     public function createOrder(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), []);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $event = $this->occasionEventRepository->createEvents($request->all());
+
+        if (!$event) {
+            response()->json([
+                'status' => 'Failed',
+                'message' => 'Unable to create events'
+            ], 409);
+        }
 
         return response()->json([
             'status' => 'success',
-            'code' => 201,
             'response' => [
                 'data' => $request->request
             ]
-        ]);
+        ], 201);
     }
 
     /**
@@ -136,7 +149,7 @@ class OccasionEventController extends Controller
             'response' => [
                 'data' => json_decode($occasion)
             ]
-        ]);
+        ], 200);
     }
 
     /**
