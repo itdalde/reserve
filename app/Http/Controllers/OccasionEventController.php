@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OccasionEventRequest;
 use App\Interfaces\OccasionEventInterface;
 use App\Interfaces\OccasionEventPriceInterface;
 use App\Models\OccasionEvent;
@@ -104,20 +105,13 @@ class OccasionEventController extends Controller
     /**
      * Create Event
      *
-     * @param Request $request
+     * @param OccasionEventRequest $request
      * @return JsonResponse
      */
-    public function createOrder(Request $request): JsonResponse
+    public function createOrder(OccasionEventRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required'
-            ]
-        );
+        $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
         $event = $this->occasionEventRepository->createEvents($request->all());
 
         if (!$event) {
