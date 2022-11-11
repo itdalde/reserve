@@ -73,6 +73,7 @@ Route::group(['prefix' => 'v1/occasion-event', 'middleware' => ['cors']], functi
     Route::post('/create-order', [OccasionEventController::class, 'createOrder'])->name('create-order');
     Route::post('/delete-event', [OccasionEventController::class, 'deleteEvent'])->name('delete-event');
     Route::get('/events', [OccasionEventController::class, 'getEvents'])->name('occasion-events');
+    Route::get('/get-events-by-occasion', [OccasionEventController::class, 'getEventByType'])->name('occasion-by-type');
 });
 
 //  INFO: OccasionEventReviews Endpoints
