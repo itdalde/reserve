@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Auth\User\User;
+use App\Models\Occasion;
+use App\Models\OccasionType;
+use App\Models\PlanType;
+use App\Models\ServiceType;
 use Arcanedev\LogViewer\Entities\Log;
 use Arcanedev\LogViewer\Entities\LogEntry;
 use Carbon\Carbon;
@@ -30,7 +34,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $serviceTypes = ServiceType::all()->toArray();
+        $occasionTypes =  Occasion::all()->toArray();
+        $plan = PlanType::all()->toArray();
+        return view('admin.dashboard',compact('occasionTypes','serviceTypes','plan' ));
     }
 
 

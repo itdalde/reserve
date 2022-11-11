@@ -47,7 +47,7 @@
                             @if (!Auth::check())
                                 @if(config('auth.users.registration'))
                                  @endif
-                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">vendor Log In</a></li>
+                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">Vendor Log In</a></li>
                             @else
                                 @if(auth()->user()->hasRole('administrator'))
                                 <li><a class="nav-link scrollto " href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a></li>

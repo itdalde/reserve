@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Interfaces\HelpInterface;
 use App\Models\Inquiries;
 use App\Models\InquiryAttachments;
+use App\Models\Occasion;
+use App\Models\OccasionType;
+use App\Models\PlanType;
+use App\Models\ServiceType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,7 +29,10 @@ class HelpController extends Controller
     public function index()
     {
         $inquiries = Inquiries::all();
-        return view('admin.helps.index',compact('inquiries'));
+        $serviceTypes = ServiceType::all()->toArray();
+        $occasionTypes =  Occasion::all()->toArray();
+        $plan = PlanType::all()->toArray();
+        return view('admin.helps.index',compact('inquiries','occasionTypes','serviceTypes','plan'));
     }
 
     /**
