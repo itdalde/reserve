@@ -3,7 +3,13 @@
 
 use Illuminate\Http\JsonResponse;
 
-function sendResponse($result, $message, $code = 200): JsonResponse
+/**
+ * @param $result
+ * @param $message
+ * @param int $code
+ * @return JsonResponse
+ */
+function sendResponse($result, $message, int $code = 200): JsonResponse
 {
     $response = [
         'success' => true,
@@ -14,7 +20,13 @@ function sendResponse($result, $message, $code = 200): JsonResponse
     return response()->json($response, $code);
 }
 
-function sendError($error, $message, $code = 404): JsonResponse {
+/**
+ * @param $error
+ * @param $message
+ * @param int $code
+ * @return JsonResponse
+ */
+function sendError($error, $message, int $code = 404): JsonResponse {
     $response = [
         'success' => false,
         'message' => $error

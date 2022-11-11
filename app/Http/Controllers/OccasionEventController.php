@@ -109,7 +109,11 @@ class OccasionEventController extends Controller
      */
     public function createOrder(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), []);
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required'
+            ]
+        );
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
