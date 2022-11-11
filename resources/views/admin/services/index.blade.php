@@ -1,5 +1,9 @@
 @extends('layouts.admin')
-@section('content')
+@section('content')<style>
+    .checked {
+        color: orange;
+    }
+</style>
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <div class="card mb-2" >
@@ -61,6 +65,16 @@
 
                                     <td>{{$service->name}}
                                         <p>{{$service->address_1}}</p>
+                                        @if($service->occasionEventsReviews)
+                                            @foreach ($service->occasionEventsReviews as $srsv)
+                                                <span class="bi bi-star {{$srsv->rate >= 1? 'checked' : ''}} "></span>
+                                                <span class="bi bi-star {{$srsv->rate >= 2? 'checked' : ''}}"></span>
+                                                <span class="bi bi-star {{$srsv->rate >= 3? 'checked' : ''}}"></span>
+                                                <span class="bi bi-star {{$srsv->rate >= 4? 'checked' : ''}}"></span>
+                                                <span class="bi bi-star {{$srsv->rate >= 5? 'checked' : ''}}"></span>
+                                                <br>
+                                             @endforeach
+                                        @endif
                                     </td>
                                     <td><small>Occasion Type</small><br>
                                         @if($service->occasion)
@@ -109,7 +123,14 @@
                     }
                 });
             });
+            $('.dataTable').on('click', 'tbody td', function() {
 
+                //get textContent of the TD
+                console.log('TD cell textContent : ', this.textContent)
+
+                //get the value of the TD using the API
+                console.log('value by API : ', table.cell({ row: this.parentNode.rowIndex, column : this.cellIndex }).data());
+            })
         } );
     </script>
 @endsection

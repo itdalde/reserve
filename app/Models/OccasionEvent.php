@@ -15,6 +15,10 @@ class OccasionEvent extends Model
         return $this->hasMany(OccasionEventsPivot::class);
     }
 
+    public function occasionEventsReviews()
+    {
+        return $this->hasMany(OccasionEventReviews::class);
+    }
     public function occasionEventPrice(): HasMany
     {
         return $this->hasMany(OccasionEventPrice::class);

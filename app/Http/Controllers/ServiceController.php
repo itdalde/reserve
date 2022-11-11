@@ -29,7 +29,6 @@ class ServiceController extends Controller
     {
         $serviceTypes = ServiceType::all()->toArray();
         $services = OccasionEvent::where('id','<>',0)->get();
-
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
         return view('admin.services.index',compact('occasionTypes','serviceTypes','plan','services' ));

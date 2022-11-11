@@ -15,7 +15,7 @@ class CreateOccasionEventReviewsTable extends Migration
     {
         Schema::create('occasion_event_reviews', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_id')->unsigned();
+            $table->integer('occasion_event_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
