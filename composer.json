@@ -20,7 +20,7 @@
         "docs": "https://github.com/Labs64/laravel-boilerplate"
     },
     "require": {
-        "php": ">=8.1.4",
+        "php": ">=8.1.2",
         "albertcht/invisible-recaptcha": "^1.9",
         "arcanedev/log-viewer": "^8.0",
         "creativeorange/gravatar": "^1.0",
@@ -55,7 +55,9 @@
             "Database\\Traits\\": "database/traits/"
         },
         "files": [
-            "app/helpers.php"
+            "app/helpers.php",
+            "app/Helpers/Common/Function.php",
+            "app/Helpers/Common/GeneralHelper.php"
         ]
     },
     "autoload-dev": {

@@ -117,18 +117,10 @@ class OccasionEventController extends Controller
         $event = $this->occasionEventRepository->createEvents($request->all());
 
         if (!$event) {
-            response()->json([
-                'status' => 'Failed',
-                'message' => 'Unable to create events'
-            ], 409);
+            $error = 'Unable to create events';
+            return sendError($error, '', 409);
         }
-
-        return response()->json([
-            'status' => 'success',
-            'response' => [
-                'data' => $request->request
-            ]
-        ], 201);
+        return sendResponse($event, 'Created Successfully!', 201);
     }
 
     /**
@@ -143,13 +135,7 @@ class OccasionEventController extends Controller
         {
             $price_plan = $this->occasionEventPriceRepository->getEventPriceById($key->occasion_id);
         }
-
-        return response()->json([
-            'status' => 'success',
-            'response' => [
-                'data' => json_decode($occasion)
-            ]
-        ], 200);
+        return sendResponse(json_decode($occasion), 'Events Collection');
     }
 
     /**
