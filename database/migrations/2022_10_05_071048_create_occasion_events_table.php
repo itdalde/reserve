@@ -15,7 +15,7 @@ class CreateOccasionEventsTable extends Migration
     {
         Schema::create('occasion_events', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_event_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('address_1')->nullable();

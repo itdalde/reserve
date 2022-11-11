@@ -23,3 +23,5 @@
 <!-- Theme CSS -->
 <link rel="stylesheet" href="{{asset('assets/css/theme.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css"/>
+

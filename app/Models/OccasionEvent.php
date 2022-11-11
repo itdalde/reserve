@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class OccasionEvent extends Model
 {
     use HasFactory;
-    public function occasion(): BelongsTo
+    public function occasion()
     {
-        return $this->belongsTo(Occasion::class);
+        return $this->hasMany(OccasionEventsPivot::class);
     }
 
     public function occasionEventPrice(): HasMany

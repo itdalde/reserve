@@ -14,3 +14,5 @@
 
 <!-- Theme JS -->
 <script src="{{asset('assets/js/theme.min.js')}}"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
