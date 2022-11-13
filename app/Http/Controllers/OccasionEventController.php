@@ -157,6 +157,7 @@ class OccasionEventController extends Controller
         $request->validated();
 
         $type = $request->occasion_type;
+
         $from = $request->from;
         $to = $request->to;
 

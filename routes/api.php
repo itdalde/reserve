@@ -62,7 +62,7 @@ Route::group(['prefix' => 'v1/occasion', 'middleware' => ['cors']], function() {
 });
 
 //  INFO: OccasionEvent Endpoints
-Route::group(['prefix' => 'v1/occasion-event', 'middleware' => ['cors']], function() {
+Route::group(['prefix' => 'v1/events', 'middleware' => ['cors']], function() {
     Route::get('/', [OccasionEventController::class, 'index'])->name('index');
     Route::post('/create', [OccasionEventController::class, 'create'])->name('create');
     Route::post('/store', [OccasionEventController::class, 'store'])->name('store');
@@ -73,11 +73,11 @@ Route::group(['prefix' => 'v1/occasion-event', 'middleware' => ['cors']], functi
     Route::post('/create-order', [OccasionEventController::class, 'createOrder'])->name('create-order');
     Route::post('/delete-event', [OccasionEventController::class, 'deleteEvent'])->name('delete-event');
     Route::get('/events', [OccasionEventController::class, 'getEvents'])->name('occasion-events');
-    Route::get('/get-events-by-occasion', [OccasionEventController::class, 'getEventByType'])->name('occasion-by-type');
+    Route::get('/events-by-occasion', [OccasionEventController::class, 'getEventByType'])->name('occasion-by-type');
 });
 
 //  INFO: OccasionEventReviews Endpoints
-Route::group(['prefix' => 'v1/occasion-event-reviews', 'middleware' => ['cors']], function() {
+Route::group(['prefix' => 'v1/event-reviews', 'middleware' => ['cors']], function() {
     Route::get('/', [OccasionEventReviewsController::class, 'index'])->name('index');
     Route::post('/create', [OccasionEventReviewsController::class, 'create'])->name('create');
     Route::post('/store', [OccasionEventReviewsController::class, 'store'])->name('store');
