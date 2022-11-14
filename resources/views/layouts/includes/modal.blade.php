@@ -55,10 +55,10 @@
                             </div>
                             <div class="col-sm-5">
                                 <div class="input-group flex-nowrap">
-                                <span class="input-group-text" id="addon-wrapping">
-                                    <img class="float-end" src="{{asset('assets/images/icons/location.png')}}"
-                                         alt="location">
-                                </span>
+                                    <span class="input-group-text" id="addon-wrapping">
+                                        <img class="float-end" src="{{asset('assets/images/icons/location.png')}}"
+                                             alt="location">
+                                    </span>
                                     <input name="location" type="text" class="form-control" placeholder="Enter Location"
                                            aria-label="" aria-describedby="addon-wrapping">
                                 </div>
@@ -334,20 +334,4 @@
     </div>
 </div>
 
-@section('content_javascript')
-    <script>
-        $(document).ready(function () {
-            $('body').on('click', '.service-image-holder', function () {
-                $('#service-image-file').click();
-            });
-            $('body').on('click', '#service-next-btn', function () {
-                $('.last-step-c, #service-submit-btn, #service-back-btn').removeClass('d-none');
-                $('.fist-step-c, #service-next-btn, #service-close-btn').addClass('d-none');
-            });
-            $('body').on('click', '#service-back-btn', function () {
-                $('.last-step-c, #service-submit-btn, #service-back-btn').addClass('d-none')
-                $('.fist-step-c, #service-next-btn, #service-close-btn').removeClass('d-none')
-            });
-        });
-    </script>
-@endsection
+

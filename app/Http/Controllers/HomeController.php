@@ -26,7 +26,7 @@ class HomeController extends Controller
         if($request->get('test')) {
             return view('welcome');
         }
-        return view('maintenance');
+        return view('welcome');
     }
     public function privacy()
     {

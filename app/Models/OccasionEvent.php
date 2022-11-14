@@ -14,6 +14,10 @@ class OccasionEvent extends Model
     {
         return $this->hasMany(OccasionEventsPivot::class);
     }
+    public function serviceType()
+    {
+        return $this->hasOne(ServiceType::class,'id','service_type');
+    }
 
     public function occasionEventsReviews()
     {
@@ -22,5 +26,10 @@ class OccasionEvent extends Model
     public function occasionEventPrice(): HasMany
     {
         return $this->hasMany(OccasionEventPrice::class);
+    }
+    public function occasionEventsReviewsAverage() {
+        return $this->hasMany(OccasionEventReviews::class)
+            ->selectRaw('avg(rate) as aggregate, occasion_event_id')
+            ->groupBy('occasion_event_id');
     }
 }
