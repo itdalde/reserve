@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OccasionEventByTypeRequest;
 use App\Http\Requests\OccasionEventRequest;
 use App\Interfaces\OccasionEventInterface;
 use App\Interfaces\OccasionEventPriceInterface;
@@ -145,6 +146,23 @@ class OccasionEventController extends Controller
        $eventId = $request->route('id');
        $this->occasionEventRepository->deleteEvent($eventId);
        return response()->json(null, ResponseAlias::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @param OccasionEventByTypeRequest $request
+     * @return JsonResponse
+     */
+    public function getEventByType(OccasionEventByTypeRequest $request): JsonResponse
+    {
+        $request->validated();
+
+        $type = $request->occasion_type;
+
+        $from = $request->from;
+        $to = $request->to;
+
+        $events = $this->occasionEventRepository->getOccasionEventByType($type, $from, $to);
+        return sendResponse($events, 'Occasion Events Collection');
     }
 
 }
