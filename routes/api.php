@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Api\OccasionEventsApiController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\OccasionEventController;
 use App\Http\Controllers\OccasionEventReviewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TransactionController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -73,7 +72,10 @@ Route::group(['prefix' => 'v1/events', 'middleware' => ['cors']], function() {
     Route::post('/create-order', [OccasionEventController::class, 'createOrder'])->name('create-order');
     Route::post('/delete-event', [OccasionEventController::class, 'deleteEvent'])->name('delete-event');
     Route::get('/events', [OccasionEventController::class, 'getEvents'])->name('occasion-events');
-    Route::get('/events-by-occasion', [OccasionEventController::class, 'getEventByType'])->name('occasion-by-type');
+});
+
+Route::group(['prefix' => 'v1/events', 'middleware' => ['cors']], function() {
+   Route::get('/events-by-occasion', [OccasionEventsApiController::class, 'getEventsByOccasion'])->name('get-occasions');
 });
 
 //  INFO: OccasionEventReviews Endpoints
