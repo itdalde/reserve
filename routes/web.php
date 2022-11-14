@@ -15,7 +15,7 @@
 /**
  * Auth routes
  */
-
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');

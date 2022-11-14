@@ -1,15 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Api\OccasionEventsApiController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\OccasionEventController;
 use App\Http\Controllers\OccasionEventReviewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TransactionController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +61,7 @@ Route::group(['prefix' => 'v1/occasion', 'middleware' => ['cors']], function() {
 });
 
 //  INFO: OccasionEvent Endpoints
-Route::group(['prefix' => 'v1/occasion-event', 'middleware' => ['cors']], function() {
+Route::group(['prefix' => 'v1/events', 'middleware' => ['cors']], function() {
     Route::get('/', [OccasionEventController::class, 'index'])->name('index');
     Route::post('/create', [OccasionEventController::class, 'create'])->name('create');
     Route::post('/store', [OccasionEventController::class, 'store'])->name('store');
@@ -75,8 +74,14 @@ Route::group(['prefix' => 'v1/occasion-event', 'middleware' => ['cors']], functi
     Route::get('/events', [OccasionEventController::class, 'getEvents'])->name('occasion-events');
 });
 
+Route::group(['prefix' => 'v1/occasions', 'middleware' => ['cors']], function() {
+   Route::get('/', [OccasionEventsApiController::class, 'getOccasions'])->name('get-occasions');;
+   Route::get('/events-by-service-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-occasion-event-by-service-type');
+   Route::get('/events-by-occasion', [OccasionEventsApiController::class, 'getEventsByOccasion'])->name('get-occasions');
+});
+
 //  INFO: OccasionEventReviews Endpoints
-Route::group(['prefix' => 'v1/occasion-event-reviews', 'middleware' => ['cors']], function() {
+Route::group(['prefix' => 'v1/event-reviews', 'middleware' => ['cors']], function() {
     Route::get('/', [OccasionEventReviewsController::class, 'index'])->name('index');
     Route::post('/create', [OccasionEventReviewsController::class, 'create'])->name('create');
     Route::post('/store', [OccasionEventReviewsController::class, 'store'])->name('store');
