@@ -23,6 +23,11 @@ class OccasionEvent extends Model
     {
         return $this->hasMany(OccasionEventReviews::class);
     }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(EventImages::class,'occasion_event_id');
+    }
     public function occasionEventPrice(): HasMany
     {
         return $this->hasMany(OccasionEventPrice::class);

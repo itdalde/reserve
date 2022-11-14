@@ -12,13 +12,6 @@
             "homepage": "https://www.labs64.com"
         }
     ],
-    "support": {
-        "email": "info@labs64.com",
-        "issues": "https://github.com/Labs64/laravel-boilerplate/issues",
-        "wiki": "https://github.com/Labs64/laravel-boilerplate",
-        "source": "https://github.com/Labs64/laravel-boilerplate",
-        "docs": "https://github.com/Labs64/laravel-boilerplate"
-    },
     "require": {
         "php": ">=8.1.2",
         "albertcht/invisible-recaptcha": "^1.9",
@@ -36,7 +29,8 @@
         "laravel/socialite": "^5.4",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
-        "laravelcollective/html": "^6.1.0"
+        "laravelcollective/html": "^6.1.0",
+        "yajra/laravel-datatables": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

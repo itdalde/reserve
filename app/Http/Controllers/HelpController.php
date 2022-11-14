@@ -14,13 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class HelpController extends Controller
 {
-    private HelpInterface $helpRepository;
-    public function __construct(
-        HelpInterface $helpRepository
-    ) {
-        $this->helpRepository = $helpRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *

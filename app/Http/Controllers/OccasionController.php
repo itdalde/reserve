@@ -9,13 +9,6 @@ use Illuminate\Http\Request;
 class OccasionController extends Controller
 {
 
-    private OccasionInterface $occasionRepository;
-
-    public function __construct(
-        OccasionInterface $occasionRepository
-    ) {
-        $this->occasionRepository = $occasionRepository;
-    }
 
     /**
      * Display a listing of the resource.

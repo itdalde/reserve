@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\EventImages;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
 use App\Models\OccasionEventPrice;
+use App\Models\OccasionEventReviews;
+use App\Models\OccasionEventsPivot;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,15 +32,62 @@ class ServiceController extends Controller
     public function index()
     {
         $serviceTypes = ServiceType::all()->toArray();
-        $services = OccasionEvent::where('id','<>',0)->get();
-//        foreach ($services as $service) {
-//            dd($service->serviceType->name);
-//        }
+        $services = OccasionEvent::where('id','<>',0)->orderBy('id','DESC')->get();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
         return view('admin.services.index',compact('occasionTypes','serviceTypes','plan','services' ));
     }
 
+    public function reviews(Request $request) {
+
+            try {
+                $id = $request->all()['occasion_event_id'];
+                $sort = $request->all()['sort'] ?? 'DESC';
+                $services = OccasionEventReviews::where('occasion_event_id',$id)->with('user','occasionEvent')
+                    ->orderBy('rate',$sort)->get()->toArray();
+                usort($services, function($a, $b) {
+                    return $a['rate'] <=> $b['rate'];
+                });
+                if($sort != 'DESC') {
+                    $services = array_reverse($services);
+                }
+                $response = [];
+                foreach ($services as $service) {
+                    $html = '';
+                    $companyId = $service["occasion_event"]["company_id"];
+                    $rate1 = $service['rate'] >= 1 ? 'checked' : "";
+                    $rate2 = $service['rate'] >= 2 ? 'checked' : "";
+                    $rate3 = $service['rate'] >= 3 ? 'checked' : "";
+                    $rate4 = $service['rate'] >= 4 ? 'checked' : "";
+                    $rate5 = $service['rate'] >= 5 ? 'checked' : "";
+                    $noImage = asset('images/no-image.jpg');
+                    $html .= '<div class="d-flex flex-column bd-highlight mb-3">';
+                    $html .= '<div class="p-2 bd-highlight  d-inline-flex"><img src="'.asset("images/company/$companyId/profile/").$service['user']['profile_picture'].'" alt="..." onerror="this.onerror=null; this.src='.$noImage.'"> <p class="px-2">'.$service['user']['first_name'] ." ".$service['user']['last_name'].'</p></div>';
+                    $html .= '<div class="p-2 bd-highlight d-inline-flex">';
+                    $html .= '<span class="bi bi-star '.$rate1 .'"></span> ';
+                    $html .= '<span class="bi bi-star '.$rate2 .'"></span>';
+                    $html .= '<span class="bi bi-star '.$rate3.'"></span>';
+                    $html .= '<span class="bi bi-star '.$rate4 .'"></span>';
+                    $html .= '<span class="bi bi-star '.$rate5 .'"></span>';
+                    $html .= '<span class="px-2"><h4>'.$service['title'].'</h4></span>';
+                    $html .= '</div>';
+                    $html .= '<div class="p-2 bd-highlight">'.$service['description'].'</div></div>';
+                    $response[] = [
+                        'rate' => $html,
+                    ];
+                }
+                echo json_encode($response);die;
+            } catch (\Exception $exception) {
+                $response = array(
+                    "draw" => 1,
+                    "iTotalRecords" => 0,
+                    "iTotalDisplayRecords" => 0,
+                    "aaData" => [],
+                    "error" => $exception->getMessage(),
+                );
+                return new JsonResponse($response);
+            }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -58,7 +109,7 @@ class ServiceController extends Controller
         $data = $request->all();
         $company = $request->user()->company;
         $service = new OccasionEvent();
-        $service->occasion_id = $data['occasion_type'];
+        $service->company_id = $company->id ;
         $service->name = $data['service_name'];
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
@@ -70,14 +121,24 @@ class ServiceController extends Controller
         $service->availability_time_in = $data['start_available_time'];
         $service->availability_time_out = $data['end_available_time'];
         $service->active = 1;
-        if($request->hasFile('image')) {
-            $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path("images/company/{$company->id}/services"), $imageName);
-            $filename = "images/company/{$company->id}/services/{$imageName}";
-            $service->image = $filename;
-        }
         $service->service_type = $data['service_type'];
         $service->save();
+        $c = 0;
+        foreach ($request->file('images') as $imagefile) {
+            $c +=1;
+            $image = new EventImages();
+            $imageName = time().'.'.$imagefile->extension();
+            $imagefile->move(public_path("images/company/{$company->id}/services"), $imageName);
+            $filename = "images/company/{$company->id}/services/{$imageName}";
+            if($c == 1) {
+                $service->image = $filename; // this is for featured image
+                $service->save();
+                $image->is_featured = 1;
+            }
+            $image->image = $filename;
+            $image->occasion_event_id = $service->id;
+            $image->save();
+        }
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;
         $price->plan_id = $data['plan_id'];
@@ -88,7 +149,12 @@ class ServiceController extends Controller
         $price->package_details= $data['package_details'];
         $price->package_price= $data['package_price'];
         $price->active = 1;
+        $price->save();
 
+        $occasionEventsPivot = new OccasionEventsPivot();
+        $occasionEventsPivot->occasion_id= $data['occasion_type'];
+        $occasionEventsPivot->occasion_event_id = $service->id;
+        $occasionEventsPivot->save();
         return redirect()->back()->with('success', 'Service Saved Successfully');
     }
 

@@ -39,7 +39,7 @@
                         </div>
                         <!-- List group -->
                         <ul class="list-group list-group-flush notification-list-scroll">
-                            <!-- List group item -->
+                            <!-- List group item
                             <li class="list-group-item bg-light">
                                 <a href="#" class="text-muted">
                                     <h5 class=" mb-1">Rishi Chopra</h5>
@@ -47,8 +47,8 @@
                                         Mauris blandit erat id nunc blandit, ac eleifend dolor pretium.
                                     </p>
                                 </a>
-                            </li>
-                            <!-- List group item -->
+                            </li> -->
+                            <!-- List group item
                             <li class="list-group-item">
 
 
@@ -61,8 +61,8 @@
                                 </a>
 
 
-                            </li>
-                            <!-- List group item -->
+                            </li> -->
+                            <!-- List group item
                             <li class="list-group-item">
 
 
@@ -75,8 +75,8 @@
                                 </a>
 
 
-                            </li>
-                            <!-- List group item -->
+                            </li>-->
+                            <!-- List group item
                             <li class="list-group-item">
 
 
@@ -88,10 +88,10 @@
                                 </a>
 
 
-                            </li>
+                            </li>-->
                         </ul>
                         <div class="border-top px-3 py-2 text-center">
-                            <a href="#" class="text-inherit fw-semi-bold">
+                            <a href="{{route('notifications.index')}}" class="text-inherit fw-semi-bold">
                                 View all Notifications
                             </a>
                         </div>

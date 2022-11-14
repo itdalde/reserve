@@ -15,6 +15,10 @@
 /**
  * Auth routes
  */
+
+use App\Http\Controllers\ServiceController;
+
+Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
 Route::group(['namespace' => 'Auth'], function () {
 
     // Authentication Routes...
@@ -69,6 +73,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 });
 
 
+Route::resource('notifications', 'NotificationController');
 Route::resource('services', 'ServiceController');
 Route::resource('orders', 'OrderController');
 Route::resource('helps', 'HelpController');

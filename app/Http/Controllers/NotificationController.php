@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\OccasionEventReviewsInterface;
-use App\Models\OccasionEventReviews;
+use App\Models\Occasion;
+use App\Models\OccasionEvent;
+use App\Models\PlanType;
+use App\Models\ServiceType;
 use Illuminate\Http\Request;
 
-class OccasionEventReviewsController extends Controller
+class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -16,7 +22,12 @@ class OccasionEventReviewsController extends Controller
      */
     public function index()
     {
-        //
+        $notifications = [];
+        $serviceTypes = ServiceType::all()->toArray();
+        $services = OccasionEvent::where('id','<>',0)->orderBy('id','DESC')->get();
+        $occasionTypes =  Occasion::all()->toArray();
+        $plan = PlanType::all()->toArray();
+        return view('admin.notifications.index',compact('occasionTypes','serviceTypes','plan','services','notifications' ));
     }
 
     /**
@@ -35,18 +46,16 @@ class OccasionEventReviewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\OccasionEventReviews  $occasionEventReviews
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(OccasionEventReviews $occasionEventReviews)
+    public function show($id)
     {
         //
     }
@@ -54,10 +63,10 @@ class OccasionEventReviewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\OccasionEventReviews  $occasionEventReviews
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(OccasionEventReviews $occasionEventReviews)
+    public function edit($id)
     {
         //
     }
@@ -66,10 +75,10 @@ class OccasionEventReviewsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\OccasionEventReviews  $occasionEventReviews
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OccasionEventReviews $occasionEventReviews)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -77,10 +86,10 @@ class OccasionEventReviewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\OccasionEventReviews  $occasionEventReviews
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OccasionEventReviews $occasionEventReviews)
+    public function destroy($id)
     {
         //
     }

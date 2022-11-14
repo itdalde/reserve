@@ -10,8 +10,8 @@ class OccasionEventReviews extends Model
 {
     use HasFactory;
 
-    public function occasion() {
-        return $this->belongsTo(Occasion::class);
+    public function occasionEvent() {
+        return $this->belongsTo(OccasionEvent::class,'occasion_event_id');
     }
     public function user() {
         return $this->belongsTo(User::class);

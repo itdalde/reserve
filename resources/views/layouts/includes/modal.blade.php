@@ -96,7 +96,7 @@
                                 <input
                                     onchange="document.getElementById('service-image-view').src = window.URL.createObjectURL(this.files[0])"
                                     id="service-image-file" accept="image/png, image/gif, image/jpeg" type="file"
-                                    class="d-none" name="image">
+                                    class="d-none" name="images[]" multiple>
                             </div>
                         </div>
                     </div>
