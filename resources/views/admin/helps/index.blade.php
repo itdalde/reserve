@@ -133,9 +133,12 @@
                     },
                     url: "{{route('issues-replies')}}",
                     beforeSend: function() {
-                        $(".review-holder").css("opacity", "0.1");
+                        $('#db-wrapper').addClass('blur-bg');
+                        $('#loader').show();
                     },
                     success:function(data){
+                        $('#db-wrapper').removeClass('blur-bg');
+                        $('#loader').hide();
                         $('.replies-holder').html('');
                         $('.replies-holder').append(data)
                     },
@@ -156,9 +159,13 @@
                     cache:false,
                     contentType: false,
                     processData: false,
+                    beforeSend: function() {
+                        $('#db-wrapper').addClass('blur-bg');
+                        $('#loader').show();
+                    },
                     success:function(data){
-                        console.log("success");
-                        console.log(data);
+                        $('#db-wrapper').removeClass('blur-bg');
+                        $('#loader').hide();
                         fetchReplies()
                     },
                     error: function(data){

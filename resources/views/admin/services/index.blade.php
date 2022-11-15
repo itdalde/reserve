@@ -298,9 +298,13 @@
                         sort: sort
                     },
                     beforeSend: function() {
+                        $('#db-wrapper').addClass('blur-bg');
+                        $('#loader').show();
                         $(".review-holder").css("opacity", "0.1");
                     },
                 }).done(function (response) {
+                    $('#db-wrapper').removeClass('blur-bg');
+                    $('#loader').hide();
                     $('.review-holder').css("opacity", "1");
                     let data = JSON.parse(response);
                     $('#services-reviews-table').DataTable({
@@ -333,9 +337,13 @@
                     }
                 });
             });
+            $('#db-wrapper').addClass('blur-bg');
+            $('#loader').show();
             setTimeout(function () {
+                $('#db-wrapper').removeClass('blur-bg');
+                $('#loader').hide();
                 $('#myTable > tbody > tr:nth-child(1) > td:nth-child(2)').click();
-            }, 3000);
+            }, 2000);
             $('.dataTable').on('click', 'tbody td', function() {
                 previewElement()
                 let name = $(this).closest('tr').attr('data-name');
