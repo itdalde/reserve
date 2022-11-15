@@ -7,6 +7,7 @@ use App\Http\Requests\EventsByEventTypeRequest;
 use App\Http\Requests\EventsByOccasionRequest;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
+use App\Models\OccasionEventReviews;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 
@@ -15,7 +16,7 @@ class OccasionEventsApiController extends Controller
 
     public function getOccasions(): JsonResponse
     {
-        $occasions = OccasionEvent::select('occasion_events.*', 'occasions.name as occasion_type')
+        $occasions = OccasionEvent::select('occasion_events.*', 'occasions.name as occasion_name', 'prices.*', 'reviews.*')
             ->leftJoin('occasion_events_pivots', 'occasion_events_pivots.occasion_event_id', '=', 'occasion_events.id')
             ->leftJoin('occasions', 'occasions.id', '=', 'occasion_events_pivots.occasion_id')
             ->leftJoin('occasion_event_prices as prices', 'prices.occasion_event_id', '=', 'occasion_events.id')
@@ -35,15 +36,19 @@ class OccasionEventsApiController extends Controller
         $occasionType = $request->occasion_id;
         $from = $request->date_from;
         $to = $request->date_to;
-        $occasions = Occasion::join('occasion_events_pivots', 'occasion_events_pivots.occasion_id', '=', 'occasions.id')
-            ->leftJoin('occasion_events', 'occasion_events.id', '=', 'occasion_events_pivots.occasion_event_id')
-            ->leftJoin('occasion_event_prices as prices', 'prices.occasion_event_id', '=', 'occasion_events.id')
-            ->leftJoin('occasion_event_reviews as reviews', 'reviews.occasion_event_id', '=', 'occasion_events.id')
-            ->where('occasions.id', '=', $occasionType)
+
+        $occasions = OccasionEvent::select('occasion_events.*', 'o.name as occasion_name', 'oer.*', 'oeps.*')
+            ->leftJoin('occasion_events_pivots as oep', 'occasion_events.id', '=', 'oep.occasion_event_id')
+            ->leftJoin('occasions as o', 'oep.occasion_id', '=', 'o.id')
+            ->leftJoin('occasion_event_reviews as oer', 'occasion_events.id', '=', 'oer.occasion_event_id')
+            ->leftJoin('occasion_event_prices as oeps', 'occasion_events.id', '=', 'oeps.occasion_event_id')
+            ->where('oep.occasion_id', '=', $occasionType)
+            ->where('occasion_events.active', '=', 1)
             ->orWhere([
                 ['occasion_events.availability_start_date', '=', $from],
                 ['occasion_events.availability_end_date', '=', $to]
-            ])->get();
+            ])
+            ->get();
         return sendResponse($occasions, "Occasion Events By Occasion Type");
     }
 
