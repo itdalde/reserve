@@ -298,7 +298,7 @@
                         sort: sort
                     },
                     beforeSend: function() {
-                        $(".review-holder").css("opacity", "0.7");
+                        $(".review-holder").css("opacity", "0.1");
                     },
                 }).done(function (response) {
                     $('.review-holder').css("opacity", "1");
@@ -324,7 +324,6 @@
                 console.log( 'An error has been reported by DataTables: ', message);
             })
             $('#myTable_length, #myTable_filter').remove();
-            $('#search-service-name')
 
 
             $(document).on('focus', '#search-service-name', function() {

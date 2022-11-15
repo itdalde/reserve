@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\HomeInterface;
+use App\Models\Auth\Role\Role;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

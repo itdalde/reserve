@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
 use App\Models\PlanType;
 use App\Models\ServiceType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
@@ -22,7 +24,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = [];
+        $notifications = Notification::where('user_id', Auth::user()->id)->get();
         $serviceTypes = ServiceType::all()->toArray();
         $services = OccasionEvent::where('id','<>',0)->orderBy('id','DESC')->get();
         $occasionTypes =  Occasion::all()->toArray();

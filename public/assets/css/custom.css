@@ -46,3 +46,11 @@
 .input-group input {
     border-left: none;
 }
+
+.card-border-orange {
+    border: 1px solid #eeb30e!important;
+    box-shadow: 0 2px 4px rgb(203 0 0 / 8%), 0 1px 2px rgb(234 134 4 / 8%);
+}
+.img-circle {
+    border-radius: 25px;
+}

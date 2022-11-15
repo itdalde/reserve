@@ -178,6 +178,11 @@ class UserController extends Controller
         return redirect()->route('admin.users')->withFlashDanger('Unable to Delete User!');
     }
 
+    public function serviceProviders(Request $request) {
+
+        $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
+        return view('superadmin.service-provider',compact('users'));
+    }
     public function userList(Request $request) {
         if($request->search) {
             $users = User::where('full_name','like','%'.$request->search.'%')

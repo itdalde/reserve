@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\OrderInterface;
+use App\Models\Occasion;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
@@ -19,7 +20,7 @@ class OrderController extends Controller
     public function index()
     {
         $serviceTypes = ServiceType::all()->toArray();
-        $occasionTypes =  OccasionType::all()->toArray();
+        $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan' ));
     }

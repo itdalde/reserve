@@ -15,10 +15,17 @@
 /**
  * Auth routes
  */
+
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HelpController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
+Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
+Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
+Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
+
 Route::group(['namespace' => 'Auth'], function () {
 
     // Authentication Routes...
@@ -53,7 +60,7 @@ Route::group(['namespace' => 'Auth'], function () {
 /**
  * Backend routes
  */
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], function () {
 
     // Dashboard
     Route::get('/', 'DashboardController@index')->name('dashboard');
