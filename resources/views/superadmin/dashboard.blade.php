@@ -46,10 +46,10 @@
             let datatable = $('#user-table').DataTable({
                 "pageLength": 10,
             });
-            $('#service-provider-table').on('error.dt', function(e, settings, techNote, message) {
+            $('#user-table').on('error.dt', function(e, settings, techNote, message) {
                 console.log( 'An error has been reported by DataTables: ', message);
             })
-            $('#service-provider-table_length').remove();
+            $('#user-table_length').remove();
         } );
     </script>
 @endsection
