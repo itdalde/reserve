@@ -104,25 +104,6 @@ class OccasionEventController extends Controller
     }
 
     /**
-     * Create Event
-     *
-     * @param OccasionEventRequest $request
-     * @return JsonResponse
-     */
-    public function createOrder(OccasionEventRequest $request): JsonResponse
-    {
-        $request->validated();
-
-        $event = $this->occasionEventRepository->createEvents($request->all());
-
-        if (!$event) {
-            $error = 'Unable to create events';
-            return sendError($error, '', 409);
-        }
-        return sendResponse($event, 'Created Successfully!', 201);
-    }
-
-    /**
      * @param Request $request
      * @return JsonResponse
      */
@@ -135,34 +116,6 @@ class OccasionEventController extends Controller
             $price_plan = $this->occasionEventPriceRepository->getEventPriceById($key->occasion_id);
         }
         return sendResponse(json_decode($occasion), 'Events Collection');
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function deleteEvent(Request $request): JsonResponse
-    {
-       $eventId = $request->route('id');
-       $this->occasionEventRepository->deleteEvent($eventId);
-       return response()->json(null, ResponseAlias::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @param OccasionEventByTypeRequest $request
-     * @return JsonResponse
-     */
-    public function getEventByType(OccasionEventByTypeRequest $request): JsonResponse
-    {
-        $request->validated();
-
-        $type = $request->occasion_type;
-
-        $from = $request->from;
-        $to = $request->to;
-
-        $events = $this->occasionEventRepository->getOccasionEventByType($type, $from, $to);
-        return sendResponse($events, 'Occasion Events Collection');
     }
 
 }
