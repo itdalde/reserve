@@ -30,7 +30,7 @@ class OccasionEvent extends Model
     }
     public function occasionEventPrice(): HasMany
     {
-        return $this->hasMany(OccasionEventPrice::class);
+        return $this->hasMany(OccasionEventPrice::class)->where('active', '=', 1);
     }
     public function occasionEventsReviewsAverage() {
         return $this->hasMany(OccasionEventReviews::class)
