@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
          $this->call(
              [
                  OccasionEventSeeder::class,
-                 OccasionEventPriceSeeder::class
+                 OccasionEventPriceSeeder::class,
+                 OccasionTypesSeeder::class
              ]
          );
     }

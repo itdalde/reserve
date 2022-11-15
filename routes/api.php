@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
+use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\OccasionEventController;
@@ -48,79 +49,16 @@ Route::group(['prefix' => 'v1/membership', 'middleware' => ['cors']], function()
     Route::get('/members', [MembershipController::class, 'getMembers'])->name('membership');
 });
 
-//  INFO: Occasion Endpoints
-Route::group(['prefix' => 'v1/occasion', 'middleware' => ['cors']], function() {
-    Route::get('/', [OccasionController::class, 'index'])->name('index');
-    Route::post('/create', [OccasionController::class, 'create'])->name('create');
-    Route::post('/store', [OccasionController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [OccasionController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [OccasionController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [OccasionController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [OccasionController::class, 'destroy'])->name('destroy');
-    Route::get('/demo', [OccasionController::class, 'demo'])->name('demo');
-});
-
-//  INFO: OccasionEvent Endpoints
-Route::group(['prefix' => 'v1/events', 'middleware' => ['cors']], function() {
-    Route::get('/', [OccasionEventController::class, 'index'])->name('index');
-    Route::post('/create', [OccasionEventController::class, 'create'])->name('create');
-    Route::post('/store', [OccasionEventController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [OccasionEventController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [OccasionEventController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [OccasionEventController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [OccasionEventController::class, 'destroy'])->name('destroy');
-    Route::post('/create-order', [OccasionEventController::class, 'createOrder'])->name('create-order');
-    Route::post('/delete-event', [OccasionEventController::class, 'deleteEvent'])->name('delete-event');
-    Route::get('/events', [OccasionEventController::class, 'getEvents'])->name('occasion-events');
-});
 
 Route::group(['prefix' => 'v1/occasions', 'middleware' => ['cors']], function() {
-   Route::get('/', [OccasionEventsApiController::class, 'getOccasions'])->name('get-occasions');;
-   Route::get('/events-by-service-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-occasion-event-by-service-type');
-   Route::get('/events-by-occasion', [OccasionEventsApiController::class, 'getEventsByOccasion'])->name('get-occasions');
+    Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
+    Route::get('/occasion-by-occasion-type', [OccasionsApiController::class, 'getOccasionTypeByOccasionId'])->name('get-occasions-by-occasion-type');
 });
 
-//  INFO: OccasionEventReviews Endpoints
-Route::group(['prefix' => 'v1/event-reviews', 'middleware' => ['cors']], function() {
-    Route::get('/', [OccasionEventReviewsController::class, 'index'])->name('index');
-    Route::post('/create', [OccasionEventReviewsController::class, 'create'])->name('create');
-    Route::post('/store', [OccasionEventReviewsController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [OccasionEventReviewsController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [OccasionEventReviewsController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [OccasionEventReviewsController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [OccasionEventReviewsController::class, 'destroy'])->name('destroy');
-});
-
-//  INFO: Order Endpoints
-Route::group(['prefix' => 'v1/order', 'middleware' => ['cors']], function() {
-    Route::get('/', [OrderController::class, 'index'])->name('index');
-    Route::post('/create', [OrderController::class, 'create'])->name('create');
-    Route::post('/store', [OrderController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [OrderController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [OrderController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [OrderController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [OrderController::class, 'destroy'])->name('destroy');
-});
-
-//  INFO: Service Endpoints
-Route::group(['prefix' => 'v1/service', 'middleware' => ['cors']], function() {
-    Route::get('/', [ServiceController::class, 'index'])->name('index');
-    Route::post('/create', [ServiceController::class, 'create'])->name('create');
-    Route::post('/store', [ServiceController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [ServiceController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [ServiceController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [ServiceController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [ServiceController::class, 'destroy'])->name('destroy');
-});
-
-//  INFO: Transaction Endpoints
-Route::group(['prefix' => 'v1/transaction', 'middleware' => ['cors']], function() {
-    Route::get('/', [TransactionController::class, 'index'])->name('index');
-    Route::post('/create', [TransactionController::class, 'create'])->name('create');
-    Route::post('/store', [TransactionController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [TransactionController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [TransactionController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [TransactionController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [TransactionController::class, 'destroy'])->name('destroy');
+Route::group(['prefix' => 'v1/occasion-events', 'middleware' => ['cors']], function() {
+   Route::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])->name('get-occasions');;
+   Route::get('/events-by-event-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-occasion-event-by-service-type');
+   Route::get('/events-by-occasion-id', [OccasionEventsApiController::class, 'getEventsByOccasionId'])->name('get-occasions');
+   Route::get('/events-by-occasion-id', [OccasionEventsApiController::class, 'getOccasionEventsByOccasionId'])->name('get-occasion-events-by-occasion');
 });
 
