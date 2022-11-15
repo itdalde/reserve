@@ -31,7 +31,7 @@ class OccasionEventsApiController extends Controller
      * @param EventsByOccasionRequest $request
      * @return JsonResponse
      */
-    public function getEventsByOccasionId(EventsByOccasionRequest $request): JsonResponse
+    public function getEventsByOccasionDate(EventsByOccasionRequest $request): JsonResponse
     {
         $request->validated();
         $occasionType = $request->occasion_id;
