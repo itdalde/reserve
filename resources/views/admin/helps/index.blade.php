@@ -193,8 +193,8 @@
                 if(userImage) {
                     image = userImage;
                 }
-                $('#owner_id').val(id);
-                $('#issue_id').val(userId);
+                $('#owner_id').val(userId);
+                $('#issue_id').val(id);
                 $('.issue-user-image').attr('src',image)
                 $('.issue-date').text(issueDate)
                 $('.issue-user-name').text(userName)
