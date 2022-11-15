@@ -70,27 +70,29 @@ class HelpController extends Controller
         }
     }
 
-    public function reply(Request $request) {
+    public function reply(Request $request)
+    {
 
         $data = $request->all();
         $company = $request->user()->company;
-        $inquiryReply =  new InquiryReply();
+        $inquiryReply = new InquiryReply();
 
         $inquiryReply->inquiries_id = $data['issue_id'];
         $inquiryReply->user_id = $request->user()->id;
         $inquiryReply->description = $data['reply'];
-        $inquiryReply->is_owner = $request->user()->id !=  $data['owner_id'] ? 0 : 1 ;
+        $inquiryReply->is_owner = $request->user()->id != $data['owner_id'] ? 0 : 1;
         $inquiryReply->save();
-        foreach ($request->file('images') as $imagefile) {
-            $image = new InquiryReplyImage();
-            $imageName = time().'.'.$imagefile->extension();
-            $imagefile->move(public_path("images/company/{$company->id}/reply"), $imageName);
-            $filename = "images/company/{$company->id}/reply/{$imageName}";
-            $image->image = $filename;
-            $image->inquiry_replies_id = $inquiryReply->id;
-            $image->save();
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $imagefile) {
+                $image = new InquiryReplyImage();
+                $imageName = time() . '.' . $imagefile->extension();
+                $imagefile->move(public_path("images/company/{$company->id}/reply"), $imageName);
+                $filename = "images/company/{$company->id}/reply/{$imageName}";
+                $image->image = $filename;
+                $image->inquiry_replies_id = $inquiryReply->id;
+                $image->save();
+            }
         }
-
         $response = [
             'success' => true,
             'data' => $inquiryReply,

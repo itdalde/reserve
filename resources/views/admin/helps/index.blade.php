@@ -136,6 +136,7 @@
                         $(".review-holder").css("opacity", "0.1");
                     },
                     success:function(data){
+                        $('.replies-holder').html('');
                         $('.replies-holder').append(data)
                     },
                     error: function(data){
@@ -158,6 +159,7 @@
                     success:function(data){
                         console.log("success");
                         console.log(data);
+                        fetchReplies()
                     },
                     error: function(data){
                         console.log("error");
