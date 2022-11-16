@@ -14,9 +14,14 @@ class OccasionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-            'name' => $this->faker->randomElement(['Catering', 'Mens Event']),
-            'active' => 1
+            [
+                'name' => 'Catering',
+                'active' => 1
+            ],
+            [
+                'name' => 'Men Occasions',
+                'active' => 1
+            ]
         ];
     }
 }
