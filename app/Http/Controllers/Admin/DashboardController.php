@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\Occasion;
 use App\Models\OccasionType;
@@ -32,8 +33,12 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request )
     {
+        if(Auth::user()->hasRole('superadmin')) {
+            $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
+            return view('superadmin.dashboard',compact('users'));
+        }
         $serviceTypes = ServiceType::all()->toArray();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();

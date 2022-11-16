@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNotificationsTable extends Migration
+class CreateInquiryRepliesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('inquiry_replies', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
+            $table->unsignedBigInteger('inquiries_id');
+            $table->unsignedBigInteger('user_id');
             $table->text('description')->nullable();
-            $table->integer('company_id')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->string('notification_type')->nullable();
+            $table->tinyInteger('active')->default(1)->unsigned();
+            $table->tinyInteger('is_owner')->default(0)->unsigned();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::dropIfExists('inquiry_replies');
     }
 }

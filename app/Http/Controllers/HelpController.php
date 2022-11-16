@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Interfaces\HelpInterface;
 use App\Models\Inquiries;
 use App\Models\InquiryAttachments;
+use App\Models\InquiryReply;
+use App\Models\InquiryReplyImage;
 use App\Models\Occasion;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
+use Google\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,11 +24,12 @@ class HelpController extends Controller
      */
     public function index()
     {
-        $inquiries = Inquiries::all();
+        $activeInquiries = Inquiries::where('is_active',1)->get();
+        $inActiveInquiries = Inquiries::where('is_active',0)->get();
         $serviceTypes = ServiceType::all()->toArray();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
-        return view('admin.helps.index',compact('inquiries','occasionTypes','serviceTypes','plan'));
+        return view('admin.helps.index',compact('activeInquiries','inActiveInquiries','occasionTypes','serviceTypes','plan'));
     }
 
     /**
@@ -36,6 +40,66 @@ class HelpController extends Controller
     public function create()
     {
         //
+    }
+
+    public function replies(Request $request) {
+        try {
+            $data = $request->all();
+            $inquiryReplies = InquiryReply::where('inquiries_id', $data['inquiries_id'])->get();
+            $data = '';
+            foreach ($inquiryReplies as $inquiryReply) {
+                $name = $inquiryReply->user->first_name . ' ' . $inquiryReply->user->last_name;
+                $date = $inquiryReply->created_at->format('d/m/Y h:i A');
+                $imageProfile = $inquiryReply->user->profile_picture ?? asset('images/blank-profile-picture.png');
+                $description = $inquiryReply->description;
+                $data .= '<div class="card mt-7 mb-2" ><div class="card-body">';
+                $data .= '<div class="d-flex bd-highlight mb-3">
+                        <div class="p-2 bd-highlight"><img width="50" class="img-circle " src="' . $imageProfile . '" alt="..."></div>
+                        <div class="p-2 bd-highlight"><span class="">' . $name . '</span></div>
+                        <div class="ms-auto p-2 bd-highlight"><span class="">' . $date . '</span></div>
+                    </div>
+                    <div class="d-flex flex-column bd-highlight mb-3">
+                        <div class="p-2 bd-highlight ">' . $description . '</div>
+                    </div>';
+                $data .= '</div></div>';
+            }
+            echo $data;
+            die;
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
+        }
+    }
+
+    public function reply(Request $request)
+    {
+
+        $data = $request->all();
+        $company = $request->user()->company;
+        $inquiryReply = new InquiryReply();
+
+        $inquiryReply->inquiries_id = $data['issue_id'];
+        $inquiryReply->user_id = $request->user()->id;
+        $inquiryReply->description = $data['reply'];
+        $inquiryReply->is_owner = $request->user()->id != $data['owner_id'] ? 0 : 1;
+        $inquiryReply->save();
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $imagefile) {
+                $image = new InquiryReplyImage();
+                $imageName = time() . '.' . $imagefile->extension();
+                $imagefile->move(public_path("images/company/{$company->id}/reply"), $imageName);
+                $filename = "images/company/{$company->id}/reply/{$imageName}";
+                $image->image = $filename;
+                $image->inquiry_replies_id = $inquiryReply->id;
+                $image->save();
+            }
+        }
+        $response = [
+            'success' => true,
+            'data' => $inquiryReply,
+            'message' => 'Successfully saved'
+        ];
+
+        return response()->json($response, 200);
     }
 
     /**

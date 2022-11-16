@@ -124,20 +124,22 @@ class ServiceController extends Controller
         $service->service_type = $data['service_type'];
         $service->save();
         $c = 0;
-        foreach ($request->file('images') as $imagefile) {
-            $c +=1;
-            $image = new EventImages();
-            $imageName = time().'.'.$imagefile->extension();
-            $imagefile->move(public_path("images/company/{$company->id}/services"), $imageName);
-            $filename = "images/company/{$company->id}/services/{$imageName}";
-            if($c == 1) {
-                $service->image = $filename; // this is for featured image
-                $service->save();
-                $image->is_featured = 1;
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $imagefile) {
+                $c += 1;
+                $image = new EventImages();
+                $imageName = time() . '.' . $imagefile->extension();
+                $imagefile->move(public_path("images/company/{$company->id}/services"), $imageName);
+                $filename = "images/company/{$company->id}/services/{$imageName}";
+                if ($c == 1) {
+                    $service->image = $filename; // this is for featured image
+                    $service->save();
+                    $image->is_featured = 1;
+                }
+                $image->image = $filename;
+                $image->occasion_event_id = $service->id;
+                $image->save();
             }
-            $image->image = $filename;
-            $image->occasion_event_id = $service->id;
-            $image->save();
         }
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;

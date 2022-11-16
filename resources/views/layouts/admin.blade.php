@@ -5,6 +5,14 @@
 
 </head>
 <body class="bg-light">
+<div id='loader' class="a" style="--n: 5;margin-top: 50vh;
+    text-align: center;">
+    <div class="dot" style="--i: 0"></div>
+    <div class="dot" style="--i: 1"></div>
+    <div class="dot" style="--i: 2"></div>
+    <div class="dot" style="--i: 3"></div>
+    <div class="dot" style="--i: 4"></div>
+</div>
 <div id="db-wrapper">
 @include('layouts.includes.sidebar')
 

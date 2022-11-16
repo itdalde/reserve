@@ -90,7 +90,6 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         $errors = [];
-
         if (config('auth.users.confirm_email') && !$user->confirmed) {
             $errors = [$this->username() => __('auth.notconfirmed', ['url' => route('confirm.send', [$user->email])])];
         }
