@@ -24,6 +24,16 @@
                             <div class="login_content">
                                 {{ Form::open(['route' => 'register']) }}
                                 <div>
+                                    <input type="text" name="first_name" class="form-control"
+                                           placeholder="First Name"
+                                           required/>
+                                </div>
+                                <div>
+                                    <input type="text" name="last_name" class="form-control"
+                                           placeholder="Last Name"
+                                           required/>
+                                </div>
+                                <div>
                                     <input type="email" name="email" class="form-control"
                                            placeholder="{{ __('views.auth.register.input_1') }}"
                                            required/>
@@ -42,6 +52,15 @@
                                     <input type="text" name="company_name" class="form-control"
                                            placeholder="Company Name"
                                            value="{{ old('company_name') }}" required autofocus/>
+                                </div>
+                                <div class="mb-4">
+                                    <select name="service_type" required autofocus value="{{ old('service_type') }}" class="form-control" aria-label="Select Service Type">
+                                        @if(isset($serviceTypes))
+                                            @foreach($serviceTypes as $serviceType)
+                                                <option value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                                 <div>
                                     <textarea type="text" name="company_description" class="form-control"

@@ -109,8 +109,12 @@
                 <a class="rounded-circle" href="#" role="button" id="dropdownUser"
                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="avatar avatar-md avatar-indicators avatar-online">
-                        <img alt="avatar" src="./assets/images/avatar/avatar-1.jpg"
-                             class="rounded-circle"/>
+
+                        @if(Auth::user() && Auth::user()->profile_picture )
+                            <img class="rounded-circle" src="{{  Auth::user()->profile_picture }}" alt="...."   />
+                        @else
+                            <img class="rounded-circle" src="https://ui-avatars.com/api/?name={{Auth::user() && Auth::user()->first_name ? Auth::user()->first_name: Auth::user()->email}}" alt="...">
+                        @endif
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end text-center" style="    width: 200px;"

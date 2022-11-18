@@ -80,6 +80,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 });
 
 
+Route::resource('settings', 'SettingsController');
 Route::resource('notifications', 'NotificationController');
 Route::resource('services', 'ServiceController');
 Route::resource('orders', 'OrderController');

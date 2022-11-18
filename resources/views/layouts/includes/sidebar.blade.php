@@ -6,7 +6,11 @@
         <div class="d-flex flex-column bd-highlight mb-3">
             <div class="  bd-highlight">
                 <a class="navbar-brand" href="{{ url('/admin') }}">
-                    <img class="company-logo" src="/assets/images/company/{{ Auth::user() && Auth::user()->company ? Auth::user()->company->logo: '' }}" alt="...."/>
+                    @if(Auth::user() && Auth::user()->company && Auth::user()->company->logo)
+                        <img class="company-logo" src="{{  Auth::user()->company->logo }}" alt="...."   />
+                    @else
+                        <img class="company-logo" src="https://ui-avatars.com/api/?name={{Auth::user() && Auth::user()->company ? Auth::user()->company->name : Auth::user()->email}}" alt="...">
+                    @endif
                 </a>
             </div>
             <div class=" bd-highlight text-center">
@@ -40,6 +44,24 @@
                     <img class="ml-15px " src="{{Request::is('helps*') ? asset('assets/images/icons/Group active.svg') : asset('assets/images/icons/Group.svg')}}" alt="....">
                     Help
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link px-4 d-flex align-items-center custom-tooltip customers-side-tab"  data-bs-toggle="collapse" href="#settings" role="button" aria-expanded="false" aria-controls="settings">
+                    <span class="ml-15px "><i style="font-size: 25px; {{Request::is('settings*') ? 'color:orange' : ''}}" class="bi bi-gear"></i> </span>
+                    <span>Settings</span>
+                </a>
+                <ul class="collapse pl-0 mx-0" id="settings" style="list-style-type: none;">
+                    <li class="nav-item' {{ Request::is('settings*') ? ' active' : '' }}">
+                        <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.index')}}">
+                            <span class="pl-1 ml-2"> Profile </span>
+                        </a>
+                    </li>
+                    <li class="nav-item' {{ Request::is('settings*') ? 'active' : '' }}">
+                        <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.index')}}">
+                            <span class="pl-1 ml-2">Pause/Stop new orders</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             @else
                 <li class="nav-item py-2">
