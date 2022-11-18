@@ -24,32 +24,32 @@
                             <div class="login_content">
                                 {{ Form::open(['route' => 'register']) }}
                                 <div>
-                                    <input type="text" name="first_name" class="form-control"
+                                    <input  autocomplete="new-password" type="text" name="first_name" class="form-control"
                                            placeholder="First Name"
                                            required/>
                                 </div>
                                 <div>
-                                    <input type="text" name="last_name" class="form-control"
+                                    <input autocomplete="new-password" type="text" name="last_name" class="form-control"
                                            placeholder="Last Name"
                                            required/>
                                 </div>
                                 <div>
-                                    <input type="email" name="email" class="form-control"
+                                    <input autocomplete="new-password" type="email" name="email" class="form-control"
                                            placeholder="{{ __('views.auth.register.input_1') }}"
                                            required/>
                                 </div>
                                 <div>
-                                    <input type="password" name="password" class="form-control"
+                                    <input autocomplete="new-password" type="password" name="password" class="form-control"
                                            placeholder="{{ __('views.auth.register.input_2') }}"
                                            required=""/>
                                 </div>
                                 <div>
-                                    <input type="password" name="password_confirmation" class="form-control"
+                                    <input autocomplete="new-password" type="password" name="password_confirmation" class="form-control"
                                            placeholder="{{ __('views.auth.register.input_3') }}"
                                            required/>
                                 </div>
                                 <div>
-                                    <input type="text" name="company_name" class="form-control"
+                                    <input autocomplete="new-password" type="text" name="company_name" class="form-control"
                                            placeholder="Company Name"
                                            value="{{ old('company_name') }}" required autofocus/>
                                 </div>
