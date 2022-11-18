@@ -111,7 +111,7 @@
                     <div class="avatar avatar-md avatar-indicators avatar-online">
 
                         @if(Auth::user() && Auth::user()->profile_picture )
-                            <img class="rounded-circle" src="{{  Auth::user()->profile_picture }}" alt="...."   />
+                            <img class="rounded-circle" src="{{ asset( Auth::user()->profile_picture) }}" alt="...."   />
                         @else
                             <img class="rounded-circle" src="https://ui-avatars.com/api/?name={{Auth::user() && Auth::user()->first_name ? Auth::user()->first_name: Auth::user()->email}}" alt="...">
                         @endif

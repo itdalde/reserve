@@ -7,7 +7,7 @@
             <div class="  bd-highlight">
                 <a class="navbar-brand" href="{{ url('/admin') }}">
                     @if(Auth::user() && Auth::user()->company && Auth::user()->company->logo)
-                        <img class="company-logo" src="{{  Auth::user()->company->logo }}" alt="...."   />
+                        <img class="company-logo" src="{{  asset(Auth::user()->company->logo) }}" alt="...."   />
                     @else
                         <img class="company-logo" src="https://ui-avatars.com/api/?name={{Auth::user() && Auth::user()->company ? Auth::user()->company->name : Auth::user()->email}}" alt="...">
                     @endif
@@ -57,8 +57,8 @@
                         </a>
                     </li>
                     <li class="nav-item' {{ Request::is('settings*') ? 'active' : '' }}">
-                        <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.index')}}">
-                            <span class="pl-1 ml-2">Pause/Stop new orders</span>
+                        <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.manage_orders')}}">
+                            <span class="pl-1 ml-2">Manage orders</span>
                         </a>
                     </li>
                 </ul>

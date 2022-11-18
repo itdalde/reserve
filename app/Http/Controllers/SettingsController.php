@@ -27,6 +27,11 @@ class SettingsController extends Controller
         //
     }
 
+    public function manageOrders(Request $request) {
+        return view('admin.orders.manage');
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
