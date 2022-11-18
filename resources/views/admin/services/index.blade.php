@@ -289,6 +289,10 @@
                 let sort = $(this).attr('data-sort');
                 generateReviewList(sort)
             });
+            $('#new-service-modal').on('hidden.bs.modal', function () {
+                generateReviewList();
+            })
+
             function generateReviewList(sort = 'DESC') {
                 $.ajax({
                     url: "{{route('services-reviews')}}",

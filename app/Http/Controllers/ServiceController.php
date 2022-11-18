@@ -6,6 +6,7 @@ use App\Interfaces\ServiceInterface;
 use App\Models\EventImages;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
+use App\Models\OccasionEventAddon;
 use App\Models\OccasionEventPrice;
 use App\Models\OccasionEventReviews;
 use App\Models\OccasionEventsPivot;
@@ -31,11 +32,10 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $serviceTypes = ServiceType::all()->toArray();
-        $services = OccasionEvent::where('id','<>',0)->orderBy('id','DESC')->get();
+        $services = OccasionEvent::where('company_id',auth()->user()->company->id)->orderBy('id','DESC')->get();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
-        return view('admin.services.index',compact('occasionTypes','serviceTypes','plan','services' ));
+        return view('admin.services.index',compact('occasionTypes','plan','services' ));
     }
 
     public function reviews(Request $request) {
@@ -111,11 +111,13 @@ class ServiceController extends Controller
         $service = new OccasionEvent();
         $service->company_id = $company->id ;
         $service->name = $data['service_name'];
+        $service->occasion_type =  $data['occasion_type'];
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
         $service->address_1 = $data['location'];
-        $service->max_capacity = $data['hall_min_capacity'];
-        $service->min_capacity = $data['hall_max_capacity'];
+        $service->max_capacity = $data['min_capacity'];
+        $service->min_capacity = $data['max_capacity'];
+        $service->availability_slot = $data['available_slot'];
         $service->availability_start_date = $data['start_available_date'];
         $service->availability_end_date = $data['end_available_date'];
         $service->availability_time_in = $data['start_available_time'];
@@ -123,24 +125,20 @@ class ServiceController extends Controller
         $service->active = 1;
         $service->service_type = $data['service_type'];
         $service->save();
-        $c = 0;
+
+        if ($request->file('featured_image')) {
+            $file = $request->file('featured_image');
+            $filename = $this->uploadImage($file,$service);
+            $service->image = $filename;
+            $service->save();
+        }
+
         if ($request->file('images')) {
-            foreach ($request->file('images') as $imagefile) {
-                $c += 1;
-                $image = new EventImages();
-                $imageName = time() . '.' . $imagefile->extension();
-                $imagefile->move(public_path("images/company/{$company->id}/services"), $imageName);
-                $filename = "images/company/{$company->id}/services/{$imageName}";
-                if ($c == 1) {
-                    $service->image = $filename; // this is for featured image
-                    $service->save();
-                    $image->is_featured = 1;
-                }
-                $image->image = $filename;
-                $image->occasion_event_id = $service->id;
-                $image->save();
+            foreach ($request->file('images') as $file) {
+                $this->uploadImage($file,$service);
             }
         }
+
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;
         $price->plan_id = $data['plan_id'];
@@ -149,7 +147,7 @@ class ServiceController extends Controller
         $price->min_capacity= $data['package_min_capacity'];
         $price->max_capacity= $data['package_max_capacity'];
         $price->package_details= $data['package_details'];
-        $price->package_price= $data['package_price'];
+        $price->package_price= $data['service_price'];
         $price->active = 1;
         $price->save();
 
@@ -157,7 +155,32 @@ class ServiceController extends Controller
         $occasionEventsPivot->occasion_id= $data['occasion_type'];
         $occasionEventsPivot->occasion_event_id = $service->id;
         $occasionEventsPivot->save();
+
+        foreach ($data['add_on_name'] as $k => $name) {
+            if($name) {
+                $occasionEventAddon = new OccasionEventAddon();
+                $occasionEventAddon->occasion_event_id = $service->id;
+                $occasionEventAddon->name = $name;
+                $occasionEventAddon->price = $data['add_on_price'][$k] ?? 0;
+                $occasionEventAddon->description = $data['add_on_description'][$k] ?? '';
+                $occasionEventAddon->save();
+            }
+        }
+
         return redirect()->back()->with('success', 'Service Saved Successfully');
+    }
+
+    public function uploadImage($file,$service,$isFeatured = 0) {
+        $company = auth()->user()->company;
+        $image = new EventImages();
+        $imageName = time() . '.' . $file->extension();
+        $file->move(public_path("images/company/{$company->id}/services"), $imageName);
+        $filename = "images/company/{$company->id}/services/{$imageName}";
+        $image->image = $filename;
+        $image->is_featured = $isFeatured;
+        $image->occasion_event_id = $service->id;
+        $image->save();
+        return $filename;
     }
 
     /**

@@ -18,9 +18,11 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HelpController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 
+Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
 Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
 Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
@@ -80,6 +82,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
 });
 
 
+Route::resource('settings', 'SettingsController');
 Route::resource('notifications', 'NotificationController');
 Route::resource('services', 'ServiceController');
 Route::resource('orders', 'OrderController');

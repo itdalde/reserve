@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\Auth\Role\Role;
 use App\Models\Company;
+use App\Models\ServiceType;
 use App\Notifications\Auth\ConfirmEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -76,8 +77,9 @@ class RegisterController extends Controller
     {
         /** @var  $user User */
         $user = User::create([
-            'first_name' => $data['company_name'],
-            'last_name' => '',
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'full_name' => $data['first_name'] . ' '. $data['last_name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code' => Uuid::uuid4(),
@@ -87,12 +89,17 @@ class RegisterController extends Controller
         $company->name = $data['company_name'];
         $company->user_id = $user->id;
         $company->description = $data['company_description'];
+        $company->service_type_id = $data['service_type'];
         $company->save();
-        if (config('auth.users.default_role')) {
-            $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
-        }
+        $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
 
         return $user;
+    }
+
+    public function showRegistrationForm()
+    {
+        $serviceTypes = ServiceType::all()->toArray();
+        return view('auth.register',compact('serviceTypes'));
     }
 
     /**

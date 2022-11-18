@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="new-service-modalLabel">Add new service</h5>
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close</button>
             </div>
-            <form action="{{route('services.store')}}" method="post" enctype="multipart/form-data">
+            <form id="create-service" action="{{route('services.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
 
                 <div class="modal-body">
@@ -40,18 +40,16 @@
                             <div class="col-sm-10">
                                 <input name="service_name" type="text" class="form-control" placeholder="Enter Service Name"
                                        id="service-name" value="">
+                                    <div class="service-name-error alert alert-danger d-none  mt-2" role="alert">
+                                       Please add service name
+                                    </div>
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="service-type" class="col-sm-2 col-form-label">Service type</label>
                             <div class="col-sm-5">
-                                <select name="service_type" class="form-select" aria-label="Select Service Type">
-                                    @if(isset($serviceTypes))
-                                        @foreach($serviceTypes as $serviceType)
-                                            <option value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
+                                <input type="hidden" name="service_type" value="{{Auth::user() ? Auth::user()->company->service_type_id : 1}}">
+                                <input type="text" class="form-control" readonly value="{{Auth::user() ? Auth::user()->company->serviceType->name : 'Serrvice'}}">
                             </div>
                             <div class="col-sm-5">
                                 <div class="input-group flex-nowrap">
@@ -87,16 +85,31 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label class="col-sm-2 col-form-label">Image Service</label>
-                            <div class="col-sm-10">
-                                <a href="#" class="service-image-holder">
-                                    <img width="200" id="service-image-view"
-                                         src="{{asset('assets/images/icons/image-select.png')}}" alt="image-select">
-                                </a>
+                            <label class="col-sm-2 col-form-label">Featured Image</label>
+                            <div class="col-sm-10 mb-2">
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <a href="#" class="service-image-holder">
+                                        <img width="200" id="service-image-view"
+                                             src="{{asset('assets/images/icons/image-select.png')}}" alt="image-select">
+                                    </a>
+                                </div>
                                 <input
                                     onchange="document.getElementById('service-image-view').src = window.URL.createObjectURL(this.files[0])"
                                     id="service-image-file" accept="image/png, image/gif, image/jpeg" type="file"
-                                    class="d-none" name="images[]" multiple>
+                                    class="d-none" name="featured_image" >
+
+                                <div class="service-image-error alert alert-danger d-none mt-2" role="alert">
+                                    Please add image first
+                                </div>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Image Gallery</label>
+                            <div class="col-sm-10">
+
+                                <div class="d-flex justify-content-between service-image-gallery-holder  flex-wrap"></div>
+                                <input
+                                    id="service-image-gallery-file" accept="image/png, image/gif, image/jpeg" type="file"
+                                    class="" name="images[]" multiple>
+
                             </div>
                         </div>
                     </div>
@@ -126,70 +139,70 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="mb-3 row">
-                            <label for="service-name" class="col-sm-2 col-form-label">Hall features</label>
+                        <div class=" row">
+                            <label for="service-name" class="col-sm-2 col-form-label">Details</label>
                             <div class="col-sm-10">
                                 <div class="mb-3">
                                     <label class="form-label">Capacity</label>
                                     <div class="d-flex flex-row bd-highlight mb-3">
                                         <div class="bd-highlight w-50">
-                                            <input min="0" value="0" placeholder="Minimum" name="hall_min_capacity" class="float-end form-control" type="number">
+                                            <input min="0" value="0" placeholder="Minimum" name="min_capacity" class="float-end form-control" type="number">
                                         </div>
                                         <div class="bd-highlight w-15">
                                             <hr>
                                         </div>
                                         <div class="bd-highlight w-50">
-                                            <input min="0" value="0" placeholder="Maximum" name="hall_max_capacity" class="float-start form-control" type="number">
+                                            <input min="0" value="0" placeholder="Maximum" name="max_capacity" class="float-start form-control" type="number">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row bd-highlight mb-3">
-                                    <div class="col-sm-6 pe-2">
+                                    <div class="col-sm-6 pe-2 d-none">
                                         <div class="mb-3">
                                             <label class="form-label">Available time</label>
                                             <div class="d-flex flex-row bd-highlight mb-3">
                                                 <div class="bd-highlight">
-                                                    <input name="start_available_time" class="float-end form-control" type="time">
+                                                    <input value="07:00:00" name="start_available_time" class="float-end form-control" type="time">
                                                 </div>
                                                 <div class="bd-highlight w-15">
                                                     <hr>
                                                 </div>
                                                 <div class="bd-highlight">
-                                                    <input name="end_available_time" class="float-start form-control" type="time">
+                                                    <input value="20:00:00" name="end_available_time" class="float-start form-control" type="time">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 ">
-                                        <div class="mb-3">
+                                    <div class="col-sm-7 pe-2 ">
+                                        <div class="row">
                                             <label class="form-label">Available Date</label>
-                                            <div class="d-flex flex-row bd-highlight mb-3">
-                                                <div class="bd-highlight w-50">
-                                                    <input name="start_available_date" class="float-end form-control" type="date">
-                                                </div>
-                                                <div class="bd-highlight w-15">
-                                                    <hr style="width: 3px;">
-                                                </div>
-                                                <div class="bd-highlight w-50">
-                                                    <input name="end_available_date" class="float-start form-control" type="date">
-                                                </div>
+                                            <div class="col-sm-6 ">
+                                                <input value="<?php echo date('Y-m-d'); ?>" name="start_available_date" class="float-end form-control" type="date">
                                             </div>
+                                            <div class="col-sm-6 ">
+                                                <input value="<?php echo date('Y-m-d'); ?>"  name="end_available_date" class="float-start form-control" type="date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3 col-sm-5 ">
+                                        <label class="form-label">Available Slot</label>
+                                        <div class="bd-highlight">
+                                            <input value="2" name="available_slot" class="float-end form-control" type="number">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3 row">
+                        <div class=" row">
                             <label for="service-type" class="col-sm-2 col-form-label">Payment plans</label>
 
                             <div class="col-sm-10">
-                                <h4>Default</h4>
                                 <div class="mb-3">
                                     <div class="d-flex flex-row bd-highlight mb-3">
                                         <div class="pe-2 bd-highlight w-100">
-                                            <label class="form-label">Service unit</label>
+                                            <label class="form-label">Plan Type</label>
                                             <div class="bd-highlight w-100">
-                                                <select name="plan_id" class="form-select" aria-label="Select Service unit">
+                                                <select id="plan_id" name="plan_id" class="form-select" aria-label="Select Plan Type">
                                                     @if(isset($plan))
                                                         @foreach($plan as $p)
                                                             <option value="{{$p['id']}}">{{$p['name']}}</option>
@@ -202,50 +215,40 @@
                                             <label class="form-label">Price</label>
                                             <div class="bd-highlight w-100">
                                                 <div class="input-group mb-3">
-                                                    <span class="input-group-text">$</span>
-                                                    <input value="0" name="service_price" type="text" class="form-control" aria-label="Amount">
+                                                    <span class="input-group-text">QAR</span>
+                                                    <input type="number" placeholder="0" class="form-control" required name="service_price" min="0" value="0" step="0.01" title="Amount" pattern="^\d+(?:\.\d{1,2})?$">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <h4>Packages</h4>
-                                <div class="mb-3">
-                                    <label class="form-label">Package name</label>
-                                    <div class="bd-highlight w-100">
-                                        <input name="package_name" class="float-end form-control" type="text">
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label  class="form-label">Capacity</label>
-                                    <div class="d-flex flex-row bd-highlight mb-3">
-                                        <div class="bd-highlight w-50">
-                                            <input min="0" value="0" placeholder="Minimum" name="package_min_capacity" class="float-end form-control" type="number">
-                                        </div>
-                                        <div class="bd-highlight w-15">
-                                            <hr>
-                                        </div>
-                                        <div class="bd-highlight w-50">
-                                            <input min="0" value="0" placeholder="Maximum" name="package_max_capacity" class="float-start form-control" type="number">
+                                <div class="d-none package-div">
+                                    <div class="mb-3">
+                                        <label class="form-label">Package name</label>
+                                        <div class="bd-highlight w-100">
+                                            <input name="package_name" class="float-end form-control" type="text">
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="mb-3">
-                                    <div class="d-flex flex-row bd-highlight mb-3">
-                                        <div class="pe-2 bd-highlight w-100">
-                                            <labe class="form-label">Package details</labe>
-                                            <div class="bd-highlight w-100 mt-2">
-                                                <input name="package_details" class="float-end form-control" type="text">
+                                    <div class="mb-3">
+                                        <label  class="form-label">Capacity</label>
+                                        <div class="d-flex flex-row bd-highlight mb-3">
+                                            <div class="bd-highlight w-50">
+                                                <input min="0" value="0" placeholder="Minimum" name="package_min_capacity" class="float-end form-control" type="number">
+                                            </div>
+                                            <div class="bd-highlight w-15">
+                                                <hr>
+                                            </div>
+                                            <div class="bd-highlight w-50">
+                                                <input min="0" value="0" placeholder="Maximum" name="package_max_capacity" class="float-start form-control" type="number">
                                             </div>
                                         </div>
-                                        <div class=" bd-highlight  w-100">
-                                            <label class="form-label">Price</label>
-                                            <div class="bd-highlight w-100">
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">$</span>
-                                                    <input value="0" name="package_price" type="text" class="form-control" aria-label="Amount">
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex flex-row bd-highlight mb-3">
+                                            <div class="pe-2 bd-highlight w-100">
+                                                <labe class="form-label">Package details</labe>
+                                                <div class="bd-highlight w-100 mt-2">
+                                                    <input name="package_details" class="float-end form-control" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -254,6 +257,50 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="service-type" class="col-sm-2 col-form-label">Add-ons</label>
+
+                            <div class="col-sm-10">
+                                <div class="add-on-div cloneable d-none">
+                                    <div class="d-flex flex-row bd-highlight">
+                                        <div class="pe-2 bd-highlight w-100">
+                                            <label class="form-label">Name</label>
+                                            <div class="bd-highlight w-100">
+                                                <input type="text" class="form-control add_on_name border border-danger" name="add_on_name[]">
+
+                                            </div>
+                                        </div>
+                                        <div class=" bd-highlight w-100">
+                                            <label class="form-label">Price</label>
+                                            <div class="bd-highlight w-100">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">QAR</span>
+                                                    <input type="number" placeholder="0" class="form-control" required name="add_on_price[]" min="0" value="0" step="0.01" title="Amount" pattern="^\d+(?:\.\d{1,2})?$">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row bd-highlight">
+                                        <div class="bd-highlight w-100">
+                                            <label class="form-label">Description</label>
+                                            <div class="bd-highlight w-100">
+                                                <input type="text" class="form-control" name="add_on_description[]">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex bd-highlight mb-3 remove-btn-div d-none">
+                                        <div class="p-2 bd-highlight w-75">
+                                            <hr>
+                                        </div>
+                                        <div class="ms-auto p-2 bd-highlight">
+                                            <button type="button"  class="btn btn-orange remove-addon-data-btn"><img src="{{asset('assets/images/icons/remove-circle.png')}}" alt="remove-circle.png">&nbsp;  &nbsp;&nbsp;remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-row bd-highlight">
+                                    <button type="button" id="add-addon-data-btn" class="btn btn-orange"><img src="{{asset('assets/images/icons/add.png')}}" alt="add.png">  Add-ons</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -39,10 +39,9 @@ class DashboardController extends Controller
             $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
             return view('superadmin.dashboard',compact('users'));
         }
-        $serviceTypes = ServiceType::all()->toArray();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
-        return view('admin.dashboard',compact('occasionTypes','serviceTypes','plan' ));
+        return view('admin.dashboard',compact('occasionTypes','plan' ));
     }
 
 
