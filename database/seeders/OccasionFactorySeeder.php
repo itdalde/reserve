@@ -19,6 +19,20 @@ class OccasionFactorySeeder extends Seeder
     {
         //
         $this->truncate('occasions');
-        Occasion::factory()->times(2)->create();
+        $occasions = [
+            [
+                'name' => 'Catering',
+                'active' => 1
+            ],
+            [
+                'name' => 'Men Occasions',
+                'active' => 1
+            ]
+        ];
+
+        foreach($occasions as $occasion) {
+            Occasion::create($occasion);
+        }
+//        Occasion::factory()->times(1)->create();
     }
 }

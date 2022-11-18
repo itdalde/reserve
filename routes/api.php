@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
+use App\Http\Controllers\Api\ServiceTypesApiController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\OccasionEventController;
@@ -60,5 +61,9 @@ Route::group(['prefix' => 'v1/occasion-events', 'middleware' => ['cors']], funct
    Route::get('/events-by-event-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-occasion-event-by-service-type');
    Route::get('/events-by-occasion-date', [OccasionEventsApiController::class, 'getEventsByOccasionDate'])->name('get-occasions');
    Route::get('/events-by-occasion-id', [OccasionEventsApiController::class, 'getOccasionEventsByOccasionId'])->name('get-occasion-events-by-occasion');
+});
+
+Route::group(['prefix' => 'v1/service-types', 'middleware' => ['cors']], function() {
+    Route::get('/', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
 });
 
