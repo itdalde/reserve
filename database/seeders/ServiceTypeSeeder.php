@@ -15,10 +15,29 @@ class ServiceTypeSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         //
         $this->truncate('service_types');
-        ServiceType::factory()->times(3)->create();
+        $serviceTypes = [
+            [
+                'name' => 'Catering',
+                'active' => 1
+            ],
+            [
+                'name' => 'Hospitality Men',
+                'active' => 1
+            ],
+            [
+                'name' => 'Hospitality Women',
+                'active' => 1
+            ]
+        ];
+
+        foreach($serviceTypes as $types){
+            ServiceType::create($types);
+        }
+
+        // ServiceType::factory()->times(3)->create();
     }
 }

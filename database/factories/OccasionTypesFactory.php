@@ -15,10 +15,10 @@ class OccasionTypesFactory extends Factory
     {
         return [
             //
-            'name' => $this->faker->randomElement(['Cake', 'Decor', 'Hall']),
+            'name' => $this->faker->randomElement(['Catering', 'Hospitality Men', 'Hospitality Women']),
             'image' => $this->faker->image(),
             'base_price' => $this->faker->numberBetween(850, 1000),
-            'occasion_id' => $this->faker->numberBetween(1, 2)
+            'occasion_id' => $this->faker->numberBetween(1, 2),
         ];
     }
 }
