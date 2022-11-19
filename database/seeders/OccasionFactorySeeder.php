@@ -6,6 +6,7 @@ use App\Models\Occasion;
 use Database\Traits\DisableForeignKeys;
 use Database\Traits\TruncateTable;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class OccasionFactorySeeder extends Seeder
 {
@@ -19,13 +20,16 @@ class OccasionFactorySeeder extends Seeder
     {
         //
         $this->truncate('occasions');
+        $faker = Faker::create();
         $occasions = [
             [
                 'name' => 'Catering',
+                'logo' => $faker->image(),
                 'active' => 1
             ],
             [
                 'name' => 'Men Occasions',
+                'logo' => $faker->image(),
                 'active' => 1
             ]
         ];

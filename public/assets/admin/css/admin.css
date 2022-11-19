@@ -10175,17 +10175,17 @@ button.close {
 
 
 html , body{
-
+	
  height:100%;
-
+ 
 }
-
+ 
 .full-width {
-
+	
  width:100%;
-
+ 
  }
-
+ 
 .full-height{
  height:100%;
  }
@@ -10319,7 +10319,7 @@ html , body{
     padding: 0 0 4px 0
 }
 .left_col {
-    background: #fcfcfc
+    background: #2A3F54
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
@@ -10419,13 +10419,14 @@ html , body{
 }
 .menu_section h3 {
     padding-left: 15px;
-    color: #4f4e4e;
+    color: #fff;
     text-transform: uppercase;
     letter-spacing: .5px;
     font-weight: bold;
     font-size: 11px;
     margin-bottom: 0;
     margin-top: 0;
+    text-shadow: 1px 1px #000
 }
 .menu_section>ul {
     margin-top: 10px
@@ -10500,7 +10501,7 @@ html , body{
 }
 .nav_menu {
     float: left;
-    background: #FFFFFF;;
+    background: #EDEDED;
     border-bottom: 1px solid #D9DEE4;
     margin-bottom: 10px;
     width: 100%;
@@ -10534,7 +10535,7 @@ body .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
-    background: #fffcfc;
+    background: #2A3F54;
     border-radius: 0;
     height: 57px
 }
@@ -10666,7 +10667,7 @@ body .container.body .right_col {
 }
 body {
     color: #73879C;
-    background: #ffffff;
+    background: #2A3F54;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -10902,7 +10903,7 @@ a:focus {
     margin-bottom: 6px
 }
 .nav.side-menu>li>a:hover {
-    color: #070707 !important
+    color: #F2F5F7 !important
 }
 .nav.side-menu>li>a:hover,
 .nav>li>a:focus {
@@ -10945,7 +10946,7 @@ a:focus {
 }
 .nav.side-menu>li>a,
 .nav.child_menu>li>a {
-    color: #0e0e0e;
+    color: #E7E7E7;
     font-weight: 500
 }
 .nav.child_menu li li:hover,
@@ -10954,7 +10955,7 @@ a:focus {
 }
 .nav.child_menu li li a:hover,
 .nav.child_menu li li a.active {
-    color: #111111
+    color: #fff
 }
 .nav>li>a {
     position: relative;
@@ -14414,7 +14415,7 @@ ul.notifications {
 table thead .checkbox { margin-top:-7px;margin-top:-21px; }
 table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 */
-
+			
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{
@@ -14432,11 +14433,4 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 .guided-tour {
     margin-top: 20px;
     cursor: pointer;
-}
-.input-group-text {
-    background: white;
-    border-right: none;
-}
-.input-group input {
-    border-left: none;
 }
