@@ -19,4 +19,8 @@ class Occasion extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function serviceTypes() {
+        return $this->hasMany(ServiceType::class);
+    }
+
 }

@@ -13,7 +13,7 @@ class OccasionsApiController extends Controller
 
     public function getOccasions(): JsonResponse
     {
-        $occasion = Occasion::select(['id', 'name', 'active'])->where('active', 1)->get();
+        $occasion = Occasion::select(['id', 'name', 'logo', 'active'])->where('active', 1)->get();
         return sendResponse($occasion, 'Occasions');
     }
 
