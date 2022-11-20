@@ -14,8 +14,8 @@ class ServiceTypesApiController extends Controller
 {
     public function getServiceTypes(): JsonResponse
     {
-        $serviceTypes = ServiceType::all();
-        return sendResponse($serviceTypes, "Service Types");
+        $serviceTypes = ServiceType::get(['id', 'name', 'active']);
+        return sendResponse($serviceTypes, "Service Types Collection");
     }
 
     /**
@@ -25,8 +25,11 @@ class ServiceTypesApiController extends Controller
     public function getServiceTypeByOccasionId(OccasionServiceTypeRequest $request): JsonResponse
     {
         $request->validated();
-        $services = OccasionServiceTypePivot::with('occasions', 'serviceTypes')->where('occasion_id', $request->occasion_id)->get();
-        return sendResponse($services, 'Services by Service Type group by Occasion');
+        $services = OccasionServiceTypePivot::leftJoin('occasions as o', 'o.id', '=', 'occasion_service_type_pivots.occasion_id')
+            ->leftJoin('service_types as st', 'st.id' , '=', 'occasion_service_type_pivots.service_type_id')
+            ->where('occasion_service_type_pivots.occasion_id', $request->occasion_id)
+            ->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'st.name as service_type']);
+        return sendResponse($services, 'Services group by occasion');
     }
 
 }

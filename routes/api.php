@@ -51,20 +51,25 @@ Route::group(['prefix' => 'v1/membership', 'middleware' => ['cors']], function()
 });
 
 
-Route::group(['prefix' => 'v1/occasions', 'middleware' => ['cors']], function() {
-    Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
-    Route::get('/occasion-by-occasion-type', [OccasionsApiController::class, 'getOccasionTypeByOccasionId'])->name('get-occasions-by-occasion-type');
+Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
+
+    Route::group(['prefix' => 'occasions', 'middleware' => ['cors']], function() {
+       Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
+       Route::get('/by-type', [OccasionsApiController::class, 'getOccasionTypeByOccasionId'])->name('get-occasions-by-occasion-type');
+    });
+
+    Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
+        Route::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])->name('get-occasion-events');
+        Route::get('/by-event-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-events-by-event-type');
+        Route::get('/by-occasion-date', [OccasionEventsApiController::class, 'getEventsByOccasionDate'])->name('get-events-by-occasion-date');
+        Route::get('/by-occasion-id', [OccasionEventsApiController::class, 'getOccasionEventsByOccasionId'])->name('get-occasion-events-by-occasion-id');
+    });
+
+    Route::group(['prefix' => '/services', 'middleware' => ['cors']], function() {
+       Route::get('/types', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
+       Route::get('/occasion-by-id', [ServiceTypesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
+    });
 });
 
-Route::group(['prefix' => 'v1/occasion-events', 'middleware' => ['cors']], function() {
-   Route::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])->name('get-occasions-events');;
-   Route::get('/events-by-event-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-occasion-event-by-service-type');
-   Route::get('/events-by-occasion-date', [OccasionEventsApiController::class, 'getEventsByOccasionDate'])->name('get-occasions-events-by-occasion-date');
-   Route::get('/events-by-occasion-id', [OccasionEventsApiController::class, 'getOccasionEventsByOccasionId'])->name('get-occasion-events-by-occasion');
-});
 
-Route::group(['prefix' => 'v1/service-types', 'middleware' => ['cors']], function() {
-    Route::get('/', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
-    Route::get('/services-by-occasion-id', [ServiceTypesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
-});
 
