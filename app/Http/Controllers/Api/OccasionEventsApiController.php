@@ -11,6 +11,7 @@ use App\Models\OccasionEvent;
 use App\Models\OccasionEventReviews;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class OccasionEventsApiController extends Controller
 {
@@ -72,5 +73,15 @@ class OccasionEventsApiController extends Controller
         $occasions = OccasionEvent::with('serviceType')
             ->where('occasion_events.service_type', $serviceType)->where('occasion_events.active', '=', 1)->get();
         return sendResponse($occasions, 'Occasion By Events');
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getOccasionEventById(Request $request): JsonResponse
+    {
+        $event = OccasionEvent::where('id', $request->id)->first();
+        return sendResponse($event, 'Occasion Event by ID');
     }
 }
