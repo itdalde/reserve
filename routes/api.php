@@ -61,17 +61,23 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
         Route::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])->name('get-occasion-events');
-        Route::get('/{id}', [OccasionEventsApiController::class, 'getOccasionEventById'])->name('get-occasion');
+        Route::get('/{id}', [OccasionEventsApiController::class, 'getOccasionEventById'])->name('get-occasion-by-id');
         Route::get('/by-event-type', [OccasionEventsApiController::class, 'getEventsByEventType'])->name('get-events-by-event-type');
         Route::get('/by-occasion-date', [OccasionEventsApiController::class, 'getEventsByOccasionDate'])->name('get-events-by-occasion-date');
         Route::get('/by-occasion-id', [OccasionEventsApiController::class, 'getOccasionEventsByOccasionId'])->name('get-occasion-events-by-occasion-id');
     });
 
-    Route::group(['prefix' => '/services', 'middleware' => ['cors']], function() {
+    Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
        Route::get('/types', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
 
-       Route::get('/occasion-by-id', [ServicesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
-       Route::get('/by-vendors', [ServicesApiController::class, 'findOccasionServiceByVendors'])->name('find-service-by-vendor');
+       Route::get('/', [ServicesApiController::class, 'findOccasionServiceByProvider'])->name('find-service-by-provider');
+       Route::get('/occasion/{id}', [ServicesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
+    });
+
+    Route::group(['prefix' => 'providers', 'middleware' => ['cors']], function() {
+        Route::get('/', [ServicesApiController::class, 'getProviders'])->name('get-providers');
+        Route::get('/services', [ServicesApiController::class, 'getServicesByCompany'])->name('get-all-services-by-company');
+        Route::get('/service-type/{id}', [ServicesApiController::class, 'getProvidersByServiceType'])->name('get-providers-by-service-type');
     });
 });
 

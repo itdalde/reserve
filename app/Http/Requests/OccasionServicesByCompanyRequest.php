@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OccasionServiceTypeRequest extends FormRequest
+class OccasionServicesByCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class OccasionServiceTypeRequest extends FormRequest
     {
         return [
             //
-            'id' => 'required|integer'
+            'company_id' => ''
         ];
     }
 }

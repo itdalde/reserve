@@ -72,7 +72,7 @@ class OccasionEventsApiController extends Controller
         $serviceType = $request->service_type_id;
         $occasions = OccasionEvent::with('serviceType')
             ->where('occasion_events.service_type', $serviceType)->where('occasion_events.active', '=', 1)->get();
-        return sendResponse($occasions, 'Occasion By Events');
+        return sendResponse($occasions, 'Occasion By Event Type');
     }
 
     /**
@@ -81,7 +81,7 @@ class OccasionEventsApiController extends Controller
      */
     public function getOccasionEventById(Request $request): JsonResponse
     {
-        $event = OccasionEvent::where('id', $request->id)->first();
+        $event = OccasionEvent::where('company_id', $request->company_id)->first();
         return sendResponse($event, 'Occasion Event by ID');
     }
 }

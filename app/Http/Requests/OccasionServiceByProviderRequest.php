@@ -25,8 +25,8 @@ class OccasionServiceByProviderRequest extends FormRequest
     {
         return [
             //
-            'search' => 'required',
-            'service_type_id' => 'required'
+            'search' => '',
+            'service_type_id' => ''
         ];
     }
 }
