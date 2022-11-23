@@ -29,9 +29,9 @@
                                        href="#">
                                         <div class="card mb-3 border border-secondary card-border-orange" >
                                             <div class="card-body  text-dark">
-                                                <h5 class="card-title">#{{$inquiry->id}} {{$inquiry->title}}</h5>
-                                                <p class="card-text">{{ substr_replace($inquiry->description, "...", 150)}}</p>
-                                                <small class="card-text">{{$inquiry->created_at->format('d/m/Y h:i A')}}</small><br>
+                                                <h5 dir="auto" class="card-title">#{{$inquiry->id}} {{$inquiry->title}}</h5>
+                                                <p dir="auto" class="card-text">{{ substr_replace($inquiry->description, "...", 150)}}</p>
+                                                <small dir="auto" class="card-text">{{$inquiry->created_at->format('d/m/Y h:i A')}}</small><br>
                                                 <span>Issue ID</span> <span class="bg-light-blue">{{$inquiry->reference}}</span>
                                             </div>
                                         </div>
@@ -51,8 +51,8 @@
                                        data-user-name="{{$inquiry->user->first_name .' '. $inquiry->user->last_name }}">
                                         <div class="card mb-3 border border-secondary card-border-orange" >
                                             <div class="card-body  text-dark">
-                                                <h5 class="card-title">#{{$inquiry->id}} {{$inquiry->title}}</h5>
-                                                <p class="card-text">{{ substr_replace($inquiry->description, "...", 150)}}</p>
+                                                <h5 dir="auto" class="card-title">#{{$inquiry->id}} {{$inquiry->title}}</h5>
+                                                <p dir="auto" class="card-text">{{ substr_replace($inquiry->description, "...", 150)}}</p>
                                                 <small class="card-text">{{$inquiry->created_at->format('d/m/Y h:i A')}}</small><br>
                                                 <span>Issue ID</span> <span class="bg-light-blue">{{$inquiry->reference}}</span>
                                             </div>
@@ -86,12 +86,12 @@
                         <div class="card mt-7 mb-2" >
                             <div class="card-body">
                                 <div class="d-flex bd-highlight mb-3">
-                                    <div class="p-2 bd-highlight"><img width="50" class="img-circle issue-user-image" src="" alt="..."></div>
-                                    <div class="p-2 bd-highlight"><span class="issue-user-name"></span></div>
-                                    <div class="ms-auto p-2 bd-highlight"><span class="issue-date"></span></div>
+                                    <div dir="auto" class="p-2 bd-highlight"><img width="50" class="img-circle issue-user-image" src="" alt="..."></div>
+                                    <div dir="auto" class="p-2 bd-highlight"><span class="issue-user-name"></span></div>
+                                    <div dir="auto" class="ms-auto p-2 bd-highlight"><span class="issue-date"></span></div>
                                 </div>
                                 <div class="d-flex flex-column bd-highlight mb-3">
-                                    <div class="p-2 bd-highlight issue-description"></div>
+                                    <div dir="auto" class="p-2 bd-highlight issue-description"></div>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                                 <input type="hidden" name="issue_id" id="issue_id" value="">
                                 <input type="hidden" name="owner_id" id="owner_id" value="">
                                 <input multiple name="images[]" type="file" class="d-none" id="issue-attachment-replies">
-                                <input name="reply" id="issue-reply-input" style="border-left: 1px solid #7e7b7b6b; border-right: none;" type="text" class="form-control" aria-label="Type your reply" placeholder="Type your message">
+                                <input dir="auto" name="reply" id="issue-reply-input" style="border-left: 1px solid #7e7b7b6b; border-right: none;" type="text" class="form-control" aria-label="Type your reply" placeholder="Type your message">
                                 <span class="input-group-text"><img id="issue-attachment-replies-preview" src="{{asset('assets/images/icons/attachments.png')}}" alt=""></span>
                                 <span style="border-right: 1px solid #7e7b7b6b;" class="input-group-text"><button id="issue-reply-btn" type="submit" class="btn btn-warning">Send</button></span>
                             </div>

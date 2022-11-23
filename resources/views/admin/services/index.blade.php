@@ -109,8 +109,8 @@
                                              onerror="this.onerror=null; this.src='{{asset('images/no-image.jpg')}}'"
                                              alt="..."></td>
 
-                                    <td>{{$service->name}}
-                                        <p>{{$service->address_1}}</p>
+                                    <td dir="auto">{{$service->name}}
+                                        <p dir="auto">{{$service->address_1}}</p>
                                         @if($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
                                             <span
                                                 class="bi bi-star {{$service->occasionEventsReviewsAverage[0]->aggregate >= 1? 'checked' : ''}} "></span>
@@ -130,7 +130,7 @@
                                             <span class="bi bi-star"></span>
                                         @endif
                                     </td>
-                                    <td><small>Occasion Type</small><br>
+                                    <td><small dir="auto">Occasion Type</small><br>
                                         @if($service->occasion)
                                             @foreach ($service->occasion as $srv)
                                                 <span
@@ -146,7 +146,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-6 ">
             <div class="card mb-2">
                 <div class="card-body">
                     <form action="{{route('services.update_service')}}" method="post" enctype="multipart/form-data">
@@ -236,7 +236,7 @@
                                     <img class="img-fluid mt-2 me-2" style="width: 15px;
                                         height: 100%;
                                         top: 13px;" src="{{asset('assets/images/icons/location.png')}}" alt="location">
-                                    <span type="text" readonly
+                                    <span dir="auto" type="text" readonly
                                           class="form-control-plaintext sp-2 bd-highlight service-location edit-trigger-display"></span>
                                     <input dir="auto" name="service_location" id="edit-service-location-input"
                                            class="form-control edit-trigger-show d-none" placeholder="Service Location" type="text">
@@ -255,7 +255,7 @@
                             <hr>
                             <div class="d-flex flex-column bd-highlight mb-3">
                                 <div class="p-2 bd-highlight">Description</div>
-                                <span class="p-2 bd-highlight service-description edit-trigger-display"></span>
+                                <span dir="auto" class="p-2 bd-highlight service-description edit-trigger-display"></span>
 
                                 <div class="mb-3 row edit-trigger-show d-none">
                                     <div class="col-sm-12 ">

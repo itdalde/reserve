@@ -57,7 +57,7 @@
                                         <img class="float-end" src="{{asset('assets/images/icons/location.png')}}"
                                              alt="location">
                                     </span>
-                                    <input name="location" type="text" class="form-control" placeholder="Enter Location"
+                                    <input dir="auto" name="location" type="text" class="form-control" placeholder="Enter Location"
                                            aria-label="" aria-describedby="addon-wrapping">
                                 </div>
                             </div>
@@ -340,7 +340,7 @@
                             <label for="ticket-modal-title-field" class="col-form-label">Enter ticket title</label>
                         </div>
                         <div class="col-auto" style="width: 70%;">
-                            <input name="title" type="text" id="ticket-modal-title-field" class="form-control"
+                            <input dir="auto" name="title" type="text" id="ticket-modal-title-field" class="form-control"
                                    placeholder="Enter service name">
                         </div>
                     </div>
@@ -349,7 +349,7 @@
                             <label for="ticket-modal-description-field" class="col-form-label">Issue description</label>
                         </div>
                         <div class="col-auto" style="width: 70%;">
-                        <textarea rows="8" name="description" type="text" id="ticket-modal-description-field"
+                        <textarea dir="auto" rows="8" name="description" type="text" id="ticket-modal-description-field"
                                   class="form-control"
                                   placeholder="Enter service description"> </textarea>
                         </div>
