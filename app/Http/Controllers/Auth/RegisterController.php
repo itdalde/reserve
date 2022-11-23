@@ -83,7 +83,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code' => Uuid::uuid4(),
-            'confirmed' => true
+            'confirmed' => false
         ]);
         $company = new Company();
         $company->name = $data['company_name'];
