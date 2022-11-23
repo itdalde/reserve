@@ -12,7 +12,7 @@
                             <div class="card card-bg-green " >
                                 <div class="card-body">
                                     <img src="{{asset('assets/images/icons/sales.png')}}" alt="..">
-                                    <h2>$2,643</h2>
+                                    <h2>$ 0</h2>
                                     <p>Total sales</p>
                                     <small class="error-message"> -5% from last week</small>
                                 </div>
@@ -103,6 +103,12 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($services as $service)
+                                <tr>
+                                    <td>{{$service->name}}</td>
+                                    <td>{{count($service->orders)}}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -121,6 +127,12 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($users as $customer)
+                                <tr>
+                                    <td>{{$customer->name}}</td>
+                                    <td>{{count($customer->orders)}}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

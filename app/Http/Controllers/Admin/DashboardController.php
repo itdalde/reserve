@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\Occasion;
+use App\Models\OccasionEvent;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
@@ -35,13 +36,15 @@ class DashboardController extends Controller
      */
     public function index(Request $request )
     {
+        $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
         if(Auth::user()->hasRole('superadmin')) {
-            $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
             return view('superadmin.dashboard',compact('users'));
         }
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
-        return view('admin.dashboard',compact('occasionTypes','plan' ));
+        $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->offset(0)->limit(10)->get();
+        $services =  OccasionEvent::offset(0)->limit(10)->get();
+        return view('admin.dashboard',compact('occasionTypes','plan','users','services' ));
     }
 
 

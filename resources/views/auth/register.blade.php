@@ -8,136 +8,143 @@
 @section('body_class','register')
 
 @section('content')
-    <div class="mx-auto login-main">
-        <img class="auth-img-top" src="{{asset('assets/auth/img/login-img-top.png')}}" alt="login-img-top">
-        <div class="container">
-            <div class="row mx-auto mt-5" style="width:40em;">
+    <div class="d-flex justify-content-between">
+        <div class="p-0">
+            <img class="auth-img-top" src="{{asset('assets/auth/img/login-img-top.png')}}" alt="login-img-top">
+        </div>
+        <div class="p-0">
+            <div class="container">
+                <div class="row mx-auto mt-5" style="width:40em;">
 
-                <div class="p-2 text-center">
-                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                    <div class="p-2 text-center">
+                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
 
-                </div>
-                <div class="p-2 mt-5">
-                    <div class="card">
-                        <div class="card-body p-5">
-                            <div class="login_content" style="text-align: left !important;">
-                                {{ Form::open(['route' => 'register']) }}
-                                <div class="row mb-3">
-                                    <label for="first_name" class="col-sm-4 col-form-label">First Name</label>
-                                    <div class="col-sm-8">
-                                        <input id="first_name" autocomplete="new-password" type="text" name="first_name"
-                                               class="mb-0 form-control"
-                                               placeholder="First Name"
-                                               required/>
+                    </div>
+                    <div class="p-2 mt-5">
+                        <div class="card">
+                            <div class="card-body p-5">
+                                <div class="login_content" style="text-align: left !important;">
+                                    {{ Form::open(['route' => 'register']) }}
+                                    <div class="row mb-3">
+                                        <label for="first_name" class="col-sm-4 col-form-label">First Name</label>
+                                        <div class="col-sm-8">
+                                            <input id="first_name" autocomplete="new-password" type="text" name="first_name"
+                                                   class="mb-0 form-control"
+                                                   placeholder="First Name"
+                                                   required/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="last_name" class="col-sm-4 col-form-label">Last Name</label>
-                                    <div class="col-sm-8">
-                                        <input id="last_name" autocomplete="new-password" type="text" name="last_name"
-                                               class="mb-0 form-control"
-                                               placeholder="Last Name"
-                                               required/>
+                                    <div class="row mb-3">
+                                        <label for="last_name" class="col-sm-4 col-form-label">Last Name</label>
+                                        <div class="col-sm-8">
+                                            <input id="last_name" autocomplete="new-password" type="text" name="last_name"
+                                                   class="mb-0 form-control"
+                                                   placeholder="Last Name"
+                                                   required/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="email" class="col-sm-4 col-form-label">Email</label>
-                                    <div class="col-sm-8">
-                                        <input id="email" autocomplete="new-password" type="email" name="email"
-                                               class="mb-0 form-control"
-                                               placeholder="{{ __('views.auth.register.input_1') }}"
-                                               required/>
+                                    <div class="row mb-3">
+                                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                                        <div class="col-sm-8">
+                                            <input id="email" autocomplete="new-password" type="email" name="email"
+                                                   class="mb-0 form-control"
+                                                   placeholder="{{ __('views.auth.register.input_1') }}"
+                                                   required/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="password" class="col-sm-4 col-form-label">Password</label>
-                                    <div class="col-sm-8">
-                                        <input id="password" autocomplete="new-password" type="password" name="password"
-                                               class="mb-0 form-control"
-                                               placeholder="{{ __('views.auth.register.input_2') }}"
-                                               required=""/>
+                                    <div class="row mb-3">
+                                        <label for="password" class="col-sm-4 col-form-label">Password</label>
+                                        <div class="col-sm-8">
+                                            <input id="password" autocomplete="new-password" type="password" name="password"
+                                                   class="mb-0 form-control"
+                                                   placeholder="{{ __('views.auth.register.input_2') }}"
+                                                   required=""/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="password_confirmation" class="col-sm-4 col-form-label">Confirm
-                                        Password</label>
+                                    <div class="row mb-3">
+                                        <label for="password_confirmation" class="col-sm-4 col-form-label">Confirm
+                                            Password</label>
 
-                                    <div class="col-sm-8">
-                                        <input id="password_confirmation" autocomplete="new-password" type="password"
-                                               name="password_confirmation"
-                                               class="mb-0 form-control"
-                                               placeholder="{{ __('views.auth.register.input_3') }}"
-                                               required/>
+                                        <div class="col-sm-8">
+                                            <input id="password_confirmation" autocomplete="new-password" type="password"
+                                                   name="password_confirmation"
+                                                   class="mb-0 form-control"
+                                                   placeholder="{{ __('views.auth.register.input_3') }}"
+                                                   required/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="company_name" class="col-sm-4 col-form-label">Company Name</label>
+                                    <div class="row mb-3">
+                                        <label for="company_name" class="col-sm-4 col-form-label">Company Name</label>
 
-                                    <div class="col-sm-8">
-                                        <input id="company_name" autocomplete="new-password" type="text"
-                                               name="company_name"
-                                               class="mb-0 form-control"
-                                               placeholder="Company Name"
-                                               value="{{ old('company_name') }}" required autofocus/>
+                                        <div class="col-sm-8">
+                                            <input id="company_name" autocomplete="new-password" type="text"
+                                                   name="company_name"
+                                                   class="mb-0 form-control"
+                                                   placeholder="Company Name"
+                                                   value="{{ old('company_name') }}" required autofocus/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="password" class="col-sm-4 col-form-label">Service Type</label>
-                                    <div class="col-sm-8">
-                                        <select id="service_type" name="service_type" required autofocus
-                                                value="{{ old('service_type') }}"
-                                                class="mb-0 form-control" aria-label="Select Service Type">
-                                            @if(isset($serviceTypes))
-                                                @foreach($serviceTypes as $serviceType)
-                                                    <option
-                                                        value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
+                                    <div class="row mb-3">
+                                        <label for="password" class="col-sm-4 col-form-label">Service Type</label>
+                                        <div class="col-sm-8">
+                                            <select id="service_type" name="service_type" required autofocus
+                                                    value="{{ old('service_type') }}"
+                                                    class="mb-0 form-control" aria-label="Select Service Type">
+                                                @if(isset($serviceTypes))
+                                                    @foreach($serviceTypes as $serviceType)
+                                                        <option
+                                                            value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="company_description" class="col-sm-4 col-form-label">Description</label>
+                                    <div class="row mb-3">
+                                        <label for="company_description" class="col-sm-4 col-form-label">Description</label>
 
-                                    <div class="col-sm-8">
+                                        <div class="col-sm-8">
                                     <textarea id="company_description" type="text" name="company_description"
                                               class="mb-0 form-control"
                                               placeholder="Company Description"
                                               value="{{ old('company_description') }}" autofocus></textarea>
+                                        </div>
                                     </div>
+
+                                    @if (session('status'))
+                                        <div class="alert alert-success">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
+
+                                    @if (!$errors->isEmpty())
+                                        <div class="alert alert-danger" role="alert">
+                                            {!! $errors->first() !!}
+                                        </div>
+                                    @endif
+
+                                    @if(config('auth.captcha.registration'))
+                                        @captcha()
+                                    @endif
+
+                                    <div class="pt-5">
+                                        <button type="submit"
+                                                class="btn btn-default bg-orange submit w-100">Submit
+                                        </button>
+                                    </div>
+
+                                    {{ Form::close() }}
                                 </div>
-
-                                @if (session('status'))
-                                    <div class="alert alert-success">
-                                        {{ session('status') }}
-                                    </div>
-                                @endif
-
-                                @if (!$errors->isEmpty())
-                                    <div class="alert alert-danger" role="alert">
-                                        {!! $errors->first() !!}
-                                    </div>
-                                @endif
-
-                                @if(config('auth.captcha.registration'))
-                                    @captcha()
-                                @endif
-
-                                <div class="pt-5">
-                                    <button type="submit"
-                                            class="btn btn-default bg-orange submit w-100">Submit
-                                    </button>
-                                </div>
-
-                                {{ Form::close() }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <img class="auth-img-bottom" src="{{asset('assets/auth/img/login-bottom-img.png')}}" alt="login-bottom-img.png">
+        <div class="p-0">
+            <img style="
+    margin-top: 29em;
+    overflow: hidden;" class="auth-img-bottom" src="{{asset('assets/auth/img/login-bottom-img.png')}}" alt="login-bottom-img.png">
+        </div>
     </div>
 @endsection
 

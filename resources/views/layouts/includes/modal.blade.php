@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3 row">
+                        <div class="mb-3 row d-none">
                             <label for="staticEmail" class="col-sm-2 col-form-label">Occasion Type</label>
                             <div class="col-sm-10">
                                 <select name="occasion_type" class="form-select" aria-label="Select Occasion Type">

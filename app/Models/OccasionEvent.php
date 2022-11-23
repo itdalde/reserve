@@ -37,4 +37,8 @@ class OccasionEvent extends Model
             ->selectRaw('avg(rate) as aggregate, occasion_event_id')
             ->groupBy('occasion_event_id');
     }
+
+    public function orders() {
+        return $this->hasMany(Transaction::class,'occasion_event_id','id');
+    }
 }
