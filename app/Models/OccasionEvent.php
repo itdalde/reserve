@@ -14,6 +14,10 @@ class OccasionEvent extends Model
     {
         return $this->hasMany(OccasionEventsPivot::class);
     }
+    public function price()
+    {
+        return $this->hasOne(OccasionEventPrice::class);
+    }
     public function serviceType()
     {
         return $this->hasOne(ServiceType::class,'id','service_type');

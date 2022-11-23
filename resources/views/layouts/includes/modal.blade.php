@@ -38,7 +38,7 @@
                         <div class="mb-3 row">
                             <label for="service-name" class="col-sm-2 col-form-label">Service name</label>
                             <div class="col-sm-10">
-                                <input name="service_name" type="text" class="form-control" placeholder="Enter Service Name"
+                                <input dir="auto" name="service_name" type="text" class="form-control" placeholder="Enter Service Name"
                                        id="service-name" value="">
                                     <div class="service-name-error alert alert-danger d-none  mt-2" role="alert">
                                        Please add service name
@@ -78,7 +78,7 @@
                             <label class="col-sm-2 col-form-label">Service description</label>
                             <div class="col-sm-10 ">
                                 <div class="form-floating">
-                                    <textarea name="service_description" class="form-control" placeholder="Descripition"
+                                    <textarea dir="auto" name="service_description" class="form-control" placeholder="Description"
                                               id="floatingTextarea2" style="height: 100px"></textarea>
                                     <label for="floatingTextarea2">Enter Service description</label>
                                 </div>
@@ -226,7 +226,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Package name</label>
                                         <div class="bd-highlight w-100">
-                                            <input name="package_name" class="float-end form-control" type="text">
+                                            <input dir="auto" name="package_name" class="float-end form-control" type="text">
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -248,7 +248,7 @@
                                             <div class="pe-2 bd-highlight w-100">
                                                 <labe class="form-label">Package details</labe>
                                                 <div class="bd-highlight w-100 mt-2">
-                                                    <input name="package_details" class="float-end form-control" type="text">
+                                                    <input dir="auto" name="package_details" class="float-end form-control" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -265,7 +265,7 @@
                                         <div class="pe-2 bd-highlight w-100">
                                             <label class="form-label">Name</label>
                                             <div class="bd-highlight w-100">
-                                                <input type="text" class="form-control add_on_name border border-danger" name="add_on_name[]">
+                                                <input dir="auto" type="text" class="form-control add_on_name border border-danger" name="add_on_name[]">
 
                                             </div>
                                         </div>
@@ -283,7 +283,7 @@
                                         <div class="bd-highlight w-100">
                                             <label class="form-label">Description</label>
                                             <div class="bd-highlight w-100">
-                                                <input type="text" class="form-control" name="add_on_description[]">
+                                                <input dir="auto" type="text" class="form-control" name="add_on_description[]">
                                             </div>
                                         </div>
                                     </div>
@@ -380,5 +380,3 @@
         </div>
     </div>
 </div>
-
-

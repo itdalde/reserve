@@ -11,7 +11,7 @@
             <!-- Form -->
             @if(!Auth::user()->hasRole('superadmin'))
             <form class="d-flex align-items-center">
-                <input type="search" class="form-control" placeholder="Search"/>
+                <input id="head-general-search" type="search" class="form-control" placeholder="Search"/>
             </form>
             @else
                 <span><h3>Admin account</h3></span>
@@ -120,8 +120,6 @@
                 <div class="dropdown-menu dropdown-menu-end text-center" style="    width: 200px;"
                      aria-labelledby="dropdownUser">
                     <div class="px-4 pb-0 pt-2">
-
-
                         <div class="lh-1 ">
                             <h5 class="mb-1"> {{Auth::check() ? Auth::user()->full_name : ''}}</h5>
                             <a href="#" class="text-inherit fs-6 d-none" >View my profile</a>

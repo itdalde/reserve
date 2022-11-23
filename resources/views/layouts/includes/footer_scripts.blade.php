@@ -17,3 +17,21 @@
 <script src="{{asset('assets/js/general.js')}}"></script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+<script  type="text/javascript">
+    $(document).ready( function () {
+        $('body').on('keyup','#head-general-search',function (e) {
+        });
+        $(document).on('focus', '#head-general-search', function() {
+
+            $(this).unbind().bind('keyup', function(e) {
+                if(e.keyCode === 13) {
+                    window.location.href = "{{route('services.index')}}"+"?search="+$(this).val();
+                }
+            });
+        });
+
+    });
+</script>

@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
         $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->offset(0)->limit(10)->get();
-        $services =  OccasionEvent::offset(0)->limit(10)->get();
+        $services =  OccasionEvent::where('company_id',Auth::user()->company->id)->offset(0)->limit(10)->get();
         return view('admin.dashboard',compact('occasionTypes','plan','users','services' ));
     }
 

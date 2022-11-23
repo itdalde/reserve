@@ -108,3 +108,11 @@
     background-color: rgba(0,0,0,0.5);
     z-index: 99999999999999999999999999999999;
 }
+.close-service-images {
+    border: none;
+    background: #fff1f19e;
+    border-radius: 44px;
+    float: right;
+    margin-left: 65px;
+    position: absolute;
+}

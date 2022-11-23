@@ -24,6 +24,9 @@ use App\Http\Controllers\ServiceController;
 
 Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
+
+Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
+Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
 Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
 Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
 Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
