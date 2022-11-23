@@ -33,7 +33,36 @@
                                         </div>
                                         <hr>
                                     </div>
-                                    <div class="p-2 bd-highlight"></div>
+                                    <div class="p-2 bd-highlight">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-0">
+                                                <img src="{{asset('assets/images/icons/cart-profile.png')}}" alt="cart-profile.png">
+                                                <span>0 Orders</span>
+                                            </div>
+                                            <div class="p-0">
+                                                <img src="{{asset('assets/images/icons/dollar-profile.png')}}" alt="dollar-profile.png">
+                                                <span>0 Spent</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <h5>Last {{$user->company ? 'sales' : "purchase"}}</h5>
+                                        <span>{{Carbon\Carbon::parse($user->created_at)->format('Y-m-d')}}</span>
+                                        <hr>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <h5>Contact Info</h5>
+                                        <div class="d-flex flex-column">
+                                            <div class="p-2">
+                                                <img src="{{asset('assets/images/icons/email-profile.png')}}" alt="email-profile"> {{$user->email}}
+                                            </div>
+                                            <div class="p-2">
+                                                <img src="{{asset('assets/images/icons/phone-profile.png')}}" alt="phone-profile"> {{$user->phone_number}}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
                                 </div>
 
                             </div>
