@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OccasionServiceByProviderRequest;
 use App\Http\Requests\OccasionServicesByCompanyRequest;
 use App\Http\Requests\OccasionServiceTypeRequest;
+use App\Http\Requests\ProviderByServiceTypeRequest;
 use App\Models\Company;
 use App\Models\OccasionEvent;
 use App\Models\OccasionServiceTypePivot;
@@ -23,7 +24,7 @@ class ServicesApiController extends Controller
         $request->validated();
         $services = OccasionServiceTypePivot::leftJoin('occasions as o', 'o.id', '=', 'occasion_service_type_pivots.occasion_id')
             ->leftJoin('service_types as st', 'st.id' , '=', 'occasion_service_type_pivots.service_type_id')
-            ->where('occasion_service_type_pivots.occasion_id', $request->occasion_id)
+            ->where('occasion_service_type_pivots.occasion_id', $request->id)
             ->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
         return sendResponse($services, 'Services group by occasion');
     }
@@ -32,7 +33,7 @@ class ServicesApiController extends Controller
      * @param OccasionServiceByProviderRequest $request
      * @return JsonResponse
      */
-    public function findOccasionServiceByVendors(OccasionServiceByProviderRequest $request): JsonResponse
+    public function findOccasionServiceByProvider(OccasionServiceByProviderRequest $request): JsonResponse
     {
         $search = $request->search;
         $serviceId = $request->service_type_id;
@@ -62,5 +63,12 @@ class ServicesApiController extends Controller
         $companyId = $request->company_id;
         $services = OccasionEvent::where('company_id', $companyId)->get();
         return sendResponse($services, 'Company Services');
+    }
+
+    public function getProvidersByServiceType(ProviderByServiceTypeRequest $request): JsonResponse
+    {
+        $providers = Company::where('service_type_id', $request->id)
+            ->get(['id', 'user_id', 'name', 'description', 'logo', 'service_type_id']);
+        return sendResponse($providers, 'Get providers by service type');
     }
 }
