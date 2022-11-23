@@ -29,7 +29,7 @@
                                 <a href="">
                                     <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
                                 </a>
-                                <a href="">
+                                <a href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
                                     <img src="{{asset('assets/images/icons/remove.png')}}" alt="..">
                                 </a>
                             </td>

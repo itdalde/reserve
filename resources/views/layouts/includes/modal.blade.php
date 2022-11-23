@@ -48,8 +48,8 @@
                         <div class="mb-3 row">
                             <label for="service-type" class="col-sm-2 col-form-label">Service type</label>
                             <div class="col-sm-5">
-                                <input type="hidden" name="service_type" value="{{Auth::user() ? Auth::user()->company->service_type_id : 1}}">
-                                <input type="text" class="form-control" readonly value="{{Auth::user() ? Auth::user()->company->serviceType->name : 'Serrvice'}}">
+                                <input type="hidden" name="service_type" value="{{Auth::user() &&  Auth::user()->company &&  Auth::user()->company->service_type_id ?  Auth::user()->company->service_type_id : 1}}">
+                                <input type="text" class="form-control" readonly value="{{Auth::user() &&  Auth::user()->company &&  Auth::user()->company->serviceType ? Auth::user()->company->serviceType->name : 'Serrvice'}}">
                             </div>
                             <div class="col-sm-5">
                                 <div class="input-group flex-nowrap">

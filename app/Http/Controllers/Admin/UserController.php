@@ -178,6 +178,11 @@ class UserController extends Controller
         return redirect()->route('admin.users')->withFlashDanger('Unable to Delete User!');
     }
 
+    public function removeUser(Request $request) {
+        User::where('id',$request->id)->delete();
+        return redirect()->back()->with('success', 'Removed Successfully');
+    }
+
     public function serviceProviders(Request $request) {
 
         $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();

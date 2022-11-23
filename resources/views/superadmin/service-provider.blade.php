@@ -18,7 +18,7 @@
 
                 @foreach($users as $user)
                     <tr>
-                        <td>{{$user->first_name . ' ' . $user->last_name}}</td>
+                        <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
                         <td>0</td>
                         <td>{{$user->location }}</td>
                         <td><span class="badge bg-secondary w-100">0 unresolved</span></td>
@@ -27,7 +27,7 @@
                             <a href="">
                                 <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
                             </a>
-                            <a href="">
+                            <a href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
                                 <img src="{{asset('assets/images/icons/remove.png')}}" alt="..">
                             </a>
                         </td>
