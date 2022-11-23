@@ -63,6 +63,17 @@
                                         </div>
                                         <hr>
                                     </div>
+                                    <div class="p-2 bd-highlight">
+                                        <h5>{{$user->company ? 'Company name' : "Default Address"}}</h5>
+                                        @if($user->company)
+                                            {{$user->company->name}}
+                                        @else
+                                            {{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}
+                                        @endif
+                                        <br>
+                                        {{$user->phone_number}}
+                                        <hr>
+                                    </div>
                                 </div>
 
                             </div>
