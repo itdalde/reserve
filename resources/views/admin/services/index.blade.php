@@ -156,7 +156,17 @@
                                 <input dir="auto" name="service_name" id="edit-service-title-input"
                                        class="form-control edit-trigger-show d-none" placeholder="Service Name" type="text"></div>
                             <div class="p-2 bd-highlight">
-                                <img id="image-display-view" width="100" src=""
+
+                                <a href="#" class="edit-featured-service-image-holder edit-trigger-show d-none">
+                                    <img width="100" id="edit-featured-service-image-view"
+                                         src="{{asset('assets/images/icons/image-select.png')}}" alt="image-select">
+                                </a>
+
+                                <input
+                                    onchange="document.getElementById('edit-featured-service-image-view').src = window.URL.createObjectURL(this.files[0])"
+                                    id="edit-featured-service-image-file" accept="image/png, image/gif, image/jpeg" type="file"
+                                    class="d-none" name="featured_image" >
+                                <img class="edit-trigger-display" id="image-display-view" width="100" src=""
                                      onerror="this.onerror=null; this.src='{{asset('images/no-image.jpg')}}'" alt="...">
                             </div>
                             <div class="p-2 bd-highlight">
@@ -388,6 +398,22 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $('body').on('click', '.edit-featured-service-image-holder', function () {
+                $('#edit-featured-service-image-file').click();
+            });
+            $('body').on('change', '#add-images-data-file', function () {
+                $('.new-added-mg-temp').remove();
+                for(let i=0;i<this.files.length;++i){
+                    let filereader = new FileReader();
+                    let $img=jQuery.parseHTML("<img class='new-added-mg-temp figure-img img-fluid img-thumbnail image-gallery' src=''>");
+                    filereader.onload = function(){
+                        $img[0].src=this.result;
+                    };
+                    filereader.readAsDataURL(this.files[i]);
+                    $(".service-images").append($img);
+                }
+
+            });
             $('body').on('click', '#edit-service-btn', function () {
                 $('.edit-trigger-show').removeClass('d-none');
                 $('.edit-trigger-display').addClass('d-none');
@@ -582,7 +608,8 @@
                 $('.service-type').text(serviceType)
                 $('.service-location').text(location)
                 $('.service-title').text(name)
-                $('#image-display-view').attr('src', image)
+                $('#image-display-view, #edit-featured-service-image-view').attr('src', image)
+
 
             })
         });
