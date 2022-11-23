@@ -24,7 +24,7 @@ class ServicesApiController extends Controller
         $request->validated();
         $services = OccasionServiceTypePivot::leftJoin('occasions as o', 'o.id', '=', 'occasion_service_type_pivots.occasion_id')
             ->leftJoin('service_types as st', 'st.id' , '=', 'occasion_service_type_pivots.service_type_id')
-            ->where('occasion_service_type_pivots.occasion_id', $request->id)
+            ->where('occasion_service_type_pivots.occasion_id', $request->occasion_id)
             ->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
         return sendResponse($services, 'Services group by occasion');
     }

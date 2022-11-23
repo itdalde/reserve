@@ -70,8 +70,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
        Route::get('/types', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
 
-       Route::get('/', [ServicesApiController::class, 'findOccasionServiceByProvider'])->name('find-service-by-provider');
-       Route::get('/occasion/{id}', [ServicesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
+       Route::get('/by-vendors', [ServicesApiController::class, 'findOccasionServiceByProvider'])->name('find-service-by-provider');
+       Route::get('/occasion-by-id', [ServicesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
     });
 
     Route::group(['prefix' => 'providers', 'middleware' => ['cors']], function() {
