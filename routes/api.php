@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
+use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
@@ -68,7 +69,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => '/services', 'middleware' => ['cors']], function() {
        Route::get('/types', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
-       Route::get('/occasion-by-id', [ServiceTypesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
+
+       Route::get('/occasion-by-id', [ServicesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
+       Route::get('/by-vendors', [ServicesApiController::class, 'findOccasionServiceByVendors'])->name('find-service-by-vendor');
     });
 });
 
