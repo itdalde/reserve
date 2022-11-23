@@ -132,7 +132,7 @@ class ServiceController extends Controller
                 $html .= '<span class="bi bi-star ' . $rate5 . '"></span>';
                 $html .= '<span class="px-2"><h4>' . $service['title'] . '</h4></span>';
                 $html .= '</div>';
-                $html .= '<div class="p-2 bd-highlight">' . $service['description'] . '</div></div>';
+                $html .= '<div class="p-2 bd-highlight"  dir="auto">' . $service['description'] . '</div></div>';
                 $response[] = [
                     'rate' => $html,
                 ];
