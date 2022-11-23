@@ -178,6 +178,11 @@ class UserController extends Controller
         return redirect()->route('admin.users')->withFlashDanger('Unable to Delete User!');
     }
 
+    public function view(Request $request) {
+        $user = User::where('id',$request->id)->first();
+        return view('superadmin.user-view', compact('user'));
+    }
+
     public function removeUser(Request $request) {
         User::where('id',$request->id)->delete();
         return redirect()->back()->with('success', 'Removed Successfully');

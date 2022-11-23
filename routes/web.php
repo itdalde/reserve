@@ -26,6 +26,7 @@ Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
 
 Route::get('/users/remove', [UserController::class, 'removeUser'])->name('users.delete-user');
+Route::get('/users/view', [UserController::class, 'view'])->name('users.view-user');
 Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
 Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
 Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');

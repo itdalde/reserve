@@ -24,7 +24,7 @@
                         <td><span class="badge bg-secondary w-100">0 unresolved</span></td>
                         <td>0</td>
                         <td>
-                            <a href="">
+                            <a href="{{route('users.view-user',['id' => $user->id])}}">
                                 <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
                             </a>
                             <a href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
