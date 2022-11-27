@@ -84,4 +84,12 @@ class OccasionEventsApiController extends Controller
         $event = OccasionEvent::where('company_id', $request->company_id)->first();
         return sendResponse($event, 'Occasion Event by ID');
     }
+
+    public function getOccasionServiceByOccasionId(Request $request, $occasion_event_id)
+    {
+        $event = OccasionEvent::with('occasionEventPrice', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
+            ->where('occasion_events.id', $occasion_event_id)
+            ->where('occasion_events.active', '=', 1)->get();
+        return sendResponse($event, 'Get service occasion event by occasion Id');
+    }
 }
