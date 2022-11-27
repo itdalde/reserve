@@ -45,4 +45,9 @@ class OccasionEvent extends Model
     public function orders() {
         return $this->hasMany(Transaction::class,'occasion_event_id','id');
     }
+
+    public function providers(): HasMany
+    {
+        return $this->hasMany(Company::class, 'id', 'company_id');
+    }
 }

@@ -25,7 +25,7 @@ class OccasionServicesByCompanyRequest extends FormRequest
     {
         return [
             //
-            'company_id' => ''
+            'id' => 'integer'
         ];
     }
 }

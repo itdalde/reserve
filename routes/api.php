@@ -69,14 +69,16 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
        Route::get('/types', [ServiceTypesApiController::class, 'getServiceTypes'])->name('get-all-service-types');
+        Route::get('/occasion-service/{id}', [ServiceTypesApiController::class, 'getServiceTypesByOccasionId'])->name('get-service-types-by-occasion-id');
 
        Route::get('/by-vendors', [ServicesApiController::class, 'findOccasionServiceByProvider'])->name('find-service-by-provider');
-       Route::get('/occasion-by-id', [ServicesApiController::class, 'getServiceTypeByOccasionId'])->name('get-service-type-by-occasion-id');
+       Route::get('/occasions/{id}', [ServicesApiController::class, 'getServicesByOccasionId'])->name('get-service-type-by-occasion-id');
+       Route::get('/provider/{id}', [ServicesApiController::class, 'getServicesByProviders'])->name('get-services-by-providers');
     });
 
     Route::group(['prefix' => 'providers', 'middleware' => ['cors']], function() {
         Route::get('/', [ServicesApiController::class, 'getProviders'])->name('get-providers');
-        Route::get('/services', [ServicesApiController::class, 'getServicesByCompany'])->name('get-all-services-by-company');
+        Route::get('/services/{id}', [ServicesApiController::class, 'getServicesByCompany'])->name('get-all-services-by-company');
         Route::get('/service-type/{id}', [ServicesApiController::class, 'getProvidersByServiceType'])->name('get-providers-by-service-type');
     });
 });
