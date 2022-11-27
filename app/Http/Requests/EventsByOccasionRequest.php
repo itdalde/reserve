@@ -27,7 +27,7 @@ class EventsByOccasionRequest extends FormRequest
     {
         return [
             //
-            'occasion_id' => 'required|integer'
+            '' => ''
         ];
     }
 
