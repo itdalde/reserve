@@ -29,16 +29,14 @@ class OccasionEventsApiController extends Controller
         $fromDate = Carbon::createFromFormat('Y-m-d', $request->date_from);
         $toDate = Carbon::createFromFormat('Y-m-d', $request->date_to);
 
-        return $fromDate;
-//
-//        $occasions = OccasionEvent::with('occasionEventPrice', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
-//            ->leftJoin('occasion_events_pivots as oep', 'occasion_events.id', '=', 'oep.occasion_event_id')
-//            ->where('oep.occasion_id', '=', $occasionEventId)
-//            ->where('occasion_events.availability_start_date', '>=', $fromDate)
-//            ->where('occasion_events.availability_end_date', '<=', $toDate)
-//            ->get();
-//
-//        return sendResponse($occasions, "Occasion Events By Occasion Date");
+        $occasions = OccasionEvent::with('occasionEventPrice', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
+            ->leftJoin('occasion_events_pivots as oep', 'occasion_events.id', '=', 'oep.occasion_event_id')
+            ->where('oep.occasion_id', '=', $occasionEventId)
+            ->where('occasion_events.availability_start_date', '>=', $fromDate)
+            ->where('occasion_events.availability_end_date', '<=', $toDate)
+            ->get();
+
+        return sendResponse($occasions, "Occasion Events By Occasion Date");
     }
 
     /**
