@@ -25,7 +25,7 @@ class OccasionServiceTypeRequest extends FormRequest
     {
         return [
             //
-            'occasion_id' => 'required|integer'
+            'id' => ''
         ];
     }
 }

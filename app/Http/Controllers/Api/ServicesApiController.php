@@ -19,12 +19,12 @@ class ServicesApiController extends Controller
      * @param OccasionServiceTypeRequest $request
      * @return JsonResponse
      */
-    public function getServiceTypeByOccasionId(OccasionServiceTypeRequest $request): JsonResponse
+    public function getServicesByOccasionId(OccasionServiceTypeRequest $request): JsonResponse
     {
         $request->validated();
         $services = OccasionServiceTypePivot::leftJoin('occasions as o', 'o.id', '=', 'occasion_service_type_pivots.occasion_id')
             ->leftJoin('service_types as st', 'st.id' , '=', 'occasion_service_type_pivots.service_type_id')
-            ->where('occasion_service_type_pivots.occasion_id', $request->occasion_id)
+            ->where('occasion_service_type_pivots.occasion_id', $request->id)
             ->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
         return sendResponse($services, 'Services group by occasion');
     }
@@ -50,9 +50,10 @@ class ServicesApiController extends Controller
      */
     public function getProviders(): JsonResponse
     {
-        $provides = Company::all();
+        $provides = Company::all(['id', 'user_id', 'name', 'description', 'logo', 'service_type_id']);
         return sendResponse($provides, 'Event Providers');
     }
+
 
     /**
      * @param OccasionServicesByCompanyRequest $request
@@ -60,15 +61,27 @@ class ServicesApiController extends Controller
      */
     public function getServicesByCompany(OccasionServicesByCompanyRequest $request): JsonResponse
     {
-        $companyId = $request->company_id;
-        $services = OccasionEvent::where('company_id', $companyId)->get();
+        $services = OccasionEvent::with('occasionEventPrice', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
+        ->where('company_id', $request->id)->get();
         return sendResponse($services, 'Company Services');
     }
 
     public function getProvidersByServiceType(ProviderByServiceTypeRequest $request): JsonResponse
     {
-        $providers = Company::where('service_type_id', $request->id)
-            ->get(['id', 'user_id', 'name', 'description', 'logo', 'service_type_id']);
+        $providers = OccasionEvent::with('providers', 'serviceType', 'occasionEventPrice', 'occasionEventsReviewsAverage')
+            ->get();
         return sendResponse($providers, 'Get providers by service type');
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getServicesByProviders(Request $request): JsonResponse
+    {
+        $services = OccasionEvent::leftJoin('companies as c', 'occasion_events.company_id', '=', 'c.id')
+            ->where('c.id', $request->id)
+            ->get();
+        return sendResponse($services, 'Get all services by provider');
     }
 }
