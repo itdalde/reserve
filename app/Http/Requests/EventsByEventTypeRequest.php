@@ -27,7 +27,7 @@ class EventsByEventTypeRequest extends FormRequest
     {
         return [
             //
-            'service_type_id' => 'required|integer'
+            'service_type_id' => ''
         ];
     }
 
@@ -35,7 +35,7 @@ class EventsByEventTypeRequest extends FormRequest
      * @param Validator $validator
      * @return void
      */
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): void
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
