@@ -43,7 +43,7 @@ class DashboardController extends Controller
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
         $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->offset(0)->limit(10)->get();
-        if(Auth::user()->company) {
+        if(!Auth::user()->company) {
             return redirect()->route('logout');
         }
         $services =  OccasionEvent::where('company_id',Auth::user()->company->id)->offset(0)->limit(10)->get();
