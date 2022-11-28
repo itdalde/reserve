@@ -91,10 +91,10 @@ class ServicesApiController extends Controller
      */
     public function getServicesByCompanyAndServiceType(Request $request, $company_id, $service_type)
     {
-        $services = OccasionEvent::with('providers', 'serviceType')
-            ->where('company_id', $company_id)
-            ->where('service_type', $service_type)
-            ->get();
+        $services = Company::with('serviceType', 'occasionEvents')
+                ->where('id', $company_id)
+                ->where('service_type_id', $service_type)
+                ->get();
         return sendResponse($services, "Get services by company group by service-type");
     }
 
