@@ -7,9 +7,9 @@
                 <thead>
                 <tr>
                     <th scope="col">Customer name</th>
-                    <th scope="col">Last purchase</th>
+                    <th scope="col">Company</th>
+                    <th scope="col">Sale</th>
                     <th scope="col">Location</th>
-                    <th scope="col">CS Cases</th>
                     <th scope="col">Total orders</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -20,9 +20,9 @@
                     @if((!$user->hasRole('superadmin')))
                         <tr>
                             <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
+                            <td>{{$user->company->name }}</td>
                             <td>0</td>
                             <td>{{$user->location }}</td>
-                            <td><span class="badge bg-secondary w-100">0 unresolved</span></td>
                             <td>0</td>
                             <td>
                                 <a href="{{route('users.view-user',['id' => $user->id])}}">
