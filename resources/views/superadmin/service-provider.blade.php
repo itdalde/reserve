@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <h3>Customers</h3>
+    <h3>Service Providers</h3>
     <div class="card" >
         <div class="card-body">
             <table class="table" id="service-provider-table">
