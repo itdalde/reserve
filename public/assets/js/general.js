@@ -48,6 +48,7 @@ $(document).ready(function () {
     });
 
     $('body').on('click', '.profile-image-holder', function () {
+
         $('#profile-image-file').click();
     });
 
@@ -56,7 +57,7 @@ $(document).ready(function () {
     });
 
     $('body').on('click', '.service-image-holder', function () {
-        $('#service-image-file').click();
+        $(this).closest('.modal').find('#service-image-file').click();
     });
     $('body').on('change', '#service-image-file', function () {
         $('.service-image-error').addClass('d-none');

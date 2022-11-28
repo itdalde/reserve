@@ -51,12 +51,12 @@
                     <span>Settings</span>
                 </a>
                 <ul class="collapse pl-0 mx-0" id="settings" style="list-style-type: none;">
-                    <li class="nav-item' {{ Request::is('settings*') ? ' active' : '' }}">
+                    <li class="nav-item' {{ Request::is('settings*') ? ' show' : '' }}">
                         <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.index')}}">
                             <span class="pl-1 ml-2"> Profile </span>
                         </a>
                     </li>
-                    <li class="nav-item' {{ Request::is('settings*') ? 'active' : '' }}">
+                    <li class="nav-item' {{ Request::is('settings*') ? 'show' : '' }}">
                         <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.manage_orders')}}">
                             <span class="pl-1 ml-2">Manage orders</span>
                         </a>
@@ -77,6 +77,34 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link px-4 d-flex align-items-center custom-tooltip customers-side-tab {{ Request::is('settings*') ? ' show active' : '' }}"  data-bs-toggle="collapse" href="#settings" role="button" aria-expanded="{{ Request::is('settings*') ? 'true' : 'false' }}" aria-controls="settings">
+                        <span class="ml-15px "><i style="font-size: 25px; {{Request::is('settings*') ? 'color:orange' : ''}}" class="bi bi-gear"></i> </span>
+                        <span>Settings</span>
+                    </a>
+                    <ul class="collapse pl-0 mx-0 {{ Request::is('settings*') ? ' show' : '' }}" id="settings" style="list-style-type: none;">
+                        <li class="nav-item {{ Request::is('settings*') ? ' show' : '' }}">
+                            <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.services')}}">
+                                <span class="pl-1 ml-2"> Services </span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::is('settings*') ? 'show' : '' }}">
+                            <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.occasions')}}">
+                                <span class="pl-1 ml-2">Occasions</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::is('settings*') ? 'show' : '' }}">
+                            <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.statuses')}}">
+                                <span class="pl-1 ml-2">Statuses</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::is('settings*') ? 'show' : '' }}">
+                            <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.roles')}}">
+                                <span class="pl-1 ml-2">Roles</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             @endif
 
         </ul>

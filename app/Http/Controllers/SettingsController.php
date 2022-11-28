@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auth\Role\Role;
 use App\Models\EventImages;
+use App\Models\Occasion;
+use App\Models\OccasionEvent;
+use App\Models\ServiceType;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -30,7 +35,30 @@ class SettingsController extends Controller
     public function manageOrders(Request $request)
     {
         return view('admin.orders.manage');
+    }
 
+    public function services(Request $request)
+    {
+        $services = ServiceType::all();
+        return view('admin.settings.services', compact('services'));
+    }
+
+    public function occasions(Request $request)
+    {
+        $occasions = Occasion::all();
+        return view('admin.settings.occasions', compact('occasions'));
+    }
+
+    public function statuses(Request $request)
+    {
+        $statuses = Status::all();
+        return view('admin.settings.statuses', compact('statuses'));
+    }
+
+    public function roles(Request $request)
+    {
+        $roles = Role::all();
+        return view('admin.settings.roles', compact('roles'));
     }
 
     public function companyUpdate(Request $request)
@@ -52,6 +80,79 @@ class SettingsController extends Controller
             $company->name = $data['name'];
             $company->save();
             return redirect()->back()->with('success', 'Company Updated Successfully');
+        } catch (Exception $ex) {
+            dd($ex->getMessage());
+        }
+    }
+
+    public function statusDelete(Request $request)
+    {
+        try {
+            $data = $request->all();
+            Status::where('id',$data['id'])->delete();
+            return redirect()->back()->with('success', 'Company Updated Successfully');
+        } catch (Exception $ex) {
+            dd($ex->getMessage());
+        }
+    }
+    public function statusUpdate(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $status = Status::where('id',$data['id'])->first();
+            $status->name = $data['name'];
+            $status->active = isset($data['active']) ? 1 : 0;
+            $status->save();
+            return redirect()->back()->with('success', 'Status Updated Successfully');
+        } catch (Exception $ex) {
+            dd($ex->getMessage());
+        }
+    }
+    public function statusStore(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $status = new Status();
+            $status->name = $data['name'];
+            $status->active = isset($data['active']) ? 1 : 0;
+            $status->save();
+            return redirect()->back()->with('success', 'Company Updated Successfully');
+        } catch (Exception $ex) {
+            dd($ex->getMessage());
+        }
+    }
+    public function serviceDelete(Request $request)
+    {
+        try {
+            $data = $request->all();
+            ServiceType::where('id',$data['id'])->delete();
+            return redirect()->back()->with('success', 'Service Type Deleted Successfully');
+        } catch (Exception $ex) {
+            dd($ex->getMessage());
+        }
+    }
+    public function serviceUpdate(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $status = ServiceType::where('id',$data['id'])->first();
+            $status->name = $data['name'];
+            $status->active = isset($data['active']) ? 1 : 0;
+            $status->save();
+            return redirect()->back()->with('success', 'Service Type Updated Successfully');
+        } catch (Exception $ex) {
+            dd($ex->getMessage());
+        }
+    }
+    public function serviceStore(Request $request)
+    {
+        try {
+            $data = $request->all();
+            $status = new ServiceType();
+            $status->name = $data['name'];
+            $status->active = isset($data['active']) ? 1 : 0;
+            $status->save();
+            return redirect()->back()->with('success', 'Service Type Created Successfully');
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }

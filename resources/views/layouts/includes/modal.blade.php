@@ -1,3 +1,5 @@
+
+@if(!Auth::user()->hasRole('superadmin'))
 <div class="modal fade" id="new-service-modal" tabindex="-1" aria-labelledby="new-service-modalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -380,3 +382,4 @@
         </div>
     </div>
 </div>
+@endif

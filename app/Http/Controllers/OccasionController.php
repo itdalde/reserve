@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\OccasionInterface;
+use App\Models\InquiryReplyImage;
 use App\Models\Occasion;
+use Google\Exception;
 use Illuminate\Http\Request;
 
 class OccasionController extends Controller
@@ -54,7 +56,18 @@ class OccasionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $occasion = new Occasion();
+        $occasion->name = $data['name'];
+        $occasion->active = isset($data['active']) ? 1 : 0;
+        if ($request->file('image')) {
+            $imageName = time() . '.' . $request->file('image')->extension();
+            $request->file('image')->move(public_path("assets/images/occasions"), $imageName);
+            $filename = "assets/images/occasions/{$imageName}";
+            $occasion->logo = $filename;
+        }
+        $occasion->save();
+        return redirect()->back()->with('success', 'Occasion Created Successfully');
     }
 
     /**
@@ -74,9 +87,24 @@ class OccasionController extends Controller
      * @param  \App\Models\Occasion  $occasion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Occasion $occasion)
+    public function edit(Request $request)
     {
-        //
+        try {
+            $data = $request->all();
+            $occasion = Occasion::where('id',$data['id'])->first();
+            $occasion->name = $data['title'];
+            $occasion->active = isset($data['active']) ? 1 : 0;
+            if ($request->file('image')) {
+                $imageName = time() . '.' . $request->file('image')->extension();
+                $request->file('image')->move(public_path("assets/images/occasions"), $imageName);
+                $filename = "assets/images/occasions/{$imageName}";
+                $occasion->logo = $filename;
+            }
+            $occasion->save();
+            return redirect()->back()->with('success', 'Occasion Updated Successfully');
+        } catch (Exception $exception) {
+            return redirect()->back()->with('error', 'Something went wrong');
+        }
     }
 
     /**
@@ -91,6 +119,14 @@ class OccasionController extends Controller
         //
     }
 
+    public function activateDeactivate(Request $request)
+    {
+        $data = $request->all();
+        $occasion = Occasion::where('id',$data['id'])->first();
+        $occasion->active = $data['active'] == 1 ? 0 : 1;
+        $occasion->save();
+        return redirect()->back()->with('success', 'Occasion Updated Successfully');
+    }
     /**
      * Remove the specified resource from storage.
      *
