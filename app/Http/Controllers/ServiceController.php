@@ -187,13 +187,11 @@ class ServiceController extends Controller
         $service->availability_time_out = $data['end_available_time'];
         $service->active = 1;
         $service->service_type = $data['service_type'];
-        $service->save();
 
         if ($request->file('featured_image')) {
             $file = $request->file('featured_image');
             $filename = $this->uploadImage($file, $service);
             $service->image = $filename;
-            $service->save();
         }
 
         if ($request->file('images')) {
@@ -201,6 +199,7 @@ class ServiceController extends Controller
                 $this->uploadImage($file, $service);
             }
         }
+        $service->save();
 
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;
