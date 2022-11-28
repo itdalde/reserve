@@ -177,6 +177,7 @@ class ServiceController extends Controller
         $service->occasion_type = 0;
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
+        $service->description_arabic = $data['service_description_arabic'];
         $service->address_1 = $data['location'];
         $service->max_capacity = $data['min_capacity'];
         $service->min_capacity = $data['max_capacity'];
