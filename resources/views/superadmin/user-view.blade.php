@@ -4,7 +4,11 @@
         <div class="row">
             <div class="col-4">
                 <div class="d-flex flex-column bd-highlight mb-3">
-                    <div class="p-2 bd-highlight"><a href="javascript: history.go(-1)"><-- Customers</a></div>
+                    <div class="p-2 bd-highlight"><a href="javascript: history.go(-1)"><--  @if($user->company)
+                                Service Providers
+                            @else
+                                Customers
+                                @endif</a></div>
                     <div class="p-2 bd-highlight">
                         <div class="d-flex justify-content-between">
                             <h3>Customer details</h3>

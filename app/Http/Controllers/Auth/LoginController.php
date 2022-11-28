@@ -110,7 +110,7 @@ class LoginController extends Controller
             auth()->logout();  //logout
             return redirect()->back()
                 ->withInput($request->only($this->username(), 'remember'))
-                ->withErrors(['errors' => $this->username().' not allowed to login.Please contact system administrator.']);
+                ->withErrors(['errors' => $user->email.' not allowed to login.Please contact system administrator.']);
         }
         $user->last_login = now();
         $user->save();
