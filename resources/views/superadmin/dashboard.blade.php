@@ -20,7 +20,7 @@
 
                     @if(!$user->hasRole('superadmin'))
                         <tr>
-                            <td>{{$user->first_name . ' ' . $user->last_name}}</td>
+                            <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
                             <td>0</td>
                             <td>{{$user->location }}</td>
                             <td><span class="badge bg-secondary w-100">0 unresolved</span></td>
