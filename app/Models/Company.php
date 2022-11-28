@@ -12,4 +12,12 @@ class Company extends Model
     public function serviceType() {
         return $this->belongsTo(ServiceType::class);
     }
+
+    public function occasionEvents() {
+        return $this->hasMany(OccasionEvent::class)->with(
+            'serviceType',
+            'occasionEventsReviews',
+            'occasionEventPrice',
+            'occasionEventsReviewsAverage');
+    }
 }
