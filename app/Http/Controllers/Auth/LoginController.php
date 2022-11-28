@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -105,7 +106,12 @@ class LoginController extends Controller
                 ->withInput($request->only($this->username(), 'remember'))
                 ->withErrors($errors);
         }
+        if(!Auth::user()->company) {auth()->logout();  //logout
 
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors(['errors' => 'user is not allowed to login']);
+        }
         $user->last_login = now();
         $user->save();
 
