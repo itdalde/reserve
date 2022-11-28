@@ -10,7 +10,6 @@
                     <th scope="col">Company</th>
                     <th scope="col">Sale</th>
                     <th scope="col">Location</th>
-                    <th scope="col">Total orders</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -23,7 +22,6 @@
                             <td>{{$user->company->name }}</td>
                             <td>0</td>
                             <td>{{$user->location }}</td>
-                            <td>0</td>
                             <td>
                                 <a href="{{route('users.view-user',['id' => $user->id])}}">
                                     <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
