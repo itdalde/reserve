@@ -53,6 +53,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'occasions', 'middleware' => ['cors']], function() {
         Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
+        Route::get('/{id}', [OccasionsApiController::class, 'getOccasion'])->name('get-occasion-by-id');
     });
 
     Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
