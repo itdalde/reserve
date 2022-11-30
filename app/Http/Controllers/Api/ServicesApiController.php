@@ -69,8 +69,7 @@ class ServicesApiController extends Controller
 
     public function getProvidersByServiceType(ProviderByServiceTypeRequest $request, $service_type_id): JsonResponse
     {
-
-        $providers = Company::with('tags', 'serviceType', 'services')
+        $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
             ->where('service_type_id', $service_type_id)
             ->get();
         return sendResponse($providers, 'Get providers by service type');

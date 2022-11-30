@@ -22,26 +22,27 @@ class OccasionEventFactory extends Factory
     {
         return [
             //
-            'occasion_id' => $this->faker->randomNumber(2),
-            'name' => $this->faker->randomElement(['Hall', 'Chamber', 'Catering']),
-            'description' => 'test',
-            'address_1' => $this->faker->streetAddress,
-            'image' => $this->faker->image(),
-            'address_2' => $this->faker->streetName,
+            'company_id' => $this->faker->randomElement([1,2,3,4,5,6,7,8,9]),
+            'name' => $this->faker->randomElement(['Catering', 'Photography', 'Videography', 'Hosting', 'Music Band', 'Sound Equipment']),
+            'price' => $this->faker->randomElement([650, 750, 850, 550, 950]),
+            'description' => $this->faker->words(10, true),
+            'address_1' => $this->faker->address,
+            'address_2' => $this->faker->address,
             'postal_code' => $this->faker->postcode,
             'province' => $this->faker->country,
             'city' => $this->faker->city,
             'country' => $this->faker->country,
-            'max_capacity' => $this->faker->numberBetween(50, 100),
-            'min_capacity' => $this->faker->numberBetween(1, 50),
-            'availability_start_date' => $this->faker->date('Y-m-d', 'now'),
+            'max_capacity' => $this->faker->randomElement([10, 25, 50, 100]),
+            'min_capacity' => $this->faker->randomElement([1, 3, 5, 8]),
+            'availability_start_date' =>  $this->faker->date('Y-m-d', 'now'),
             'availability_end_date' => $this->faker->date('Y-m-d', 'now'),
             'availability_time_in' => $this->faker->time('H:i:s', 'now'),
             'availability_time_out' => $this->faker->time('H:i:s', 'now'),
-            'active' => $this->faker->numberBetween(0, 1),
-            'service_type' => $this->faker->numberBetween(1,3),
-            'created_at' => Carbon::now()->toDateTimeString(),
-            'updated_at' => Carbon::now()->toDateTimeString(),
+            'active' => 1,
+            'service_type' => $this->faker->randomElement([1,2,3]),
+            'occasion_type' => 0,
+            'availability_slot' => 2,
+            'description_arabic' => $this->faker->words(10, true)
         ];
     }
 }
