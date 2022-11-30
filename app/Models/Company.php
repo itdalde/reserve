@@ -13,11 +13,15 @@ class Company extends Model
         return $this->belongsTo(ServiceType::class);
     }
 
-    public function occasionEvents() {
+    public function services() {
         return $this->hasMany(OccasionEvent::class)->with(
             'serviceType',
-            'occasionEventsReviews',
-            'occasionEventPrice',
-            'occasionEventsReviewsAverage');
+            'serviceReviews',
+            'serviceRate',
+            'ratings');
+    }
+
+    public function tags() {
+        return $this->hasMany(Tags::class);
     }
 }

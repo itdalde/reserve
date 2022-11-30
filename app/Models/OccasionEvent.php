@@ -50,4 +50,16 @@ class OccasionEvent extends Model
     {
         return $this->hasMany(Company::class, 'id', 'company_id');
     }
+    public function serviceRate() {
+        return $this->hasMany(OccasionEventPrice::class)->where('active', '=', 1);
+    }
+    public function serviceReviews()
+    {
+        return $this->hasMany(OccasionEventReviews::class);
+    }
+    public function ratings() {
+        return $this->hasMany(OccasionEventReviews::class)
+            ->selectRaw('avg(rate) as aggregate, occasion_event_id')
+            ->groupBy('occasion_event_id');
+    }
 }

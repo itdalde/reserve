@@ -31,8 +31,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -43,8 +42,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -55,8 +53,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -67,8 +64,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -79,8 +75,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -91,8 +86,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -103,8 +97,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -115,8 +108,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
             [
@@ -127,8 +119,7 @@ class CompanySeeder extends Seeder
                 'service_type_id' => $faker->randomElement([1,2,3]),
                 'phone_number' => $faker->phoneNumber,
                 'location' => $faker->address,
-                'rating' => $faker->randomNumber(5),
-                'tag' => $faker->randomElement(['4 Halls', 'Top rated service provider', 'Responds quickly']),
+                'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ]
         ];
