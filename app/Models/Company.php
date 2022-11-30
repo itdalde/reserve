@@ -15,7 +15,6 @@ class Company extends Model
 
     public function services() {
         return $this->hasMany(OccasionEvent::class)->with(
-            'serviceType',
             'serviceReviews',
             'serviceRate',
             'ratings');
