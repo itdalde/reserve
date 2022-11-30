@@ -30,7 +30,7 @@ class OccasionEventFactory extends Factory
             'address_2' => $this->faker->address,
             'postal_code' => $this->faker->postcode,
             'province' => $this->faker->country,
-            'image' => $this->faker->imageUrl(),
+            'image' => 'https://via.placeholder.com/280',
             'city' => $this->faker->city,
             'country' => $this->faker->country,
             'max_capacity' => $this->faker->randomElement([10, 25, 50, 100]),
