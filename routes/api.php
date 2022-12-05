@@ -79,6 +79,13 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/', [CompanyApiController::class, 'getProviders'])->name('get-all-providers');
         Route::get('/service-type/{service_type_id}', [ServicesApiController::class, 'getProvidersByServiceType'])->name('get-providers-by-service-type');
         Route::get('/{provider_id}/service-type/{service_id}', [ServicesApiController::class, 'getServicesByCompanyAndServiceType'])->name('get-services-under-company-group-by-service-type');
+    });
+
+    Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
+
+    });
+
+    Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
 
     });
 });

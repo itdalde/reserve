@@ -27,17 +27,4 @@ class OccasionsApiController extends Controller
         $occasion = Occasion::select(['id', 'name', 'logo', 'active'])->where('id', $request->id)->get();
         return sendResponse($occasion, 'Get occasion with id :' . $request->id);
     }
-
-    /**
-     * @param OccasionTypeByOccasionRequest $request
-     * @return JsonResponse
-     */
-    public function getOccasionTypeByOccasionId(OccasionTypeByOccasionRequest $request): JsonResponse
-    {
-        $request->validated();
-        $occasionId = $request->occasion_type;
-        $occasionTypes = OccasionTypes::select(['id', 'name', 'image', 'base_price', 'occasion_id'])->where('occasion_id', $occasionId)->get();
-        return sendResponse($occasionTypes, 'Occasion Types');
-    }
-
 }
