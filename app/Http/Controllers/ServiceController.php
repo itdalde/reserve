@@ -188,8 +188,6 @@ class ServiceController extends Controller
         $service->availability_time_out = $data['end_available_time'];
         $service->active = 1;
         $service->service_type = $data['service_type'];
-
-
         $service->save();
 
         if ($request->file('images')) {
