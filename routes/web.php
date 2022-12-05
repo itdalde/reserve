@@ -25,6 +25,8 @@ use App\Http\Controllers\ServiceController;
 
 Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
+
+Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign');
 Route::post('/occasions/store', [OccasionController::class, 'store'])->name('occasion-store');
 Route::post('/occasions/update', [OccasionController::class, 'edit'])->name('occasion-update');
 Route::get('/occasions/delete', [OccasionController::class, 'activateDeactivate'])->name('occasions.delete-occasion');

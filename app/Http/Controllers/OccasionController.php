@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Interfaces\OccasionInterface;
 use App\Models\InquiryReplyImage;
 use App\Models\Occasion;
+use App\Models\OccasionEvent;
 use Google\Exception;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,18 @@ class OccasionController extends Controller
     public function create()
     {
         //
+    }
+
+    public function assignServices(Request $request) {
+        $data = $request->all();
+        foreach ($data['services'] as $service) {
+            $service =  OccasionEvent::where('id',$service)->first();
+            if($service) {
+                $service->occasion_type = $data['id'];
+                $service->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Occasion Assignment Successful');
     }
 
     /**

@@ -19,7 +19,7 @@
                                 <tr>
                                     <th scope="col">Occasion</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Services</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -29,11 +29,31 @@
                                     <td>{{$occasion->name}}</td>
                                     <td><img src="{{asset($occasion->logo)}}" alt="...">
                                     </td>
-                                    <td><span
-                                            class="badge rounded-pill {{$occasion->active == 1 ? 'bg-success' : 'bg-secondary'}}">{{$occasion->active == 1 ? 'Active' : 'Inactive'}}</span>
-                                    </td>
+                                    <td>
+                                        @if($occasion->occasionEvents)
+                                            @foreach ($occasion->occasionEvents as $service)
+                                                <span class="badge rounded-pill bg-secondary">{{$service->name}}</span>
+                                                <br>
+                                            @endforeach
+                                        @endif
+                                          </td>
                                     <td>
                                         <div class="d-flex justify-content-center">
+                                            <div class="p-1">
+                                                @php $serviceIds = ''; @endphp
+                                                @if($occasion->occasionEvents)
+                                                    @foreach ($occasion->occasionEvents as $service)
+                                                        @php $serviceIds .= $service->id.','; @endphp
+                                                    @endforeach
+                                                @endif
+                                                <button class="btn btn-warning assign-occasion-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#assign-occasion-modal"
+                                                        data-id="{{$occasion->id}}"
+                                                        data-name="{{$occasion->name}}"
+                                                        data-services="{{$serviceIds}}"
+                                                >Assign</button>
+
+                                            </div>
                                             <div class="p-1">
                                                 <button class="btn btn-info update-occasion-btn"
                                                         data-bs-toggle="modal" data-bs-target="#update-occasion-modal"
@@ -125,6 +145,62 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="assign-occasion-modal" tabindex="-1" aria-labelledby="assign-occasion-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="new-support-modalLabel">Assign Occasion (<span class="occasion-title"></span>)</h5>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close</button>
+                </div>
+                <form method="post" action="{{route('occasion-assign')}}">
+                    @csrf
+                    <input type="hidden" name="id" class="occasion-id">
+                    <div class="modal-body">
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto w-100">
+                                <div class="table-responsive">
+                                    <table class="table caption-top" id="service-table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Service Name</th>
+                                            <th scope="col">Assign</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($services as $service)
+                                            <tr>
+                                                <th scope="row">{{$service['id']}}</th>
+                                                <td>{{$service['name']}}</td>
+                                                <td>
+                                                    <div class="form-check form-switch">
+                                                        <input value="{{$service['id']}}" class="form-check-input services-checkbox" name="services[]" data-id="{{$service['id']}}" data-occasion_type="{{$service['occasion_type']}}" type="checkbox" id="flexSwitchCheckChecked{{$service['id']}}" >
+                                                        <label class="form-check-label" for="flexSwitchCheckChecked{{$service['id']}}">Assign</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                            <div class="ms-auto p-2 bd-highlight">
+                                <button type="submit" class="btn btn-warning">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="update-occasion-modal" tabindex="-1" aria-labelledby="update-occasion-modalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -193,13 +269,16 @@
         $(document).ready(function () {
 
             $.fn.dataTable.ext.errMode = 'none';
-            let datatable = $('#occasions-table').DataTable({
+            $('#service-table').DataTable({
+                "pageLength": 5,
+            });
+            $('#occasions-table').DataTable({
                 "pageLength": 10,
             });
-            $('#occasions-table').on('error.dt', function (e, settings, techNote, message) {
+            $('#occasions-table, #service-table').on('error.dt', function (e, settings, techNote, message) {
                 console.log('An error has been reported by DataTables: ', message);
             })
-            $('#occasions-table_length').remove();
+            $('#occasions-table_length,#service-table_length').remove();
             $('body').on('click','.update-occasion-btn',function (e) {
                 let id = $(this).attr('data-id');
                 let name = $(this).attr('data-name');
@@ -210,6 +289,31 @@
                 $('#occasion-name-field').val(name)
                 $('#is-active-field').attr('checked',active)
             });
+            $('body').on('click','.assign-occasion-btn',function (e) {
+                let id = $(this).attr('data-id');
+                let services = $(this).attr('data-services');
+                let name = $(this).attr('data-name');
+                $('.occasion-id').val(id)
+                $('.occasion-title').text(name)
+                services = services.split(',')
+
+                console.log('services',services)
+                services.forEach(function (e) {
+                    if (e != '') {
+                        $(".services-checkbox[data-id='" + e +"']").attr('checked',true);
+
+                    }
+                });
+                $(".services-checkbox").each(function (e) {
+                    if($(this).attr('data-occasion_type') != 0 && $(this).attr('data-occasion_type') != id) {
+                        $(this).closest('tr').hide();
+                    } else {
+                        $(this).closest('tr').show();
+                    }
+                });
+
+            });
+
         });
     </script>
 @endsection

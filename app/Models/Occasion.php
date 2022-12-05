@@ -10,7 +10,7 @@ class Occasion extends Model
     use HasFactory;
 
     public function occasionEvents() {
-        return $this->hasMany(OccasionEvent::class);
+        return $this->hasMany(OccasionEvent::class,'occasion_type');
     }
     public function occasionEventsReviews() {
         return $this->hasMany(OccasionEventReviews::class);
