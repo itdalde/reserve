@@ -386,7 +386,7 @@
 
                             <div class="ms-auto p-2 bd-highlight">
                                 <button type="button" id="service-next-btn" class="btn btn-warning">Next</button>
-                                <button type="submit" id="service-submit-btn" class="btn btn-warning d-none">Save
+                                <button  type="submit" id="service-submit-btn" class="btn btn-warning d-none">Save
                                 </button>
                             </div>
                         </div>

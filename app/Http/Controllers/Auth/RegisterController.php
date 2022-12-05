@@ -57,7 +57,7 @@ class RegisterController extends Controller
         $rules = [
             'company_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:8',
         ];
 
         if (config('auth.captcha.registration')) {
@@ -133,7 +133,7 @@ class RegisterController extends Controller
         if (config('auth.users.confirm_email') && !$user->confirmed) {
 
 
-            $user->notify(new ConfirmEmail());
+//            $user->notify(new ConfirmEmail());
 
             return redirect(route('success-register'));
         }

@@ -114,22 +114,22 @@ $(document).ready(function () {
         }
     });
 
-    $("#create-service").submit(function(e) {
-        e.preventDefault();
-        let form = $(this);
-        let actionUrl = form.attr('action');
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: form.serialize(),
-            beforeSend: function() {
-                window.VIEW_LOADING();
-            },
-            success: function(data) {
-                window.HIDE_LOADING();
-                $('#new-service-modal').modal('hide');
-            }
-        });
-
-    });
+    // $("#create-service").submit(function(e) {
+    //     e.preventDefault();
+    //     let form = $(this);
+    //     let actionUrl = form.attr('action');
+    //     $.ajax({
+    //         type: "POST",
+    //         url: actionUrl,
+    //         data: form.serialize(),
+    //         beforeSend: function() {
+    //             window.VIEW_LOADING();
+    //         },
+    //         success: function(data) {
+    //             window.HIDE_LOADING();
+    //             $('#new-service-modal').modal('hide');
+    //         }
+    //     });
+    //
+    // });
 });

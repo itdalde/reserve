@@ -9,7 +9,7 @@
 @section('body_class','register')
 
 @section('content')
-    <div class="mx-auto login-main">
+    <div class="d-flex justify-content-between">
         <img class="auth-img-top" src="{{asset('assets/auth/img/login-img-top.png')}}" alt="login-img-top">
         <div class="container">
             <div class="row mx-auto mt-5" style="width: 34em;">
