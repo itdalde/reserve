@@ -106,7 +106,7 @@ class LoginController extends Controller
                 ->withInput($request->only($this->username(), 'remember'))
                 ->withErrors($errors);
         }
-        if(!Auth::user()->company) {
+        if($user->hasRole('user')) {
             auth()->logout();  //logout
             return redirect()->back()
                 ->withInput($request->only($this->username(), 'remember'))
