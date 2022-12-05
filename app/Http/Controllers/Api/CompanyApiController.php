@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 
 class CompanyApiController extends Controller
 {
-    //
-
-
     public function getProviders() {
         $providers = Company::all();
         return sendResponse($providers, 'Get providers');
