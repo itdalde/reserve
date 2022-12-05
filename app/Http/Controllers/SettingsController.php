@@ -46,7 +46,7 @@ class SettingsController extends Controller
     public function occasions(Request $request)
     {
         $occasions = Occasion::all();
-        $services = OccasionEvent::all()->toArray();
+        $services = OccasionEvent::with('company')->get()->toArray();
         return view('admin.settings.occasions', compact('occasions','services'));
     }
 

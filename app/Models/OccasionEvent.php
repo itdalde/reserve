@@ -50,6 +50,10 @@ class OccasionEvent extends Model
     {
         return $this->hasMany(Company::class, 'id', 'company_id');
     }
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'id', 'company_id');
+    }
     public function serviceRate() {
         return $this->hasMany(OccasionEventPrice::class)->where('active', '=', 1);
     }

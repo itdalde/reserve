@@ -32,7 +32,7 @@
                                     <td>
                                         @if($occasion->occasionEvents)
                                             @foreach ($occasion->occasionEvents as $service)
-                                                <span class="badge rounded-pill bg-secondary">{{$service->name}}</span>
+                                                <span class="badge rounded-pill bg-secondary  w-100 p-2 mb-1">{{$service->name}} - {{$service->company->name}}</span>
                                                 <br>
                                             @endforeach
                                         @endif
@@ -148,7 +148,7 @@
 
     <div class="modal fade" id="assign-occasion-modal" tabindex="-1" aria-labelledby="assign-occasion-modalLabel"
          aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="new-support-modalLabel">Assign Occasion (<span class="occasion-title"></span>)</h5>
@@ -164,15 +164,15 @@
                                     <table class="table caption-top" id="service-table">
                                         <thead>
                                         <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Service Name</th>
+                                            <th scope="col">Provider</th>
+                                            <th scope="col">Service</th>
                                             <th scope="col">Assign</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($services as $service)
                                             <tr>
-                                                <th scope="row">{{$service['id']}}</th>
+                                                <td>{{$service['company']['name']}}</td>
                                                 <td>{{$service['name']}}</td>
                                                 <td>
                                                     <div class="form-check form-switch">
