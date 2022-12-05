@@ -24,12 +24,12 @@ class OccasionFactorySeeder extends Seeder
         $occasions = [
             [
                 'name' => 'Catering',
-                'logo' => $faker->image(),
+                'logo' => 'https://via.placeholder.com/150',
                 'active' => 1
             ],
             [
                 'name' => 'Men Occasions',
-                'logo' => $faker->image(),
+                'logo' => 'https://via.placeholder.com/150',
                 'active' => 1
             ]
         ];

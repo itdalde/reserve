@@ -51,6 +51,11 @@ Route::group(['prefix' => 'v1/membership', 'middleware' => ['cors']], function()
 
 Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
+    Route::group(['prefix' => 'occasions', 'middleware' => ['cors']], function() {
+        Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
+        Route::get('/{id}', [OccasionsApiController::class, 'getOccasion'])->name('get-occasion-by-id');
+    });
+
     Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
         Route::get('/from-to-date', [OccasionEventsApiController::class, 'getOccasionEventsByFromToDate'])->name('get-events-by-occasion-date');
         Route::get('/service-type/{id}', [OccasionEventsApiController::class, 'getOccasionByServiceType'])->name('get-events-by-event-type');
@@ -58,14 +63,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])->name('get-occasion-events');
     });
 
-    Route::group(['prefix', 'occasions', 'middleware' => ['cors']], function() {
-        Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
-    });
-
     Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
         Route::get('/', [ServiceTypesApiController::class, 'getServices'])->name('get-services');
         Route::get('/type/{service_type_id}', [ServiceTypesApiController::class, 'getService'])->name('get-service-by-id');
         Route::get('/occasion-service-type/{occasion_id}', [ServiceTypesApiController::class, 'getServiceTypesByOccasionId'])->name('get-service-type-by-occasion-id');
+
         Route::get('/occasion-event/{occasion_event_id}', [OccasionEventsApiController::class, 'getOccasionServiceByOccasionId'])->name('get-occasion-service-by-occasion-id');
         Route::get('/provider/{provider_id}', [ServicesApiController::class, 'getServicesByProviders'])->name('get-services-by-provider');
 
