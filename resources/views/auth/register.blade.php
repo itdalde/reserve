@@ -27,22 +27,25 @@
                                     {{ Form::open(['route' => 'register']) }}
                                     <div class="form-group">
                                         <label for="first_name">First Name</label>
-                                        <input id="first_name" autocomplete="new-password" type="text" name="first_name"
+                                        <input id="first_name" type="text" name="first_name"
                                                class="mb-0 form-control"
+                                               value="{{ old('first_name') }}"
                                                placeholder="First Name"
                                                required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="last_name" class="col-form-label">Last Name</label>
-                                        <input id="last_name" autocomplete="new-password" type="text" name="last_name"
+                                        <input id="last_name"  type="text" name="last_name"
                                                class="mb-0 form-control"
+                                               value="{{ old('last_name') }}"
                                                placeholder="Last Name"
                                                required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="email" class="col-form-label">Email</label>
-                                        <input id="email" autocomplete="new-password" type="email" name="email"
+                                        <input id="email" type="email" name="email"
                                                class="mb-0 form-control"
+                                               value="{{ old('email') }}"
                                                placeholder="{{ __('views.auth.register.input_1') }}"
                                                required/>
                                     </div>
