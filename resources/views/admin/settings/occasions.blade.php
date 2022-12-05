@@ -165,7 +165,6 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Provider</th>
-                                            <th scope="col">Service</th>
                                             <th scope="col">Assign</th>
                                         </tr>
                                         </thead>
@@ -173,7 +172,6 @@
                                         @foreach($services as $service)
                                             <tr>
                                                 <td>{{$service['company']['name']}}</td>
-                                                <td>{{$service['name']}}</td>
                                                 <td>
                                                     <div class="form-check form-switch">
                                                         <input value="{{$service['id']}}" class="form-check-input services-checkbox" name="services[]" data-id="{{$service['id']}}" data-occasion_type="{{$service['occasion_type']}}" type="checkbox" id="flexSwitchCheckChecked{{$service['id']}}" >
