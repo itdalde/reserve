@@ -23,105 +23,28 @@ class CompanySeeder extends Seeder
         $faker = Faker::create();
 
         $companies = [
+           [
+               'user_id' => 1,
+               'name' => 'The Ritz - Carlton',
+               'description' => 'Doha',
+               'logo' => 'https://via.placeholder.com/150',
+               'service_type_id' => 1,
+               'phone_number' => '+(974) 33317799',
+               'location' => 'Pearl Qatar, Doha',
+               'rating' => $faker->randomElement([1,2,3,4,5]),
+               'base_price' => $faker->randomElement([850, 375, 650])
+           ],
             [
                 'user_id' => 1,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
+                'name' => 'Yasmine Palace',
+                'description' => 'European Style',
                 'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
+                'service_type_id' => 1,
+                'phone_number' => '+(974) 4411 1502',
+                'location' => 'La Croisette 31 Parcel 18 Unit 396/397 - Porto Arabia, The Pearl, Qatar',
                 'rating' => $faker->randomElement([1,2,3,4,5]),
                 'base_price' => $faker->randomElement([850, 375, 650])
             ],
-            [
-                'user_id' => 2,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 3,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 4,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 6,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 8,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 11,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 12,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ],
-            [
-                'user_id' => 13,
-                'name' => $faker->company,
-                'description' => $faker->words(50, true),
-                'logo' => 'https://via.placeholder.com/150',
-                'service_type_id' => $faker->randomElement([1,2,3]),
-                'phone_number' => $faker->phoneNumber,
-                'location' => $faker->address,
-                'rating' => $faker->randomElement([1,2,3,4,5]),
-                'base_price' => $faker->randomElement([850, 375, 650])
-            ]
         ];
 
         foreach($companies as $company) {
