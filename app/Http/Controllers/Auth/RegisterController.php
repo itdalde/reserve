@@ -133,7 +133,7 @@ class RegisterController extends Controller
         if (config('auth.users.confirm_email') && !$user->confirmed) {
 
 
-            $user->notify(new ConfirmEmail());
+//            $user->notify(new ConfirmEmail());
 
             return redirect(route('success-register'));
         }
