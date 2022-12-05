@@ -189,19 +189,21 @@ class ServiceController extends Controller
         $service->active = 1;
         $service->service_type = $data['service_type'];
 
-        if ($request->file('featured_image')) {
-            $file = $request->file('featured_image');
-            $filename = $this->uploadImage($file, $service);
-            $service->image = $filename;
-        }
+
+        $service->save();
 
         if ($request->file('images')) {
             foreach ($request->file('images') as $file) {
                 $this->uploadImage($file, $service);
             }
         }
-        $service->save();
-
+        if ($request->file('featured_image')) {
+            $file = $request->file('featured_image');
+            $filename = $this->uploadImage($file, $service);
+            $service = OccasionEvent::where('id',$service->id)->first();
+            $service->image = $filename;
+            $service->save();
+        }
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;
         $price->plan_id = $data['plan_id'];
