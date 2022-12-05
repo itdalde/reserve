@@ -60,8 +60,8 @@ class ServiceController extends Controller
             $service->name = $data['service_name'];
             $service->description = $data['service_description'];
             $service->address_1 = $data['service_location'];
-            $service->max_capacity = $data['min_capacity'];
-            $service->min_capacity = $data['max_capacity'];
+            $service->max_capacity = $data['max_capacity'];
+            $service->min_capacity = $data['min_capacity'];
             $service->availability_slot = $data['available_slot'];
             $service->availability_start_date = $data['start_available_date'];
             $service->availability_end_date = $data['end_available_date'];
@@ -179,8 +179,8 @@ class ServiceController extends Controller
         $service->description = $data['service_description'];
         $service->description_arabic = $data['service_description_arabic'];
         $service->address_1 = $data['location'];
-        $service->max_capacity = $data['min_capacity'];
-        $service->min_capacity = $data['max_capacity'];
+        $service->max_capacity = $data['max_capacity'];
+        $service->min_capacity = $data['min_capacity'];
         $service->availability_slot = $data['available_slot'];
         $service->availability_start_date = $data['start_available_date'];
         $service->availability_end_date = $data['end_available_date'];
