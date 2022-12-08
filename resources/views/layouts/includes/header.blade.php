@@ -17,7 +17,7 @@
                 <span><h3>Admin account</h3></span>
             @endif
         </div>
-        @if(!Auth::user()->hasRole('superadmin'))
+        @if(!Auth::user()->hasRole('superadmin') && isset($services) && count($services) < 1)
         <div class="mx-2 d-flex justify-content-center">
             <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#new-service-modal">
                 <img src="{{asset('assets/images/icons/add.png')}}" alt="...">  &nbsp; &nbsp; &nbsp; &nbsp;Add new service
