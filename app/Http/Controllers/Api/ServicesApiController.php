@@ -24,7 +24,7 @@ class ServicesApiController extends Controller
     {
         $search = $request->search;
         $serviceId = $request->service_type_id;
-        $services = OccasionEvent::with('occasionEventPrice', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
+        $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
             ->leftJoin('occasion_events_pivots as oep', 'occasion_events.id', '=', 'oep.occasion_event_id')
             ->where('occasion_events.name', 'like', '%' . $search . '%')
             ->where('occasion_events.service_type', '=', $serviceId)
@@ -51,7 +51,7 @@ class ServicesApiController extends Controller
 
     public function getServicesByProviders(Request $request, $provider_id)
     {
-        $services = OccasionEvent::with('occasionEventsReviews', 'occasionEventPrice', 'occasionEventsReviewsAverage')
+        $services = OccasionEvent::with('occasionEventsReviews', 'paymentPlan', 'occasionEventsReviewsAverage')
             ->where('company_id', $provider_id)
             ->get();
         return sendResponse($services, 'Get all services by provider');
