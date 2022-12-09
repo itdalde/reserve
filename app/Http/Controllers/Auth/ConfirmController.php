@@ -24,10 +24,8 @@ class ConfirmController extends Controller
         if($user) {
             $user->confirmed = true;
             $user->save();
-        };
-
-//        auth()->login($user);
-        return redirect()->intended(app(LoginController::class)->redirectPath());
+        }
+        return view('email-confirmed');
     }
 
     public function sendEmail(User $user)
