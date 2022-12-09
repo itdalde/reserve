@@ -23,8 +23,9 @@
         <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
+
     </head>
-    <body>
+    <body  data-aos-once="false">
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex align-items-center">
@@ -69,23 +70,23 @@
             <div class="container" style="height: 503px;">
 
                 <div class="row">
-                    <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left">
+                    <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item"  data-aos-once="false" data-aos-mirror="true" data-aos="fade-left">
                         <div class="content pt-4 pt-lg-0">
-                            <h3>Reserve is your one stop shop for quality services</h3>
-                            <p>
+                            <h3 data-aos-once="false" data-aos-mirror="true" data-aos="fade-right">Reserve is your one stop shop for quality services</h3>
+                            <p data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
                                 We are is an online platform where the best vendors offer up their services at competitive rates.
                             </p>
                             <div class="d-flex justify-content-center" style=" margin-top: 20em;">
-                                <a class="p-2 m-2" href="#">
+                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="#">
                                     <img src="{{asset('assets/landing/img/App Store.png')}}" alt="App Store.png">
                                 </a>
-                                <a class="p-2 m-2" href="#">
+                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-right" href="#">
                                     <img src="{{asset('assets/landing/img/Google Play.png')}}" alt="Google Play.png">
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6" data-aos="zoom-in">
+                    <div class="col-lg-6 aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false">
                         <img src="{{ asset('assets/landing/img/about-image.png')}}" class="img-fluid" alt="">
                     </div>
                 </div>
@@ -97,12 +98,12 @@
             <div class="container">
 
                 <img src="{{asset('assets/landing/img/service-border.png')}}" alt="service-border" style="margin-top: 8em;">
-                <div class="section-title" data-aos="fade-up" style="margin-top: 3em;">
+                <div class="section-title aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false" style="margin-top: 3em;">
                     <h3>How it works</h3>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in">
+                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0 aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="zoom-in">
                         <div class="icon-box icon-box-pink">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-1.png')}}" alt="service-3"></div>
                             <h4 class="title"><a href="">A wide range of services for all occasions</a></h4>
@@ -110,7 +111,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0 aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="zoom-in" data-aos-delay="100">
                         <div class="icon-box icon-box-cyan">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-2.png')}}" alt="service-3"></div>
                             <h4 class="title"><a href="">Very easy-to-use app and process</a></h4>
@@ -118,7 +119,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0 aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="zoom-in" data-aos-delay="200">
                         <div class="icon-box icon-box-green">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-3.png')}}" alt="service-3"></div>
                             <h4 class="title"><a href="">We take quality assurance very serious</a></h4>
@@ -132,49 +133,49 @@
         <section id="portfolio" class="portfolio">
             <div class="container">
 
-                <div class="section-title" data-aos="fade-up">
+                <div class="section-title aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-up">
                     <h2>Join our platform as a vendor</h2>
                     <p>Are you a vendor or a company that would like to join our platform and deliver the best to our users?</p>
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left">
-                        <div class="content pt-4 pt-lg-0 p-5">
+                    <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item">
+                        <div class="content pt-4 pt-lg-0 p-5"  data-aos-once="false" data-aos-mirror="true" data-aos="fade-up">
                             <img src="{{asset('assets/landing/img/portfolio-dashboard.png')}}" alt="portfolio-dashboard">
                             <h3>Simple UI</h3>
                             <p>We understand that using software to manage your business can be a bit daunting so we created a platform with a very simple and straightforward UI for your convenience.</p>
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5">
+                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-notes.png')}}" alt="portfolio-notes">
                             <h3>Fast and easy registration</h3>
                             <p>Our registration process is as easy as clicking the “vendor registration” button and filling in some information so we can contact you and confirm your application.</p>
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5">
+                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-cards.png')}}" alt="portfolio-cards">
 
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5">
+                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-line-graph.png')}}" alt="portfolio-line-graph">
 
                         </div>
                     </div>
-                    <div class="col-lg-6 d-flex flex-column justify-contents-center" data-aos="fade-left">
-                        <div class="content pt-4 pt-lg-0 p-5">
+                    <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item">
+                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-computer.png')}}" alt="portfolio-computer">
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5">
+                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-graph.png')}}" alt="portfolio-graph">
                             <h3>Simple earning and statistics tracking</h3>
                             <p>It is very easy to never lose track of your services and how well they are performing.</p>
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5">
+                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-pie.png')}}" alt="portfolio-pie">
                             <h3>Efficient optimization tips and hints</h3>
                             <p>Reserve provides you with occassional relevant summaries of how well your company and specific services are doing.</p>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="d-flex justify-content-center aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-up" data-aos-delay="200">
                     <div class="d-flex flex-column">
                         <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">Register as a vendor</a></div>
                     </div>
@@ -188,12 +189,12 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-lg-5 d-flex align-items-stretch" data-aos="fade-right">
+                    <div class="col-lg-5 d-flex align-items-stretch aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-right">
                         <img src="{{asset('assets/landing/img/Reserve App 1.png')}}" alt="Reserve App 1">
 
                     </div>
 
-                    <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch" data-aos="fade-left">
+                    <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                         <div class="d-flex flex-column">
                             <div class="p-2">
                                 <h3>Download a World of Hospitality</h3>
