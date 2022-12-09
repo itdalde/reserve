@@ -46,8 +46,15 @@ class ApiAuthController extends Controller
             'confirmed' => false
         ]);
         if (config('auth.users.default_role')) {
-            $user->roles()->attach(Role::firstOrCreate(['name' => config('auth.users.default_role')]));
+            $user->roles()->attach(Role::firstOrCreate(['name' =>'user']));
         }
+
+        $to = "somebody@example.com";
+        $subject = "Welcome";
+        $txt = "Welcome to Reserve";
+        $headers = "From: contactus@reservegcc.com";
+
+        mail($to,$subject,$txt,$headers);
 //        $user->notify(new ConfirmEmail());
         $response = ['message' => 'Successfully created. Please check your email to confirm'];
         return response()->json($response,200);
