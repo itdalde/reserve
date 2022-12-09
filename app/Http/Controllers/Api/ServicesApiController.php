@@ -24,7 +24,7 @@ class ServicesApiController extends Controller
     {
         $search = $request->search;
         $serviceId = $request->service_type_id;
-        $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
+        $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'occasionEventsReviewsAverage', 'gallery')
             ->leftJoin('occasion_events_pivots as oep', 'occasion_events.id', '=', 'oep.occasion_event_id')
             ->where('occasion_events.name', 'like', '%' . $search . '%')
             ->where('occasion_events.service_type', '=', $serviceId)
@@ -57,7 +57,7 @@ class ServicesApiController extends Controller
 
     public function getServicesByProviders(Request $request, $provider_id)
     {
-        $services = OccasionEvent::with('occasionEventsReviews', 'paymentPlan', 'occasionEventsReviewsAverage')
+        $services = OccasionEvent::with('occasionEventsReviews', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery')
             ->where('company_id', $provider_id)
             ->get();
         return sendResponse($services, 'Get all services by provider');
@@ -71,14 +71,14 @@ class ServicesApiController extends Controller
      */
     public function getServicesByCompanyAndServiceType(Request $request, $company_id, $service_type): JsonResponse
     {
-        $services = Company::with('serviceType', 'occasionEvents')
+        $providers = Company::with('serviceType', 'services')
                 ->where('id', $company_id)
                 ->where('service_type_id', $service_type)
                 ->get();
         foreach($providers as $provider) {
             $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
         }
-        return sendResponse($services, "Get services by company group by service-type");
+        return sendResponse($providers, "Get services by company group by service-type");
     }
 
 }
