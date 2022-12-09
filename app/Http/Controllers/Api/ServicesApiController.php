@@ -24,7 +24,7 @@ class ServicesApiController extends Controller
     {
         $search = $request->search;
         $serviceId = $request->service_type_id;
-        $services = OccasionEvent::with('occasionEventPrice', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
+        $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'occasionEventsReviewsAverage')
             ->leftJoin('occasion_events_pivots as oep', 'occasion_events.id', '=', 'oep.occasion_event_id')
             ->where('occasion_events.name', 'like', '%' . $search . '%')
             ->where('occasion_events.service_type', '=', $serviceId)
@@ -37,7 +37,10 @@ class ServicesApiController extends Controller
      */
     public function getProviders(): JsonResponse
     {
-        $provides = Company::all(['id', 'user_id', 'name', 'description', 'logo', 'service_type_id']);
+        $providers = Company::all();
+        foreach($providers as $provider) {
+            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        }
         return sendResponse($provides, 'Event Providers');
     }
 
@@ -46,12 +49,15 @@ class ServicesApiController extends Controller
         $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
             ->where('service_type_id', $service_type_id)
             ->get();
+        foreach($providers as $provider) {
+            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        }
         return sendResponse($providers, 'Get providers by service type');
     }
 
     public function getServicesByProviders(Request $request, $provider_id)
     {
-        $services = OccasionEvent::with('occasionEventsReviews', 'occasionEventPrice', 'occasionEventsReviewsAverage')
+        $services = OccasionEvent::with('occasionEventsReviews', 'paymentPlan', 'occasionEventsReviewsAverage')
             ->where('company_id', $provider_id)
             ->get();
         return sendResponse($services, 'Get all services by provider');
@@ -69,6 +75,9 @@ class ServicesApiController extends Controller
                 ->where('id', $company_id)
                 ->where('service_type_id', $service_type)
                 ->get();
+        foreach($providers as $provider) {
+            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        }
         return sendResponse($services, "Get services by company group by service-type");
     }
 
