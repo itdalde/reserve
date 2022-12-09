@@ -49,7 +49,7 @@ class ApiAuthController extends Controller
             $user->roles()->attach(Role::firstOrCreate(['name' =>'user']));
         }
 
-        $to = "somebody@example.com";
+        $to = $data['email'];
         $subject = "Welcome";
         $txt = "Welcome to Reserve";
         $headers = "From: contactus@reservegcc.com";
