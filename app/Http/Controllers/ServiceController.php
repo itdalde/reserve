@@ -174,6 +174,7 @@ class ServiceController extends Controller
         $service = new OccasionEvent();
         $service->company_id = $company->id;
         $service->name = $data['service_name'];
+        $service->name_arabic = $data['service_name_arabic'];
         $service->occasion_type = 0;
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];

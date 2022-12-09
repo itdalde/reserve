@@ -116,3 +116,13 @@
     margin-left: 65px;
     position: absolute;
 }
+.bootstrap-tagsinput .tag {
+    background: #bbbbbb;
+    padding: 5px 15px;
+    font-size: 14px;
+    border-radius: 25px;
+}
+.company-tags .bootstrap-tagsinput {
+    width: 100%;
+    padding: 0.5rem!important;
+}

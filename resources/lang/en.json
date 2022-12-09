@@ -6,7 +6,7 @@
   "auth.failed": "These credentials do not match our records.",
   "auth.throttle": "Too many login attempts. Please try again in :seconds seconds.",
   "auth.active": "Your account has been suspended",
-  "auth.notconfirmed": "Your account is not confirmed. Check your e-mail or <a href=':url'/> re-request</a> a confirmation email.",
+  "auth.notconfirmed": "Your account is not confirmed. ",
   "auth.confirmed": "Your account confirmed.",
   "auth.confirm": "A confirmation email has been sent.",
   "auth.need_confirm": "Please confirm your e-mail address, confirmation sent to your email.",

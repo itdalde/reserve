@@ -17,6 +17,7 @@
  */
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\ConfirmController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\SettingsController;
@@ -56,6 +57,8 @@ Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-rep
 Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
 Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
 
+Route::get('confirm/{user_by_code}',  [ConfirmController::class, 'confirm'])->name('confirm');
+
 Route::group(['namespace' => 'Auth'], function () {
 
     // Authentication Routes...
@@ -77,7 +80,6 @@ Route::group(['namespace' => 'Auth'], function () {
 
     // Confirmation Routes...
     if (config('auth.users.confirm_email')) {
-        Route::get('confirm/{user_by_code}', 'ConfirmController@confirm')->name('confirm');
         Route::get('confirm/resend/{user_by_email}', 'ConfirmController@sendEmail')->name('confirm.send');
     }
 

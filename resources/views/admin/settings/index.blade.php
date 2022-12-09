@@ -121,6 +121,12 @@
                                             </div>
                                         </div>
                                         <div class="row m-3">
+                                            <div class="col company-tags">
+                                                <label class="form-label" for="company-tags-input"> Meta Tags</label>
+                                                <input value="{{Auth::user()->company ? Auth::user()->company->tags : ''}}" type="text" id="company-tags-input" autocomplete="new-password" name="tags" class="form-control" placeholder="Company tags" aria-label="Company tags">
+                                            </div>
+                                        </div>
+                                        <div class="row m-3">
                                             <div class="col">
                                                 <label class="form-label" for="address">Company Address</label>
                                                 <input value="{{Auth::user()->company ? Auth::user()->company->location : ''}}" id="address" name="location" autocomplete="new-password" type="text" class="form-control" placeholder="Address" aria-label="Address">
@@ -162,6 +168,7 @@
     <script>
         $( document ).ready(function() {
 
+            $('#company-tags-input').tagsinput();
         });
     </script>
 @endsection
