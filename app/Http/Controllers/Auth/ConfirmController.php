@@ -6,31 +6,27 @@ use App\Models\Auth\User\User;
 use App\Notifications\Auth\ConfirmEmail;
 use App\Http\Controllers\Controller;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Http\Request;
 
 class ConfirmController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Confirm user email
      *
-     * @param User $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function confirm(User $user)
+    public function confirm(Request $request)
     {
-        $user->confirmed = true;
-        $user->save();
+        $data = explode('/',url()->current());
+        $confirmCode = end($data);
+        $user = User::where('confirmation_code',$confirmCode)->first();
+        if($user) {
+            $user->confirmed = true;
+            $user->save();
+        };
 
-        auth()->login($user);
+//        auth()->login($user);
         return redirect()->intended(app(LoginController::class)->redirectPath());
     }
 

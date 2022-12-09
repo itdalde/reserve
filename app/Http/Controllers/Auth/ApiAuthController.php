@@ -152,7 +152,7 @@ class ApiAuthController extends Controller
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                       <tr>
                         <td align="left" bgcolor="#ffffff" style="padding: 24px;  font-size: 16px; line-height: 24px;">
-                          <p style="margin: 0;">Tap the button below to confirm your email address. If you didn\'t create an account with <a href="https://reservegcc.com">Paste</a>, you can safely delete this email.</p>
+                          <p style="margin: 0;">Tap the button below to confirm your email address. If you didn\'t create an account with <a href="https://reservegcc.com">Reservegcc</a>, you can safely delete this email.</p>
                         </td>
                       </tr>
                       <tr>
@@ -200,8 +200,13 @@ class ApiAuthController extends Controller
         if(!$user) {
             return response(['message'=>'User not found'], 422);
         }
-        $user->notify(new ConfirmEmail());
-        $response = ['message' => 'Successfully sent consfirmation. Please check your email to confirm'];
+        $data = [
+            'email' => $user->email,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+        ];
+        $this->sendEmail($data,$user->confirmation_code);
+        $response = ['message' => 'Successfully sent confirmation. Please check your email to confirm'];
         return response()->json($response,200);
     }
 
