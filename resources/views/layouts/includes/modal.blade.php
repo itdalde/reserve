@@ -38,14 +38,59 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="mb-3 row">
-                                <label for="service-name" class="col-sm-2 col-form-label">Service name</label>
+
+                            <div class="mb-3  row">
+                                <div class="col-sm-2 ">
+                                    <label for="service-name" class="col-form-label mt-4 mb-2">Service name</label>
+                                    <label class="col-form-label">Description</label>
+                                </div>
                                 <div class="col-sm-10">
-                                    <input dir="auto" name="service_name" type="text" class="form-control"
-                                           placeholder="Enter Service Name"
-                                           id="service-name" value="">
-                                    <div class="service-name-error alert alert-danger d-none  mt-2" role="alert">
-                                        Please add service name
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="english-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#english" type="button" role="tab"
+                                                    aria-controls="english" aria-selected="true">English
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="arabic-tab" data-bs-toggle="tab"
+                                                    data-bs-target="#arabic" type="button" role="tab"
+                                                    aria-controls="arabic" aria-selected="false">Arabic
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="english" role="tabpanel"
+                                             aria-labelledby="english-tab" style="min-height: 140px;">
+
+                                            <input dir="auto" name="service_name" type="text" class="form-control mb-3"
+                                                   placeholder="Enter Service Name"
+                                                   id="service-name" value="">
+                                            <div class="service-name-error alert alert-danger d-none  mt-2"
+                                                 role="alert">
+                                                Please add service name
+                                            </div>
+                                            <div class="form-floating">
+                                    <textarea dir="auto" name="service_description" class="form-control"
+                                              placeholder="Description"
+                                              id="floatingTextarea2" style="height: 100px"></textarea>
+                                                <label for="floatingTextarea2">Enter Service description</label>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="arabic" role="tabpanel"
+                                             aria-labelledby="arabic-tab" style="min-height: 140px;">
+
+                                            <input dir="rtl" name="service_name_arabic" type="text"
+                                                   class="form-control mb-3"
+                                                   placeholder="أدخل اسم الخدمة"
+                                                   id="arabic-service-name" value="">
+                                            <div class="form-floating">
+                                            <textarea dir="rtl" name="service_description_arabic" class="form-control"
+                                              placeholder="أدخل وصف الخدمة" id="arabic-description" style="height: 100px"></textarea>
+                                                <label style="margin-left: 78%;" dir="rtl" for="arabic-description">أدخل
+                                                    وصف الخدمة</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,48 +125,6 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">Description</label>
-                                <div class="col-sm-10 ">
-
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="english-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#english" type="button" role="tab"
-                                                    aria-controls="english" aria-selected="true">English Description
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="arabic-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#arabic" type="button" role="tab"
-                                                    aria-controls="arabic" aria-selected="false">Arabic Description
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="english" role="tabpanel"
-                                             aria-labelledby="english-tab" style="min-height: 140px;">
-
-                                            <div class="form-floating">
-                                    <textarea dir="auto" name="service_description" class="form-control"
-                                              placeholder="Description"
-                                              id="floatingTextarea2" style="height: 100px"></textarea>
-                                                <label for="floatingTextarea2">Enter Service description</label>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="arabic" role="tabpanel"
-                                             aria-labelledby="arabic-tab" style="min-height: 140px;">
-
-                                            <div class="form-floating">
-                                    <textarea dir="rtl" name="service_description_arabic" class="form-control"
-                                              placeholder="أدخل وصف الخدمة"
-                                              id="arabic-description" style="height: 100px"></textarea>
-                                                <label style="margin-left: 78%;" dir="rtl" for="arabic-description">أدخل وصف الخدمة</label>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -386,7 +389,7 @@
 
                             <div class="ms-auto p-2 bd-highlight">
                                 <button type="button" id="service-next-btn" class="btn btn-warning">Next</button>
-                                <button  type="submit" id="service-submit-btn" class="btn btn-warning d-none">Save
+                                <button type="submit" id="service-submit-btn" class="btn btn-warning d-none">Save
                                 </button>
                             </div>
                         </div>

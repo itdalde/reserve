@@ -77,6 +77,7 @@ class SettingsController extends Controller
             }
             $company->description = $data['description'];
             $company->location = $data['location'];
+            $company->tags = $data['tags'];
             $company->phone_number = $data['phone_number'];
             $company->name = $data['name'];
             $company->save();
