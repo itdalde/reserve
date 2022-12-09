@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class CompanyApiController extends Controller
 {
     public function getProviders() {
-        $providers = Company::all();
+        $providers = Company::with('serviceType', 'services', 'tags', 'reviews')->get();
         foreach($providers as $provider) {
             $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
         }
