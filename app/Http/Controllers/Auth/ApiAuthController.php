@@ -8,6 +8,7 @@ use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Notifications\Auth\ConfirmEmail;
 use Carbon\Carbon as Carbon;
+use http\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -192,7 +193,7 @@ class ApiAuthController extends Controller
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= 'From: <contactus@reservegcc.com>' . "\r\n";
-        mail($to,$subject,$message,$headers);
+        return mail($to,$subject,$message,$headers);
     }
 
     public function resendConfirmation(Request $request) {
@@ -205,8 +206,12 @@ class ApiAuthController extends Controller
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
         ];
-        $this->sendEmail($data,$user->confirmation_code);
-        $response = ['message' => 'Successfully sent confirmation. Please check your email to confirm'];
+        try {
+            $sent  = $this->sendEmail($data,$user->confirmation_code);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()] ,400);
+        }
+         $response = ['message' => 'Successfully sent confirmation. Please check your email to confirm'];
         return response()->json($response,200);
     }
 
