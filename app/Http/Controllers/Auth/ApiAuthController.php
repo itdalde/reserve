@@ -315,7 +315,7 @@ class ApiAuthController extends Controller
             return response(['error'=>'User not found!'], 422);
         }
         $restToken = DB::table('password_resets')
-            ->where('token', $request->email)
+            ->where('token', $request->token)
             ->where('email', $request->email)->first();
 
         if(!$restToken) {
