@@ -71,4 +71,8 @@ class OccasionEvent extends Model
     {
         return $this->hasOne(OccasionEventPrice::class, 'occasion_event_id', 'id');
     }
+
+    public function gallery() {
+        return $this->hasMany(EventImages::class);
+    }
 }

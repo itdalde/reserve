@@ -16,8 +16,10 @@ class Company extends Model
     public function services() {
         return $this->hasMany(OccasionEvent::class)->with(
             'serviceReviews',
-            'serviceRate',
-            'ratings');
+            'paymentPlan',
+            'ratings',
+            'gallery'
+        );
     }
 
     public function tags() {
