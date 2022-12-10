@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'v1','middleware' => ['cors']], function () {
     Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
+    Route::post('/reset-password', 'Auth\ApiAuthController@resetPassword')->name('reset-password.api');
+    Route::post('/forgot-password', 'Auth\ApiAuthController@forgotPassword')->name('forgot-password.api');
     Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
     Route::post('/resend-confirmation','Auth\ApiAuthController@resendConfirmation')->name('resend.confirmation.api');
     Route::post('/google-login', 'Auth\ApiAuthController@googleLogin')->name('google.login.api');

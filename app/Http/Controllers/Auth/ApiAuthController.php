@@ -299,4 +299,60 @@ class ApiAuthController extends Controller
             return response()->json($response, 422);
         }
     }
+
+    public function resetPassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+            'email' => 'required',
+            'password' => 'required|string|min:6',
+        ]);
+        if ($validator->fails()) {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+        $user = User::where('email', $request->email)->first();
+        if(!$user) {
+            return response(['error'=>'User not found!'], 422);
+        }
+        $restToken = DB::table('password_resets')
+            ->where('token', $request->email)
+            ->where('email', $request->email)->first();
+
+        if(!$restToken) {
+            return response(['error'=>'Request reset password not found. Please check token!'], 422);
+        }
+        $restToken->delete();
+        $user->password = bcrypt($request->password);
+        $user->save();
+        $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+        $response = [
+            'message' => 'You have been successfully reset password!',
+            'token'=> $token
+        ];
+        return response($response, 200);
+    }
+    public function forgotPassword(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response(['errors'=>$validator->errors()->all()], 422);
+        }
+
+        $user = User::where('email', $request->email)->first();
+        if(!$user) {
+            return response(['error'=>'User not found!'], 422);
+        }
+        $token = Uuid::uuid4();
+        DB::table('password_resets')->insert(
+            array('email' => $request->email, 'token' => $token)
+        );
+        return response()->json([
+            'message' => 'Successfully requested password reset',
+            'data' => [
+                'token' => $token,
+                'email' => $request->email
+            ]
+        ], 200);
+    }
+
 }
