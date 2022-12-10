@@ -321,7 +321,9 @@ class ApiAuthController extends Controller
         if(!$restToken) {
             return response(['error'=>'Request reset password not found. Please check token!'], 422);
         }
-        $restToken->delete();
+        $restToken = DB::table('password_resets')
+            ->where('token', $request->token)
+            ->where('email', $request->email)->delete();
         $user->password = bcrypt($request->password);
         $user->save();
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
