@@ -183,6 +183,13 @@ class UserController extends Controller
         return view('superadmin.user-view', compact('user'));
     }
 
+    public function approve(Request $request) {
+        $user = User::where('id',$request->id)->first();
+        $user->confirmed = 1;
+        $user->save();
+        return redirect()->back()->with('success', 'Approved Successfully');
+    }
+
     public function removeUser(Request $request) {
         User::where('id',$request->id)->delete();
         return redirect()->back()->with('success', 'Removed Successfully');

@@ -23,12 +23,30 @@
                             <td>0</td>
                             <td>{{$user->location }}</td>
                             <td>
-                                <a href="{{route('users.view-user',['id' => $user->id])}}">
-                                    <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
-                                </a>
-                                <a href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
-                                    <img src="{{asset('assets/images/icons/remove.png')}}" alt="..">
-                                </a>
+
+                                <div class="d-flex justify-content-between">
+                                    <div style="    padding-top: 6px!important;">
+
+                                        @if($user->confirmed != 1)
+                                            <a href="{{route('users.approve-user',['id' => $user->id])}}" onclick="return confirm('Are you sure want to confirm this user?')">
+                                                <i class="bi bi-check-circle"></i>
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <div class="p-1">
+
+                                        <a href="{{route('users.view-user',['id' => $user->id])}}">
+                                            <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
+                                        </a>
+                                    </div>
+                                    <div class="p-1">
+
+                                        <a href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
+                                            <img src="{{asset('assets/images/icons/remove.png')}}" alt="..">
+                                        </a>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
                     @endif

@@ -51,6 +51,7 @@ Route::get('/settings/statuses', [SettingsController::class, 'statuses'])->name(
 Route::get('/settings/roles', [SettingsController::class, 'roles'])->name('settings.roles');
 Route::get('/users/remove', [UserController::class, 'removeUser'])->name('users.delete-user');
 Route::get('/users/view', [UserController::class, 'view'])->name('users.view-user');
+Route::get('/users/approve', [UserController::class, 'approve'])->name('users.approve-user');
 Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
 Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
 Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
