@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
@@ -81,6 +82,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/', [CompanyApiController::class, 'getProviders'])->name('get-all-providers');
         Route::get('/service-type/{service_type_id}', [ServicesApiController::class, 'getProvidersByServiceType'])->name('get-providers-by-service-type');
         Route::get('/{provider_id}/service-type/{service_id}', [ServicesApiController::class, 'getServicesByCompanyAndServiceType'])->name('get-services-under-company-group-by-service-type');
+    });
+
+    Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
+        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
+        Route::post('/user/{user_id}', [CartApiController::class, 'saveUserCart'])->name('save-user-cart');
+        Route::put('/user/{user_id}', [CartApiController::class, 'updateUserCart'])->name('update-users-cart');
     });
 
     Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
