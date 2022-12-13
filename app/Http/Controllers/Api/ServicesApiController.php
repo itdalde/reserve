@@ -41,7 +41,7 @@ class ServicesApiController extends Controller
         foreach($providers as $provider) {
             $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
         }
-        return sendResponse($provides, 'Event Providers');
+        return sendResponse($providers, 'Event Providers');
     }
 
     public function getProvidersByServiceType(ProviderByServiceTypeRequest $request, $service_type_id): JsonResponse
