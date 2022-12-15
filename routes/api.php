@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
+use App\Http\Controllers\Api\OrderApiController;
 use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
 use App\Http\Controllers\MembershipController;
@@ -83,8 +85,17 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/{provider_id}/service-type/{service_id}', [ServicesApiController::class, 'getServicesByCompanyAndServiceType'])->name('get-services-under-company-group-by-service-type');
     });
 
-    Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
+    Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
+        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
+        Route::post('/user/{user_id}', [CartApiController::class, 'saveUserCart'])->name('save-user-cart');
+        Route::put('/user/{user_id}', [CartApiController::class, 'updateUserCart'])->name('update-users-cart');
+        Route::post('/user/{user_id}/checkout/{cart_id}', [CartApiController::class, 'checkoutCart'])->name('checkout-user-cart');
+        Route::put('/{cart_id}/service/{service_id}', [CartApiController::class, 'removeItemFromCart'])->name('remove-item-from-cart');
+    });
 
+    Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
+        Route::post('/place-order/{user_id}/cart/{cart_id}', [OrderApiController::class, 'placeOrder'])->name('place-order');
+        Route::get('/get-order', [OrderApiController::class, 'getOrder'])->name('get-order');
     });
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
