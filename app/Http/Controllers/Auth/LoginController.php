@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ServiceType;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -116,5 +117,15 @@ class LoginController extends Controller
         $user->save();
 
         return redirect()->intended($this->redirectPath());
+    }
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        $serviceTypes = ServiceType::all()->toArray();
+        return view('auth.login',compact('serviceTypes'));
     }
 }
