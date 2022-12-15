@@ -80,6 +80,7 @@ class SettingsController extends Controller
             $company->tags = $data['tags'];
             $company->phone_number = $data['phone_number'];
             $company->name = $data['name'];
+            $company->is_custom = isset($data['is_custom']) ? 1 : 0;
             $company->save();
             return redirect()->back()->with('success', 'Company Updated Successfully');
         } catch (Exception $ex) {

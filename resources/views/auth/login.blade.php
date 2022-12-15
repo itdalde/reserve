@@ -53,7 +53,7 @@
                     <i class="bi bi-eye-slash toggle-password"
                        style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
                 </div>
-                <input type="submit" value="Login" class="btn solid"/>
+                <input type="submit" value="Login" class="btn solid w-75"/>
                 @if (!old('first_name') && !$errors->isEmpty())
                     <div class="alert alert-danger" role="alert">
                         {!! $errors->first() !!}
@@ -159,8 +159,8 @@
             @endif
 
             <div class="pt-5">
-                <button id="btn-submit-change-pass" type="submit"
-                        class="btn btn-default bg-orange submit w-100">Sign up
+                <button id="btn-submit-change-pass " type="submit"
+                        class="btn btn-default bg-orange submit w-75">Sign up
                 </button>
             </div>
 
@@ -176,7 +176,7 @@
                 <p>
                     Welcome to Reservgcc
                 </p>
-                <button class="btn transparent" id="sign-up-btn">
+                <button class="btn transparent animate-button-wiggle" id="sign-up-btn">
                     Register Service Provider
                 </button>
             </div>
@@ -186,7 +186,7 @@
         <div class="panel right-panel">
             <div class="content">
                 <h3>Already registered</h3>
-                <button class="btn transparent" id="sign-in-btn">
+                <button class="btn transparent animate-button-wiggle" id="sign-in-btn">
                     Login Service Provider
                 </button>
             </div>
@@ -220,6 +220,7 @@
 </script>
 
 <script>
+
     let data = "{{old('first_name')}}";
     if(data) {
         $('#sign-up-btn').click();

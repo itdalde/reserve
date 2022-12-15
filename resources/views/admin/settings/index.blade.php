@@ -131,6 +131,12 @@
                                                 <label class="form-label" for="address">Company Address</label>
                                                 <input value="{{Auth::user()->company ? Auth::user()->company->location : ''}}" id="address" name="location" autocomplete="new-password" type="text" class="form-control" placeholder="Address" aria-label="Address">
                                             </div>
+                                            <div class="col">
+                                                <div class="form-check form-switch mt-5 pt-3">
+                                                    <input {{Auth::user()->company && Auth::user()->company->is_custom == 1 ? 'Checked' : ''}} class="form-check-input" name="is_custom" type="checkbox" id="Accepts-custom-order">
+                                                    <label class="form-check-label" for="Accepts-custom-order">Accepts custom order</label>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="row m-3">
