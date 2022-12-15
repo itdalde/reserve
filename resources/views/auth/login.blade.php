@@ -33,7 +33,12 @@
         <div class="signin-signup">
 
             <form method="POST" action="{{route('login')}}"  class="sign-in-form " data-aos-once="false" data-aos-mirror="true" data-aos="fade-left">
-                <h2 class="title">Sign in</h2>
+                <h2 class="title">
+                    <div class="p-2 text-center">
+                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+
+                    </div>
+                </h2>
                 @csrf
 
                 <div class="input-field">
@@ -56,8 +61,12 @@
                 @endif
             </form>
             <form method="POST" action="{{route('register')}}" class="hide sign-up-form" data-aos-once="false" data-aos-mirror="true"
-                  data-aos="zoom-in" >
-            <h2 class="title">Register Service Provider</h2>
+                  data-aos="zoom-in" ><h2 class="title">
+                    <div class="p-2 text-center">
+                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+
+                    </div>
+                </h2>
             @csrf
 
             <div class="input-field">
