@@ -86,17 +86,16 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
-        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id'); // done
-        Route::post('/add-to-cart/{user_id}', [CartApiController::class, 'addToCart'])->name('save-user-cart'); // done
-        Route::put('/user/{user_id}', [CartApiController::class, 'updateUserCart'])->name('update-users-cart');
+        Route::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])->name('add-service-to-cart');
+        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
+        Route::post('/{cart_id}/remove-service/{service_id}', [CartApiController::class, 'removeServiceFromCart'])->name('remove-service-from-cart');
+        Route::post('/{cart_id}/update-service/{service_id}', [CartApiController::class, 'updateServiceFromCart'])->name('update-service-in-cart');
+        Route::get('/{cart_id}/item/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-service-in-cart-by-status');
+        Route::get('/{cart_id}/service/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])->name('get-service-by-id');
+
+
         Route::post('/user/{user_id}/checkout/{cart_id}', [CartApiController::class, 'checkoutCart'])->name('checkout-user-cart');
 
-
-        // CartItem
-        Route::post('/add-service-on-cart/{service_id}', [CartApiController::class, 'addItemToCart'])->name('add-item-to-cart');
-        Route::put('/{cart_id}/update-service-on-cart/{service_id}', [CartApiController::class, 'updateItemInCart'])->name('update-item-in-cart'); // done
-        Route::put('/{cart_id}/remove-serviceon-cart/{service_id}', [CartApiController::class, 'removeItemFromCart'])->name('remove-item-from-cart'); // done
-        Route::get('/{cart_id}/item/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-item-in-cart-by-status');
     });
 
     Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
