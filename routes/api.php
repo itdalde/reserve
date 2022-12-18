@@ -90,8 +90,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
         Route::post('/{cart_id}/remove-service/{service_id}', [CartApiController::class, 'removeServiceFromCart'])->name('remove-service-from-cart');
         Route::post('/{cart_id}/update-service/{service_id}', [CartApiController::class, 'updateServiceFromCart'])->name('update-service-in-cart');
-        Route::get('/{cart_id}/item/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-service-in-cart-by-status');
-        Route::get('/{cart_id}/service/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])->name('get-service-by-id');
+        Route::get('/{cart_id}/service/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-service-in-cart-by-status');
+        Route::get('/{cart_id}/service-item/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])->name('get-service-by-id');
 
 
         Route::post('/{cart_id}/place-order', [CartApiController::class, 'placeOrder'])->name('user-placed-order');
