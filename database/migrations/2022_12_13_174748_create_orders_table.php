@@ -19,11 +19,11 @@ class CreateOrdersTable extends Migration
             $table->string('payment_method');
             $table->string('contact_details');
             $table->string('location');
-            $table->string('promo_code');
+            $table->string('promo_code')->nullable();
             $table->string('agent');
             $table->string('notes');
             $table->enum('timeline', ['order-placed', 'connected-to-agent', 'connected-to-provider', 'order-completed'])->default('order-placed');
-            $table->enum('status', ['pending', 'accepted', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'accepted', 'declined', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

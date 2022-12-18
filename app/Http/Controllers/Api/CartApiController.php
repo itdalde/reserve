@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderItems;
 use Illuminate\Http\Request;
 
 class CartApiController extends Controller
@@ -84,16 +86,6 @@ class CartApiController extends Controller
         return sendResponse('Service updated successfully.', 'Item updated');
     }
 
-    public function checkoutCart(Request $request)
-    {
-        $cart = Cart::where('user_id', $request->user_id)
-        ->where('status', 'active')
-        ->first();
-        $cart->status = 'placed';
-        $cart->save();
-        return sendResponse('Order is placed', 'Checkout user cart');
-    }
-
     public function getItemInCartByStatus(Request $request)
     {
         $cartItem = CartItem::with('service')
@@ -109,5 +101,31 @@ class CartApiController extends Controller
         ->where('service_id', $request->service_id)
         ->first();
         return sendResponse($cartItem, 'Cart items where service '. $request->service_id);
+    }
+
+    public function placeOrder(Request $request)
+    {
+        $data = $request->order;
+        $order = new Order();
+        $order->reference_no = time();
+        $order->payment_method = $data['payment_method'];
+        $order->contact_details = $data['contact_details'];
+        $order->location = $data['location'];
+        $order->promo_code = $data['promo_code'];
+        $order->agent = $data['agent'];
+        $order->notes = $data['notes'];
+        $order->save();
+        foreach($data['items'] as $item) {
+            $orderItems = new OrderItems();
+            $orderItems->order_id = $order->id;
+            $orderItems->service_id = $item['service_id'];
+            $orderItems->save();
+
+            $cartItem = CartItem::where('cart_id', $request->cart_id)
+            ->where('service_id', $item['service_id'])->first();
+            $cartItem->status = 'ordered';
+            $cartItem->save();
+        }
+        return sendResponse($order->reference_no, 'Successfully placed your order.');
     }
 }

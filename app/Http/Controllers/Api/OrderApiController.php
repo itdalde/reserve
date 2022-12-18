@@ -11,33 +11,23 @@ class OrderApiController extends Controller
 {
     //
 
-    public function placeOrder(Request $request)
-    {
-        $data = $request->order;
-        $order = new Order();
-        $order->cart_id = $request->cart_id;
-        $order->payment_method = $data['payment_method'];
-        $order->contact_details = $data['contact_details'];
-        $order->location = $data['location'];
-        $order->agent = $data['agent'];
-        $order->notes = $data['notes'];
-        $order->status = 'pending';
+    public function updateTimelineForOrder(Request $request) {
+
+        $order = Order::where('id', $request->order_id)->first();
+        $order->timeline = $request->timeline;
         $order->save();
-
-        $cart = Cart::where('user_id', $request->user_id)
-        ->where('status', 'active')
-        ->first();
-        $cart->status = 'placed';
-        $cart->save();
-
-        return sendResponse('save', 'save order');
+        return sendResponse($order, 'Your order timeline is ' . $request->timeline .  '.');
     }
 
-    public function getOrder(Request $request)
-    {
-        $order = Order::where('cart_id', $request->cart_id,)
-        ->where('status', 'pending')->first();
+    public function updateStatusForOrder(Request $request) {
+        $order = Order::where('id', $request->order_id)->first();
+        $order->status = $request->status;
+        $order->save();
+        return sendResponse($order, 'Your order has been' . $request->status);
+    }
 
-        return sendResponse($order, 'save order');
+    public function getOrderByReferenceNo(Request $request) {
+        $order = Order::with('items')->where('reference_no', $request->reference_no)->first();
+        return sendResponse($order, 'Your order with reference no. ' . $request->reference_no);
     }
 }
