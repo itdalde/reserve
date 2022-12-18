@@ -86,16 +86,22 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
-        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
-        Route::post('/user/{user_id}', [CartApiController::class, 'saveUserCart'])->name('save-user-cart');
+        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id'); // done
+        Route::post('/add-to-cart/{user_id}', [CartApiController::class, 'addToCart'])->name('save-user-cart'); // done
         Route::put('/user/{user_id}', [CartApiController::class, 'updateUserCart'])->name('update-users-cart');
         Route::post('/user/{user_id}/checkout/{cart_id}', [CartApiController::class, 'checkoutCart'])->name('checkout-user-cart');
-        Route::put('/{cart_id}/service/{service_id}', [CartApiController::class, 'removeItemFromCart'])->name('remove-item-from-cart');
+
+
+        // CartItem
+        Route::post('/add-service-on-cart/{service_id}', [CartApiController::class, 'addItemToCart'])->name('add-item-to-cart');
+        Route::put('/{cart_id}/update-service-on-cart/{service_id}', [CartApiController::class, 'updateItemInCart'])->name('update-item-in-cart'); // done
+        Route::put('/{cart_id}/remove-serviceon-cart/{service_id}', [CartApiController::class, 'removeItemFromCart'])->name('remove-item-from-cart'); // done
+        Route::get('/{cart_id}/item/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-item-in-cart-by-status');
     });
 
     Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
         Route::post('/place-order/{user_id}/cart/{cart_id}', [OrderApiController::class, 'placeOrder'])->name('place-order');
-        Route::get('/get-order', [OrderApiController::class, 'getOrder'])->name('get-order');
+        Route::get('/get-order/{reference_no}', [OrderApiController::class, 'getOrder'])->name('get-order');
     });
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
