@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class OrderItems extends Model
 {
     use HasFactory;
-    protected $table = 'orders';
 
-    public function items() {
-        return $this->hasMany(OrderItems::class)->with('service');
+    public function service()
+    {
+        return $this->hasOne(OccasionEvent::class, 'id', 'service_id');
     }
 }

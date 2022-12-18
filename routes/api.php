@@ -86,16 +86,22 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
+        Route::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])->name('add-service-to-cart');
         Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
-        Route::post('/user/{user_id}', [CartApiController::class, 'saveUserCart'])->name('save-user-cart');
-        Route::put('/user/{user_id}', [CartApiController::class, 'updateUserCart'])->name('update-users-cart');
-        Route::post('/user/{user_id}/checkout/{cart_id}', [CartApiController::class, 'checkoutCart'])->name('checkout-user-cart');
-        Route::put('/{cart_id}/service/{service_id}', [CartApiController::class, 'removeItemFromCart'])->name('remove-item-from-cart');
+        Route::post('/{cart_id}/remove-service/{service_id}', [CartApiController::class, 'removeServiceFromCart'])->name('remove-service-from-cart');
+        Route::post('/{cart_id}/update-service/{service_id}', [CartApiController::class, 'updateServiceFromCart'])->name('update-service-in-cart');
+        Route::get('/{cart_id}/item/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-service-in-cart-by-status');
+        Route::get('/{cart_id}/service/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])->name('get-service-by-id');
+
+
+        Route::post('/{cart_id}/place-order', [CartApiController::class, 'placeOrder'])->name('user-placed-order');
+
     });
 
-    Route::group(['prefix' => 'orders', 'middleware' => ['cors']], function() {
-        Route::post('/place-order/{user_id}/cart/{cart_id}', [OrderApiController::class, 'placeOrder'])->name('place-order');
-        Route::get('/get-order', [OrderApiController::class, 'getOrder'])->name('get-order');
+    Route::group(['prefix' => 'order', 'middleware' => ['cors']], function() {
+        Route::post('/{order_id}/timeline/{timeline}', [OrderApiController::class, 'updateTimelineForOrder'])->name('update-order-timeline-status');
+        Route::post('/{order_id}/status/{status}', [OrderApiController::class, 'updateStatusForOrder'])->name('update-order-status-status');
+        Route::get('/{reference_no}', [OrderApiController::class, 'getOrderByReferenceNo'])->name('get-order-by-reference-no');
     });
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {

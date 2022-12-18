@@ -15,13 +15,15 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('cart_id')->unsigned();
+            $table->string('reference_no');
             $table->string('payment_method');
             $table->string('contact_details');
             $table->string('location');
+            $table->string('promo_code')->nullable();
             $table->string('agent');
             $table->string('notes');
-            $table->enum('status', ['pending', 'ongoing', 'fulfilled']);
+            $table->enum('timeline', ['order-placed', 'connected-to-agent', 'connected-to-provider', 'order-completed'])->default('order-placed');
+            $table->enum('status', ['pending', 'accepted', 'declined', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

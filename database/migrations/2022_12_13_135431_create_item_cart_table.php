@@ -20,7 +20,7 @@ class CreateItemCartTable extends Migration
             $table->dateTime('schedule_start_datetime');
             $table->dateTime('schedule_end_datetime');
             $table->integer('guests')->unsigned();
-            $table->tinyInteger('status')->default(1);
+            $table->enum('status', ['active', 'ordered', 'proccessing', 'cancelled', 'fulfilled'])->default('active');
             $table->timestamps();
         });
     }
