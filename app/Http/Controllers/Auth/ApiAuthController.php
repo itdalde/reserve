@@ -346,6 +346,7 @@ class ApiAuthController extends Controller
             return response(['error'=>'User not found!'], 422);
         }
         $token = Uuid::uuid4();
+        $this->sendForgotEmail($user,$token);
         DB::table('password_resets')->insert(
             array('email' => $request->email, 'token' => $token)
         );
@@ -358,4 +359,108 @@ class ApiAuthController extends Controller
         ], 200);
     }
 
+    private function sendForgotEmail($user,$token) {
+
+        $to = $user->email;
+        $subject = "Forgot Password";
+        $style = '<style type="text/css">
+          body,
+          table,
+          td,
+          a {
+            -ms-text-size-adjust: 100%; /* 1 */
+            -webkit-text-size-adjust: 100%; /* 2 */
+          }
+          table,
+          td {
+            mso-table-rspace: 0pt;
+            mso-table-lspace: 0pt;
+          }
+          img {
+            -ms-interpolation-mode: bicubic;
+          }
+          a[x-apple-data-detectors] {
+            font-family: inherit !important;
+            font-size: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+            color: inherit !important;
+            text-decoration: none !important;
+          }
+          div[style*="margin: 16px 0;"] {
+            margin: 0 !important;
+          }
+          body {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          table {
+            border-collapse: collapse !important;
+          }
+          a {
+            color: #1a82e2;
+          }
+          img {
+            height: auto;
+            line-height: 100%;
+            text-decoration: none;
+            border: 0;
+            outline: none;
+          }
+          </style>';
+        $message = ' <!DOCTYPE html>
+        <html>
+        <head>
+
+          <meta charset="utf-8">
+          <meta http-equiv="x-ua-compatible" content="ie=edge">
+          <title>Email Forgot Password</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          '.$style.'
+
+        </head>
+            <body style="background-color: #e9ecef;">
+              <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
+                   Hello '.$user->first_name." ".$user->last_name.',
+              </div>
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td align="center" bgcolor="#e9ecef">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                      <tr>
+                        <td align="center" valign="top" style="padding: 36px 24px;">
+                          <a href="https://reservegcc.com" target="_blank" style="display: inline-block;">
+                            <img src="https://reservegcc.com/assets/landing/img/logo-black.png" alt="Logo" border="0" width="48" style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" bgcolor="#e9ecef">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                      <tr>
+                        <td align="left" bgcolor="#ffffff" style="padding: 36px 24px 0;  border-top: 3px solid #d4dadf;">
+                          <h1 style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">This is your reset token code '.$token.'</h1>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </body>
+            </html>
+        ';
+
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <contactus@reservegcc.com>' . "\r\n";
+        return mail($to,$subject,$message,$headers);
+    }
 }
