@@ -345,7 +345,7 @@ class ApiAuthController extends Controller
         if(!$user) {
             return response(['error'=>'User not found!'], 422);
         }
-        $token = Uuid::uuid4();
+        $token = random_int(100000, 999999);
         $this->sendForgotEmail($user,$token);
         DB::table('password_resets')->insert(
             array('email' => $request->email, 'token' => $token)
