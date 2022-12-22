@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OccasionTypeByOccasionRequest;
 use App\Models\Occasion;
-use App\Models\OccasionTypes;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

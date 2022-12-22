@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('promo_code')->nullable();
             $table->string('agent');
             $table->string('notes');
-            $table->enum('timeline', ['order-placed', 'connected-to-agent', 'connected-to-provider', 'order-completed'])->default('order-placed');
+            $table->enum('timeline', ['order-placed', 'processing', 'order-completed'])->default('order-placed');
             $table->enum('status', ['pending', 'accepted', 'declined', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
         });

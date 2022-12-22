@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OccasionServiceByProviderRequest;
-use App\Http\Requests\OccasionServicesByCompanyRequest;
-use App\Http\Requests\OccasionServiceTypeRequest;
 use App\Http\Requests\ProviderByServiceTypeRequest;
 use App\Models\Company;
-use App\Models\Occasion;
 use App\Models\OccasionEvent;
-use App\Models\OccasionServiceTypePivot;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
