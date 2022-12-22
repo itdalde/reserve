@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\OccasionEvent;
 use App\Models\Order;
 use App\Models\OrderItems;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CartApiController extends Controller
@@ -121,9 +123,17 @@ class CartApiController extends Controller
             $orderItems->service_id = $item['service_id'];
             $orderItems->save();
 
+            $serviceTotalOrder = $orderItems->where('service_id', $item['service_id'])
+                ->where('created_at', '<>', Carbon::today()->toDateString())
+                ->count();
+
+            $event = OccasionEvent::with('company')
+            ->where('id', $item['service_id'])
+            ->first();
+
             $cartItem = CartItem::where('cart_id', $request->cart_id)
             ->where('service_id', $item['service_id'])->first();
-            $cartItem->status = 'ordered';
+            $cartItem->status = $serviceTotalOrder > $event['company']['max_booking'] ? 'pending' : 'ordered';
             $cartItem->save();
         }
         return sendResponse($order->reference_no, 'Successfully placed your order.');
