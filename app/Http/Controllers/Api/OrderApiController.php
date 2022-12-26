@@ -26,7 +26,7 @@ class OrderApiController extends Controller
     }
 
     public function getOrderByReferenceNo(Request $request) {
-        $order = Order::with('items')->where('reference_no', $request->reference_no)->first();
+        $order = Order::with('items', 'paymentMethod')->where('reference_no', $request->reference_no)->first();
         return sendResponse($order, 'Your order with reference no. ' . $request->reference_no);
     }
 }
