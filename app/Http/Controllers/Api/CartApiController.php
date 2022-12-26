@@ -127,13 +127,12 @@ class CartApiController extends Controller
                 ->where('created_at', '<>', Carbon::today()->toDateString())
                 ->count();
 
-            $event = OccasionEvent::with('company')
-            ->where('id', $item['service_id'])
+            $event = OccasionEvent::where('id', $item['service_id'])
             ->first();
 
             $cartItem = CartItem::where('cart_id', $request->cart_id)
             ->where('service_id', $item['service_id'])->first();
-            $cartItem->status = $serviceTotalOrder > $event['company']['max_booking'] ? 'pending' : 'ordered';
+            $cartItem->status = $serviceTotalOrder > $event['availability_slot'] ? 'pending' : 'ordered';
             $cartItem->save();
         }
         return sendResponse($order->reference_no, 'Successfully placed your order.');
