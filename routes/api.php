@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CompanyApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
+use App\Http\Controllers\Api\PaymentMethodApiController;
 use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
 use App\Http\Controllers\MembershipController;
@@ -106,6 +107,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
 
+    });
+
+    Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
+        Route::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])->name('save-payment-method');
+        Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-methhod-by-id');
     });
 });
 

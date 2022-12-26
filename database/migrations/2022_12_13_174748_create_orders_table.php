@@ -16,12 +16,12 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('reference_no');
-            $table->string('payment_method');
-            $table->string('contact_details');
-            $table->string('location');
+            $table->tinyInteger('payment_method');
+            $table->string('contact_details')->nullable();;
+            $table->string('location')->nullable();;
             $table->string('promo_code')->nullable();
-            $table->string('agent');
-            $table->string('notes');
+            $table->string('agent')->nullable();;
+            $table->string('notes')->nullable();;
             $table->enum('timeline', ['order-placed', 'processing', 'order-completed'])->default('order-placed');
             $table->enum('status', ['pending', 'accepted', 'declined', 'completed', 'cancelled'])->default('pending');
             $table->timestamps();
