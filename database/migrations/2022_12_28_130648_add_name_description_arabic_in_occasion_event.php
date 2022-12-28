@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddOccasionTypeToOccasionEventsTable extends Migration
+class AddNameDescriptionArabicInOccasionEvent extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,9 @@ class AddOccasionTypeToOccasionEventsTable extends Migration
     {
         Schema::table('occasion_events', function (Blueprint $table) {
             //
-            // $table->integer('occasion_type');
+            $table->string('price')->default(0);
+            $table->string('name_arabic')->nullable();
+            $table->string('description_arabic')->nullable();
         });
     }
 
@@ -28,7 +30,9 @@ class AddOccasionTypeToOccasionEventsTable extends Migration
     {
         Schema::table('occasion_events', function (Blueprint $table) {
             //
-            // $table->dropColumn('occasion_type');
+            $table->dropColumn('price');
+            $table->dropColumn('name_arabic');
+            $table->dropColumn('description_arabic');
         });
     }
 }

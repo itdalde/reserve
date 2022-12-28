@@ -15,7 +15,7 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_id')->unsigned();
+            $table->integer('occasion_event_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('plan_id')->unsigned();
             $table->integer('quantity')->default(0);
