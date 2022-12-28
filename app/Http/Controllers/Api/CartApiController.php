@@ -37,6 +37,7 @@ class CartApiController extends Controller
             $cartItem->schedule_start_datetime = $item['schedule_start_datetime'];
             $cartItem->schedule_end_datetime = $item['schedule_end_datetime'];
             $cartItem->guests = $item['guests'];
+            $cartItem->is_custom = isset($item['is_custom']) ?? 0;
             $cartItem->save();
         }
         return sendResponse('Successfully added to cart.', 'Save user cart');
@@ -129,10 +130,9 @@ class CartApiController extends Controller
 
             $event = OccasionEvent::where('id', $item['service_id'])
             ->first();
-
             $cartItem = CartItem::where('cart_id', $request->cart_id)
             ->where('service_id', $item['service_id'])->first();
-            $cartItem->status = $serviceTotalOrder > $event['availability_slot'] ? 'pending' : 'ordered';
+            $cartItem->status = $serviceTotalOrder > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'ordered');
             $cartItem->save();
         }
         return sendResponse($order->reference_no, 'Successfully placed your order.');

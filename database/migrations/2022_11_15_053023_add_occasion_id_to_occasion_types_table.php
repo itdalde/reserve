@@ -15,7 +15,7 @@ class AddOccasionIdToOccasionTypesTable extends Migration
     {
         Schema::table('occasion_types', function (Blueprint $table) {
             //
-            $table->integer('occasion_id')->nullable();
+            // $table->integer('occasion_id')->nullable();
         });
     }
 
@@ -28,7 +28,7 @@ class AddOccasionIdToOccasionTypesTable extends Migration
     {
         Schema::table('occasion_types', function (Blueprint $table) {
             //
-            $table->dropColumn('occasion_id');
+            // $table->dropColumn('occasion_id');
         });
     }
 }

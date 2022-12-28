@@ -15,7 +15,7 @@ class CreateOccasionEventPricesTable extends Migration
     {
         Schema::create('occasion_event_prices', function (Blueprint $table) {
             $table->id();
-            $table->integer('occasion_id')->unsigned();
+            $table->integer('occasion_event_id')->unsigned();
             $table->integer('plan_id')->unsigned();
             $table->enum('service_unit', ['per_person', 'per_pax'])->default('per_person');
             $table->float('service_price')->default(0);
