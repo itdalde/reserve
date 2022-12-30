@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\OrderInterface;
 use App\Models\Occasion;
+use App\Models\OccasionEvent;
 use App\Models\OccasionType;
+use App\Models\OrderItems;
 use App\Models\PlanType;
 use App\Models\ServiceType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class OrderController extends Controller
 {
@@ -22,7 +26,16 @@ class OrderController extends Controller
         $serviceTypes = ServiceType::all()->toArray();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
-        return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan' ));
+        $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
+        $futureOrders = OrderItems::whereIn('service_id',$services)
+            ->whereDate('created_at','>', Carbon::today())
+            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+
+        $orders = OrderItems::whereIn('service_id',$services)
+            ->whereDate('created_at', Carbon::today())
+            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+//       dd($orders);
+        return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders','futureOrders' ));
     }
 
     /**

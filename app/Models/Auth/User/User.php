@@ -6,6 +6,7 @@ use App\Models\Auth\User\Traits\Ables\Protectable;
 use App\Models\Auth\User\Traits\Attributes\UserAttributes;
 use App\Models\Company;
 use App\Models\OccasionEventReviews;
+use App\Models\OrderItems;
 use App\Models\Transaction;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;

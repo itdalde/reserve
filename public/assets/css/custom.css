@@ -126,3 +126,25 @@
     width: 100%;
     padding: 0.5rem!important;
 }
+.pending-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #c16b21;
+}
+.accepted-dot {
+    background-color: #5b5b5a;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.border-card-pending {
+    border-radius: 0;
+    border-left: 4px solid #c16b21;
+}
+.border-card-accepted {
+    border-radius: 0;
+    border-left: 4px solid #5b5b5a;
+}

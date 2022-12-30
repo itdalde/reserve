@@ -13,4 +13,8 @@ class OrderItems extends Model
     {
         return $this->hasOne(OccasionEvent::class, 'id', 'service_id');
     }
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'id', 'order_id');
+    }
 }
