@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use App\Models\Auth\User\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Ramsey\Uuid\Uuid;
@@ -130,19 +131,15 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
+        $name = $user->first_name .' ' . $user->last_name ;
         try {
             $this->guard()->logout();
             if (config('auth.users.confirm_email') && !$user->confirmed) {
-
-
                 $this->sendEmail($user);
-
-                return redirect(route('success-register'));
+                return redirect::back()->with(['signup' => 'success','email' => '','name' => $name]);
             }
         } catch (Exception $exception) {
-
-            return redirect(route('success-register'));
-
+            return redirect::back()->with(['signup' => 'success','email' => '','name' => $name]);
         }
     }
 

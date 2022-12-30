@@ -193,7 +193,34 @@
             <img src="/assets/landing/img/6206973.jpg" class="image img-fluid img-sign-up" alt="..."/>
         </div>
     </div>
-</div><script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
+</div>
+
+@if (Session::has('signup'))
+    <div class="modal fade" id="signupSuccessModal" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content py-4 px-md-4 px-sm-4 px-3">
+                <div class="modal-header justify-content-center border-0">
+                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                </div>
+                <div class="modal-body ">
+                    <div class="text-center par-1 mb-5">
+                        <div>Thanks for signing up</div>
+                        <div class="user-name">{{Session::get('name')}}</div>
+                    </div>
+                    <div class="text-center par-2 text-muted">
+                        <h4 class="text-black"> Application sent successfully!</h4>
+                        <p>Your application has been sent! Someone from our team will review your request and get back to you via e-mail within 2-3 working days</p>
+
+                    </div>
+                </div>
+                <div class="modal-footer bg-transparent text-center border-0">
+                    <a class="w-100 btn bg-orange solid " style="    line-height: 36px;" href="/">Return Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+<script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
 <script src="{{ asset('assets/landing/vendor/aos/aos.js') }}"></script>
@@ -221,127 +248,137 @@
 
 <script>
 
-    let data = "{{old('first_name')}}";
-    if(data) {
-        $('#sign-up-btn').click();
-        $('.sign-in-form').removeClass('show').addClass('hide')
-        setTimeout(   function()  {  $('.sign-up-form').addClass('show').removeClass('hide')   }, 1000);
-    }
-    $('body').on('click', '#sign-up-btn', function (e) {
-        $('.sign-in-form').removeClass('show').addClass('hide')
-        setTimeout(   function()  {  $('.sign-up-form').addClass('show').removeClass('hide')   }, 1000);
-    });
-
-    $('body').on('click', '#sign-in-btn', function (e) {
-        $('.sign-up-form').removeClass('show').addClass('hide')
-        setTimeout( function() {  $('.sign-in-form').addClass('show').removeClass('hide')  }, 1000);
-    });
-    $(".toggle-password").click(function() {
-
-        $(this).toggleClass("bi-eye bi-eye-slash");
-        let input = $(this).closest('div').find('input');
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
+    $(document).ready(function() {
+        @if (Session::has('signup'))
+            $('#signupSuccessModal').modal('show');
+        @endif
+        let data = "{{old('first_name')}}";
+        if (data) {
+            $('#sign-up-btn').click();
+            $('.sign-in-form').removeClass('show').addClass('hide')
+            setTimeout(function () {
+                $('.sign-up-form').addClass('show').removeClass('hide')
+            }, 1000);
         }
-    });
+        $('body').on('click', '#sign-up-btn', function (e) {
+            $('.sign-in-form').removeClass('show').addClass('hide')
+            setTimeout(function () {
+                $('.sign-up-form').addClass('show').removeClass('hide')
+            }, 1000);
+        });
 
-    $('body').on('keyup change blur', '#password', function (e) {
-        let lowerCaseLetters = /[a-z]/g;
-        let upperCaseLetters = /[A-Z]/g;
-        let numbers = /[0-9]/g;
-        let char = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
-        let btn = $('#btn-submit-change-pass');
-        let pass = $('#password').val();
-        let hideIfValid = false;
-        if ($(this).hasClass('hide-if-valid')) {
-            hideIfValid = true;
-        }
-        if ($(this).val() != '') {
-            if (pass.match(lowerCaseLetters)) {
-                if (hideIfValid) {
-                    $('.lcase').addClass('hide');
-                }
-                $('.lcase').addClass('valid').removeClass('invalid')
-                $('.lcase span').text('check_circle_outline');
+        $('body').on('click', '#sign-in-btn', function (e) {
+            $('.sign-up-form').removeClass('show').addClass('hide')
+            setTimeout(function () {
+                $('.sign-in-form').addClass('show').removeClass('hide')
+            }, 1000);
+        });
+        $(".toggle-password").click(function () {
 
+            $(this).toggleClass("bi-eye bi-eye-slash");
+            let input = $(this).closest('div').find('input');
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
             } else {
-                if (hideIfValid) {
-                    $('.lcase').removeClass('hide');
-                }
-                $('.lcase').addClass('invalid').removeClass('valid')
-                $('.lcase span').text('highlight_off');
+                input.attr("type", "password");
             }
+        });
 
-            if (pass.match(upperCaseLetters)) {
-                if (hideIfValid) {
-                    $('.ucase').addClass('hide');
+        $('body').on('keyup change blur', '#password', function (e) {
+            let lowerCaseLetters = /[a-z]/g;
+            let upperCaseLetters = /[A-Z]/g;
+            let numbers = /[0-9]/g;
+            let char = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+            let btn = $('#btn-submit-change-pass');
+            let pass = $('#password').val();
+            let hideIfValid = false;
+            if ($(this).hasClass('hide-if-valid')) {
+                hideIfValid = true;
+            }
+            if ($(this).val() != '') {
+                if (pass.match(lowerCaseLetters)) {
+                    if (hideIfValid) {
+                        $('.lcase').addClass('hide');
+                    }
+                    $('.lcase').addClass('valid').removeClass('invalid')
+                    $('.lcase span').text('check_circle_outline');
+
+                } else {
+                    if (hideIfValid) {
+                        $('.lcase').removeClass('hide');
+                    }
+                    $('.lcase').addClass('invalid').removeClass('valid')
+                    $('.lcase span').text('highlight_off');
                 }
-                $('.ucase').addClass('valid').removeClass('invalid')
-                $('.ucase span').text('check_circle_outline');
+
+                if (pass.match(upperCaseLetters)) {
+                    if (hideIfValid) {
+                        $('.ucase').addClass('hide');
+                    }
+                    $('.ucase').addClass('valid').removeClass('invalid')
+                    $('.ucase span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.ucase').removeClass('hide');
+                    }
+                    $('.ucase').addClass('invalid').removeClass('valid')
+                    $('.ucase span').text('highlight_off');
+                }
+
+                if (pass.match(numbers)) {
+                    if (hideIfValid) {
+                        $('.onum').addClass('hide');
+                    }
+                    $('.onum').addClass('valid').removeClass('invalid')
+                    $('.onum span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.onum').removeClass('hide');
+                    }
+                    $('.onum').addClass('invalid').removeClass('valid')
+                    $('.onum span').text('highlight_off');
+
+                }
+
+                if (pass.match(char)) {
+                    if (hideIfValid) {
+                        $('.schar').addClass('hide');
+                    }
+                    $('.schar').addClass('valid').removeClass('invalid')
+                    $('.schar span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.schar').removeClass('hide');
+                    }
+                    $('.schar').addClass('invalid').removeClass('valid')
+                    $('.schar span').text('highlight_off');
+                }
+
+                if (pass.length >= 8) {
+                    if (hideIfValid) {
+                        $('.mchar').addClass('hide');
+                    }
+                    $('.mchar').addClass('valid').removeClass('invalid')
+                    $('.mchar span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.mchar').removeClass('hide');
+                    }
+                    $('.mchar').addClass('invalid').removeClass('valid')
+                    $('.mchar span').text('highlight_off');
+                }
+
+                if (pass.length >= 8 && pass.match(char) && pass.match(numbers) && pass.match(upperCaseLetters) && pass.match(lowerCaseLetters)) {
+                    btn.attr('disabled', false)
+                } else {
+                    btn.attr('disabled', true)
+                }
             } else {
-                if (hideIfValid) {
-                    $('.ucase').removeClass('hide');
-                }
-                $('.ucase').addClass('invalid').removeClass('valid')
-                $('.ucase span').text('highlight_off');
-            }
-
-            if (pass.match(numbers)) {
-                if (hideIfValid) {
-                    $('.onum').addClass('hide');
-                }
-                $('.onum').addClass('valid').removeClass('invalid')
-                $('.onum span').text('check_circle_outline');
-            } else {
-                if (hideIfValid) {
-                    $('.onum').removeClass('hide');
-                }
-                $('.onum').addClass('invalid').removeClass('valid')
-                $('.onum span').text('highlight_off');
-
-            }
-
-            if (pass.match(char)) {
-                if (hideIfValid) {
-                    $('.schar').addClass('hide');
-                }
-                $('.schar').addClass('valid').removeClass('invalid')
-                $('.schar span').text('check_circle_outline');
-            } else {
-                if (hideIfValid) {
-                    $('.schar').removeClass('hide');
-                }
-                $('.schar').addClass('invalid').removeClass('valid')
-                $('.schar span').text('highlight_off');
-            }
-
-            if (pass.length >= 8) {
-                if (hideIfValid) {
-                    $('.mchar').addClass('hide');
-                }
-                $('.mchar').addClass('valid').removeClass('invalid')
-                $('.mchar span').text('check_circle_outline');
-            } else {
-                if (hideIfValid) {
-                    $('.mchar').removeClass('hide');
-                }
-                $('.mchar').addClass('invalid').removeClass('valid')
-                $('.mchar span').text('highlight_off');
-            }
-
-            if (pass.length >= 8 && pass.match(char) && pass.match(numbers) && pass.match(upperCaseLetters) && pass.match(lowerCaseLetters)) {
                 btn.attr('disabled', false)
-            } else {
-                btn.attr('disabled', true)
+                //$('.validations').find('span').addClass('hide');
             }
-        } else {
-            btn.attr('disabled', false)
-            //$('.validations').find('span').addClass('hide');
-        }
+        });
     });
-
 </script>
 </body>
 </html>
