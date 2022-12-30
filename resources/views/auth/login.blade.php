@@ -176,7 +176,7 @@
                 <p>
                     Welcome to Reservgcc
                 </p>
-                <button class="btn transparent animate-button-wiggle" id="sign-up-btn">
+                <button class="btn transparent " id="sign-up-btn">
                     Register Service Provider
                 </button>
             </div>
@@ -186,7 +186,7 @@
         <div class="panel right-panel">
             <div class="content">
                 <h3>Already registered</h3>
-                <button class="btn transparent animate-button-wiggle" id="sign-in-btn">
+                <button class="btn transparent " id="sign-in-btn">
                     Login Service Provider
                 </button>
             </div>
