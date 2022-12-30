@@ -110,6 +110,7 @@ class CartApiController extends Controller
     {
         $data = $request->order;
         $order = new Order();
+        $order->user_id = $request->user_id;
         $order->reference_no = str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
         $order->payment_method = $data['payment_method'];
         $order->contact_details = $data['contact_details'];
