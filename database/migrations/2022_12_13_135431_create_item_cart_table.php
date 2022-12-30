@@ -15,7 +15,7 @@ class CreateItemCartTable extends Migration
     {
         Schema::create('cart_items', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('cart_id')->unsinged();
+            $table->tinyInteger('cart_id')->unsigned();
             $table->tinyInteger('service_id')->unsigned();
             $table->dateTime('schedule_start_datetime');
             $table->dateTime('schedule_end_datetime');
