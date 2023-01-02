@@ -69,10 +69,8 @@ class CartApiController extends Controller
 
     public function removeServiceFromCart(Request $request)
     {
-        $item = CartItem::where('cart_id', $request->cart_id)
-        ->where('service_id', $request->service_id)->first();
-        $item->status = 'cancelled';
-        $item->save();
+        CartItem::where('cart_id', $request->cart_id)
+        ->where('service_id', $request->service_id)->delete();
         return sendResponse('Item successfully removed.', 'Item removed');
     }
 
@@ -112,6 +110,8 @@ class CartApiController extends Controller
         $order = new Order();
         $order->user_id = $request->user_id;
         $order->reference_no = str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
+        $order->total_items = $data['total_items'];
+        $order->total_amount = $data['total_amount'];
         $order->payment_method = $data['payment_method'];
         $order->contact_details = $data['contact_details'];
         $order->location = $data['location'];
@@ -120,20 +120,27 @@ class CartApiController extends Controller
         $order->notes = $data['notes'];
         $order->save();
         foreach($data['items'] as $item) {
+
+            $serviceTotalOrder = OrderItems::where('service_id', $item['service_id'])
+                ->where('created_at', '<>', Carbon::today()->toDateString())
+                ->count();
+            $event = OccasionEvent::where('id', $item['service_id'])
+            ->first();
+
+            $cartItem = CartItem::where('cart_id', $request->cart_id)
+            ->where('service_id', $item['service_id'])->first();
+
             $orderItems = new OrderItems();
             $orderItems->order_id = $order->id;
             $orderItems->service_id = $item['service_id'];
+            $orderItems->schedule_start_datetime = $cartItem['schedule_start_datetime'];
+            $orderItems->schedule_end_datetime = $cartItem['schedule_end_datetime'];
+            $orderItems->guests = $cartItem['guests'];
+            $orderItems->status = ($serviceTotalOrder + 1) > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'ordered');
+            $orderItems->is_custom = $cartItem['is_custom'];
             $orderItems->save();
 
-            $serviceTotalOrder = $orderItems->where('service_id', $item['service_id'])
-                ->where('created_at', '<>', Carbon::today()->toDateString())
-                ->count();
-
-            $event = OccasionEvent::where('id', $item['service_id'])
-            ->first();
-            $cartItem = CartItem::where('cart_id', $request->cart_id)
-            ->where('service_id', $item['service_id'])->first();
-            $cartItem->status = $serviceTotalOrder > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'ordered');
+            $cartItem->status = 'ordered';
             $cartItem->save();
         }
         return sendResponse($order->reference_no, 'Successfully placed your order.');
