@@ -23,6 +23,7 @@ class CreateItemCartTable extends Migration
             $table->enum('status', ['active', 'ordered'])->default('active');
             $table->tinyInteger('is_custom')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
