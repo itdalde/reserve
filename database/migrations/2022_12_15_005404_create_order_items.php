@@ -17,6 +17,13 @@ class CreateOrderItems extends Migration
             $table->id();
             $table->tinyInteger('order_id')->unsigned();
             $table->tinyInteger('service_id')->unsigned();
+
+            $table->dateTime('schedule_start_datetime');
+            $table->dateTime('schedule_end_datetime');
+            $table->integer('guests')->unsigned();
+            $table->enum('timeline', ['order-placed', 'processing', 'order-completed'])->default('order-placed');
+            $table->enum('status', ['ordered', 'pending', 'processing', 'cancelled', 'fulfilled'])->default('ordered');
+            $table->tinyInteger('is_custom')->default(0);
             $table->timestamps();
         });
     }
