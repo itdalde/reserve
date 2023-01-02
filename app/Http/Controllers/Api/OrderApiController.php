@@ -29,4 +29,9 @@ class OrderApiController extends Controller
         $order = Order::with('items', 'paymentMethod')->where('reference_no', $request->reference_no)->first();
         return sendResponse($order, 'Your order with reference no. ' . $request->reference_no);
     }
+
+    public function getUserOrders(Request $request) {
+        $orders = Order::with('items')->where('user_id', $request->user_id)->get();
+        return sendResponse($orders, 'Orders under user ' . $request->user_id);
+    }
 }
