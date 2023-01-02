@@ -71,6 +71,15 @@ class CartApiController extends Controller
     {
         CartItem::where('cart_id', $request->cart_id)
         ->where('service_id', $request->service_id)->delete();
+
+        $cart = Cart::where('id', $request->cart_id)->first();
+
+        $occasionEvent = OccasionEvent::where('id', $request->service_id)->first();
+
+        $cart->total_items = $cart->total_items - 1;
+        $cart->total_amount = $cart->total_amount - $occasionEvent->price;
+        $cart->save();
+
         return sendResponse('Item successfully removed.', 'Item removed');
     }
 
