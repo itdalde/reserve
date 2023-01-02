@@ -103,6 +103,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/{order_id}/timeline/{timeline}', [OrderApiController::class, 'updateTimelineForOrder'])->name('update-order-timeline-status');
         Route::post('/{order_id}/status/{status}', [OrderApiController::class, 'updateStatusForOrder'])->name('update-order-status-status');
         Route::get('/{reference_no}', [OrderApiController::class, 'getOrderByReferenceNo'])->name('get-order-by-reference-no');
+        Route::get('/user/{user_id}', [OrderApiController::class, 'getUserOrders'])->name('get-user-orders');
     });
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
