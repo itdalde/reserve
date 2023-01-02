@@ -8,13 +8,25 @@
 
 
 <div id="overlay"></div>
-<div id='loader' class="a" style="--n: 5;margin-top: 50vh;
-    text-align: center;">
-    <div class="dot" style="--i: 0"></div>
-    <div class="dot" style="--i: 1"></div>
-    <div class="dot" style="--i: 2"></div>
-    <div class="dot" style="--i: 3"></div>
-    <div class="dot" style="--i: 4"></div>
+<div id='loader' class="a" style="--n: 5;
+    text-align: center;"> <svg width="100%" height="100%">
+        <defs>
+            <pattern id="polka-dots" x="0" y="0"                    width="100" height="100"
+                     patternUnits="userSpaceOnUse">
+                <circle fill="#be9ddf" cx="25" cy="25" r="3"></circle>
+            </pattern>
+            <style>
+                @import url("https://fonts.googleapis.com/css?  family=Lora:400,400i,700,700i");
+            </style>
+
+        </defs>
+
+
+
+        <text x="50%" y="60%"  text-anchor="middle"  >
+            Reserve
+        </text>
+    </svg>
 </div>
 <div id="db-wrapper">
 @include('layouts.includes.sidebar')
