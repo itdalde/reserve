@@ -6,9 +6,13 @@ use App\Models\Auth\Role\Role;
 use App\Models\EventImages;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
+use App\Models\Order;
+use App\Models\OrderItems;
 use App\Models\ServiceType;
 use App\Models\Status;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class SettingsController extends Controller
 {
@@ -32,9 +36,51 @@ class SettingsController extends Controller
         //
     }
 
+    public function updateStatusOrder(Request $request) {
+        $data = $request->all();
+        $status = 'pending';
+        $timeline = 'processing';
+        switch ($data['action']){
+            case 'accept':
+                $status = 'accepted';
+                $timeline = 'order-accepted';
+                break;
+            case 'decline':
+                $status = 'declined';
+                $timeline = 'order-declined';
+                break;
+            case 'complete':
+                $status = 'completed';
+                $timeline = 'order-completed';
+                break;
+            case 'cancel':
+                $status = 'cancelled';
+                $timeline = 'order-cancelled';
+        }
+        $item = OrderItems::where('id',$data['id'])->first();
+        $item->status = $status;
+        $item->timeline = $timeline;
+        $item->save();
+
+        $totalItem = OrderItems::where('order_id',$item->order_id)->count();
+        $itemsAccepted = OrderItems::where('order_id',$item->order_id)->where('status',$status)->count();
+        if($totalItem == $itemsAccepted) {
+            $order = Order::where('id',$item->order_id)->first();
+            $order->status = $status;
+            $order->timeline = $timeline;
+            $order->save();
+        }
+        return redirect::back()->with(['signup' => 'success' ,'order_item' => $item]);
+    }
+
     public function manageOrders(Request $request)
     {
-        return view('admin.orders.manage');
+        $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
+        $orders = OrderItems::whereIn('service_id',$services)
+            ->whereDate('created_at', Carbon::today())
+            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+
+        return view('admin.orders.manage',compact('orders'));
     }
 
     public function services(Request $request)

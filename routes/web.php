@@ -25,6 +25,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 
 Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
+Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order');
+
+
 Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
 
 Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign');
