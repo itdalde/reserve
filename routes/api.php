@@ -95,7 +95,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/{cart_id}/service-item/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])->name('get-service-by-id');
 
 
-        Route::post('/{cart_id}/place-order', [CartApiController::class, 'placeOrder'])->name('user-placed-order');
+        Route::post('/{cart_id}/place-order/{user_id}', [CartApiController::class, 'placeOrder'])->name('user-placed-order');
 
     });
 
