@@ -28,24 +28,24 @@
                             <td>1 Service</td>
                             <td>{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y H:m')}}</td>
                             <td>
-                                @switch($order['order']['status'])
+                                @switch($order['status'])
                                     @case('pending')
-                                        <span class="w-100 badge bg-warning text-dark text-capitalize">{{$order['order']['status']}}</span>
+                                        <span class="w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
                                         @break
                                     @case('accepted')
-                                        <span class="w-100 badge bg-secondary text-capitalize">{{$order['order']['status']}}</span>
+                                        <span class="w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
                                         @break
                                     @case('declined')
-                                        <span class="w-100 badge bg-danger text-capitalize">{{$order['order']['status']}}</span>
+                                        <span class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
                                         @break
                                     @case('completed')
-                                        <span class="w-100 badge bg-success text-capitalize">{{$order['order']['status']}}</span>
+                                        <span class="w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
                                         @break
                                     @case('cancelled')
-                                        <span class="w-100 badge bg-danger text-capitalize">{{$order['order']['status']}}</span>
+                                        <span class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
                                         @break
                                     @default
-                                     <span class="w-100 badge bg-primary text-capitalize">{{$order['order']['status']}}</span
+                                     <span class="w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
                                 @endswitch
 
                             </td>
@@ -65,7 +65,7 @@
                 </div>
             </div>
             @foreach($futureOrders as $order)
-                <div class="card mb-2 {{$order['order']['status'] == 'pending' ? 'border-card-pending' : 'border-card-accepted'}}"  >
+                <div class="card mb-2 {{$order['status'] == 'pending' ? 'border-card-pending' : 'border-card-accepted'}}"  >
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2">
