@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('agent')->nullable();
             $table->string('notes')->nullable();
             $table->enum('timeline', ['order-placed', 'processing', 'order-completed'])->default('order-placed');
-            $table->enum('status', ['pending', 'accepted', 'declined', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'processing', 'completed'])->default('pending');
             $table->timestamps();
         });
     }

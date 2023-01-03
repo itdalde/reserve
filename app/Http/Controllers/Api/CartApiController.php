@@ -8,6 +8,7 @@ use App\Models\CartItem;
 use App\Models\OccasionEvent;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\PaymentDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -155,6 +156,17 @@ class CartApiController extends Controller
             $cartItem->status = 'ordered';
             $cartItem->save();
         }
+
+        $paymentDetails = new PaymentDetails();
+        $paymentDetails->payment_method_id = $data['payment_method'];
+        $paymentDetails->reference_no = $order->reference_no;
+        $paymentDetails->order_id = $order->id;
+        $paymentDetails->total = $cart->total_amount;
+        $paymentDetails->sub_total = $cart->total_amount; // without vat
+        $paymentDetails->discount = 0; // deduction from promo_code
+        $paymentDetails->promo_code = $data['promo_code'];
+        $paymentDetails->save();
+
         return sendResponse($order->reference_no, 'Successfully placed your order.');
     }
 }

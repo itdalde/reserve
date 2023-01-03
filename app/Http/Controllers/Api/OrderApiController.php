@@ -31,7 +31,7 @@ class OrderApiController extends Controller
     }
 
     public function getUserOrders(Request $request) {
-        $orders = Order::with('items')->where('user_id', $request->user_id)->get();
+        $orders = Order::with('items', 'paymentDetails')->where('user_id', $request->user_id)->get();
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
     }
 }
