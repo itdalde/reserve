@@ -15,12 +15,13 @@ class CreatePaymentDetails extends Migration
     {
         Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('payment_method_id')->unsigned();
             $table->string('reference_no');
             $table->string('order_id');
             $table->float('total')->default(0);
             $table->float('sub_total')->default(0);
             $table->float('discount')->default(0);
-            $table->string('promo_code');
+            $table->string('promo_code')->nullable();
             $table->timestamps();
         });
     }
