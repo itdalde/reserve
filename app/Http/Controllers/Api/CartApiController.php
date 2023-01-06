@@ -61,11 +61,11 @@ class CartApiController extends Controller
             );
         }])
         ->where('user_id', $request->user_id)
+        ->where('active', 1)
         ->get([
             'id',
             'total_items',
             'total_amount',
-            'promo_code',
             'user_id'
         ]);
         return sendResponse($userCart, 'Get users cart');
