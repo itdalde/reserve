@@ -21,12 +21,11 @@ class CartApiController extends Controller
     public function addServiceToCart(Request $request)
     {
         $data = $request->cart;
-        $userCart = Cart::where('user_id', $request->user_id)->first();
+        $userCart = Cart::where('user_id', $request->user_id)->where('active', 1)->first();
         $cart = isset($userCart) ? $userCart : new Cart();
 
-        $cart->total_items = $data['total_items'];
-        $cart->total_amount = $data['total_amount'];
-        $cart->promo_code = $data['promo_code'];
+        
+        $cart->total_amount = (int)$cart->total_amount + $data['total_amount'];
         $cart->user_id = $request->user_id;
         $cart->save();
 
@@ -41,7 +40,11 @@ class CartApiController extends Controller
             $cartItem->is_custom = isset($item['is_custom']) ?? 0;
             $cartItem->save();
         }
-        return sendResponse('Successfully added to cart.', 'Save user cart');
+
+        $cart->total_items = CartItem::where('cart_id', $cart->id)->count();
+        $cart->save();
+
+        return sendResponse($cart->id, 'Successfully added to cart.');
     }
 
     public function getUserCart(Request $request)
@@ -166,6 +169,9 @@ class CartApiController extends Controller
         $paymentDetails->discount = 0; // deduction from promo_code
         $paymentDetails->promo_code = $data['promo_code'];
         $paymentDetails->save();
+        
+        $cart->active = 0;
+        $cart->save();
 
         return sendResponse($order->reference_no, 'Successfully placed your order.');
     }
