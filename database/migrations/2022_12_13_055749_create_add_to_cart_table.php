@@ -15,10 +15,10 @@ class CreateAddToCartTable extends Migration
     {
         Schema::create('cart', function (Blueprint $table) {
             $table->id();
-            $table->float('total_items')->unsigned();
+            $table->float('total_items')->unsigned()->default(0);
             $table->float('total_amount')->unsigned();
-            $table->string('promo_code')->nullable();
             $table->tinyInteger('user_id')->unsigned();
+            $table->tinyInteger('active')->default(1);
             $table->timestamps();
         });
     }
