@@ -144,7 +144,7 @@ class CartApiController extends Controller
             ->first();
 
             $cartItem = CartItem::where('cart_id', $request->cart_id)
-            ->where('service_id', $item['service_id'])->first();
+            ->where('service_id', $item['service_id'])->where('status', 'active')->first();
 
             $orderItems = new OrderItems();
             $orderItems->order_id = $order->id;
