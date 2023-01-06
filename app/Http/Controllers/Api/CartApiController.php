@@ -44,7 +44,7 @@ class CartApiController extends Controller
         $cart->total_items = CartItem::where('cart_id', $cart->id)->count();
         $cart->save();
 
-        return sendResponse($cart->id, 'Successfully added to cart.');
+        return sendResponse(['cart_id' => $cart->id], 'Successfully added to cart.');
     }
 
     public function getUserCart(Request $request)
@@ -69,6 +69,13 @@ class CartApiController extends Controller
             'user_id'
         ]);
         return sendResponse($userCart, 'Get users cart');
+    }
+
+    public function getUserOrders(Request $request) {
+
+        $orders = Order::with('items', 'paymentMethod', 'paymentDetails')
+        ->where('user_id', $request->user_id)->get();
+        return sendResponse($orders, 'User orders');
     }
 
     public function removeServiceFromCart(Request $request)
@@ -123,6 +130,7 @@ class CartApiController extends Controller
 
         $cart = Cart::where('id', $request->cart_id)->first();
         $order = new Order();
+        $order->cart_id = $request->cart_id;
         $order->user_id = $request->user_id;
         $order->reference_no = str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
         $order->total_items = $cart->total_items;
@@ -173,6 +181,6 @@ class CartApiController extends Controller
         $cart->active = 0;
         $cart->save();
 
-        return sendResponse($order->reference_no, 'Successfully placed your order.');
+        return sendResponse(['reference_no' => $order->reference_no], 'Successfully placed your order.');
     }
 }
