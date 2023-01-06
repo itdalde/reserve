@@ -87,7 +87,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
-        Route::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])->name('add-service-to-cart');
+        Route::match(['get', 'post'], '/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])->name('add-service-to-cart');
         Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
         Route::post('/{cart_id}/remove-service/{service_id}', [CartApiController::class, 'removeServiceFromCart'])->name('remove-service-from-cart');
         Route::post('/{cart_id}/update-service/{service_id}', [CartApiController::class, 'updateServiceFromCart'])->name('update-service-in-cart');
