@@ -8,6 +8,7 @@ use App\Models\CartItem;
 use App\Models\OccasionEvent;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\PaymentDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,11 @@ class CartApiController extends Controller
     public function addServiceToCart(Request $request)
     {
         $data = $request->cart;
-        $userCart = Cart::where('user_id', $request->user_id)->first();
+        $userCart = Cart::where('user_id', $request->user_id)->where('active', 1)->first();
         $cart = isset($userCart) ? $userCart : new Cart();
 
-        $cart->total_items = $data['total_items'];
-        $cart->total_amount = $data['total_amount'];
-        $cart->promo_code = $data['promo_code'];
+        
+        $cart->total_amount = (int)$cart->total_amount + $data['total_amount'];
         $cart->user_id = $request->user_id;
         $cart->save();
 
@@ -40,7 +40,11 @@ class CartApiController extends Controller
             $cartItem->is_custom = isset($item['is_custom']) ?? 0;
             $cartItem->save();
         }
-        return sendResponse('Successfully added to cart.', 'Save user cart');
+
+        $cart->total_items = CartItem::where('cart_id', $cart->id)->count();
+        $cart->save();
+
+        return sendResponse(['cart_id' => $cart->id], 'Successfully added to cart.');
     }
 
     public function getUserCart(Request $request)
@@ -57,14 +61,21 @@ class CartApiController extends Controller
             );
         }])
         ->where('user_id', $request->user_id)
+        ->where('active', 1)
         ->get([
             'id',
             'total_items',
             'total_amount',
-            'promo_code',
             'user_id'
         ]);
         return sendResponse($userCart, 'Get users cart');
+    }
+
+    public function getUserOrders(Request $request) {
+
+        $orders = Order::with('items', 'paymentMethod', 'paymentDetails')
+        ->where('user_id', $request->user_id)->get();
+        return sendResponse($orders, 'User orders');
     }
 
     public function removeServiceFromCart(Request $request)
@@ -116,11 +127,14 @@ class CartApiController extends Controller
     public function placeOrder(Request $request)
     {
         $data = $request->order;
+
+        $cart = Cart::where('id', $request->cart_id)->first();
         $order = new Order();
+        $order->cart_id = $request->cart_id;
         $order->user_id = $request->user_id;
         $order->reference_no = str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
-        $order->total_items = $data['total_items'];
-        $order->total_amount = $data['total_amount'];
+        $order->total_items = $cart->total_items;
+        $order->total_amount = $cart->total_amount;
         $order->payment_method = $data['payment_method'];
         $order->contact_details = $data['contact_details'];
         $order->location = $data['location'];
@@ -133,25 +147,40 @@ class CartApiController extends Controller
             $serviceTotalOrder = OrderItems::where('service_id', $item['service_id'])
                 ->where('created_at', '<>', Carbon::today()->toDateString())
                 ->count();
+
             $event = OccasionEvent::where('id', $item['service_id'])
             ->first();
 
             $cartItem = CartItem::where('cart_id', $request->cart_id)
-            ->where('service_id', $item['service_id'])->first();
+            ->where('service_id', $item['service_id'])->where('status', 'active')->first();
 
             $orderItems = new OrderItems();
             $orderItems->order_id = $order->id;
             $orderItems->service_id = $item['service_id'];
-            $orderItems->schedule_start_datetime = $cartItem['schedule_start_datetime'];
-            $orderItems->schedule_end_datetime = $cartItem['schedule_end_datetime'];
-            $orderItems->guests = $cartItem['guests'];
-            $orderItems->status = ($serviceTotalOrder + 1) > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'ordered');
-            $orderItems->is_custom = $cartItem['is_custom'];
+            $orderItems->schedule_start_datetime = $cartItem->schedule_start_datetime;
+            $orderItems->schedule_end_datetime = $cartItem->schedule_end_datetime;
+            $orderItems->guests = $cartItem->guests;
+            $orderItems->status = ($serviceTotalOrder + 1) > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'accepted');
+            $orderItems->is_custom = $cartItem->is_custom;
             $orderItems->save();
 
             $cartItem->status = 'ordered';
             $cartItem->save();
         }
-        return sendResponse($order->reference_no, 'Successfully placed your order.');
+
+        $paymentDetails = new PaymentDetails();
+        $paymentDetails->payment_method_id = $data['payment_method'];
+        $paymentDetails->reference_no = $order->reference_no;
+        $paymentDetails->order_id = $order->id;
+        $paymentDetails->total = $cart->total_amount;
+        $paymentDetails->sub_total = $cart->total_amount; // without vat
+        $paymentDetails->discount = 0; // deduction from promo_code
+        $paymentDetails->promo_code = $data['promo_code'];
+        $paymentDetails->save();
+        
+        $cart->active = 0;
+        $cart->save();
+
+        return sendResponse(['reference_no' => $order->reference_no], 'Successfully placed your order.');
     }
 }

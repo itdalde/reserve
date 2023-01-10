@@ -22,7 +22,7 @@ class CreateOrderItems extends Migration
             $table->dateTime('schedule_end_datetime');
             $table->integer('guests')->unsigned();
             $table->enum('timeline', ['order-placed', 'processing', 'order-completed'])->default('order-placed');
-            $table->enum('status', ['ordered', 'pending', 'processing', 'cancelled', 'fulfilled'])->default('ordered');
+            $table->enum('status', ['accepted', 'pending', 'processing', 'cancelled', 'completed'])->default('accepted');
             $table->tinyInteger('is_custom')->default(0);
             $table->timestamps();
         });
