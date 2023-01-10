@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auth\Role\Role;
+use App\Models\Auth\User\User;
 use App\Models\EventImages;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
@@ -10,8 +11,10 @@ use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\ServiceType;
 use App\Models\Status;
+use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
 class SettingsController extends Controller
@@ -70,6 +73,21 @@ class SettingsController extends Controller
             $order->timeline = $timeline;
             $order->save();
         }
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/reservation', [
+                'transaction' => $item->toArray(),
+                'status' => $status
+            ]);
+        $response = [
+            "status" => "success",
+            "message" => "Transactions Successfully Released!",
+            "data" => [$item->toArray() ]
+        ];
+
+        $fcmTokens = User::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+
         return redirect::back()->with(['signup' => 'success' ,'order_item' => $item]);
     }
 
