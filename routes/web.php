@@ -19,11 +19,12 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ConfirmController;
 use App\Http\Controllers\HelpController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
-
+Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
 Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order');
 
