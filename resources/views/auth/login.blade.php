@@ -107,7 +107,7 @@
                                        name="password"
                                        style="width: 92%;
                                                             border-right: none;"
-                                       placeholder="Password"
+                                       placeholder="{{ __('login.Password') }}"
                                        autocomplete="new-password"
                                        required/>
 
