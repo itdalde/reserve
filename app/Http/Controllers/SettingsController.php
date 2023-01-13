@@ -67,8 +67,8 @@ class SettingsController extends Controller
 
         $totalItem = OrderItems::where('order_id',$item->order_id)->count();
         $itemsAccepted = OrderItems::where('order_id',$item->order_id)->where('status',$status)->count();
+        $order = Order::where('id',$item->order_id)->first();
         if($totalItem == $itemsAccepted) {
-            $order = Order::where('id',$item->order_id)->first();
             $order->status = $status;
             $order->timeline = $timeline;
             $order->save();
@@ -84,10 +84,10 @@ class SettingsController extends Controller
             "message" => "Transactions Successfully Released!",
             "data" => [$item->toArray() ]
         ];
-
-        $fcmTokens = User::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-        NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
-
+        if($order) {
+            $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+            NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+        }
         return redirect::back()->with(['signup' => 'success' ,'order_item' => $item]);
     }
 
