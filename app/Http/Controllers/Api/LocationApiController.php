@@ -28,7 +28,7 @@ class LocationApiController extends Controller
     }
 
     public function getLocations(Request $request) {
-        $locations = Location::all();
+        $locations = Location::where('user_id', $request->user_id)->get();
         return sendResponse($locations, 'Available Locations');
     }
 
