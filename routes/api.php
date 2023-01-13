@@ -40,8 +40,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function()
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
     Route::get('/me', 'Auth\ApiAuthController@me')->name('me.api');
     Route::get('/users', [UserController::class,'userList'])->name('users.list.api');
+    Route::post('/fcm-token', [UserController::class, 'updateToken']);
 });
 
+Route::get('/test-fcm', [UserController::class, 'testFcm']);
+Route::get('/test-socket', [UserController::class, 'testSocket']);
 //  INFO: Membership Endpoints
 Route::group(['prefix' => 'v1/membership', 'middleware' => ['cors']], function() {
     Route::get('/', [MembershipController::class, 'index'])->name('index');

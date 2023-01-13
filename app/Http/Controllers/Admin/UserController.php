@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\Occasion;
+use App\Utility\NotificationUtility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Access\User\EloquentUserRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Validator;
 
 class UserController extends Controller
@@ -200,6 +202,49 @@ class UserController extends Controller
         $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();
         return view('superadmin.service-provider',compact('users'));
     }
+
+    public function testFcm() {
+
+        $response = [
+            "status" => "success",
+            "message" => "Transactions Successfully Released!",
+            "data" => ['test' => 'ni' ]
+        ];
+
+        $fcmTokens = User::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        NotificationUtility::sendNotification('Test', 'Approved by ', $fcmTokens, $response);
+    }
+    public function testSocket() {
+
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/reservation', [
+                'transaction' => [
+                    'test' => 'only'
+                ],
+                'status' => 'approved'
+            ]);
+    }
+
+    public function updateToken(Request $request)
+    {
+        try {
+
+            $user = auth()->user();
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully added'
+            ]);
+        } catch (\Exception $e) {
+            report($e);
+            return response()->json([
+                'success' => false
+            ], 500);
+        }
+    }
+
     public function userList(Request $request) {
         if($request->search) {
             $users = User::where('full_name','like','%'.$request->search.'%')
