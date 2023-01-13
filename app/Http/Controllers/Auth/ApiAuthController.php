@@ -45,6 +45,7 @@ class ApiAuthController extends Controller
             'email' => $data['email'],
             'phone_number' => $data['phone_number'],
             'password' => bcrypt($data['password']),
+            'fcm_token' =>  $data['fcm_token'],
             'confirmation_code' => $confirmationCode,
             'confirmed' => false
         ]);
