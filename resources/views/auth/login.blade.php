@@ -47,12 +47,12 @@
                             <div class="input-field">
                                 <i class="bi bi-person-circle"></i>
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                       placeholder="{{ __('views.auth.login.input_0') }}" required autofocus>
+                                       placeholder="{{ __('login.E-Mail address') }}" required autofocus>
                             </div>
                             <div class="input-field">
                                 <i class="bi bi-shield-lock"></i>
                                 <input autocomplete="new-password" type="password" class="form-control" name="password"
-                                       placeholder="{{ __('views.auth.login.input_1') }}" required/>
+                                       placeholder="{{ __('login.Password) }}" required/>
                                 <i class="bi bi-eye-slash toggle-password"
                                    style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
                             </div>

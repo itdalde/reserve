@@ -25,5 +25,6 @@ return [
     'Return Home' => 'Return Home',
     'login' => 'Login',
     'Service Type' => 'Service Type',
-    '' => '',
+    "E-Mail address"=> "E-Mail address",
+    "Password"=>"Password",
 ];
