@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
+use App\Http\Controllers\Api\LocationApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
@@ -114,6 +115,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
         Route::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])->name('save-payment-method');
         Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-methhod-by-id');
+    });
+
+    Route::group(['prefix' => 'locations', 'middleware' => ['cors']], function() {
+        Route::post('/', [LocationApiController::class, 'addLocation'])->name('post-new-location');
+        Route::get('/user/{user_id}', [LocationApiController::class, 'getLocations'])->name('get-locations');
+        Route::get('/default/{user_id}', [LocationApiController::class, 'getDefaultLocation'])->name('get-default-location');
     });
 });
 
