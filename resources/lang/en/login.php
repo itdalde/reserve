@@ -23,7 +23,7 @@ return [
     'Application sent successfully!' => 'Application sent successfully!',
     'review' => 'Your application has been sent! Someone from our team will review your request and get back to you via e-mail within 2-3 working days',
     'Return Home' => 'Return Home',
-    'login' => 'Login',
+    'login_btn' => 'Login',
     'Service Type' => 'Service Type',
     "E-Mail address"=> "E-Mail address",
     "Password"=>"Password",

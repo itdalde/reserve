@@ -52,11 +52,11 @@
                             <div class="input-field">
                                 <i class="bi bi-shield-lock"></i>
                                 <input autocomplete="new-password" type="password" class="form-control" name="password"
-                                       placeholder="{{ __('login.Password) }}" required/>
+                                       placeholder="{{ __('login.Password') }}" required/>
                                 <i class="bi bi-eye-slash toggle-password"
                                    style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
                             </div>
-                            <input type="submit" value="{{ __('login.login') }}" class="btn solid  w-100"/>
+                            <input type="submit" value="{{ __('login.login_btn') }}" class="btn solid  w-100"/>
                             @if (!old('first_name') && !$errors->isEmpty())
                                 <div class="alert alert-danger" role="alert">
                                     {!! $errors->first() !!}
