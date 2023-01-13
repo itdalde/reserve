@@ -119,7 +119,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'locations', 'middleware' => ['cors']], function() {
         Route::post('/', [LocationApiController::class, 'addLocation'])->name('post-new-location');
-        Route::get('/', [LocationApiController::class, 'getLocations'])->name('get-locations');
+        Route::get('/user/{user_id}', [LocationApiController::class, 'getLocations'])->name('get-locations');
         Route::get('/default/{user_id}', [LocationApiController::class, 'getDefaultLocation'])->name('get-default-location');
     });
 });
