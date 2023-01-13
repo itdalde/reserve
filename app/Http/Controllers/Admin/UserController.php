@@ -213,9 +213,13 @@ class UserController extends Controller
 
         $fcmTokens = User::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
         NotificationUtility::sendNotification('Test', 'Approved by ', $fcmTokens, $response);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully sent'
+        ]);
     }
     public function testSocket() {
-
         Http::timeout(10)
             ->withOptions(['verify' => false])
             ->post('http://reservegcc.com:3000/reservation', [
@@ -224,6 +228,10 @@ class UserController extends Controller
                 ],
                 'status' => 'approved'
             ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully sent'
+        ]);
     }
 
     public function updateToken(Request $request)
