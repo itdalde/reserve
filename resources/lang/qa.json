@@ -173,5 +173,6 @@
   "views.membership.table_header_4": "Status",
   "views.membership.table_header_5": "Expires",
   "views.membership.table_header_6": "Actions",
-  "views.membership.valid": "valid"
+  "views.membership.valid": "valid",
+  "views.membership.not_valid": "not valid"
 }

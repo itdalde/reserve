@@ -11,10 +11,10 @@
 
                     <nav id="navbar" class="navbar order-last order-lg-0">
                         <ul>
-                            <li><a class="nav-link" href="{{route('terms-condition')}}">Terms and Conditions</a></li>
-                            <li><a class="nav-link" href="{{route('privacy')}}">Privacy Policy</a></li>
-                            <li><a class="nav-link" href="{{route('faq')}}">FAQs</a></li>
-                            <li><a class="nav-link" href="{{route('help')}}">Help</a></li>
+                            <li><a class="nav-link" href="{{route('terms-condition')}}">{{__('home.Terms and Conditions')}}</a></li>
+                            <li><a class="nav-link" href="{{route('privacy')}}">{{__('home.Privacy Policy')}}</a></li>
+                            <li><a class="nav-link" href="{{route('faq')}}">{{__('home.FAQs')}}}</a></li>
+                            <li><a class="nav-link" href="{{route('help')}}">{{__('home.Help')}}</a></li>
                         </ul>
                         <i class="bi bi-list mobile-nav-toggle"></i>
                     </nav><!-- .navbar -->
@@ -30,7 +30,7 @@
                     <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
                 </div>
             </div>
-            <div class="copyright text-white">Terms and Conditions and Privacy Policy | ©2022 reservecc.com.All Rights Reserved</div>
+            <div class="copyright text-white">{{__('home.terms')}}</div>
         </div>
     </div>
 </footer><!-- End Footer -->

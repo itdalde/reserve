@@ -56,7 +56,7 @@
                                 <i class="bi bi-eye-slash toggle-password"
                                    style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
                             </div>
-                            <input type="submit" value="Login" class="btn solid  w-100"/>
+                            <input type="submit" value="{{ __('login.login') }}" class="btn solid  w-100"/>
                             @if (!old('first_name') && !$errors->isEmpty())
                                 <div class="alert alert-danger" role="alert">
                                     {!! $errors->first() !!}
@@ -79,20 +79,20 @@
                                 <i class="bi bi-person-circle"></i>
                                 <input required type="text" id="first_name" value="{{ old('first_name') }}"
                                        name="first_name"
-                                       placeholder="First Name"/>
+                                       placeholder="{{__('login.First Name')}}"/>
                             </div>
                             <div class="input-field">
                                 <i class="bi bi-person-circle"></i>
                                 <input required type="text" id="last_name" value="{{ old('last_name') }}"
                                        name="last_name"
-                                       placeholder="Last Name"/>
+                                       placeholder="{{__('login.Last Name')}} "/>
                             </div>
                             <div class="input-field">
                                 <i class="bi bi-envelope"></i>
                                 <input id="email" type="email" name="email"
                                        class="mb-0 form-control"
                                        value="{{ old('email') }}"
-                                       placeholder="Email"
+                                       placeholder="{{__('login.Email')}}"
                                        required/>
                             </div>
 
@@ -101,7 +101,7 @@
 
                                 <input class="form-control password block mb-0 hide-if-valid"
                                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                       title="{{__('login.password_role')}}"
                                        id="password"
                                        type="password"
                                        name="password"
@@ -116,15 +116,15 @@
                             </div>
 
                             <div class="d-flex flex-column validations px-3">
-                <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">At least one lowercase character <i
+                <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role1')}} <i
                         class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">At least one uppercase character <i
+                                <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role2')}} <i
                                         class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">At least one numeric character <i
+                                <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role3')}} <i
                                         class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">At least one special character <i
+                                <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role4')}} <i
                                         class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">8-16 characters <i
+                                <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role5')}} <i
                                         class="ps-2 bi bi-x-circle"></i> </span>
                             </div>
 
@@ -132,14 +132,14 @@
                                 <input id="company_name" autocomplete="new-password" type="text"
                                        name="company_name"
                                        class="mb-0 form-control"
-                                       placeholder="Company Name"
+                                       placeholder="{{__('login.Company Name')}}"
                                        value="{{ old('company_name') }}" required autofocus/>
                             </div>
                             <div class="input-field"><i class="bi bi-card-checklist"></i>
                                 <select id="service_type" name="service_type" required autofocus
                                         value="{{ old('service_type') }}"
-                                        class="mb-0 form-control" aria-label="Select Service Type">
-                                    <option value="">Service Type</option>
+                                        class="mb-0 form-control" aria-label="{{__('login.Select Service Type')}}">
+                                    <option value="">{{__('login.Service Type')}}</option>
                                     @if(isset($serviceTypes))
                                         @foreach($serviceTypes as $serviceType)
                                             <option
@@ -152,7 +152,7 @@
                             <div class="input-field"><i class="bi bi-info-circle"></i>
                                 <textarea id="company_description" type="text" name="company_description"
                                           class="mb-0 form-control"
-                                          placeholder="Company Description"
+                                          placeholder="{{__('login.Company Description')}}"
                                           value="{{ old('company_description') }}" autofocus></textarea>
                             </div>
 
@@ -168,7 +168,7 @@
 
                             <div class="pt-5">
                                 <button id="btn-submit-change-pass " type="submit"
-                                        class="btn btn-default bg-orange submit w-100">Sign up
+                                        class="btn btn-default bg-orange submit w-100">{{__('login.Sign up')}}
                                 </button>
                             </div>
                         </div>
@@ -181,12 +181,12 @@
     <div class="panels-container col-sm-12  col-md-12 col-lg-6 ">
         <div class="panel left-panel">
             <div class="content " data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
-                <h3>Don't have an account ? </h3>
+                <h3>{{__('login.have an account')}} </h3>
                 <p>
-                    Welcome to Reservgcc
+                    {{__('login.Welcome to Reservgcc')}}
                 </p>
                 <button class="btn transparent w-100" id="sign-up-btn">
-                    Register Service Provider
+                    {{__('login.Register Service Provider')}}
                 </button>
             </div>
             <img data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in" src="/assets/landing/img/6207967.jpg"
@@ -194,9 +194,9 @@
         </div>
         <div class="panel right-panel">
             <div class="content">
-                <h3>Already registered</h3>
+                <h3>{{__('login.Already registered')}}</h3>
                 <button class="btn transparent w-100 " id="sign-in-btn">
-                    Login Service Provider
+                    {{__('login.Login Service Provider')}}
                 </button>
             </div>
             <img src="/assets/landing/img/6206973.jpg" class="image img-fluid img-sign-up" alt="..."/>
@@ -213,18 +213,17 @@
                 </div>
                 <div class="modal-body ">
                     <div class="text-center par-1 mb-5">
-                        <div>Thanks for signing up</div>
+                        <div>{{__('login.Thanks for signing up')}}</div>
                         <div class="user-name">{{Session::get('name')}}</div>
                     </div>
                     <div class="text-center par-2 text-muted">
-                        <h4 class="text-black"> Application sent successfully!</h4>
-                        <p>Your application has been sent! Someone from our team will review your request and get back
-                            to you via e-mail within 2-3 working days</p>
+                        <h4 class="text-black"> {{__('login.Application sent successfully!')}}</h4>
+                        <p>{{__('login.review')}}</p>
 
                     </div>
                 </div>
                 <div class="modal-footer bg-transparent text-center border-0">
-                    <a class="w-100 btn bg-orange solid " style="    line-height: 36px;" href="/">Return Home</a>
+                    <a class="w-100 btn bg-orange solid " style="    line-height: 36px;" href="/">{{__('login.Return Home')}}</a>
                 </div>
             </div>
         </div>

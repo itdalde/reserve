@@ -23,6 +23,7 @@
         <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" integrity="sha512-uvXdJud8WaOlQFjlz9B15Yy2Au/bMAvz79F7Xa6OakCl2jvQPdHD0hb3dEqZRdSwG4/sknePXlE7GiarwA/9Wg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     </head>
     <body  data-aos-once="false">
@@ -36,19 +37,19 @@
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
-                    <li><a class="nav-link scrollto " href="/#about">Home</a></li>
-                    <li><a class="nav-link scrollto" href="#services">What We Offer</a></li>
-                    <li><a class="nav-link scrollto " href="#portfolio">For vendors</a></li>
+                    <li><a class="nav-link scrollto " href="/#about">{{__('home.home')}}</a></li>
+                    <li><a class="nav-link scrollto" href="#services">{{__('home.what_we_offer')}}</a></li>
+                    <li><a class="nav-link scrollto " href="#portfolio">{{__('home.for_vendors')}}</a></li>
                     <li><a class="nav-link " href="#"><span class="btn bg-orange" style="color: white;
     background-color: orange;
     border-color: orange;">
-                                Download for free
+                                {{__('home.download_for_free')}}
                             </span></a></li>
                      @if (Route::has('login'))
                             @if (!Auth::check())
                                 @if(config('auth.users.registration'))
                                  @endif
-                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">Vendor Log In</a></li>
+                                    <li><a class="nav-link scrollto " href="{{ url('/login') }}">{{__('home.login')}}</a></li>
                             @else
                                 @if(auth()->user()->hasRole('administrator'))
                                 <li><a class="nav-link scrollto " href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a></li>
@@ -58,12 +59,12 @@
                         @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> {{ Config::get('languages')[App::getLocale()]['display'] }}
+                            <span class="fi fis fi-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> {{ Config::get('languages')[App::getLocale()]['display'] }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             @foreach (Config::get('languages') as $lang => $language)
                                 @if ($lang != App::getLocale())
-                                    <a class="dropdown-item" href="{{ route('lang.switch', $lang) }}"><span class="flag-icon flag-icon-{{$language['flag-icon']}}"></span> {{$language['display']}}</a>
+                                    <a class="dropdown-item text-dark w-75" href="{{ route('lang.switch', $lang) }}"><span class="fi fis fi-{{$language['flag-icon']}}"></span> {{$language['display']}}</a>
                                 @endif
                             @endforeach
                         </div>
@@ -83,9 +84,9 @@
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item"  data-aos-once="false" data-aos-mirror="true" data-aos="fade-left">
                         <div class="content pt-4 pt-lg-0">
-                            <h3 data-aos-once="false" data-aos-mirror="true" data-aos="fade-right">Reserve is your one stop shop for quality services</h3>
+                            <h3 data-aos-once="false" data-aos-mirror="true" data-aos="fade-right">{{__('home.banner')}} </h3>
                             <p data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
-                                We are is an online platform where the best vendors offer up their services at competitive rates.
+                                {{__('home.banner1')}}
                             </p>
                             <div class="d-flex justify-content-center" style=" margin-top: 20em;">
                                 <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="#">
@@ -110,31 +111,31 @@
 
                 <img src="{{asset('assets/landing/img/service-border.png')}}" alt="service-border" style="margin-top: 8em;">
                 <div class="section-title aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false" style="margin-top: 3em;">
-                    <h3>How it works</h3>
+                    <h3> {{__('home.how_it_works')}}</h3>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0 aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="zoom-in">
                         <div class="icon-box icon-box-pink">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-1.png')}}" alt="service-3"></div>
-                            <h4 class="title"><a href="">A wide range of services for all occasions</a></h4>
-                            <p class="description">Explore and pick from any of our many vendors for single service or occasions.</p>
+                            <h4 class="title"><a href="">{{__('home.card1')}}</a></h4>
+                            <p class="description">{{__('home.card1_body')}}</p>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0 aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="zoom-in" data-aos-delay="100">
                         <div class="icon-box icon-box-cyan">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-2.png')}}" alt="service-3"></div>
-                            <h4 class="title"><a href="">Very easy-to-use app and process</a></h4>
-                            <p class="description">Choose what you need, add it to cart and create an agreement between single or multiple vendors.</p>
+                            <h4 class="title"><a href="">{{__('home.card2')}}</a></h4>
+                            <p class="description">{{__('home.card2_body')}}</p>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0 aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="zoom-in" data-aos-delay="200">
                         <div class="icon-box icon-box-green">
                             <div class="icon"><img src="{{asset('assets/landing/img/service-3.png')}}" alt="service-3"></div>
-                            <h4 class="title"><a href="">We take quality assurance very serious</a></h4>
-                            <p class="description">We are here to help and to guarantee that you get what you ordered.</p>
+                            <h4 class="title"><a href="">{{__('home.card3')}}</a></h4>
+                            <p class="description">{{__('home.card3_body')}}</p>
                         </div>
                     </div>
                 </div>
@@ -145,21 +146,21 @@
             <div class="container">
 
                 <div class="section-title aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-up">
-                    <h2>Join our platform as a vendor</h2>
-                    <p>Are you a vendor or a company that would like to join our platform and deliver the best to our users?</p>
+                    <h2>{{__('home.for_vendors_title')}}</h2>
+                    <p>{{__('home.for_vendors_sub')}}</p>
                 </div>
 
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item">
                         <div class="content pt-4 pt-lg-0 p-5"  data-aos-once="false" data-aos-mirror="true" data-aos="fade-up">
                             <img src="{{asset('assets/landing/img/portfolio-dashboard.png')}}" alt="portfolio-dashboard">
-                            <h3>Simple UI</h3>
-                            <p>We understand that using software to manage your business can be a bit daunting so we created a platform with a very simple and straightforward UI for your convenience.</p>
+                            <h3>{{__('home.simple_ui')}}</h3>
+                            <p>{{__('home.simple_ui_sub')}}</p>
                         </div>
                         <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-notes.png')}}" alt="portfolio-notes">
-                            <h3>Fast and easy registration</h3>
-                            <p>Our registration process is as easy as clicking the “vendor registration” button and filling in some information so we can contact you and confirm your application.</p>
+                            <h3>{{__('home.Fast and easy registration')}}</h3>
+                            <p>{{__('home.Fast and easy registration_sub')}}</p>
                         </div>
                         <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-cards.png')}}" alt="portfolio-cards">
@@ -176,19 +177,19 @@
                         </div>
                         <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-graph.png')}}" alt="portfolio-graph">
-                            <h3>Simple earning and statistics tracking</h3>
-                            <p>It is very easy to never lose track of your services and how well they are performing.</p>
+                            <h3>{{__("home.Simple earning and statistics tracking")}}</h3>
+                            <p>{{__('home.sub_1')}}</p>
                         </div>
                         <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-pie.png')}}" alt="portfolio-pie">
-                            <h3>Efficient optimization tips and hints</h3>
-                            <p>Reserve provides you with occassional relevant summaries of how well your company and specific services are doing.</p>
+                            <h3>{{__('home.Efficient optimization tips and hints')}}</h3>
+                            <p>{{__('home.sub_2')}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-up" data-aos-delay="200">
                     <div class="d-flex flex-column">
-                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">Register as a vendor</a></div>
+                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">{{__('home.Register as a vendor')}}</a></div>
                     </div>
                 </div>
 
@@ -208,7 +209,7 @@
                     <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                         <div class="d-flex flex-column">
                             <div class="p-2">
-                                <h3>Download a World of Hospitality</h3>
+                                <h3>{{__('home.Download a World of Hospitality')}}</h3>
                             </div>
                             <div class="p-2">
                                 <div class="d-flex flex-row" >

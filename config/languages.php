@@ -4,8 +4,8 @@ return [
         'display' => 'English',
         'flag-icon' => 'us'
     ],
-    'ar' => [
+    'qa' => [
         'display' => 'Arabic',
-        'flag-icon' => 'ar'
+        'flag-icon' => 'qa'
     ],
 ];

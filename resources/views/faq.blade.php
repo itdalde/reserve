@@ -35,9 +35,9 @@
 
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-                <li><a class="nav-link scrollto" href="/">Home</a></li>
-                <li><a class="nav-link scrollto" href="/?#services">What We Offer</a></li>
-                <li><a class="nav-link scrollto " href="/?#portfolio">For service providers</a></li>
+                <li><a class="nav-link scrollto " href="/">{{__('home.home')}}</a></li>
+                <li><a class="nav-link scrollto" href="/?#services">{{__('home.what_we_offer')}}</a></li>
+                <li><a class="nav-link scrollto " href="/?#portfolio">{{__('home.for_vendors')}}</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
