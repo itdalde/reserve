@@ -28,155 +28,164 @@
 
 </head>
 <body data-aos-once="false">
-<div class="container" data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
-    <div class="forms-container">
+<div class="container row mx-auto" data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
+    <div class="forms-container col-sm-12 col-md-12  col-lg-6 ">
         <div class="signin-signup">
+            <div class="d-flex align-content-end flex-wrap">
+                <div class="signin-p1">
+                    <form method="POST" action="{{route('login')}}" class="sign-in-form ">
 
-            <form method="POST" action="{{route('login')}}"  class="sign-in-form " data-aos-once="false" data-aos-mirror="true" data-aos="fade-left">
-                <h2 class="title">
-                    <div class="p-2 text-center">
-                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                        <div class="d-flex flex-column w-100 mx-auto">
+                            <h2 class="title">
+                                <div class="p-2 text-center">
+                                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
 
-                    </div>
-                </h2>
-                @csrf
+                                </div>
+                            </h2>
+                            @csrf
 
-                <div class="input-field">
-                    <i class="bi bi-person-circle"></i>
-                    <input type="email" class="form-control" name="email" value="{{ old('email') }}"
-                           placeholder="{{ __('views.auth.login.input_0') }}" required autofocus>
+                            <div class="input-field">
+                                <i class="bi bi-person-circle"></i>
+                                <input type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                       placeholder="{{ __('views.auth.login.input_0') }}" required autofocus>
+                            </div>
+                            <div class="input-field">
+                                <i class="bi bi-shield-lock"></i>
+                                <input autocomplete="new-password" type="password" class="form-control" name="password"
+                                       placeholder="{{ __('views.auth.login.input_1') }}" required/>
+                                <i class="bi bi-eye-slash toggle-password"
+                                   style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
+                            </div>
+                            <input type="submit" value="Login" class="btn solid  w-100"/>
+                            @if (!old('first_name') && !$errors->isEmpty())
+                                <div class="alert alert-danger" role="alert">
+                                    {!! $errors->first() !!}
+                                </div>
+                            @endif
+                        </div>
+                    </form>
                 </div>
-                <div class="input-field">
-                    <i class="bi bi-shield-lock"></i>
-                    <input autocomplete="new-password" type="password" class="form-control" name="password"
-                           placeholder="{{ __('views.auth.login.input_1') }}" required/>
-                    <i class="bi bi-eye-slash toggle-password"
-                       style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
-                </div>
-                <input type="submit" value="Login" class="btn solid w-75"/>
-                @if (!old('first_name') && !$errors->isEmpty())
-                    <div class="alert alert-danger" role="alert">
-                        {!! $errors->first() !!}
-                    </div>
-                @endif
-            </form>
-            <form method="POST" action="{{route('register')}}" class="hide sign-up-form" data-aos-once="false" data-aos-mirror="true"
-                  data-aos="zoom-in" ><h2 class="title">
-                    <div class="p-2 text-center">
-                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                <div class="signup-p1">
+                    <form method="POST" action="{{route('register')}}" class="hide sign-up-form">
+                        @csrf
+                        <div class="d-flex flex-column w-100mx-auto">
+                            <h2 class="title">
+                                <div class="p-2 text-center">
+                                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
 
-                    </div>
-                </h2>
-            @csrf
+                                </div>
+                            </h2>
+                            <div class="input-field">
+                                <i class="bi bi-person-circle"></i>
+                                <input required type="text" id="first_name" value="{{ old('first_name') }}"
+                                       name="first_name"
+                                       placeholder="First Name"/>
+                            </div>
+                            <div class="input-field">
+                                <i class="bi bi-person-circle"></i>
+                                <input required type="text" id="last_name" value="{{ old('last_name') }}"
+                                       name="last_name"
+                                       placeholder="Last Name"/>
+                            </div>
+                            <div class="input-field">
+                                <i class="bi bi-envelope"></i>
+                                <input id="email" type="email" name="email"
+                                       class="mb-0 form-control"
+                                       value="{{ old('email') }}"
+                                       placeholder="Email"
+                                       required/>
+                            </div>
 
-            <div class="input-field">
-                <i class="bi bi-person-circle"></i>
-                <input required type="text" id="first_name" value="{{ old('first_name') }}" name="first_name"
-                       placeholder="First Name"/>
-            </div>
-            <div class="input-field">
-                <i class="bi bi-person-circle"></i>
-                <input required type="text" id="last_name" value="{{ old('last_name') }}" name="last_name"
-                       placeholder="Last Name"/>
-            </div>
-            <div class="input-field">
-                <i class="bi bi-envelope"></i>
-                <input id="email" type="email" name="email"
-                       class="mb-0 form-control"
-                       value="{{ old('email') }}"
-                       placeholder="Email"
-                       required/>
-            </div>
+                            <div class="input-field">
+                                <i class="bi bi-shield-lock"></i>
 
-            <div class="input-field">
-                <i class="bi bi-shield-lock"></i>
-
-                    <input class="form-control password block mb-0 hide-if-valid"
-                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                           title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                           id="password"
-                           type="password"
-                           name="password"
-                           style="width: 92%;
+                                <input class="form-control password block mb-0 hide-if-valid"
+                                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                       title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                                       id="password"
+                                       type="password"
+                                       name="password"
+                                       style="width: 92%;
                                                             border-right: none;"
-                           placeholder="Password"
-                           autocomplete="new-password"
-                           required/>
+                                       placeholder="Password"
+                                       autocomplete="new-password"
+                                       required/>
 
-                <i class="bi bi-eye-slash toggle-password"
-                   style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
-            </div>
+                                <i class="bi bi-eye-slash toggle-password"
+                                   style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
+                            </div>
 
-            <div class="d-flex flex-column validations px-3">
+                            <div class="d-flex flex-column validations px-3">
                 <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">At least one lowercase character <i
                         class="ps-2 bi bi-x-circle"></i> </span>
-                <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">At least one uppercase character <i
-                        class="ps-2 bi bi-x-circle"></i> </span>
-                <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">At least one numeric character <i
-                        class="ps-2 bi bi-x-circle"></i> </span>
-                <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">At least one special character <i
-                        class="ps-2 bi bi-x-circle"></i> </span>
-                <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">8-16 characters <i
-                        class="ps-2 bi bi-x-circle"></i> </span>
-            </div>
+                                <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">At least one uppercase character <i
+                                        class="ps-2 bi bi-x-circle"></i> </span>
+                                <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">At least one numeric character <i
+                                        class="ps-2 bi bi-x-circle"></i> </span>
+                                <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">At least one special character <i
+                                        class="ps-2 bi bi-x-circle"></i> </span>
+                                <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">8-16 characters <i
+                                        class="ps-2 bi bi-x-circle"></i> </span>
+                            </div>
 
-            <div class="input-field"><i class="bi bi-people"></i>
-                <input id="company_name" autocomplete="new-password" type="text"
-                       name="company_name"
-                       class="mb-0 form-control"
-                       placeholder="Company Name"
-                       value="{{ old('company_name') }}" required autofocus/>
-            </div>
-            <div class="input-field"><i class="bi bi-card-checklist"></i>
-                <select id="service_type" name="service_type" required autofocus
-                        value="{{ old('service_type') }}"
-                        class="mb-0 form-control" aria-label="Select Service Type">
-                    <option value="">Service Type</option>
-                    @if(isset($serviceTypes))
-                        @foreach($serviceTypes as $serviceType)
-                            <option
-                                value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
+                            <div class="input-field"><i class="bi bi-people"></i>
+                                <input id="company_name" autocomplete="new-password" type="text"
+                                       name="company_name"
+                                       class="mb-0 form-control"
+                                       placeholder="Company Name"
+                                       value="{{ old('company_name') }}" required autofocus/>
+                            </div>
+                            <div class="input-field"><i class="bi bi-card-checklist"></i>
+                                <select id="service_type" name="service_type" required autofocus
+                                        value="{{ old('service_type') }}"
+                                        class="mb-0 form-control" aria-label="Select Service Type">
+                                    <option value="">Service Type</option>
+                                    @if(isset($serviceTypes))
+                                        @foreach($serviceTypes as $serviceType)
+                                            <option
+                                                value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
 
-            <div class="input-field"><i class="bi bi-info-circle"></i>
-                <textarea id="company_description" type="text" name="company_description"
-                          class="mb-0 form-control"
-                          placeholder="Company Description"
-                          value="{{ old('company_description') }}" autofocus></textarea>
-            </div>
+                            <div class="input-field"><i class="bi bi-info-circle"></i>
+                                <textarea id="company_description" type="text" name="company_description"
+                                          class="mb-0 form-control"
+                                          placeholder="Company Description"
+                                          value="{{ old('company_description') }}" autofocus></textarea>
+                            </div>
 
-            @if (old('first_name') && !$errors->isEmpty())
-                <div class="alert alert-danger" role="alert">
-                    {!! $errors->first() !!}
+                            @if (old('first_name') && !$errors->isEmpty())
+                                <div class="alert alert-danger" role="alert">
+                                    {!! $errors->first() !!}
+                                </div>
+                            @endif
+
+                            @if(config('auth.captcha.registration'))
+                                @captcha()
+                            @endif
+
+                            <div class="pt-5">
+                                <button id="btn-submit-change-pass " type="submit"
+                                        class="btn btn-default bg-orange submit w-100">Sign up
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            @endif
-
-            @if(config('auth.captcha.registration'))
-                @captcha()
-            @endif
-
-            <div class="pt-5">
-                <button id="btn-submit-change-pass " type="submit"
-                        class="btn btn-default bg-orange submit w-75">Sign up
-                </button>
             </div>
-
-
-            </form>
         </div>
     </div>
 
-    <div class="panels-container">
+    <div class="panels-container col-sm-12  col-md-12 col-lg-6 ">
         <div class="panel left-panel">
             <div class="content " data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
                 <h3>Don't have an account ? </h3>
                 <p>
                     Welcome to Reservgcc
                 </p>
-                <button class="btn transparent " id="sign-up-btn">
+                <button class="btn transparent w-100" id="sign-up-btn">
                     Register Service Provider
                 </button>
             </div>
@@ -186,7 +195,7 @@
         <div class="panel right-panel">
             <div class="content">
                 <h3>Already registered</h3>
-                <button class="btn transparent " id="sign-in-btn">
+                <button class="btn transparent w-100 " id="sign-in-btn">
                     Login Service Provider
                 </button>
             </div>
@@ -209,7 +218,8 @@
                     </div>
                     <div class="text-center par-2 text-muted">
                         <h4 class="text-black"> Application sent successfully!</h4>
-                        <p>Your application has been sent! Someone from our team will review your request and get back to you via e-mail within 2-3 working days</p>
+                        <p>Your application has been sent! Someone from our team will review your request and get back
+                            to you via e-mail within 2-3 working days</p>
 
                     </div>
                 </div>
@@ -221,7 +231,8 @@
     </div>
 @endif
 <script src="{{asset('assets/libs/jquery/dist/jquery.min.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
 <script src="{{ asset('assets/landing/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets/landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -248,9 +259,9 @@
 
 <script>
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         @if (Session::has('signup'))
-            $('#signupSuccessModal').modal('show');
+        $('#signupSuccessModal').modal('show');
         @endif
         let data = "{{old('first_name')}}";
         if (data) {

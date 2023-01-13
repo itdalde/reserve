@@ -272,8 +272,8 @@ form.sign-in-form {
 
 @media (max-width: 870px) {
     .container {
-        min-height: 800px;
-        height: 100vh;
+        min-height: 803px;
+        height: 173vh;
     }
     .signin-signup {
         width: 100%;
@@ -371,6 +371,9 @@ form.sign-in-form {
         top: 5%;
         transform: translate(-50%, 0);
     }
+    /*.signin-p1 {*/
+    /*    margin-top: -55em;*/
+    /*}*/
 }
 
 @media (max-width: 570px) {
@@ -397,7 +400,16 @@ form.sign-in-form {
         bottom: 28%;
         left: 50%;
     }
+    /*.signin-p1 {*/
+    /*    margin-top: -37em;*/
+    /*}*/
 }
+/*@media (max-width: 320px) {*/
+
+/*    .signin-p1 {*/
+/*        margin-top: -33em;*/
+/*    }*/
+/*}*/
 .img-sign-up ,.img-sign-in {
     border-bottom-right-radius: 122px;
     border-top-left-radius: 122px;
