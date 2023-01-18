@@ -26,13 +26,13 @@ class UserApiController extends Controller
 
         $profile->first_name = $data['first_name'];
         $profile->last_name = $data['last_name'];
-        $profile->location = $data['location'] ?? null;
+        $profile->location = $data['location'] ?? $profile->location;
         $profile->full_name = $data['first_name'] . ' ' . $data['last_name'];
-        $profile->phone_number = $data['phone_number'] ?? null;
+        $profile->phone_number = $data['phone_number'] ?? $profile->phone_number;
         // $profile->profile_picture = $data['profile_picture'] ?? null;
         // $profile->email = $data['email'] ?? $profile->email;
-        $profile->gender = $data['gender'] ?? null;
-        $profile->birth_date = $data['birth_date'] ?? null;
+        $profile->gender = $data['gender'] ?? $profile->gender;
+        $profile->birth_date = $data['birth_date'] ?? $profile->birth_date;
         $profile->update();
 
         return sendResponse($profile, "Profile Updated");
@@ -47,6 +47,6 @@ class UserApiController extends Controller
             $filename = "assets/images/avatar/{$imageName}";
             $profile->profile_picture = $filename;
         }
-        return sendResponse($profile, "Image profile updated");
+        return sendResponse($request->file, "Image profile updated");
     }
 }
