@@ -23,11 +23,12 @@ class UserApiController extends Controller
             $filename = "assets/images/avatar/{$imageName}";
             $profile->profile_picture = $filename;
         }
-
-        $profile->first_name = $data['first_name'];
-        $profile->last_name = $data['last_name'];
+        $firstName = $data['first_name'] ?? $profile->first_name;
+        $lastName = $data['last_name'] ?? $profile->last_name;
+        $profile->first_name = $firstName;
+        $profile->last_name = $lastName;
         $profile->location = $data['location'] ?? $profile->location;
-        $profile->full_name = $data['first_name'] . ' ' . $data['last_name'];
+        $profile->full_name = $firstName . ' ' . $lastName;
         $profile->phone_number = $data['phone_number'] ?? $profile->phone_number;
         // $profile->profile_picture = $data['profile_picture'] ?? null;
         // $profile->email = $data['email'] ?? $profile->email;
