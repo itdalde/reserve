@@ -128,8 +128,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
-        Route::patch('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
-        Route::patch('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
+        Route::put('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
+        Route::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
     });
 });
 
