@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
 use App\Http\Controllers\Api\PaymentMethodApiController;
+use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
 use App\Http\Controllers\MembershipController;
@@ -124,6 +125,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/', [LocationApiController::class, 'addLocation'])->name('post-new-location');
         Route::get('/user/{user_id}', [LocationApiController::class, 'getLocations'])->name('get-locations');
         Route::get('/default/{user_id}', [LocationApiController::class, 'getDefaultLocation'])->name('get-default-location');
+    });
+
+    Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
+        Route::patch('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
+        Route::patch('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
     });
 });
 
