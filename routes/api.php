@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\LocationApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
+use App\Http\Controllers\Api\PaymentApiController;
 use App\Http\Controllers\Api\PaymentMethodApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ServicesApiController;
@@ -130,6 +131,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
         Route::put('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
         Route::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
+    });
+
+    Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
+        Route::post('/', [PaymentApiController::class, 'processPayment'])->name('process-payment');
+        Route::get('/{payment_id}', [PaymentApiController::class, 'getPaymentById'])->name('get-payment-by-id');
     });
 });
 
