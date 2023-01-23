@@ -13,54 +13,51 @@ class SkipCashUtility
 
     public static function postPayment($order) 
     {
+
         $skipCashUrl = config('skipcash.url') . '/api/v1/payments';
-        $skipCashClientId = config('skipcash.client_id');
         $skipCashKeyId = config('skipcash.key_id');
         $skipCashSecretKey = config('skipcash.secret_key');
-        $skipCashWebhookKey = config('skipcash.webhook_key');
+        // $skipCashClientId = config('skipcash.client_id');
+        // $skipCashWebhookKey = config('skipcash.webhook_key');
 
-        $formData = [
-            "uid" => Str::uuid()->toString(),
-            "keyId" => $skipCashKeyId,
-            "amount" => number_format($order->total_amount, 2),
-            "firstName" => $order->user->first_name,
-            "lastName" => $order->user->last_name,
-            "phone" => $order->user->phone_number,
-            "email" => $order->user->email,
-            "street" => "CA",
-            "city" => "Nasipit",
-            "state" => "00",
-            "country" => "00",
-            "postCode" => "8602",
-        ];
-
-        $query = http_build_query($formData, "", ",");
-
-        $signature = hash_hmac('sha256', json_encode($query), $skipCashSecretKey);
-
-        $headers = [
-            'Authorization: ' . base64_encode($signature),
-            'Content-Type: application/json;',
-            'x-client-id: ' . $skipCashClientId,
-            'x-client-secret: ' . $skipCashSecretKey,
-        ];
-        
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $skipCashUrl);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_FILETIME, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $formData);
-        $response = curl_exec($ch);
-        curl_close($ch);
-        $data = json_decode($response);
-        return $data;
+        $uuid = Str::uuid()->toString();
+        $data = [];
+        $data['Uid'] = $uuid;
+        $data['KeyId'] = $skipCashKeyId;
+        $data['Amount'] = "$order->total_amount";
+        $data['FirstName'] = $order->user->first_name;
+        $data['LastName'] = $order->user->last_name;
+        $data['Phone'] = $order->user->phone_number;
+        $data['Email'] = $order->user->email;
+        $data['Street'] = "st";
+        $data['City'] = "TempCity";
+        $data['State'] = "QA";
+        $data['Country'] = "QA";
+        $data['PostalCode'] = "01238";
+        $data['TransactionId'] = $order->reference_no;
+        $data_string = json_encode($data);
+        $resultheader = "Uid=" . $data['Uid'] . ',KeyId=' . $data['KeyId'] . ',Amount=' . $data['Amount'] . ',FirstName=' . $data['FirstName'] . ',LastName=' . $data['LastName'] . ',Phone=' . $data['Phone'] . ',Email=' . $data['Email']. ',Street=' . $data['Street']. ',City=' . $data['City']. ',State=' . $data['State']. ',Country=' . $data['Country']. ',PostalCode=' . $data['PostalCode']. ',TransactionId=' . $data['TransactionId'];
+        $signature = hash_hmac('sha256', $resultheader, $skipCashSecretKey, true);
+        $authorisationheader = base64_encode($signature);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $skipCashUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $data_string,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization:' . $authorisationheader,
+                'Content-Type:application/json',
+            ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response, true);
+        return $response;
     }
     
 }
