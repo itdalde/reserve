@@ -78,7 +78,7 @@
         </div>
     </header><!-- End Header -->
 
-    <main id="main">
+    <main id="main"  style=" {{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}">
 
         <!-- ======= About Section ======= -->
         <section id="about" class="about">
