@@ -36,11 +36,11 @@
             </div>
 
             <nav id="navbar" class="navbar order-last order-lg-0">
-                <ul>
+                <ul style=" {{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}"  >
                     <li><a class="nav-link scrollto " href="/#about">{{__('home.home')}}</a></li>
                     <li><a class="nav-link scrollto" href="#services">{{__('home.what_we_offer')}}</a></li>
                     <li><a class="nav-link scrollto " href="#portfolio">{{__('home.for_vendors')}}</a></li>
-                    <li><a class="nav-link " href="#"><span class="btn bg-orange" style="color: white;
+                    <li><a class="nav-link " href="https://play.google.com/store/games?hl=en&gl=US"><span class="btn bg-orange" style="color: white;
     background-color: orange;
     border-color: orange;">
                                 {{__('home.download_for_free')}}
@@ -57,6 +57,8 @@
                                     <li><a class="nav-link scrollto " href="{{ url('/logout') }}">{{ __('views.welcome.logout') }}</a></li>
                             @endif
                         @endif
+                </ul>
+                <ul>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="fi fis fi-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> {{ Config::get('languages')[App::getLocale()]['display'] }}
@@ -69,6 +71,7 @@
                             @endforeach
                         </div>
                     </li>
+
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -89,10 +92,10 @@
                                 {{__('home.banner1')}}
                             </p>
                             <div class="d-flex justify-content-center" style=" margin-top: 20em;">
-                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="#">
+                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="https://apps.apple.com/">
                                     <img src="{{asset('assets/landing/img/App Store.png')}}" alt="App Store.png">
                                 </a>
-                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-right" href="#">
+                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-right" href="https://play.google.com/store/apps">
                                     <img src="{{asset('assets/landing/img/Google Play.png')}}" alt="Google Play.png">
                                 </a>
                             </div>
@@ -189,7 +192,7 @@
                 </div>
                 <div class="d-flex justify-content-center aos-item" data-aos-mirror="true" data-aos-once="false" data-aos="fade-up" data-aos-delay="200">
                     <div class="d-flex flex-column">
-                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('register') }}">{{__('home.Register as a vendor')}}</a></div>
+                        <div class="p-2 mx-auto"><a class="btn btn-orange" href="{{ route('login',['register'=>'1']) }}">{{__('home.Register as a vendor')}}</a></div>
                     </div>
                 </div>
 
@@ -213,10 +216,10 @@
                             </div>
                             <div class="p-2">
                                 <div class="d-flex flex-row" >
-                                    <a class="p-2 m-2" href="#">
+                                    <a class="p-2 m-2" href="https://apps.apple.com/">
                                         <img src="{{asset('assets/landing/img/App Store.png')}}" alt="App Store.png">
                                     </a>
-                                    <a class="p-2 m-2" href="#">
+                                    <a class="p-2 m-2" href="https://play.google.com/store/apps">
                                         <img src="{{asset('assets/landing/img/Google Play.png')}}" alt="Google Play.png">
                                     </a>
                                 </div>
