@@ -92,10 +92,10 @@
                                 {{__('home.banner1')}}
                             </p>
                             <div class="d-flex justify-content-center" style=" margin-top: 20em;">
-                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="#">
+                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="https://apps.apple.com/">
                                     <img src="{{asset('assets/landing/img/App Store.png')}}" alt="App Store.png">
                                 </a>
-                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-right" href="#">
+                                <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-right" href="https://play.google.com/store/apps">
                                     <img src="{{asset('assets/landing/img/Google Play.png')}}" alt="Google Play.png">
                                 </a>
                             </div>
@@ -216,10 +216,10 @@
                             </div>
                             <div class="p-2">
                                 <div class="d-flex flex-row" >
-                                    <a class="p-2 m-2" href="#">
+                                    <a class="p-2 m-2" href="https://apps.apple.com/">
                                         <img src="{{asset('assets/landing/img/App Store.png')}}" alt="App Store.png">
                                     </a>
-                                    <a class="p-2 m-2" href="#">
+                                    <a class="p-2 m-2" href="https://play.google.com/store/apps">
                                         <img src="{{asset('assets/landing/img/Google Play.png')}}" alt="Google Play.png">
                                     </a>
                                 </div>
