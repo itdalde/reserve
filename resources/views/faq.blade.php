@@ -14,7 +14,9 @@
     <link href="{{ asset('assets/landing/img/favicon.ico') }}" rel="icon">
     <link href="{{ asset('assets/landing/img/favicon.ico') }}" rel="apple-touch-icon">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
     <link href="{{ asset('assets/landing/vendor/aos/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/landing/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -34,10 +36,29 @@
         </div>
 
         <nav id="navbar" class="navbar order-last order-lg-0">
-            <ul>
+            <ul style=" {{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}">
                 <li><a class="nav-link scrollto " href="/">{{__('home.home')}}</a></li>
                 <li><a class="nav-link scrollto" href="/?#services">{{__('home.what_we_offer')}}</a></li>
                 <li><a class="nav-link scrollto " href="/?#portfolio">{{__('home.for_vendors')}}</a></li>
+            </ul>
+            <ul>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        <span
+                            class="fi fis fi-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> {{ Config::get('languages')[App::getLocale()]['display'] }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @foreach (Config::get('languages') as $lang => $language)
+                            @if ($lang != App::getLocale())
+                                <a class="dropdown-item text-dark w-75" href="{{ route('lang.switch', $lang) }}"><span
+                                        class="fi fis fi-{{$language['flag-icon']}}"></span> {{$language['display']}}
+                                </a>
+                            @endif
+                        @endforeach
+                    </div>
+                </li>
+
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav><!-- .navbar -->
@@ -48,17 +69,18 @@
     <p class="p-2" style="margin-top: 3em;">
     </p>
 
-    <div class=" sub-section-bg" >
+    <div class=" sub-section-bg">
         <h3 style="margin-left: 122px" class="pt-3 text-white" data-aos="fade-up">Frequently asked questions</h3>
     </div>
     <!-- ======= F.A.Q Section ======= -->
-    <section id="faq" class="faq"  data-aos="zoom-in">
+    <section id="faq" class="faq" data-aos="zoom-in">
         <div class="container">
 
             <ul class="faq-list">
 
                 <li>
-                    <div data-bs-toggle="collapse" class="collapsed question" href="#faq1" aria-expanded="true">How can you guarantee the quality of my order?
+                    <div data-bs-toggle="collapse" class="collapsed question" href="#faq1" aria-expanded="true">How can
+                        you guarantee the quality of my order?
                         <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq1" class="collapse show" data-bs-parent=".faq-list">
                         <p>
@@ -70,7 +92,9 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq2" class="collapsed question"  aria-expanded="true">Can I cancel my order?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq2" class="collapsed question" aria-expanded="true">Can I
+                        cancel my order?<i class="bi bi-chevron-down icon-show"></i><i
+                            class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq2" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             An order can be cancelled while it is still in pending status.
@@ -80,7 +104,9 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq3" class="collapsed question"  aria-expanded="true">What payment methods you accept? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq3" class="collapsed question" aria-expanded="true">What
+                        payment methods you accept? <i class="bi bi-chevron-down icon-show"></i><i
+                            class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq3" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             We accept various methods including credit cards, local debit
@@ -90,7 +116,9 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq4" class="collapsed question"  aria-expanded="true">Why my order is not accepted immediately? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq4" class="collapsed question" aria-expanded="true">Why my
+                        order is not accepted immediately? <i class="bi bi-chevron-down icon-show"></i><i
+                            class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq4" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             When you place an order, it undergo multiple stages to be
@@ -101,7 +129,9 @@
                 </li>
 
                 <li>
-                    <div data-bs-toggle="collapse" href="#faq5" class="collapsed question"  aria-expanded="true">Where can I talk to customer service? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+                    <div data-bs-toggle="collapse" href="#faq5" class="collapsed question" aria-expanded="true">Where
+                        can I talk to customer service? <i class="bi bi-chevron-down icon-show"></i><i
+                            class="bi bi-chevron-up icon-close"></i></div>
                     <div id="faq5" class="collapse show" data-bs-parent=".faq-list">
                         <p>
                             We take customer satisfaction very seriously, please reach out to
@@ -121,7 +151,8 @@
 @include('layouts.includes.footer')
 <!-- End Footer -->
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
 <!-- Vendor JS Files -->
 <script src="{{ asset('assets/landing/vendor/aos/aos.js') }}"></script>
 <script src="{{ asset('assets/landing/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

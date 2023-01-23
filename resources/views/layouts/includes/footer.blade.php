@@ -13,7 +13,7 @@
                         <ul>
                             <li><a class="nav-link" href="{{route('terms-condition')}}">{{__('home.Terms and Conditions')}}</a></li>
                             <li><a class="nav-link" href="{{route('privacy')}}">{{__('home.Privacy Policy')}}</a></li>
-                            <li><a class="nav-link" href="{{route('faq')}}">{{__('home.FAQs')}}}</a></li>
+                            <li><a class="nav-link" href="{{route('faq')}}">{{__('home.FAQs')}}</a></li>
                             <li><a class="nav-link" href="{{route('help')}}">{{__('home.Help')}}</a></li>
                         </ul>
                         <i class="bi bi-list mobile-nav-toggle"></i>

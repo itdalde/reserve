@@ -38,7 +38,9 @@
                         <div class="d-flex flex-column w-100 mx-auto">
                             <h2 class="title">
                                 <div class="p-2 text-center">
-                                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                                    <a href="/">
+                                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                                    </a>
 
                                 </div>
                             </h2>
@@ -71,8 +73,9 @@
                         <div class="d-flex flex-column w-100mx-auto">
                             <h2 class="title">
                                 <div class="p-2 text-center">
+                                    <a href="/">
                                     <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
-
+                                    </a>
                                 </div>
                             </h2>
                             <div class="input-field">
@@ -262,8 +265,14 @@
         @if (Session::has('signup'))
         $('#signupSuccessModal').modal('show');
         @endif
+        @if (app('request')->input('register'))
+        onCLickSignUp()
+        @endif
         let data = "{{old('first_name')}}";
         if (data) {
+            onCLickSignUp()
+        }
+        function onCLickSignUp() {
             $('#sign-up-btn').click();
             $('.sign-in-form').removeClass('show').addClass('hide')
             setTimeout(function () {
