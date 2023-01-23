@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\LocationApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
+use App\Http\Controllers\Api\PaymentApiController;
 use App\Http\Controllers\Api\PaymentMethodApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ServicesApiController;
@@ -116,9 +117,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     });
 
-    Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
+    Route::group(['prefix' => 'payment-method', 'middleware' => ['cors']], function() {
         Route::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])->name('save-payment-method');
-        Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-methhod-by-id');
+        Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-method-by-id');
     });
 
     Route::group(['prefix' => 'locations', 'middleware' => ['cors']], function() {
@@ -130,6 +131,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
         Route::put('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
         Route::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
+    });
+
+    Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
+        Route::post('/', [PaymentApiController::class, 'processPayment'])->name('process-payment');
+        Route::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])->name('get-payment-by-id');
     });
 });
 
