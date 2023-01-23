@@ -117,9 +117,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     });
 
-    Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
+    Route::group(['prefix' => 'payment-method', 'middleware' => ['cors']], function() {
         Route::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])->name('save-payment-method');
-        Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-methhod-by-id');
+        Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-method-by-id');
     });
 
     Route::group(['prefix' => 'locations', 'middleware' => ['cors']], function() {
@@ -135,7 +135,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
         Route::post('/', [PaymentApiController::class, 'processPayment'])->name('process-payment');
-        Route::get('/{payment_id}', [PaymentApiController::class, 'getPaymentById'])->name('get-payment-by-id');
+        Route::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])->name('get-payment-by-id');
     });
 });
 

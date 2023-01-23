@@ -16,6 +16,8 @@ class AddColumnToPaymentDetails extends Migration
         Schema::table('payment_details', function (Blueprint $table) {
             //
             $table->string("payment_id")->nullable();
+            $table->string('payment_url')->nullable();
+            $table->string('currency')->nullable();
         });
     }
 
@@ -29,6 +31,8 @@ class AddColumnToPaymentDetails extends Migration
         Schema::table('payment_details', function (Blueprint $table) {
             //
             $table->dropColumn("payment_id");
+            $table->dropColumn('payment_url');
+            $table->dropColumn('currency');
         });
     }
 }
