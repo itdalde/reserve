@@ -168,15 +168,15 @@ class CartApiController extends Controller
             $cartItem->save();
         }
 
-        $paymentDetails = new PaymentDetails();
-        $paymentDetails->payment_method_id = $data['payment_method'];
-        $paymentDetails->reference_no = $order->reference_no;
-        $paymentDetails->order_id = $order->id;
-        $paymentDetails->total = $cart->total_amount;
-        $paymentDetails->sub_total = $cart->total_amount; // without vat
-        $paymentDetails->discount = 0; // deduction from promo_code
-        $paymentDetails->promo_code = $data['promo_code'];
-        $paymentDetails->save();
+        // $paymentDetails = new PaymentDetails();
+        // $paymentDetails->payment_method_id = $data['payment_method'];
+        // $paymentDetails->reference_no = $order->reference_no;
+        // $paymentDetails->order_id = $order->id;
+        // $paymentDetails->total = $cart->total_amount;
+        // $paymentDetails->sub_total = $cart->total_amount; // without vat
+        // $paymentDetails->discount = 0; // deduction from promo_code
+        // $paymentDetails->promo_code = $data['promo_code'];
+        // $paymentDetails->save();
         
         $cart->active = 0;
         $cart->save();
