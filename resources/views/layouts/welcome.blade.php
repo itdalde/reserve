@@ -57,23 +57,23 @@
                                     <li><a class="nav-link scrollto " href="{{ url('/logout') }}">{{ __('views.welcome.logout') }}</a></li>
                             @endif
                         @endif
-                </ul>
-                <ul>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="fi fis fi-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> {{ Config::get('languages')[App::getLocale()]['display'] }}
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <div class="dropdown-menu w-100" aria-labelledby="navbarDropdownMenuLink">
                             @foreach (Config::get('languages') as $lang => $language)
                                 @if ($lang != App::getLocale())
-                                    <a class="dropdown-item text-dark w-75" href="{{ route('lang.switch', $lang) }}"><span class="fi fis fi-{{$language['flag-icon']}}"></span> {{$language['display']}}</a>
+                                    <a class="dropdown-item text-dark w-100" href="{{ route('lang.switch', $lang) }}">
+                                        <div class="d-inline-flex mx-auto">{{$language['display']}} <span class="fi fis fi-{{$language['flag-icon']}}"></span></div>
+                                    </a>
                                 @endif
                             @endforeach
                         </div>
                     </li>
-
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
+
             </nav><!-- .navbar -->
         </div>
     </header><!-- End Header -->
