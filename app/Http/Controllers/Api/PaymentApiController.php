@@ -48,7 +48,7 @@ class PaymentApiController extends Controller
 
     public function paymentProcessing(Request $request) {
         $data = [
-            'paymentId' => $request['PaymentId'],
+            'paymentId' => $request->input('PaymentId'),
             'amount' => $request['Amount'],
             'statusId' => $request['StatusId'],
             'status' => $request['status'] ?? '',
@@ -57,21 +57,29 @@ class PaymentApiController extends Controller
             'visaId' => $request['VisaId'] ?? ''
         ];
         $response = SkipCashUtility::processPaymentHooks($data);
-        return sendResponse($response, "PaymentProcessed");
+        return sendResponse($request, "PaymentProcessed");
     }
 
-    public function paymentSuccess(Request $request) {
+    public function paymentSuccess(Request $request)
+    {
         if ($request->has('id')) {
             $id = $request->input('id');
             $statusId = $request->input('statusId');
             $status = $request->input('status');
+            $transId = $request->input('transId');
+            $custom1 = $request->input('custom1');
         }
+
         $data = [
-            'id' => $id,
-            'statusid' => $statusId,
-            'status' => $status
-        ];
-        return sendResponse($data, "Success");
+            'data' => [
+                'id' => $id ?? '',
+                'transId' => $transId ?? '',
+                'custom1' => $custom1 ?? ''
+            ],
+            'status' => $status ?? '',
+            'statusId' => $statusId ?? '',
+        ]; 
+        return sendResponse($data, $status == "Failed" ? "Payment Failed" : "Payment Successfull");
     }
 
     public function paymentProcessed(Request $request)
