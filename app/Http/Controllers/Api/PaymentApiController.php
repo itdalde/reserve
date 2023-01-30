@@ -48,12 +48,13 @@ class PaymentApiController extends Controller
 
     public function paymentProcessing(Request $request) {
         $data = [
-            'paymentId' => $request->input('id'),
-            'amount' => '1000',
-            'statusId' => $request->input('statusId'),
-            'transactionId' => $request->input('transId'),
-            'customId' => $request->input('custom1') ?? '',
-            'visaId' => $request->input('visaId') ?? ''
+            'paymentId' => $request['PaymentId'],
+            'amount' => $request['Amount'],
+            'statusId' => $request['StatusId'],
+            'status' => $request['status'] ?? '',
+            'transactionId' => $request['TransactionId'],
+            'customId' => $request['CustomId'] ?? '',
+            'visaId' => $request['VisaId'] ?? ''
         ];
         $response = SkipCashUtility::processPaymentHooks($data);
         return sendResponse($response, "PaymentProcessed");
@@ -71,5 +72,10 @@ class PaymentApiController extends Controller
             'status' => $status
         ];
         return sendResponse($data, "Success");
+    }
+
+    public function paymentProcessed(Request $request)
+    {
+        return sendResponse($request, "RETURN SUCCESS");
     }
 }

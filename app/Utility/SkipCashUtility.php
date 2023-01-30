@@ -89,15 +89,15 @@ class SkipCashUtility
 
     public static function processPaymentHooks($request) {
         
-        $webhookUrl = 'https://reservegcc.com/api/v1/payments/processing';
+        $webhookUrl = 'https://reservegcc.com/api/v1/payments/processed';
         $skipCashSecretKey = config('skipcash.secret_key');
         $data = [];
-        $data['PaymentId'] = $request['paymentId'];
-        $data['Amount'] = $request['amount'];
-        $data['StatusId'] = $request['statusId'];
-        $data['TransactionId'] = $request['transactionId'];
-        $data['CustomId'] = $request['customId'];
-        $data['VisaId'] = $request['visaId'];
+        $data['PaymentId'] = $request['PaymentId'];
+        $data['Amount'] = $request['Amount'];
+        $data['StatusId'] = $request['StatusId'];
+        $data['TransactionId'] = $request['TransactionId'];
+        $data['CustomId'] = $request['CustomId'];
+        $data['VisaId'] = $request['VisaId'];
         
         $data_string = json_encode($data);
 
