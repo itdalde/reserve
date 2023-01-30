@@ -138,7 +138,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])->name('get-payment-by-id');
 
         Route::post('/processing',[PaymentApiController::class, 'paymentProcessing'])->name('payment-processing');
-        Route::get('/success', [PaymentApiController::class, 'paymentSuccess'])->name('payment-success');
+        Route::post('/success', [PaymentApiController::class, 'paymentSuccess'])->name('payment-success');
         Route::post('/processed', [PaymentApiController::class, 'paymentProcessed'])->name('payment-processed');
     });
 });
