@@ -45,4 +45,31 @@ class PaymentApiController extends Controller
 
         return sendResponse($result, "Payment details with payment id " . $request->payment_id);
     }
+
+    public function paymentProcessing(Request $request) {
+        $data = [
+            'paymentId' => $request->input('id'),
+            'amount' => '1000',
+            'statusId' => $request->input('statusId'),
+            'transactionId' => $request->input('transId'),
+            'customId' => $request->input('custom1') ?? '',
+            'visaId' => $request->input('visaId') ?? ''
+        ];
+        $response = SkipCashUtility::processPaymentHooks($data);
+        return sendResponse($response, "PaymentProcessed");
+    }
+
+    public function paymentSuccess(Request $request) {
+        if ($request->has('id')) {
+            $id = $request->input('id');
+            $statusId = $request->input('statusId');
+            $status = $request->input('status');
+        }
+        $data = [
+            'id' => $id,
+            'statusid' => $statusId,
+            'status' => $status
+        ];
+        return sendResponse($data, "Success");
+    }
 }

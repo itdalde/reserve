@@ -109,8 +109,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/{order_id}/timeline/{timeline}', [OrderApiController::class, 'updateTimelineForOrder'])->name('update-order-timeline-status');
         Route::post('/{order_id}/status/{status}', [OrderApiController::class, 'updateStatusForOrder'])->name('update-order-status-status');
         Route::get('/{reference_no}', [OrderApiController::class, 'getOrderByReferenceNo'])->name('get-order-by-reference-no');
-        Route::get('/user/{user_id}', [OrderApiController::class, 'getUserOrders'])->name('get-user-orders');
-        Route::get('/user/{user_id}/orders', [OrderApiController::class, 'getUserOrders'])->name('get-user-order-history');
+        // Route::get('/user/{user_id}', [OrderApiController::class, 'getUserOrders'])->name('get-user-orders');
+        Route::get('/user/{user_id}/orders', [OrderApiController::class, 'ge tUserOrders'])->name('get-user-order-history');
     });
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
@@ -136,6 +136,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
         Route::post('/', [PaymentApiController::class, 'processPayment'])->name('process-payment');
         Route::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])->name('get-payment-by-id');
+
+        Route::post('/processing',[PaymentApiController::class, 'paymentProcessing'])->name('payment-processing');
+        Route::get('/success', [PaymentApiController::class, 'paymentSuccess'])->name('payment-success');
     });
 });
 
