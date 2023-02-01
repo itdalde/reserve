@@ -58,7 +58,7 @@ class PaymentApiController extends Controller
         $pe->custom_1 = $request['Custom1'];
         $pe->visa_id = $request['VisaId'];
         $pe->save();
-        return sendResponse($request, "PaymentProcessed");
+        return sendResponse($pe, "SkipCash Response");
     }
 
     public function paymentSuccess(Request $request)
