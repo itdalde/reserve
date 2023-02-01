@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\PaymentDetails;
+use App\Models\PaymentEvents;
 use App\Utility\SkipCashUtility;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -47,16 +48,16 @@ class PaymentApiController extends Controller
     }
 
     public function paymentProcessing(Request $request) {
-        $data = [
-            'paymentId' => $request->input('PaymentId'),
-            'amount' => $request['Amount'],
-            'statusId' => $request['StatusId'],
-            'status' => $request['status'] ?? '',
-            'transactionId' => $request['TransactionId'],
-            'customId' => $request['CustomId'] ?? '',
-            'visaId' => $request['VisaId'] ?? ''
-        ];
-        $response = SkipCashUtility::processPaymentHooks($data);
+     
+        $pe = new PaymentEvents();
+        $pe->payment_id = $request['PaymentId'];
+        $pe->amount = $request['Amount'];
+        $pe->status_id = $request['StatusId'];
+        $pe->status = $request['Status'];
+        $pe->transaction_id = $request['TransactionId'];
+        $pe->custom_1 = $request['Custom1'];
+        $pe->visa_id = $request['VisaId'];
+        $pe->save();
         return sendResponse($request, "PaymentProcessed");
     }
 
