@@ -32,8 +32,8 @@
     <div class="forms-container col-sm-12 col-md-12  col-lg-6 ">
         <div class="signin-signup">
             <div class="d-flex align-content-end flex-wrap">
-                <div class="signin-p1">
-                    <form method="POST" action="{{route('login')}}" class="sign-in-form ">
+                <div class="signin-p1 sign-in-form mx-auto">
+                    <form method="POST" action="{{route('login')}}" class=" ">
 
                         <div class="d-flex flex-column w-100 mx-auto">
                             <h2 class="title">
@@ -67,115 +67,190 @@
                         </div>
                     </form>
                 </div>
-                <div class="signup-p1">
-                    <form method="POST" action="{{route('register')}}" class="hide sign-up-form">
-                        @csrf
-                        <div class="d-flex flex-column w-100mx-auto">
-                            <h2 class="title">
-                                <div class="p-2 text-center">
-                                    <a href="/">
-                                    <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
-                                    </a>
-                                </div>
-                            </h2>
-                            <div class="input-field">
-                                <i class="bi bi-person-circle"></i>
-                                <input required type="text" id="first_name" value="{{ old('first_name') }}"
-                                       name="first_name"
-                                       placeholder="{{__('login.First Name')}}"/>
-                            </div>
-                            <div class="input-field">
-                                <i class="bi bi-person-circle"></i>
-                                <input required type="text" id="last_name" value="{{ old('last_name') }}"
-                                       name="last_name"
-                                       placeholder="{{__('login.Last Name')}} "/>
-                            </div>
-                            <div class="input-field">
-                                <i class="bi bi-envelope"></i>
-                                <input id="email" type="email" name="email"
-                                       class="mb-0 form-control"
-                                       value="{{ old('email') }}"
-                                       placeholder="{{__('login.Email')}}"
-                                       required/>
-                            </div>
+                <div class="signup-p1 sign-up-form mx-auto hide">
+                    <div class="row">
 
-                            <div class="input-field">
-                                <i class="bi bi-shield-lock"></i>
+                        <form method="POST" action="{{route('register')}}" class=" ">
+                            @csrf
+                            <div class="p-3">
+                                <div class="card" style="    min-width: 100%;
+                                    width: 106%;
+                                    max-width: 200%; border: none">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column w-100 mx-auto">
+                                            <h2 class="title">
+                                                <div class="p-2 text-center">
+                                                    <a href="/">
+                                                        <img src="{{asset('assets/landing/img/logo-black.png')}}"
+                                                             alt="logo-black">
+                                                    </a>
+                                                </div>
+                                            </h2>
+                                            <div class="p-1" style="    max-height: 68vh; overflow-y: auto;">
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Company Name')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-people"></i>
+                                                        <input id="company_name" autocomplete="new-password" type="text"
+                                                               name="company_name"
+                                                               class="mb-0 form-control w-100"
+                                                               value="{{ old('company_name') }}" required autofocus/>
+                                                    </div>
+                                                </div>
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Full Name')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-person-circle"></i>
+                                                        <input required type="text" id="first_name"
+                                                               value="{{ old('full_name') }}"
+                                                               name="full_name"
+                                                               class="mb-0 form-control w-100" />
+                                                    </div>
+                                                </div>
 
-                                <input class="form-control password block mb-0 hide-if-valid"
-                                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                       title="{{__('login.password_role')}}"
-                                       id="password"
-                                       type="password"
-                                       name="password"
-                                       style="width: 92%;
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Position')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-award"></i>
+                                                        <input type="text" id="position" value="{{ old('position') }}"
+                                                               name="position"
+                                                               class="mb-0 form-control w-100" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Phone number')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-telephone"></i>
+                                                        <input required type="text" id="phone_number"
+                                                               value="{{ old('phone_number') }}"
+                                                               name="phone_number"
+                                                               class="mb-0 form-control w-100" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Email')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-envelope"></i>
+                                                        <input id="email" type="email" name="email"
+                                                               class="mb-0 form-control w-100"
+                                                               value="{{ old('email') }}"
+                                                               required/>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.location')}} </label> <br>
+                                                    <div class="ms-2 input-field"><i class="bi bi-geo-alt"></i>
+                                                        <input type="text" id="location" value="{{ old('location') }}"
+                                                               name="location"
+                                                               class="mb-0 form-control w-100"
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.registration_number')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-journal-text"></i>
+                                                        <input type="text" id="registration_number"
+                                                               value="{{ old('registration_number') }}"
+                                                               name="registration_number"
+                                                               class="mb-0 form-control w-100"
+                                                               required/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Password')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-shield-lock"></i>
+
+                                                        <input
+                                                            class="form-control password block mb-0 hide-if-valid w-100"
+                                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                                            title="{{__('login.password_role')}}"
+                                                            id="password"
+                                                            type="password"
+                                                            name="password"
+                                                            style="width: 92%;
                                                             border-right: none;"
-                                       placeholder="{{ __('login.Password') }}"
-                                       autocomplete="new-password"
-                                       required/>
+                                                            autocomplete="new-password"
+                                                            required/>
 
-                                <i class="bi bi-eye-slash toggle-password"
-                                   style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
-                            </div>
+                                                        <i class="bi bi-eye-slash toggle-password"
+                                                           style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
+                                                    </div>
+                                                </div>
 
-                            <div class="d-flex flex-column validations px-3">
-                <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role1')}} <i
-                        class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role2')}} <i
-                                        class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role3')}} <i
-                                        class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role4')}} <i
-                                        class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role5')}} <i
-                                        class="ps-2 bi bi-x-circle"></i> </span>
-                            </div>
+                                                <div class="d-flex flex-column validations px-3">
+                                                    <span
+                                                        class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role1')}}
+                                                        <i class="ps-2 bi bi-x-circle"></i>
+                                                    </span>
+                                                    <span
+                                                        class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role2')}}
+                                                        <i class="ps-2 bi bi-x-circle"></i> </span>
+                                                    <span
+                                                        class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role3')}}
+                                                        <i class="ps-2 bi bi-x-circle"></i> </span>
+                                                    <span
+                                                        class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role4')}}
+                                                        <i class="ps-2 bi bi-x-circle"></i> </span>
+                                                    <span
+                                                        class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{__('login.password_role5')}}
+                                                        <i class="ps-2 bi bi-x-circle"></i> </span>
+                                                </div>
 
-                            <div class="input-field"><i class="bi bi-people"></i>
-                                <input id="company_name" autocomplete="new-password" type="text"
-                                       name="company_name"
-                                       class="mb-0 form-control"
-                                       placeholder="{{__('login.Company Name')}}"
-                                       value="{{ old('company_name') }}" required autofocus/>
-                            </div>
-                            <div class="input-field"><i class="bi bi-card-checklist"></i>
-                                <select id="service_type" name="service_type" required autofocus
-                                        value="{{ old('service_type') }}"
-                                        class="mb-0 form-control" aria-label="{{__('login.Select Service Type')}}">
-                                    <option value="">{{__('login.Service Type')}}</option>
-                                    @if(isset($serviceTypes))
-                                        @foreach($serviceTypes as $serviceType)
-                                            <option
-                                                value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
-                                        @endforeach
-                                    @endif
-                                </select>
-                            </div>
 
-                            <div class="input-field"><i class="bi bi-info-circle"></i>
-                                <textarea id="company_description" type="text" name="company_description"
-                                          class="mb-0 form-control"
-                                          placeholder="{{__('login.Company Description')}}"
-                                          value="{{ old('company_description') }}" autofocus></textarea>
-                            </div>
+                                                <div class="control-group p-1 mx-auto">
+                                                    <label for="">{{__('login.Select Service Type')}} <strong class="text-danger"> * </strong></label> <br>
+                                                    <div class="ms-2 input-field"><i class="bi bi-card-checklist"></i>
+                                                        <select id="service_type" name="service_type" required autofocus
+                                                                value="{{ old('service_type') }}" style="    background: none;
+                                                                outline: none;
+                                                                border: none;
+                                                                line-height: 1;
+                                                                font-weight: 600;
+                                                                font-size: 1.1rem;
+                                                                color: #0c0707;"
+                                                                class="mb-0 form-control"
+                                                                aria-label="{{__('login.Select Service Type')}}">
+                                                            @if(isset($serviceTypes))
+                                                                @foreach($serviceTypes as $serviceType)
+                                                                    <option
+                                                                        value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" name="company_description">
 
-                            @if (old('first_name') && !$errors->isEmpty())
-                                <div class="alert alert-danger" role="alert">
-                                    {!! $errors->first() !!}
+                                                @if (old('first_name') && !$errors->isEmpty())
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {!! $errors->first() !!}
+                                                    </div>
+                                                @endif
+
+                                                @if(config('auth.captcha.registration'))
+                                                    @captcha()
+                                                @endif
+                                            </div>
+
+
+                                            <div class="pt-3">
+                                                <button id="btn-submit-change-pass " type="submit"
+                                                        class="btn btn-default bg-orange submit w-100">{{__('login.Sign up')}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            @endif
-
-                            @if(config('auth.captcha.registration'))
-                                @captcha()
-                            @endif
-
-                            <div class="pt-5">
-                                <button id="btn-submit-change-pass " type="submit"
-                                        class="btn btn-default bg-orange submit w-100">{{__('login.Sign up')}}
-                                </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -215,18 +290,15 @@
                     <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
                 </div>
                 <div class="modal-body ">
-                    <div class="text-center par-1 mb-5">
-                        <div>{{__('login.Thanks for signing up')}}</div>
-                        <div class="user-name">{{Session::get('name')}}</div>
-                    </div>
-                    <div class="text-center par-2 text-muted">
-                        <h4 class="text-black"> {{__('login.Application sent successfully!')}}</h4>
+                    <div class="text-center par-2 ">
+                        <p class="text-black"> {{__('login.Application sent successfully!')}}</p>
                         <p>{{__('login.review')}}</p>
 
                     </div>
                 </div>
                 <div class="modal-footer bg-transparent text-center border-0">
-                    <a class="w-100 btn bg-orange solid " style="    line-height: 36px;" href="/">{{__('login.Return Home')}}</a>
+                    <a class="w-100 btn bg-orange solid " style="    line-height: 36px;"
+                       href="/">{{__('login.Return Home')}}</a>
                 </div>
             </div>
         </div>
@@ -262,6 +334,9 @@
 <script>
 
     $(document).ready(function () {
+        $(document).on('shown.bs.modal', '.modal', function () {
+            $('.modal-backdrop').before($(this));
+        });
         @if (Session::has('signup'))
         $('#signupSuccessModal').modal('show');
         @endif
@@ -272,6 +347,7 @@
         if (data) {
             onCLickSignUp()
         }
+
         function onCLickSignUp() {
             $('#sign-up-btn').click();
             $('.sign-in-form').removeClass('show').addClass('hide')
@@ -279,6 +355,7 @@
                 $('.sign-up-form').addClass('show').removeClass('hide')
             }, 1000);
         }
+
         $('body').on('click', '#sign-up-btn', function (e) {
             $('.sign-in-form').removeClass('show').addClass('hide')
             setTimeout(function () {

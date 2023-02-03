@@ -17,6 +17,16 @@ use Illuminate\Support\Facades\Storage;
 
 class HelpController extends Controller
 {
+
+    /**
+ * Create a new controller instance.
+ *
+ * @return void
+ */
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +34,8 @@ class HelpController extends Controller
      */
     public function index()
     {
-        $activeInquiries = Inquiries::where('is_active',1)->get();
-        $inActiveInquiries = Inquiries::where('is_active',0)->get();
+        $activeInquiries = Inquiries::where('is_active',1)->with('user')->get();
+        $inActiveInquiries = Inquiries::where('is_active',0)->with('user')->get();
         $serviceTypes = ServiceType::all()->toArray();
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();

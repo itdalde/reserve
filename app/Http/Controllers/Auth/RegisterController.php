@@ -59,6 +59,7 @@ class RegisterController extends Controller
         $rules = [
             'company_name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'phone_number' => 'required|max:255|unique:users',
             'password' => 'required|min:8',
         ];
 
@@ -79,9 +80,12 @@ class RegisterController extends Controller
     {
         /** @var  $user User */
         $user = User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'full_name' => $data['first_name'] . ' '. $data['last_name'],
+            'first_name' => '',
+            'last_name' => '',
+            'full_name' => $data['full_name'] ,
+            'position' => $data['position'],
+            'location' => $data['location'],
+            'phone_number' => $data['phone_number'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'confirmation_code' => Uuid::uuid4(),
@@ -91,6 +95,8 @@ class RegisterController extends Controller
         $company->name = $data['company_name'];
         $company->user_id = $user->id;
         $company->description = $data['company_description'];
+        $company->location = $data['location'];
+        $company->registration_number = $data['registration_number'];
         $company->service_type_id = $data['service_type'];
         $company->save();
         $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
@@ -135,7 +141,7 @@ class RegisterController extends Controller
         try {
             $this->guard()->logout();
             if (config('auth.users.confirm_email') && !$user->confirmed) {
-                $this->sendEmail($user);
+//                $this->sendEmail($user);
                 return redirect::back()->with(['signup' => 'success','email' => '','name' => $name]);
             }
         } catch (Exception $exception) {
@@ -145,10 +151,11 @@ class RegisterController extends Controller
 
 
     private function sendEmail($user) {
+        try {
 
-        $to = $user->email;
-        $subject = "Welcome to Reserve";
-        $style = '<style type="text/css">
+            $to = $user->email;
+            $subject = "Welcome to Reserve";
+            $style = '<style type="text/css">
           body,
           table,
           td,
@@ -195,7 +202,7 @@ class RegisterController extends Controller
             outline: none;
           }
           </style>';
-        $message = ' <!DOCTYPE html>
+            $message = ' <!DOCTYPE html>
         <html>
         <head>
 
@@ -244,9 +251,12 @@ class RegisterController extends Controller
             </html>
         ';
 
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= 'From: <contactus@reservegcc.com>' . "\r\n";
-        return mail($to,$subject,$message,$headers);
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers .= 'From: <contactus@reservegcc.com>' . "\r\n";
+            return mail($to,$subject,$message,$headers);
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 }

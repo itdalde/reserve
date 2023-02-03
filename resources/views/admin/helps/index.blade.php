@@ -17,6 +17,7 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="activeInquiries" role="tabpanel" aria-labelledby="activeInquiries-tab" style="min-height: 140px;">
                                 @foreach($activeInquiries as $inquiry)
+                                    @if($inquiry->user)
                                     <a class="link-inquiry-c"
                                        data-id="{{$inquiry->id}}"
                                        data-title="{{$inquiry->title}}"
@@ -36,17 +37,19 @@
                                             </div>
                                         </div>
                                     </a>
+                                    @endif
                                 @endforeach
                             </div>
                             <div class="tab-pane fade" id="inActiveInquiries" role="tabpanel" aria-labelledby="inActiveInquiries-tab" style="min-height: 140px;">
                                 @foreach($inActiveInquiries as $inquiry)
+                                    @if($inquiry->user)
                                     <a class="link-inquiry-c" href="#"
                                        data-id="{{$inquiry->id}}"
                                        data-title="{{$inquiry->title}}"
                                        data-description="{{$inquiry->description}}"
                                        data-issue-id="{{$inquiry->reference}}"
                                        data-issue-date="{{$inquiry->created_at->format('d/m/Y h:i A')}}"
-                                       data-user-id="{{$inquiry->user->id}}"
+                                       data-user-id="{{$inquiry->user ? $inquiry->user->id : ''}}"
                                        data-user-image="{{$inquiry->user->profile_picture}}"
                                        data-user-name="{{$inquiry->user->first_name .' '. $inquiry->user->last_name }}">
                                         <div class="card mb-3 border border-secondary card-border-orange" >
@@ -58,6 +61,7 @@
                                             </div>
                                         </div>
                                     </a>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>

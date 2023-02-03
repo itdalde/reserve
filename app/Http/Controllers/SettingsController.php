@@ -13,6 +13,7 @@ use App\Models\ServiceType;
 use App\Models\Status;
 use App\Utility\NotificationUtility;
 use Carbon\Carbon;
+use Google\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -93,11 +94,15 @@ class SettingsController extends Controller
 
     public function manageOrders(Request $request)
     {
-        $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
-        $orders = OrderItems::whereIn('service_id',$services)
-            ->whereDate('created_at', Carbon::today())
-            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+        $orders = [];
+        try {
+            $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
+            $orders = OrderItems::whereIn('service_id',$services)
+                ->whereDate('created_at', Carbon::today())
+                ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+        } catch (Exception $exception) {
 
+        }
         return view('admin.orders.manage',compact('orders'));
     }
 
