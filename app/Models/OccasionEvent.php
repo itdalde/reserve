@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OccasionEvent extends Model
 {
@@ -49,6 +50,10 @@ class OccasionEvent extends Model
     public function providers(): HasMany
     {
         return $this->hasMany(Company::class, 'id', 'company_id');
+    }
+    public function provider(): HasOne
+    {
+        return $this->hasOne(Company::class, 'id', 'company_id');
     }
     public function company()
     {
