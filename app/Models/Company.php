@@ -18,7 +18,8 @@ class Company extends Model
             'serviceReviews',
             'paymentPlan',
             'ratings',
-            'gallery'
+            'gallery',
+            'company'
         );
     }
 
