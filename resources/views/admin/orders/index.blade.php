@@ -22,9 +22,9 @@
                 <tbody>
                     @foreach($orders as $order)
                         <tr>
-                            <td>{{$order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name']}}</td>
-                            <td>{{$order['order']['reference_no']}}</td>
-                            <td>{{$order['service']['price']['plan_type']['name']}}</td>
+                            <td>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : ''}}</td>
+                            <td>{{$order['order'] ? $order['order']['reference_no'] : ''}}</td>
+                            <td>{{$order['service'] && $order['service']['price'] && $order['service']['price']['plan_type'] ? $order['service']['price']['plan_type']['name'] : ''}}</td>
                             <td>1 Service</td>
                             <td>{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y H:m')}}</td>
                             <td>
@@ -70,16 +70,16 @@
                         <div class="row">
                             <div class="col-2">
                                 <div class="avatar avatar-md avatar-indicators avatar-online">
-                                    @if($order['order']['user']['profile_picture'] )
+                                    @if($order['order'] && $order['order']['user'] && $order['order']['user']['profile_picture'] )
                                         <img class="rounded-circle" src="{{ asset( $order['order']['user']['profile_picture']) }}" alt="...."   />
                                     @else
-                                        <img class="rounded-circle" src="https://ui-avatars.com/api/?name={{$order['order']['user']['first_name']. ' ' . $order['order']['user']['last_name']}}" alt="...">
+                                        <img class="rounded-circle" src="https://ui-avatars.com/api/?name={{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name']. ' ' . $order['order']['user']['last_name'] : 'R'}}" alt="...">
                                     @endif
                                 </div>
                             </div>
                             <div class="col-5">
                                 <div>{{$order['order']['reference_no']}}</div>
-                                <div>{{$order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name']}}</div>
+                                <div>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : ''}}</div>
                             </div>
                             <div class="col-5" style="border-left: 2px solid #a69382;">
                                 <div>{{Carbon\Carbon::parse($order['created_at'])->format('H:m A')}}</div>

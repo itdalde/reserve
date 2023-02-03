@@ -33,7 +33,8 @@
                             </thead>
                             <tbody>
                             @foreach($orders as $order)
-                                <tr>
+                                @if($order['order']['user'])
+                                    <tr>
                                     <td>
                                         <div class="py-2">
                                             {{$order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name']}}
@@ -121,6 +122,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

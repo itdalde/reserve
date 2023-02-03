@@ -25,42 +25,50 @@ use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
-Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
-Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
+    Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
+
+    Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign');
+    Route::post('/occasions/store', [OccasionController::class, 'store'])->name('occasion-store');
+    Route::post('/occasions/update', [OccasionController::class, 'edit'])->name('occasion-update');
+    Route::get('/occasions/delete', [OccasionController::class, 'activateDeactivate'])->name('occasions.delete-occasion');
+    Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order');
 
 
-Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
+    Route::post('/settings/statuses/update', [SettingsController::class, 'statusUpdate'])->name('status-update');
+    Route::post('/settings/statuses/store', [SettingsController::class, 'statusStore'])->name('status-store');
+    Route::get('/settings/statuses/delete', [SettingsController::class, 'statusDelete'])->name('statuses.delete');
 
-Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign');
-Route::post('/occasions/store', [OccasionController::class, 'store'])->name('occasion-store');
-Route::post('/occasions/update', [OccasionController::class, 'edit'])->name('occasion-update');
-Route::get('/occasions/delete', [OccasionController::class, 'activateDeactivate'])->name('occasions.delete-occasion');
+    Route::post('/settings/roles/update', [SettingsController::class, 'roleUpdate'])->name('role-update');
+    Route::post('/settings/roles/store', [SettingsController::class, 'roleStore'])->name('role-store');
+    Route::get('/settings/roles/delete', [SettingsController::class, 'roleDelete'])->name('roles.delete');
 
-Route::post('/settings/statuses/update', [SettingsController::class, 'statusUpdate'])->name('status-update');
-Route::post('/settings/statuses/store', [SettingsController::class, 'statusStore'])->name('status-store');
-Route::get('/settings/statuses/delete', [SettingsController::class, 'statusDelete'])->name('statuses.delete');
+    Route::post('/settings/services/update', [SettingsController::class, 'serviceUpdate'])->name('service-update');
+    Route::post('/settings/services/store', [SettingsController::class, 'serviceStore'])->name('service-store');
+    Route::get('/settings/services/delete', [SettingsController::class, 'serviceDelete'])->name('services.delete');
 
-Route::post('/settings/roles/update', [SettingsController::class, 'roleUpdate'])->name('role-update');
-Route::post('/settings/roles/store', [SettingsController::class, 'roleStore'])->name('role-store');
-Route::get('/settings/roles/delete', [SettingsController::class, 'roleDelete'])->name('roles.delete');
+    Route::post('/settings/company-update', [SettingsController::class, 'companyUpdate'])->name('settings.company_update');
+    Route::get('/settings/services', [SettingsController::class, 'services'])->name('settings.services');
+    Route::get('/settings/occasions', [SettingsController::class, 'occasions'])->name('settings.occasions');
+    Route::get('/settings/statuses', [SettingsController::class, 'statuses'])->name('settings.statuses');
+    Route::get('/settings/roles', [SettingsController::class, 'roles'])->name('settings.roles');
+    Route::get('/users/remove', [UserController::class, 'removeUser'])->name('users.delete-user');
+    Route::get('/users/view', [UserController::class, 'view'])->name('users.view-user');
+    Route::get('/users/approve', [UserController::class, 'approve'])->name('users.approve-user');
+    Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
+    Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
+    Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
+    Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
+    Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
 
-Route::post('/settings/services/update', [SettingsController::class, 'serviceUpdate'])->name('service-update');
-Route::post('/settings/services/store', [SettingsController::class, 'serviceStore'])->name('service-store');
-Route::get('/settings/services/delete', [SettingsController::class, 'serviceDelete'])->name('services.delete');
+    Route::resource('settings', 'SettingsController');
 
-Route::post('/settings/company-update', [SettingsController::class, 'companyUpdate'])->name('settings.company_update');
-Route::get('/settings/services', [SettingsController::class, 'services'])->name('settings.services');
-Route::get('/settings/occasions', [SettingsController::class, 'occasions'])->name('settings.occasions');
-Route::get('/settings/statuses', [SettingsController::class, 'statuses'])->name('settings.statuses');
-Route::get('/settings/roles', [SettingsController::class, 'roles'])->name('settings.roles');
-Route::get('/users/remove', [UserController::class, 'removeUser'])->name('users.delete-user');
-Route::get('/users/view', [UserController::class, 'view'])->name('users.view-user');
-Route::get('/users/approve', [UserController::class, 'approve'])->name('users.approve-user');
-Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
-Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
-Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
-Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
-Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
+    Route::resource('notifications', 'NotificationController');
+    Route::resource('services', 'ServiceController');
+    Route::resource('orders', 'OrderController');
+    Route::resource('helps', 'HelpController');
+});
 
 Route::get('confirm/{user_by_code}',  [ConfirmController::class, 'confirm'])->name('confirm');
 
@@ -116,12 +124,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], fu
     Route::get('dashboard/registration-chart', 'DashboardController@getRegistrationChartData')->name('dashboard.registration.chart');
 });
 
-
-Route::resource('settings', 'SettingsController');
-Route::resource('notifications', 'NotificationController');
-Route::resource('services', 'ServiceController');
-Route::resource('orders', 'OrderController');
-Route::resource('helps', 'HelpController');
 Route::get('/', 'HomeController@index');
 Route::get('/privacy', 'HomeController@privacy')->name('privacy');
 Route::get('/terms-condition', 'HomeController@termsCondition')->name('terms-condition');
