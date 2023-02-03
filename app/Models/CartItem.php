@@ -15,7 +15,7 @@ class CartItem extends Model
 
     public function service()
     {
-        return $this->hasOne(OccasionEvent::class, 'id', 'service_id')->with('company');
+        return $this->hasOne(OccasionEvent::class, 'id', 'service_id')->with('company', 'serviceType', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery');
     }
 
 }
