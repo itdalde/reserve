@@ -36,7 +36,7 @@ class SkipCashUtility
         $data['PostalCode'] = "01238";
         $data['TransactionId'] = $order->reference_no;
         $data_string = json_encode($data);
-        $resultheader = "Uid=" . $data['Uid'] . ',KeyId=' . $data['KeyId'] . ',Amount=' . $data['Amount'] . ',FirstName=' . $data['FirstName'] . ',LastName=' . $data['LastName'] . ',Phone=' . $data['Phone'] . ',Email=' . $data['Email']. ',Street=' . $data['Street']. ',City=' . $data['City']. ',State=' . $data['State']. ',Country=' . $data['Country']. ',PostalCode=' . $data['PostalCode']. ',TransactionId=' . $data['TransactionId'];
+        $resultheader = 'Uid=' . $data['Uid'] . ',KeyId=' . $data['KeyId'] . ',Amount=' . $data['Amount'] . ',FirstName=' . $data['FirstName'] . ',LastName=' . $data['LastName'] . ',Phone=' . $data['Phone'] . ',Email=' . $data['Email']. ',Street=' . $data['Street']. ',City=' . $data['City']. ',State=' . $data['State']. ',Country=' . $data['Country']. ',PostalCode=' . $data['PostalCode']. ',TransactionId=' . $data['TransactionId'];
         $signature = hash_hmac('sha256', $resultheader, $skipCashSecretKey, true);
         $authorisationheader = base64_encode($signature);
         $curl = curl_init();
@@ -84,6 +84,45 @@ class SkipCashUtility
         curl_close($curl);
         $response = json_decode($response, true);
 
+        return $response;
+    }
+
+    public static function processPaymentHooks($request) {
+        
+        $webhookUrl = 'https://reservegcc.com/api/v1/payments/processed';
+        $skipCashSecretKey = config('skipcash.secret_key');
+        $data = [];
+        $data['PaymentId'] = $request['PaymentId'];
+        $data['Amount'] = $request['Amount'];
+        $data['StatusId'] = $request['StatusId'];
+        $data['TransactionId'] = $request['TransactionId'];
+        $data['CustomId'] = $request['CustomId'];
+        $data['VisaId'] = $request['VisaId'];
+        
+        $data_string = json_encode($data);
+
+        $resultheader = 'PaymentId='.$data['PaymentId'].',Amount='.$data['Amount'].',StatusId='.$data['StatusId'].',TransactionId='.$data['TransactionId'].',Custom1='.$data['Custom1'].',VisaId=' . $data['VisaId'];
+        $signature = hash_hmac('sha256', $resultheader, $skipCashSecretKey, true);
+        $authorisationheader = base64_encode($signature);
+
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $webhookUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $data_string,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization:' . $authorisationheader,
+                'Content-Type: application/json'
+            )
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response, null);
         return $response;
     }
     

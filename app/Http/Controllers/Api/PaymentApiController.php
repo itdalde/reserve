@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\PaymentDetails;
+use App\Models\PaymentEvents;
 use App\Utility\SkipCashUtility;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -44,5 +45,46 @@ class PaymentApiController extends Controller
         $result = SkipCashUtility::getPaymentDetail($paymentId);
 
         return sendResponse($result, "Payment details with payment id " . $request->payment_id);
+    }
+
+    public function paymentProcessing(Request $request) {
+     
+        $pe = new PaymentEvents();
+        $pe->payment_id = $request['PaymentId'];
+        $pe->amount = $request['Amount'];
+        $pe->status_id = $request['StatusId'];
+        $pe->status = $request['Status'];
+        $pe->transaction_id = $request['TransactionId'];
+        $pe->custom_1 = $request['Custom1'];
+        $pe->visa_id = $request['VisaId'];
+        $pe->save();
+        return sendResponse($pe, "SkipCash Response");
+    }
+
+    public function paymentSuccess(Request $request)
+    {
+        if ($request->has('id')) {
+            $id = $request->input('id');
+            $statusId = $request->input('statusId');
+            $status = $request->input('status');
+            $transId = $request->input('transId');
+            $custom1 = $request->input('custom1');
+        }
+
+        $data = [
+            'data' => [
+                'id' => $id ?? '',
+                'transId' => $transId ?? '',
+                'custom1' => $custom1 ?? ''
+            ],
+            'status' => $status ?? '',
+            'statusId' => $statusId ?? '',
+        ]; 
+        return sendResponse($data, $status == "Failed" ? "Payment Failed" : "Payment Successfull");
+    }
+
+    public function paymentProcessed(Request $request)
+    {
+        return sendResponse($request, "RETURN SUCCESS");
     }
 }
