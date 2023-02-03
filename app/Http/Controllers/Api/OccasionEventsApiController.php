@@ -44,7 +44,7 @@ class OccasionEventsApiController extends Controller
     {
         $request->validated();
         $serviceType = $request->id;
-        $occasions = OccasionEvent::with('company', 'serviceType', 'occasionEventsReviews', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery')
+        $occasions = OccasionEvent::with('company', 'occasionEventsReviews', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery')
             ->where('service_type', $serviceType)
             ->get();
         return sendResponse($occasions, 'Occasion By Event Type');
