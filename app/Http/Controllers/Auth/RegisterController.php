@@ -141,7 +141,7 @@ class RegisterController extends Controller
         try {
             $this->guard()->logout();
             if (config('auth.users.confirm_email') && !$user->confirmed) {
-//                $this->sendEmail($user);
+                $this->sendEmail($user);
                 return redirect::back()->with(['signup' => 'success','email' => '','name' => $name]);
             }
         } catch (Exception $exception) {
