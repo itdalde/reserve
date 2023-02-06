@@ -12,7 +12,7 @@ class Cart extends Model
     protected $table = 'cart';
 
     public function items() {
-        return $this->hasMany(CartItem::class)->with('service');
+        return $this->hasMany(CartItem::class, 'cart_id', 'id')->with('service');
     }
 
 }
