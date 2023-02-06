@@ -127,6 +127,9 @@
             $('#issue-attachment-replies-preview').click(function() {
                 $('#issue-attachment-replies').click();
             });
+            $('#new-support-modal').on('hidden.bs.modal', function () {
+                $('#list-uploaded-data-help').text('')
+            })
             let fileToRead = document.getElementById("support-attachments");
             fileToRead.addEventListener("change", function(event) {
                 let numberOfFiles = event.target.files.length;
