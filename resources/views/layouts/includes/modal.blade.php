@@ -459,4 +459,63 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="new-schedule-modal" tabindex="-1" aria-labelledby="new-schedule-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="new-support-modalLabel">New Opted Schedule</h5>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close
+                    </button>
+                </div>
+                <form method="post" action="{{route('schedules.store')}}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto" style="width: 29%;">
+                                <label for="ticket-modal-name-field" class="col-form-label">Name</label>
+                            </div>
+                            <div class="col-auto" style="width: 70%;">
+                                <input dir="auto" name="name" type="text" id="schedule-modal-name-field"
+                                       class="form-control"
+                                       placeholder="Enter schedule name">
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mb-3 ">
+                            <div class="col-auto" style="width: 29%; margin-top: -157px;">
+                                <label for="schedule-modal-description-field" class="col-form-label">Schedule
+                                    description</label>
+                            </div>
+                            <div class="col-auto" style="width: 70%;">
+                            <textarea dir="auto" rows="8" name="description" type="text" id="schedule-modal-description-field"
+                                  class="form-control"
+                                  placeholder="Enter schedule description"> </textarea>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto" style="width: 29%;">
+                                <label for="ticket-modal-date-field" class="col-form-label">Date</label>
+                            </div>
+                            <div class="col-auto" style="width: 70%;">
+                                <input dir="auto"  name="date" type="date" id="schedule-modal-date-field"
+                                       class="form-control"
+                                       placeholder="Enter schedule date">
+                            </div>
+                        </div>
+                        <div class="d-flex bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            </div>
+
+                            <div class="ms-auto p-2 bd-highlight">
+                                <button type="submit" class="btn btn-warning">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endif

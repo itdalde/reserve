@@ -25,6 +25,8 @@ use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
+Route::get('/schedules/delete-schedule', [\App\Http\Controllers\SchedulesController::class, 'deleteSchedule'])->name('schedules.delete-schedule');
+
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
     Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
@@ -64,6 +66,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('settings', 'SettingsController');
     Route::resource('schedules', 'SchedulesController');
+
 
     Route::resource('notifications', 'NotificationController');
     Route::resource('services', 'ServiceController');
