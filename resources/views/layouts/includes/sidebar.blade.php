@@ -81,6 +81,12 @@
                         Service Providers
                     </a>
                 </li>
+                <li class="nav-item py-2">
+                    <a class="nav-link {{ Request::is('orders*') ? ' active' : '' }}" href="{{ route('orders.admin') }}">
+                        <img class="ml-15px " src="{{Request::is('orders*') ? asset('assets/images/icons/service-providers-active.png') : asset('assets/images/icons/service-providers.png')}}" alt="....">
+                        Orders
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link px-4 d-flex align-items-center custom-tooltip customers-side-tab {{ Request::is('settings*') ? ' show active' : '' }}"  data-bs-toggle="collapse" href="#settings" role="button" aria-expanded="{{ Request::is('settings*') ? 'true' : 'false' }}" aria-controls="settings">

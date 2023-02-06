@@ -37,7 +37,12 @@ class OrderController extends Controller
 //       dd($orders);
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders','futureOrders' ));
     }
+    public function superList() {
+        $orders = OrderItems::with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
 
+        return view('superadmin.orders',compact('orders'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *
