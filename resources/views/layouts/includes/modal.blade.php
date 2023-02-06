@@ -441,6 +441,8 @@
                                 </button>
                                 <input name="attachments[]" id="support-attachments" type="file" multiple="multiple"
                                        class="d-none">
+                                <div id="list-uploaded-data-help">
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex bd-highlight mb-3">

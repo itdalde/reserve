@@ -127,7 +127,20 @@
             $('#issue-attachment-replies-preview').click(function() {
                 $('#issue-attachment-replies').click();
             });
-
+            let fileToRead = document.getElementById("support-attachments");
+            fileToRead.addEventListener("change", function(event) {
+                let numberOfFiles = event.target.files.length;
+                for (let i = 0; i < numberOfFiles; i++) {
+                    let file = event.target.files[i];
+                    const url = window.URL.createObjectURL(file);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.text = file.name;
+                    a.download = file.name;
+                    let element = document.getElementById("list-uploaded-data-help");
+                    element.appendChild(a);
+                }
+            }, false);
             function fetchReplies() {
 
                 $.ajax({
