@@ -181,6 +181,6 @@ class CartApiController extends Controller
         $cart->active = 0;
         $cart->save();
 
-        return sendResponse(['reference_no' => $order->reference_no], 'Successfully placed your order.');
+        return sendResponse(['reference_no' => $order->reference_no], 'Order has been placed successfully!');
     }
 }
