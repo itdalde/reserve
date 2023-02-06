@@ -70,6 +70,12 @@
                                 <img src="{{asset('assets/images/icons/add-white.png')}}" alt="...">  &nbsp; &nbsp; &nbsp; &nbsp;Create new case
                             </button>
                         </div>
+                        <hr>
+                        <div class="alert alert-warning mt-2" role="alert">
+                            <p>WhatsApp us:</p>
+                            <p>+974-74477814</p>
+                            <p> Do not share number with customers this is only for vendors.</p>
+                        </div>
                     </div>
                 </div>
             </div>

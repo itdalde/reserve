@@ -27,12 +27,12 @@
                 </a>
 
             </li>
-            <li class="nav-item py-2">
-                <a class="nav-link {{ Request::is('service*') ? ' active' : '' }}" href="{{ route('services.index') }}">
-                    <img class="ml-15px " src="{{Request::is('service*') ? asset('assets/images/icons/Services Outline active.svg') : asset('assets/images/icons/Services Outline.svg')}}" alt="....">
-                    Service
-                </a>
-            </li>
+                <li class="nav-item py-2">
+                    <a class="nav-link {{ Request::is('service*') ? ' active' : '' }}" href="{{ route('services.index') }}">
+                        <img class="ml-15px " src="{{Request::is('service*') ? asset('assets/images/icons/Services Outline active.svg') : asset('assets/images/icons/Services Outline.svg')}}" alt="....">
+                        Service
+                    </a>
+                </li>
             <li class="nav-item py-2">
                 <a class="nav-link {{ Request::is('orders*') ? ' active' : '' }}" href="{{ route('orders.index') }}">
                     <img class="ml-15px " src="{{Request::is('orders*') ? asset('assets/images/icons/Orders Outline active.svg') : asset('assets/images/icons/Orders Outline.svg')}}" alt="....">
@@ -50,15 +50,20 @@
                     <span class="ml-15px "><i style="font-size: 25px; {{Request::is('settings*') ? 'color:orange' : ''}}" class="bi bi-gear"></i> </span>
                     <span>Settings</span>
                 </a>
-                <ul class="collapse pl-0 mx-0" id="settings" style="list-style-type: none;">
-                    <li class="nav-item' {{ Request::is('settings*') ? ' show' : '' }}">
+                <ul class="collapse pl-0 mx-0 {{ Request::is('schedules*') || Request::is('settings*') ? ' show' : '' }}" id="settings" style="list-style-type: none;">
+                    <li class="nav-item {{ Request::is('schedules*') || Request::is('settings*') ? ' show' : '' }}">
                         <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.index')}}">
                             <span class="pl-1 ml-2"> Profile </span>
                         </a>
                     </li>
-                    <li class="nav-item' {{ Request::is('settings*') ? 'show' : '' }}">
+                    <li class="nav-item {{ Request::is('schedules*') || Request::is('settings*')? 'show' : '' }}">
                         <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{route('settings.manage_orders')}}">
                             <span class="pl-1 ml-2">Manage orders</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is('schedules*') || Request::is('settings*') ? 'show' : '' }}">
+                        <a class="nav-link pl-5 d-flex align-items-center custom-tooltip" href="{{ route('schedules.index') }}">
+                              <span class="pl-1 ml-2">My Schedule</span>
                         </a>
                     </li>
                 </ul>

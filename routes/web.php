@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
 
     Route::resource('settings', 'SettingsController');
+    Route::resource('schedules', 'SchedulesController');
 
     Route::resource('notifications', 'NotificationController');
     Route::resource('services', 'ServiceController');

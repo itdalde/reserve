@@ -71,16 +71,18 @@ class ServiceController extends Controller
                 }
             }
             $service->save();
+            if(isset($data['price']) && $data['price']) {
+                foreach ($data['price'] as  $price) {
 
-//            $price = $service->price;
-//            $price->plan_id = $data['plan_id'];
-//            $price->service_price = $data['service_price'];
-//            $price->package = $data['package_name'];
-//            $price->min_capacity = $data['package_min_capacity'];
-//            $price->max_capacity = $data['package_max_capacity'];
-//            $price->package_details = $data['package_details'];
-//            $price->package_price = $data['service_price'];
-//            $price->save();
+                    foreach ($price as $k => $p) {
+                        $pri = OccasionEventPrice::where('id',$k)->first();
+                        $pri->service_price = $p;
+                        $pri->package_price = $p;
+                        $pri->save();
+                        continue;
+                    }
+                }
+            }
 //
 //            foreach ($data['add_on_name'] as $k => $name) {
 //                if ($name) {
