@@ -7,7 +7,6 @@ use App\Models\Order;
 use App\Models\PaymentDetails;
 use App\Models\PaymentEvents;
 use App\Utility\SkipCashUtility;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PaymentApiController extends Controller
@@ -18,13 +17,13 @@ class PaymentApiController extends Controller
     {
 
         $data = $request->payment;
-        $order = Order::with('user')->where('reference_no', $data['order_id'])->get();
-        $result = SkipCashUtility::postPayment($order[0]);
+        $order = Order::with('user')->where('reference_no', $data['order_id'])->first();
+        $result = SkipCashUtility::postPayment($order);
         if ($result['returnCode'] == 200) {
             $paymentDetails = new PaymentDetails();
             $paymentDetails->payment_method_id = $data['payment_method'];
             $paymentDetails->reference_no = $result['resultObj']['transactionId'];
-            $paymentDetails->order_id = $order[0]->id;
+            $paymentDetails->order_id = $order->id;
             $paymentDetails->total = $result['resultObj']['amount'];
             $paymentDetails->sub_total = $result['resultObj']['amount']; // without vat
             $paymentDetails->discount = 0; // deduction from promo_code
@@ -34,6 +33,16 @@ class PaymentApiController extends Controller
             $paymentDetails->currency = $result['resultObj']['currency'];
             $paymentDetails->save();
         }
+
+        if ($result['resultObj']['amount'] == $order->total_amount) {
+            $order->status = 'processing';
+            $order->timeline = 'processing';
+        } else {
+            $order->status = 'completed';
+            $order->timeline = 'completed';
+        }
+
+        $order->save();
 
         return sendResponse($result, $result['returnCode'] == 200 ? "Success" : "Failed");
     }
@@ -53,7 +62,7 @@ class PaymentApiController extends Controller
         $pe->payment_id = $request['PaymentId'];
         $pe->amount = $request['Amount'];
         $pe->status_id = $request['StatusId'];
-        $pe->status = $request['Status'];
+        $pe->status = Self::paymentStatus(isset($request['StatusId']));
         $pe->transaction_id = $request['TransactionId'];
         $pe->custom_1 = $request['Custom1'];
         $pe->visa_id = $request['VisaId'];
@@ -83,8 +92,27 @@ class PaymentApiController extends Controller
         return sendResponse($data, $status == "Failed" ? "Payment Failed" : "Payment Successfull");
     }
 
-    public function paymentProcessed(Request $request)
+    public function paymentReceipt(Request $request)
     {
-        return sendResponse($request, "RETURN SUCCESS");
+        $paymentDetails = PaymentDetails::where('reference_no', $request->reference_no)->first();
+
+        $orderReceipt = [
+            'reference_no' => $request->reference_no,
+            'url' => config('skipcash.url') . '/pay/'.$paymentDetails->payment_id.'/receipt'
+        ];
+
+        return sendResponse($orderReceipt, "Skip cash payment receipt");
+    }
+
+    ## 
+    private function paymentStatus($status)
+    {
+        $transaction = 'Failed';
+        if ($status == 2) {
+            $transaction = 'Paid';
+        } else if ($status == 3) {
+            $transaction = 'Cancelled';
+        }
+        return $transaction;
     }
 }
