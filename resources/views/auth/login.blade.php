@@ -35,7 +35,7 @@
                 <div class="signin-p1 sign-in-form mx-auto">
                     <form method="POST" action="{{route('login')}}" class=" ">
 
-                        <div class="d-flex flex-column w-100 mx-auto">
+                        <div class="d-flex flex-column w-100 mx-auto " style="{{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}">
                             <h2 class="title">
                                 <div class="p-2 text-center">
                                     <a href="/">
@@ -56,7 +56,7 @@
                                 <input autocomplete="new-password" type="password" class="form-control" name="password"
                                        placeholder="{{ __('login.Password') }}" required/>
                                 <i class="bi bi-eye-slash toggle-password"
-                                   style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
+                                   style="cursor: pointer;  {{__('home.home')  == 'Home' ? 'margin-left: 590%;' : 'margin-left: 0;'}}   margin-top: -57px;"></i>
                             </div>
                             <input type="submit" value="{{ __('login.login_btn') }}" class="btn solid  w-100"/>
                             @if (!old('first_name') && !$errors->isEmpty())
@@ -76,7 +76,7 @@
                                 <div class="card" style="    min-width: 100%;
                                     width: 106%;
                                     max-width: 200%; border: none">
-                                    <div class="card-body">
+                                    <div class="card-body" style="{{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}">
                                         <div class="d-flex flex-column w-100 mx-auto">
                                             <h2 class="title">
                                                 <div class="p-2 text-center">
@@ -146,7 +146,7 @@
                                                     <div class="ms-2 input-field"><i class="bi bi-geo-alt"></i>
                                                         <input type="text" id="location" value="{{ old('location') }}"
                                                                name="location"
-                                                               class="mb-0 form-control w-100"
+                                                               class="mb-0 form-control w-100">
                                                     </div>
                                                 </div>
 
@@ -178,9 +178,9 @@
                                                             border-right: none;"
                                                             autocomplete="new-password"
                                                             required/>
-
                                                         <i class="bi bi-eye-slash toggle-password"
-                                                           style="cursor: pointer;   margin-left: 590%;  margin-top: -57px;"></i>
+                                                           style="cursor: pointer;  {{__('home.home')  == 'Home' ? 'margin-left: 590%;' : 'margin-left: 0;'}}   margin-top: -57px;"></i>
+
                                                     </div>
                                                 </div>
 
@@ -206,24 +206,14 @@
 
                                                 <div class="control-group p-1 mx-auto">
                                                     <label for="">{{__('login.Select Service Type')}} <strong class="text-danger"> * </strong></label> <br>
-                                                    <div class="ms-2 input-field"><i class="bi bi-card-checklist"></i>
-                                                        <select id="service_type" name="service_type" required autofocus
-                                                                value="{{ old('service_type') }}" style="    background: none;
-                                                                outline: none;
-                                                                border: none;
-                                                                line-height: 1;
-                                                                font-weight: 600;
-                                                                font-size: 1.1rem;
-                                                                color: #0c0707;"
-                                                                class="mb-0 form-control"
-                                                                aria-label="{{__('login.Select Service Type')}}">
-                                                            @if(isset($serviceTypes))
-                                                                @foreach($serviceTypes as $serviceType)
-                                                                    <option
-                                                                        value="{{$serviceType['id']}}">{{$serviceType['name']}}</option>
-                                                                @endforeach
-                                                            @endif
-                                                        </select>
+                                                    <div class="ms-2 input-field">
+                                                        <i class="bi bi-card-checklist"></i>
+
+                                                        <input type="text" id="service_type"
+                                                               value="{{ old('service_type') }}"
+                                                               name="service_type"
+                                                               class="mb-0 form-control w-100"
+                                                               required/>
                                                     </div>
                                                 </div>
                                                 <input type="hidden" name="company_description">
@@ -289,7 +279,7 @@
                 <div class="modal-header justify-content-center border-0">
                     <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
                 </div>
-                <div class="modal-body ">
+                <div class="modal-body " style="{{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}">
                     <div class="text-center par-2 ">
                         <p class="text-black"> {{__('login.Application sent successfully!')}}</p>
                         <p>{{__('login.review')}}</p>
