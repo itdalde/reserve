@@ -86,7 +86,7 @@
                                                     </a>
                                                 </div>
                                             </h2>
-                                            <div class="p-1" style="    max-height: 68vh; overflow-y: auto;">
+                                            <div class="p-1 signup-container" style="    max-height: 68vh; overflow-y: auto;">
                                                 <div class="control-group p-1 mx-auto">
                                                     <label for="">{{__('login.Company Name')}} <strong class="text-danger"> * </strong></label> <br>
                                                     <div class="ms-2 input-field">
