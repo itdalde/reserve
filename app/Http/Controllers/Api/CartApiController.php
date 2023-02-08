@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\OccasionEvent;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\OrderSplit;
 use App\Models\PaymentDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -132,7 +134,7 @@ class CartApiController extends Controller
         $order = new Order();
         $order->cart_id = $request->cart_id;
         $order->user_id = $request->user_id;
-        $order->reference_no = str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
+        $order->reference_no = GeneralHelper::referenceNo();
         $order->total_items = $cart->total_items;
         $order->total_amount = $cart->total_amount;
         $order->payment_method = $data['payment_method'];
@@ -180,6 +182,16 @@ class CartApiController extends Controller
         
         $cart->active = 0;
         $cart->save();
+
+        for ($i = 0; $i < 2; $i++) {
+            $orderSplit = new OrderSplit();
+            $orderSplit->order_id = $order->id;
+            $orderSplit->reference_order = $order->reference_no;
+            $orderSplit->reference_no = GeneralHelper::referenceNo();
+            $orderSplit->amount = $order->total_amount / 2;
+            $orderSplit->status = 'pending';
+            $orderSplit->save();
+        }
 
         return sendResponse(['reference_no' => $order->reference_no], 'Order has been placed successfully!');
     }
