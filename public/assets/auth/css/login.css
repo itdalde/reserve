@@ -449,3 +449,23 @@ form.sign-in-form {
         transform: rotateZ(0);
     }
 }
+
+.signup-p1 .signup-container::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(104, 104, 104, 0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.signup-p1 .signup-container::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.signup-p1 .signup-container::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(105, 105, 105, 0.3);
+	background-color: #ADADAD;
+}
