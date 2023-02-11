@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderSplit;
+use Carbon\Carbon;
 
 class OrderApiController extends Controller
 {
@@ -31,7 +34,7 @@ class OrderApiController extends Controller
     }
 
     public function getUserOrders(Request $request) {
-        $orders = Order::with('items', 'paymentDetails')->where('user_id', $request->user_id)->get();
+        $orders = Order::with('items', 'paymentDetails', 'splitOrder')->where('user_id', $request->user_id)->get();
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
     }
 }
