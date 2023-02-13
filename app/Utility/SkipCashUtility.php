@@ -23,7 +23,7 @@ class SkipCashUtility
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
-    public static function postPayment($order) 
+    public static function postPayment($sOrder) 
     {
 
         $skipCashUrl = config('skipcash.url') . '/api/v1/payments';
@@ -36,17 +36,17 @@ class SkipCashUtility
         $data = [];
         $data['Uid'] = $uuid;
         $data['KeyId'] = $skipCashKeyId;
-        $data['Amount'] = "$order->total_amount";
-        $data['FirstName'] = $order->user->first_name;
-        $data['LastName'] = $order->user->last_name;
-        $data['Phone'] = $order->user->phone_number;
-        $data['Email'] = $order->user->email;
+        $data['Amount'] = "$sOrder->amount";
+        $data['FirstName'] = $sOrder->order->user->first_name;
+        $data['LastName'] = $sOrder->order->user->last_name;
+        $data['Phone'] = $sOrder->order->user->phone_number;
+        $data['Email'] = $sOrder->order->user->email;
         $data['Street'] = "st";
         $data['City'] = "TempCity";
         $data['State'] = "QA";
         $data['Country'] = "QA";
         $data['PostalCode'] = "01238";
-        $data['TransactionId'] = $order->reference_no;
+        $data['TransactionId'] = $sOrder->reference_no;
         $data_string = json_encode($data);
         $resultheader = 'Uid=' . $data['Uid'] . ',KeyId=' . $data['KeyId'] . ',Amount=' . $data['Amount'] . ',FirstName=' . $data['FirstName'] . ',LastName=' . $data['LastName'] . ',Phone=' . $data['Phone'] . ',Email=' . $data['Email']. ',Street=' . $data['Street']. ',City=' . $data['City']. ',State=' . $data['State']. ',Country=' . $data['Country']. ',PostalCode=' . $data['PostalCode']. ',TransactionId=' . $data['TransactionId'];
         $signature = hash_hmac('sha256', $resultheader, $skipCashSecretKey, true);

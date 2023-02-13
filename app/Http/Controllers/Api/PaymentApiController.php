@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItems;
+use App\Models\OrderSplit;
 use App\Models\PaymentDetails;
 use App\Models\PaymentEvents;
 use App\Utility\SkipCashUtility;
@@ -17,13 +20,17 @@ class PaymentApiController extends Controller
     {
 
         $data = $request->payment;
-        $order = Order::with('user')->where('reference_no', $data['order_id'])->first();
-        $result = SkipCashUtility::postPayment($order);
+        // $order = Order::with('user')->where('reference_no', $data['order_id'])->first();
+        $orderSplit = OrderSplit::with('order')->where('reference_order', $data['order_id'])->where('status', 'pending')->first();
+        if ($orderSplit == null) {
+            return sendResponse('There is no transaction under the reference no. provided.', 'Unable to process payment');
+        }
+        $result = SkipCashUtility::postPayment($orderSplit);
         if ($result['returnCode'] == 200) {
             $paymentDetails = new PaymentDetails();
             $paymentDetails->payment_method_id = $data['payment_method'];
             $paymentDetails->reference_no = $result['resultObj']['transactionId'];
-            $paymentDetails->order_id = $order->id;
+            $paymentDetails->order_id = $orderSplit->order->id;
             $paymentDetails->total = $result['resultObj']['amount'];
             $paymentDetails->sub_total = $result['resultObj']['amount']; // without vat
             $paymentDetails->discount = 0; // deduction from promo_code
@@ -33,17 +40,6 @@ class PaymentApiController extends Controller
             $paymentDetails->currency = $result['resultObj']['currency'];
             $paymentDetails->save();
         }
-
-        if ($result['resultObj']['amount'] == $order->total_amount) {
-            $order->status = 'processing';
-            $order->timeline = 'processing';
-        } else {
-            $order->status = 'completed';
-            $order->timeline = 'completed';
-        }
-
-        $order->save();
-
         return sendResponse($result, $result['returnCode'] == 200 ? "Success" : "Failed");
     }
 
@@ -62,11 +58,40 @@ class PaymentApiController extends Controller
         $pe->payment_id = $request['PaymentId'];
         $pe->amount = $request['Amount'];
         $pe->status_id = $request['StatusId'];
-        $pe->status = Self::paymentStatus(isset($request['StatusId']));
+        $pe->status = GeneralHelper::paymentStatus(isset($request['StatusId']));
         $pe->transaction_id = $request['TransactionId'];
         $pe->custom_1 = $request['Custom1'];
         $pe->visa_id = $request['VisaId'];
         $pe->save();
+
+        $os = OrderSplit::where('reference_no', $pe->transaction_id)->first();
+        $o = Order::where('reference_no', $os->reference_order)->first();
+        $oi = OrderItems::where('order_id', $o->id)->get();
+
+        $totalPaid = $os->where('reference_order', $o->reference_no)->where('status', 'paid')->sum('amount');
+        if ($totalPaid != $o->total_amount) {
+            $o->status = 'processing';
+            $o->timeline = 'processing';
+            foreach($oi as $item)
+            {
+                $item->status = 'processing';
+                $item->timeline = 'processing';
+                $item->save();
+            }
+        } else {
+            $o->status = 'completed';
+            $o->timeline = 'order-completed';
+            foreach($oi as $item)
+            {
+                $item->status = 'completed';
+                $item->timeline = 'order-completed';
+                $item->save();
+            }
+        }
+        $o->save();
+
+        $os->status = 'paid';
+        $os->save();
         return sendResponse($pe, "SkipCash Response");
     }
 
@@ -102,17 +127,5 @@ class PaymentApiController extends Controller
         ];
 
         return sendResponse($orderReceipt, "Skip cash payment receipt");
-    }
-
-    ## 
-    private function paymentStatus($status)
-    {
-        $transaction = 'Failed';
-        if ($status == 2) {
-            $transaction = 'Paid';
-        } else if ($status == 3) {
-            $transaction = 'Cancelled';
-        }
-        return $transaction;
     }
 }

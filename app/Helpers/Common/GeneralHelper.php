@@ -14,4 +14,19 @@ class GeneralHelper
         $audit_trail->notes = $notes;
         $audit_trail->save();
     }
+
+    public static function referenceNo()
+    {
+        return str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
+    }
+
+    public static function paymentStatus($code)
+    {
+        return $code == 2 ? 'Paid' : Self::paymentFailed($code);
+    }
+
+    private static function paymentFailed($code)
+    {
+        return $code == 3 ? 'Cancelled' : 'Failed';
+    }
 }

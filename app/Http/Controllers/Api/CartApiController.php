@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\OccasionEvent;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\OrderSplit;
 use App\Models\PaymentDetails;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,13 +26,12 @@ class CartApiController extends Controller
         $userCart = Cart::where('user_id', $request->user_id)->where('active', 1)->first();
         $cart = isset($userCart) ? $userCart : new Cart();
 
-        
+
         $cart->total_amount = (int)$cart->total_amount + $data['total_amount'];
         $cart->user_id = $request->user_id;
         $cart->save();
 
-        foreach($data['items'] as $item)
-        {
+        foreach ($data['items'] as $item) {
             $cartItem = new CartItem();
             $cartItem->cart_id = $cart->id;
             $cartItem->service_id = $item['service_id'];
@@ -49,7 +50,7 @@ class CartApiController extends Controller
 
     public function getUserCart(Request $request)
     {
-        $userCart = Cart::with(['items' => function($query) {
+        $userCart = Cart::with(['items' => function ($query) {
             $query->select(
                 'id',
                 'cart_id',
@@ -60,28 +61,29 @@ class CartApiController extends Controller
                 'status'
             );
         }])
-        ->where('user_id', $request->user_id)
-        ->where('active', 1)
-        ->get([
-            'id',
-            'total_items',
-            'total_amount',
-            'user_id'
-        ]);
+            ->where('user_id', $request->user_id)
+            ->where('active', 1)
+            ->get([
+                'id',
+                'total_items',
+                'total_amount',
+                'user_id'
+            ]);
         return sendResponse($userCart, 'Get users cart');
     }
 
-    public function getUserOrders(Request $request) {
+    public function getUserOrders(Request $request)
+    {
 
         $orders = Order::with('items', 'paymentMethod', 'paymentDetails')
-        ->where('user_id', $request->user_id)->get();
+            ->where('user_id', $request->user_id)->get();
         return sendResponse($orders, 'User orders');
     }
 
     public function removeServiceFromCart(Request $request)
     {
         CartItem::where('cart_id', $request->cart_id)
-        ->where('service_id', $request->service_id)->delete();
+            ->where('service_id', $request->service_id)->delete();
 
         $cart = Cart::where('id', $request->cart_id)->first();
 
@@ -98,8 +100,8 @@ class CartApiController extends Controller
     {
         $data = $request->cart;
         $item = CartItem::where('cart_id', $request->cart_id)
-        ->where('service_id', $request->service_id)
-        ->first();
+            ->where('service_id', $request->service_id)
+            ->first();
         $item->schedule_start_datetime = $data['items'][0]['schedule_start_datetime'];
         $item->schedule_end_datetime = $data['items'][0]['schedule_end_datetime'];
         $item->guests = $data['items'][0]['guests'];
@@ -110,29 +112,37 @@ class CartApiController extends Controller
     public function getItemInCartByStatus(Request $request)
     {
         $cartItem = CartItem::with('service')
-        ->where('cart_id', $request->cart_id)
-        ->where('status', $request->status)
-        ->get();
-        return sendResponse($cartItem, 'Cart items where status '. $request->status);
+            ->where('cart_id', $request->cart_id)
+            ->where('status', $request->status)
+            ->get();
+        return sendResponse($cartItem, 'Cart items where status ' . $request->status);
     }
 
-    public function getServiceByCartAndServiceId(Request $request) {
+    public function getServiceByCartAndServiceId(Request $request)
+    {
         $cartItem = CartItem::with('service')
-        ->where('cart_id', $request->cart_id)
-        ->where('service_id', $request->service_id)
-        ->first();
-        return sendResponse($cartItem, 'Cart items where service '. $request->service_id);
+            ->where('cart_id', $request->cart_id)
+            ->where('service_id', $request->service_id)
+            ->first();
+        return sendResponse($cartItem, 'Cart items where service ' . $request->service_id);
     }
 
     public function placeOrder(Request $request)
     {
         $data = $request->order;
 
-        $cart = Cart::where('id', $request->cart_id)->first();
+        $cart = Cart::where('id', $request->cart_id)
+            ->where('user_id', $request->user_id)
+            ->first();
+
+        if ($cart == null) {
+            return sendResponse('There is no item in your cart', 'Unable to place an order');
+        }
+
         $order = new Order();
         $order->cart_id = $request->cart_id;
         $order->user_id = $request->user_id;
-        $order->reference_no = str_pad(mt_rand(1, substr(time(), 1, -1)), 8, '0', STR_PAD_LEFT);
+        $order->reference_no = GeneralHelper::referenceNo();
         $order->total_items = $cart->total_items;
         $order->total_amount = $cart->total_amount;
         $order->payment_method = $data['payment_method'];
@@ -142,17 +152,17 @@ class CartApiController extends Controller
         $order->agent = $data['agent'];
         $order->notes = $data['notes'];
         $order->save();
-        foreach($data['items'] as $item) {
+        foreach ($data['items'] as $item) {
 
             $serviceTotalOrder = OrderItems::where('service_id', $item['service_id'])
                 ->where('created_at', '<>', Carbon::today()->toDateString())
                 ->count();
 
             $event = OccasionEvent::where('id', $item['service_id'])
-            ->first();
+                ->first();
 
             $cartItem = CartItem::where('cart_id', $request->cart_id)
-            ->where('service_id', $item['service_id'])->where('status', 'active')->first();
+                ->where('service_id', $item['service_id'])->where('status', 'active')->first();
 
             $orderItems = new OrderItems();
             $orderItems->order_id = $order->id;
@@ -168,18 +178,18 @@ class CartApiController extends Controller
             $cartItem->save();
         }
 
-        // $paymentDetails = new PaymentDetails();
-        // $paymentDetails->payment_method_id = $data['payment_method'];
-        // $paymentDetails->reference_no = $order->reference_no;
-        // $paymentDetails->order_id = $order->id;
-        // $paymentDetails->total = $cart->total_amount;
-        // $paymentDetails->sub_total = $cart->total_amount; // without vat
-        // $paymentDetails->discount = 0; // deduction from promo_code
-        // $paymentDetails->promo_code = $data['promo_code'];
-        // $paymentDetails->save();
-        
         $cart->active = 0;
         $cart->save();
+
+        for ($i = 0; $i < 2; $i++) {
+            $orderSplit = new OrderSplit();
+            $orderSplit->order_id = $order->id;
+            $orderSplit->reference_order = $order->reference_no;
+            $orderSplit->reference_no = GeneralHelper::referenceNo();
+            $orderSplit->amount = $order->total_amount / 2;
+            $orderSplit->status = 'pending';
+            $orderSplit->save();
+        }
 
         return sendResponse(['reference_no' => $order->reference_no], 'Order has been placed successfully!');
     }

@@ -27,4 +27,8 @@ class Order extends Model
         return $this->hasOne(PaymentDetails::class, 'order_id', 'id');
     }
 
+    public function splitOrder() {
+        return $this->hasMany(OrderSplit::class, 'order_id', 'id');
+    }
+
 }
