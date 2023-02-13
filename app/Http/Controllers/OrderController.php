@@ -6,6 +6,7 @@ use App\Interfaces\OrderInterface;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
 use App\Models\OccasionType;
+use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\PlanType;
 use App\Models\ServiceType;
@@ -38,11 +39,15 @@ class OrderController extends Controller
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders','futureOrders' ));
     }
     public function superList() {
-        $orders = OrderItems::with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
-
+        $orders = Order::with('paymentMethod','user')->get()->toArray();
         return view('superadmin.orders',compact('orders'));
-
     }
+    public function superListView(Request $request) {
+        $id = $request['id'];
+        $order = Order::where('id',$id)->with('user','items','paymentMethod')->first()->toArray();
+        return view('superadmin.orders.view',compact('order'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

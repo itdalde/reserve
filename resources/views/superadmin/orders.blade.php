@@ -1,17 +1,19 @@
 @extends('layouts.admin')
 @section('content')
-    <h3>Customers</h3>
+    <h3>Customer Orders</h3>
     <div class="card" >
         <div class="card-body">
             <table class="table" id="user-table">
                 <thead>
                 <tr>
                     <th scope="col">Customer name</th>
-                    <th scope="col">Vendor</th>
+                    <th scope="col">Contact Details</th>
                     <th scope="col">Reference No.</th>
                     <th scope="col">Status</th>
                     <th scope="col">Timeline</th>
                     <th scope="col">Amount</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -19,12 +21,14 @@
                 @foreach($orders as $order)
 
                     <tr>
-                        <td>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] .' ' .$order['order']['user']['last_name'] : ''}}</td>
-                        <td>{{$order['service'] ? $order ['service']['name'] : ''}}</td>
-                        <td>{{$order['order']  ? $order['order']['reference_no'] : ''}}</td>
+                        <td>{{$order['user'] ? $order['user']['first_name'] .' ' .$order['user']['last_name'] : ''}}</td>
+                        <td>{{$order['contact_details'] }}</td>
+                        <td>{{$order['reference_no'] }}</td>
                         <td>{{$order['status']}}</td>
                         <td>{{$order['timeline']}}</td>
-                        <td>QAD {{$order['order']  ? number_format($order['order']['total_amount']) : '0.00'}}</td>
+                        <td>QAD {{ number_format($order['total_amount'])}}</td>
+                        <td>{{$order['total_items']}}</td>
+                        <td> <a href="{{route('orders.admin.view',['id'=> $order['id']])}}" class="btn btn-outline-info">View</a></td>
                     </tr>
                 @endforeach
                 </tbody>

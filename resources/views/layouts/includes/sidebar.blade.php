@@ -70,8 +70,8 @@
             </li>
             @else
                 <li class="nav-item py-2">
-                    <a class="nav-link {{ Request::is('admin*') ? ' active' : '' }}" href="{{ url('/admin') }}">
-                        <img class="ml-15px " src="{{Request::is('admin*') ? asset('assets/images/icons/customers-side.png') : asset('assets/images/icons/customers-side-inactive.png')}}" alt="....">
+                    <a class="nav-link {{ Request::is('admin') ? ' active' : '' }}" href="{{ url('/admin') }}">
+                        <img class="ml-15px " src="{{Request::is('admin') ? asset('assets/images/icons/customers-side.png') : asset('assets/images/icons/customers-side-inactive.png')}}" alt="....">
                         Customers
                     </a>
                 </li>
@@ -82,8 +82,8 @@
                     </a>
                 </li>
                 <li class="nav-item py-2">
-                    <a class="nav-link {{ Request::is('orders*') ? ' active' : '' }}" href="{{ route('orders.admin') }}">
-                        <img class="ml-15px " src="{{Request::is('orders*') ? asset('assets/images/icons/service-providers-active.png') : asset('assets/images/icons/service-providers.png')}}" alt="....">
+                    <a class="nav-link {{ Request::is('admin/orders*') ? ' active' : '' }}" href="{{ route('orders.admin') }}">
+                        <span class="ml-15px "><i style="font-size: 25px; {{Request::is('admin/orders*') ? 'color:orange' : ''}}" class="bi bi-menu-app-fill"></i>  </span>
                         Orders
                     </a>
                 </li>

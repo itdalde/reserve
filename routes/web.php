@@ -28,6 +28,7 @@ Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang
 Route::get('/schedules/delete-schedule', [\App\Http\Controllers\SchedulesController::class, 'deleteSchedule'])->name('schedules.delete-schedule');
 
 Route::get('/admin/orders', [\App\Http\Controllers\OrderController::class, 'superList'])->name('orders.admin');
+Route::get('/admin/orders/view', [\App\Http\Controllers\OrderController::class, 'superListView'])->name('orders.admin.view');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
