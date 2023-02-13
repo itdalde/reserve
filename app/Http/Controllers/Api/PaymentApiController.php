@@ -90,7 +90,7 @@ class PaymentApiController extends Controller
         }
         $o->save();
 
-        $os->status = 'paid';
+        $os->status = $request['StatusId'] == 2 ? 'paid' : 'pending';
         $os->save();
         return sendResponse($pe, "SkipCash Response");
     }
