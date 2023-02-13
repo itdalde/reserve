@@ -44,7 +44,8 @@ class OrderController extends Controller
     }
     public function superListView(Request $request) {
         $id = $request['id'];
-        $order = Order::where('id',$id)->with('user','items','paymentMethod')->first()->toArray();
+        $order = Order::where('id',$id)->with('user','items','paymentMethod','paymentDetails')->first()->toArray();
+//        dd($order);
         return view('superadmin.orders.view',compact('order'));
     }
 

@@ -91,13 +91,31 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-sm-6">Card Name</div>
-                                    <div class="col-sm-6">{{$item['payment_method']['name'] }}</div>
+                                    <div class="col-sm-6">{{$order['payment_method']['name'] }}</div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-sm-6">Card Type</div>
-                                    <div class="col-sm-6">{{$item['payment_method']['card_type'] }}</div>
+                                    <div class="col-sm-6">Payment Ref No.</div>
+                                    <div class="col-sm-6">{{$order['payment_details']['reference_no'] }}</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6">Total Payment</div>
+                                    <div class="col-sm-6">QAD {{number_format($order['payment_details']['total'],2) }}</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6">Promo Code</div>
+                                    <div class="col-sm-6">{{$order['payment_details']['promo_code'] }}</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6">Payment URL</div>
+                                    <div class="col-sm-6"><a href="{{$order['payment_details']['payment_url'] }}">Go To Skipcash</a></div>
                                 </div>
                             </li>
                         </ul>
