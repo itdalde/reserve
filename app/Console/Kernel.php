@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('daily:check_pending_order')->cron('0 1 * * *');
+        $schedule->command('daily:order_status')->cron('0 1 * * *');
     }
 
     /**

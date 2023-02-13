@@ -29,12 +29,21 @@ class OrderApiController extends Controller
     }
 
     public function getOrderByReferenceNo(Request $request) {
-        $order = Order::with('items', 'paymentMethod')->where('reference_no', $request->reference_no)->first();
+        $order = Order::with('items', 'paymentMethod', 'splitOrder')->where('reference_no', $request->reference_no)->first();
+
+        $order['total_paid'] = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
+        $order['balance'] = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->sum('amount');
+
         return sendResponse($order, 'Your order with reference no. ' . $request->reference_no);
     }
 
     public function getUserOrders(Request $request) {
         $orders = Order::with('items', 'paymentDetails', 'splitOrder')->where('user_id', $request->user_id)->get();
+        foreach($orders as $order)
+        {
+            $order['total_paid'] = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
+            $order['balance'] = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->sum('amount');
+        }
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
     }
 }
