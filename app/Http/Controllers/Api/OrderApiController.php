@@ -7,6 +7,7 @@ use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderSplit;
+use App\Models\PaymentDetails;
 use Carbon\Carbon;
 
 class OrderApiController extends Controller
@@ -38,11 +39,14 @@ class OrderApiController extends Controller
     }
 
     public function getUserOrders(Request $request) {
-        $orders = Order::with('items', 'paymentDetails', 'splitOrder')->where('user_id', $request->user_id)->get();
+        $orders = Order::with('items', 'splitOrder')->where('user_id', $request->user_id)->get();
         foreach($orders as $order)
         {
             $order['total_paid'] = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
             $order['balance'] = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->sum('amount');
+
+            $osPending = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->first();
+            $order['payment_details'] = $osPending ? PaymentDetails::where('reference_no', $osPending->reference_no)->first() : [];
         }
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
     }

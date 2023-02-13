@@ -15,4 +15,9 @@ class OrderSplit extends Model
     {
         return $this->hasOne(Order::class, 'id', 'order_id')->with('user');
     }
+
+    public function paymentDetails()
+    {
+        return $this->hasOne(PaymentDetails::class, 'reference_no', 'reference_no');
+    }
 }
