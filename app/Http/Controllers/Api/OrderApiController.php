@@ -45,8 +45,8 @@ class OrderApiController extends Controller
             $order['total_paid'] = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
             $order['balance'] = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->sum('amount');
 
-            $paid = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->orderBy('updated_at', 'desc')->first();
-            $order['payment_details'] = PaymentDetails::where('reference_no', $paid->reference_no)->first();
+            // $paid = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->orderBy('updated_at', 'desc')->first();
+            // $order['payment_details'] = PaymentDetails::where('reference_no', $paid->reference_no)->first();
         }
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
     }
