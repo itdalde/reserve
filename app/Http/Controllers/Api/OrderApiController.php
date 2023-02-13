@@ -45,10 +45,15 @@ class OrderApiController extends Controller
             $order['total_paid'] = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
             $order['balance'] = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->sum('amount');
 
-            $osPending = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->first();
-            $order['payment_details'] = $osPending != null ? PaymentDetails::where('reference_no', $osPending->reference_no)->first()
-            : PaymentDetails::where('order_id', $order->id)->first();
+            $paid = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->orderBy('updated_at', 'desc')->first();
+            $order['payment_details'] = PaymentDetails::where('reference_no', $paid->reference_no)->first();
         }
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
+    }
+
+    public function getPaymentDetailByReferenceNo(Request $request)
+    {
+        $paymentDetail = PaymentDetails::where('reference_no', $request->reference_no)->first();
+        return sendResponse($paymentDetail, 'Payment details by ref ' . $request->reference_no);
     }
 }
