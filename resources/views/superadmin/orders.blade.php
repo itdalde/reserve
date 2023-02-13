@@ -26,7 +26,7 @@
                         <td>{{$order['reference_no'] }}</td>
                         <td>{{$order['status']}}</td>
                         <td>{{$order['timeline']}}</td>
-                        <td>QAD {{ number_format($order['total_amount'])}}</td>
+                        <td>QAD {{ number_format($order['total_amount'],2)}}</td>
                         <td>{{$order['total_items']}}</td>
                         <td> <a href="{{route('orders.admin.view',['id'=> $order['id']])}}" class="btn btn-outline-info">View</a></td>
                     </tr>
