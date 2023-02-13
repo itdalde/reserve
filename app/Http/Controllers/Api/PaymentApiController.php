@@ -22,6 +22,9 @@ class PaymentApiController extends Controller
         $data = $request->payment;
         // $order = Order::with('user')->where('reference_no', $data['order_id'])->first();
         $orderSplit = OrderSplit::with('order')->where('reference_order', $data['order_id'])->where('status', 'pending')->first();
+        if ($orderSplit == null) {
+            return sendResponse('There is no transaction under the reference no. provided.', 'Unable to process payment');
+        }
         $result = SkipCashUtility::postPayment($orderSplit);
         if ($result['returnCode'] == 200) {
             $paymentDetails = new PaymentDetails();
