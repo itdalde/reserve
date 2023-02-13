@@ -40,8 +40,9 @@ class PaymentApiController extends Controller
             $paymentDetails->currency = $result['resultObj']['currency'];
             $paymentDetails->save();
 
-            $o = Order::where('id', $data['order_id'])->first();
+            $o = Order::where('reference_no', $data['order_id'])->first();
             $o->status = 'processing';
+            $o->timeline = 'processing';
             $o->save();
         }
         return sendResponse($result, $result['returnCode'] == 200 ? "Success" : "Failed");
