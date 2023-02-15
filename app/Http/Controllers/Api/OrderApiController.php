@@ -47,10 +47,7 @@ class OrderApiController extends Controller
             $order['balance'] = $os->where('status', 'pending')->sum('amount');
             
             $osPending = $os->where('status', 'pending')->first();
-            $osPaid = $os->where('status', 'paid')->first();
-            $reference_no = $osPending ? $osPending->reference_no : $osPaid->reference_no;
-
-            $order['payment_details'] = PaymentDetails::where('reference_no', $reference_no)->orderBy('created_at', 'desc')->first();
+            $order['payment_details'] = $osPending ? PaymentDetails::where('reference_no', $osPending->reference_no)->orderBy('created_at', 'desc')->first() : null;
         }
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
     }
