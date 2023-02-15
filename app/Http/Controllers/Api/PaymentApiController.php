@@ -39,11 +39,6 @@ class PaymentApiController extends Controller
             $paymentDetails->payment_url = $result['resultObj']['payUrl'];
             $paymentDetails->currency = $result['resultObj']['currency'];
             $paymentDetails->save();
-
-            $o = Order::where('reference_no', $data['order_id'])->first();
-            $o->status = 'processing';
-            $o->timeline = 'processing';
-            $o->save();
         }
         return sendResponse($result, $result['returnCode'] == 200 ? "Success" : "Failed");
     }
@@ -73,25 +68,13 @@ class PaymentApiController extends Controller
         $o = Order::where('reference_no', $os->reference_order)->first();
         $oi = OrderItems::where('order_id', $o->id)->get();
 
-        $totalPaid = $os->where('reference_order', $o->reference_no)->where('status', 'paid')->sum('amount');
-        if ($totalPaid != $o->total_amount) {
-            $o->status = 'processing';
-            $o->timeline = 'processing';
-            foreach($oi as $item)
-            {
-                $item->status = 'processing';
-                $item->timeline = 'processing';
-                $item->save();
-            }
-        } else {
-            $o->status = 'completed';
-            $o->timeline = 'order-completed';
-            foreach($oi as $item)
-            {
-                $item->status = 'completed';
-                $item->timeline = 'order-completed';
-                $item->save();
-            }
+        $o->status = 'processing';
+        $o->timeline = 'processing';
+        foreach($oi as $item)
+        {
+            $item->status = 'processing';
+            $item->timeline = 'processing';
+            $item->save();
         }
         $o->save();
 
