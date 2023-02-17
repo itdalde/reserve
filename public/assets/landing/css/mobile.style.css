@@ -110,3 +110,75 @@
         padding-bottom: 30px;
     }
 }
+
+@media (481px <=width <=768px) and (orientation: landscape) {
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -8rem auto;
+        display: flex;
+    }
+}
+
+@media (769px <=width <=1023px) and (orientation: landscape) {
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -8rem auto;
+        display: flex;
+    }
+}
+
+
+@media (769px <=width <=1023px) and (orientation: landscape) {
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -11rem auto;
+        display: flex;
+    }
+}
+
+
+@media (800px <=width <=1023px) and (orientation: portrait) {
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -11rem auto;
+        display: flex;
+    }
+
+    .about .row .abt-logo img {
+        position: absolute;
+        top: -9rem;
+        margin: -2rem auto;
+        padding-left: 17%;
+    }
+}
+
+
+
