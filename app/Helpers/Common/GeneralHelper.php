@@ -4,6 +4,7 @@ namespace App\Helpers\Common;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\AuditTrail;
+use App\Models\OrderSplit;
 
 class GeneralHelper
 {
@@ -25,6 +26,12 @@ class GeneralHelper
         return $code == 2 ? 'Paid' : Self::paymentFailed($code);
     }
 
+    public static function orderBalance($orderId, $status)
+    {
+        return OrderSplit::where('order_id', $orderId)->where('status', $status)->sum('amount');
+    }
+
+    // PRIVATE
     private static function paymentFailed($code)
     {
         return $code == 3 ? 'Cancelled' : 'Failed';

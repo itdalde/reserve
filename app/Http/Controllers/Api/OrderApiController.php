@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
@@ -42,11 +43,10 @@ class OrderApiController extends Controller
         $orders = Order::with('items', 'splitOrder')->where('user_id', $request->user_id)->get();
         foreach($orders as $order)
         {
-            $os = OrderSplit::where('order_id', $order->id)->get();
-            $order['total_paid'] = $os->where('status', 'paid')->sum('amount');
-            $order['balance'] = $os->where('status', 'pending')->sum('amount');
+            $order['total_paid'] = GeneralHelper::orderBalance($order->id, 'paid');
+            $order['balance'] = GeneralHelper::orderBalance($order->id, 'pending');
             
-            $osPending = $os->where('status', 'pending')->first();
+            $osPending = OrderSplit::where('status', 'pending')->first();
             $order['payment_details'] = $osPending ? PaymentDetails::where('reference_no', $osPending->reference_no)->orderBy('created_at', 'desc')->first() : null;
         }
         return sendResponse($orders, 'Orders under user ' . $request->user_id);
