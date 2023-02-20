@@ -41,7 +41,7 @@
                     <li><a class="nav-link scrollto " href="/#about">{{__('home.home')}}</a></li>
                     <li><a class="nav-link scrollto" href="#services">{{__('home.what_we_offer')}}</a></li>
                     <li><a class="nav-link scrollto " href="#portfolio">{{__('home.for_vendors')}}</a></li>
-                    <li><a class="nav-link " href="https://play.google.com/store/games?hl=en&gl=US"><span class="btn bg-orange" style="color: white;
+                    <li><a class="nav-link " href="{{ route('login',['register'=>'1']) }}"><span class="btn bg-orange" style="color: white;
     background-color: orange;
     border-color: orange;">
                                 {{__('home.download_for_free')}}
