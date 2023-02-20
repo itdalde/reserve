@@ -70,12 +70,12 @@ class SettingsController extends Controller
                 $item->save();
 
                 $order = Order::where('id',$item->order_id)->first();
-                Http::timeout(10)
-                    ->withOptions(['verify' => false])
-                    ->post('http://reservegcc.com:3000/reservation', [
-                        'transaction' => $item->toArray(),
-                        'status' => $status
-                    ]);
+//                Http::timeout(10)
+//                    ->withOptions(['verify' => false])
+//                    ->post('http://reservegcc.com:3000/reservation', [
+//                        'transaction' => $item->toArray(),
+//                        'status' => $status
+//                    ]);
                 $response = [
                     "status" => "success",
                     "message" => "Transactions Successfully Released!",
@@ -101,12 +101,12 @@ class SettingsController extends Controller
                     $item->save();
 
                     $order = Order::where('id',$item->order_id)->first();
-                    Http::timeout(10)
-                        ->withOptions(['verify' => false])
-                        ->post('http://reservegcc.com:3000/reservation', [
-                            'transaction' => $item->toArray(),
-                            'status' => $status
-                        ]);
+//                    Http::timeout(10)
+//                        ->withOptions(['verify' => false])
+//                        ->post('http://reservegcc.com:3000/reservation', [
+//                            'transaction' => $item->toArray(),
+//                            'status' => $status
+//                        ]);
                     $response = [
                         "status" => "success",
                         "message" => "Transactions Successfully Released!",
@@ -139,12 +139,12 @@ class SettingsController extends Controller
                     $order->reason = isset($data['reason']) ? $data['reason'] : '';
                     $order->save();
                 }
-                Http::timeout(10)
-                    ->withOptions(['verify' => false])
-                    ->post('http://reservegcc.com:3000/reservation', [
-                        'transaction' => $item->toArray(),
-                        'status' => $status
-                    ]);
+//                Http::timeout(10)
+//                    ->withOptions(['verify' => false])
+//                    ->post('http://reservegcc.com:3000/reservation', [
+//                        'transaction' => $item->toArray(),
+//                        'status' => $status
+//                    ]);
                 $response = [
                     "status" => "success",
                     "message" => "Transactions Successfully Released!",
