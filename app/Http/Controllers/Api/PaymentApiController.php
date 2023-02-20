@@ -68,29 +68,17 @@ class PaymentApiController extends Controller
         $o = Order::where('reference_no', $os->reference_order)->first();
         $oi = OrderItems::where('order_id', $o->id)->get();
 
-        $totalPaid = $os->where('reference_order', $o->reference_no)->where('status', 'paid')->sum('amount');
-        if ($totalPaid != $o->total_amount) {
-            $o->status = 'processing';
-            $o->timeline = 'processing';
-            foreach($oi as $item)
-            {
-                $item->status = 'processing';
-                $item->timeline = 'processing';
-                $item->save();
-            }
-        } else {
-            $o->status = 'completed';
-            $o->timeline = 'order-completed';
-            foreach($oi as $item)
-            {
-                $item->status = 'completed';
-                $item->timeline = 'order-completed';
-                $item->save();
-            }
+        $o->status = 'processing';
+        $o->timeline = 'processing';
+        foreach($oi as $item)
+        {
+            $item->status = 'processing';
+            $item->timeline = 'processing';
+            $item->save();
         }
         $o->save();
 
-        $os->status = 'paid';
+        $os->status = $request['StatusId'] == 2 ? 'paid' : 'pending';
         $os->save();
         return sendResponse($pe, "SkipCash Response");
     }

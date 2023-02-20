@@ -142,6 +142,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/success', [PaymentApiController::class, 'paymentSuccess'])->name('payment-success');
         Route::get('/receipt/{reference_no}', [PaymentApiController::class, 'paymentReceipt'])->name('payment-receipt');
     });
+
+    Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
+        Route::get('/', [OrderApiController::class, 'executeCommand'])->name('order-apis');
+    });
 });
 
 

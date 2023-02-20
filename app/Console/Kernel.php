@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
-        Commands\OrderScheduler::class
+        Commands\OrderScheduler::class,
+        Commands\CompletedOrder::class
     ];
 
     /**
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('daily:order_status')->cron('0 1 * * *');
+        $schedule->command('daily:completed_order')->cron('0 1 * * *');
     }
 
     /**
