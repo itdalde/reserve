@@ -2,7 +2,7 @@
 
 return [
     'login' => 'Vendor Login',
-    'download_for_free' => 'Download for free',
+    'download_for_free' => 'Register',
     'home' => 'Home',
     'what_we_offer' => 'What We Offer',
     'for_vendors' => 'For vendors',
