@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Interfaces\OrderInterface;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
 use App\Models\OccasionType;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\OrderSplit;
 use App\Models\PlanType;
 use App\Models\ServiceType;
 use Carbon\Carbon;
@@ -29,11 +31,9 @@ class OrderController extends Controller
         $plan = PlanType::all()->toArray();
         $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
         $futureOrders = OrderItems::whereIn('service_id',$services)
-            ->whereDate('created_at','>', Carbon::today())
             ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
 
         $orders = OrderItems::whereIn('service_id',$services)
-            ->whereDate('created_at', Carbon::today())
             ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
 //       dd($orders);
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders','futureOrders' ));
@@ -44,8 +44,9 @@ class OrderController extends Controller
     }
     public function superListView(Request $request) {
         $id = $request['id'];
-        $order = Order::where('id',$id)->with('user','items','paymentMethod','paymentDetails')->first()->toArray();
-//        dd($order);
+        $order = Order::where('id',$id)->with('user','items','paymentMethod','paymentDetails', 'splitOrder')->first()->toArray();
+        $order['total_paid'] = OrderSplit::where('order_id', $order['id'])->where('status', 'paid')->sum('amount');
+        $order['balance'] = OrderSplit::where('order_id', $order['id'])->where('status', 'pending')->sum('amount');
         return view('superadmin.orders.view',compact('order'));
     }
 
@@ -78,7 +79,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::where('id',$id)->with('user','items','paymentMethod','paymentDetails', 'splitOrder')->first()->toArray();
+        $order['total_paid'] = OrderSplit::where('order_id', $order['id'])->where('status', 'paid')->sum('amount');
+        $order['balance'] = OrderSplit::where('order_id', $order['id'])->where('status', 'pending')->sum('amount');
+        return view('admin.orders.view',compact('order'));
     }
 
     /**

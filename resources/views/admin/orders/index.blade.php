@@ -1,113 +1,199 @@
 @extends('layouts.admin')
 @section('content')
-<div class="container">
+    <div class="container">
 
-    <div class="row">
-        <div class="col-9">
-            <h3>Order List</h3>
+        <div class="row">
+            <div class="col-9">
+                <h3>Order List</h3>
 
-            <div class="card mb-2" >
-                <div class="card-body">
-                    <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
-                    <th scope="col" style=" background: #F2F1F0;">ID</th>
-                    <th scope="col" style=" background: #F2F1F0;">Type</th>
-                    <th scope="col" style=" background: #F2F1F0;">Volume</th>
-                    <th scope="col" style=" background: #F2F1F0;">Date</th>
-                    <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach($orders as $order)
-                        <tr>
-                            <td>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : ''}}</td>
-                            <td>{{$order['order'] ? $order['order']['reference_no'] : ''}}</td>
-                            <td>{{$order['service'] && $order['service']['price'] && $order['service']['price']['plan_type'] ? $order['service']['price']['plan_type']['name'] : ''}}</td>
-                            <td>1 Service</td>
-                            <td>{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y H:m')}}</td>
-                            <td>
-                                @switch($order['status'])
-                                    @case('pending')
-                                        <span class="w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
-                                        @break
-                                    @case('accepted')
-                                        <span class="w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
-                                        @break
-                                    @case('declined')
-                                        <span class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                        @break
-                                    @case('completed')
-                                        <span class="w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
-                                        @break
-                                    @case('cancelled')
-                                        <span class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                        @break
-                                    @default
-                                     <span class="w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
-                                @endswitch
-
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-3 p-0">
-            <h3>Upcoming orders</h3>
-            <div class="d-flex justify-content-around">
-                <div class="px-2"> <span class=" pending-dot"></span> Pending
-                </div>
-                <div class="px-2 "> <span class=" accepted-dot"></span> Accepted
-                </div>
-            </div>
-            @foreach($futureOrders as $order)
-                <div class="card mb-2 {{$order['status'] == 'pending' ? 'border-card-pending' : 'border-card-accepted'}}"  >
+                <div class="card mb-2">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-2">
-                                <div class="avatar avatar-md avatar-indicators avatar-online">
-                                    @if($order['order'] && $order['order']['user'] && $order['order']['user']['profile_picture'] )
-                                        <img class="rounded-circle" src="{{ asset( $order['order']['user']['profile_picture']) }}" alt="...."   />
-                                    @else
-                                        <img class="rounded-circle" src="https://ui-avatars.com/api/?name={{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name']. ' ' . $order['order']['user']['last_name'] : 'R'}}" alt="...">
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="col-5">
-                                <div>{{$order['order']['reference_no']}}</div>
-                                <div>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : ''}}</div>
-                            </div>
-                            <div class="col-5" style="border-left: 2px solid #a69382;">
-                                <div>{{Carbon\Carbon::parse($order['created_at'])->format('H:m A')}}</div>
-                                <div>{{Carbon\Carbon::parse($order['created_at'])->format('Y/d/m')}}</div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Order No.</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Type</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Guests</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Date</th>
+                                    <th scope="col" style="background: #F2F1F0;">Status</th>
+                                    <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($orders as $order)
+                                    <tr>
+                                        <td>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : ''}}</td>
+                                        <td>{{$order['order'] ? $order['order']['reference_no'] : ''}}</td>
+                                        <td>{{$order['service'] && $order['service']['price'] && $order['service']['price']['plan_type'] ? $order['service']['price']['plan_type']['name'] : ''}}</td>
+                                        <td>{{$order['guests']}}</td>
+                                        <td>{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y H:m')}}</td>
+                                        <td>
+                                            @switch($order['status'])
+                                                @case('pending')
+                                                <span
+                                                    class="w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
+                                                @break
+                                                @case('accepted')
+                                                <span
+                                                    class="w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
+                                                @break
+                                                @case('declined')
+                                                <span
+                                                    class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                @break
+                                                @case('completed')
+                                                <span
+                                                    class="w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
+                                                @break
+                                                @case('cancelled')
+                                                <span
+                                                    class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                @break
+                                                @default
+                                                <span
+                                                    class="w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
+                                            @endswitch
+
+                                        </td>
+                                        <td>
+                                            <div class="d-flex justify-content-center w-100">
+                                                <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}}">
+                                                    <button type="button"
+                                                            class="btn btn-action btn-warning btn-accept-order "
+                                                            data-id="{{$order['order']['id']}}" data-action="accept">
+                                                        Accept
+                                                    </button>
+                                                </div>
+                                                <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}} ">
+                                                    <button type="button"
+                                                            class="btn btn-secondary btn-action btn-decline-order "
+                                                            data-id="{{$order['order']['id']}}" data-action="decline">
+                                                        Decline
+                                                    </button>
+                                                </div>
+                                                <div
+                                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
+                                                    <button type="button"
+                                                            class="btn btn-action btn-warning btn-complete-order  "
+                                                            data-id="{{$order['order']['id']}}" data-action="complete">
+                                                        Complete
+                                                    </button>
+                                                </div>
+                                                <div class="px-2  {{$order['status'] == 'accepted' ? '' : 'd-none'}}">
+                                                    <button type="button"
+                                                            class="btn btn-action btn-danger btn-cancel-order "
+                                                            data-id="{{$order['order']['id']}}" data-action="cancel">
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                                <div class="px-2">
+                                                    <a href="orders/{{$order['order']['id']}}" class="btn btn-outline-info">View</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            </div>
+            <div class="col-3 p-0">
+                <h3>Upcoming orders</h3>
+                <div class="d-flex justify-content-around">
+                    <div class="px-2"><span class=" pending-dot"></span> Pending
+                    </div>
+                    <div class="px-2 "><span class=" accepted-dot"></span> Accepted
+                    </div>
+                </div>
+                @foreach($futureOrders as $order)
+                    <div
+                        class="card mb-2 {{$order['status'] == 'pending' ? 'border-card-pending' : 'border-card-accepted'}}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="avatar avatar-md avatar-indicators avatar-online">
+                                        @if($order['order'] && $order['order']['user'] && $order['order']['user']['profile_picture'] )
+                                            <img class="rounded-circle"
+                                                 src="{{ asset( $order['order']['user']['profile_picture']) }}"
+                                                 alt="...."/>
+                                        @else
+                                            <img class="rounded-circle"
+                                                 src="https://ui-avatars.com/api/?name={{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name']. ' ' . $order['order']['user']['last_name'] : 'R'}}"
+                                                 alt="...">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div>{{$order['order']['reference_no']}}</div>
+                                    <div>{{$order['order'] && $order['order']['user'] ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : ''}}</div>
+                                </div>
+                                <div class="col-5" style="border-left: 2px solid #a69382;">
+                                    <div>{{Carbon\Carbon::parse($order['created_at'])->format('H:m A')}}</div>
+                                    <div>{{Carbon\Carbon::parse($order['created_at'])->format('Y/d/m')}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('content_javascript')
     <script type="text/javascript">
         $(document).ready(function () {
 
+            $('body').on('click', '.btn-action', function () {
+                let action = $(this).attr('data-action');
+                let id = $(this).attr('data-id');
+                let that = this;
+                $.ajax({
+                    url: "{{route('settings.update-status-order')}}",
+                    method: "POST",
+                    data: {action, id},
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    beforeSend: function () {
+                        $('#loader').show();
+                    },
+                }).done(function (response) {
+                    $('#loader').hide();
+                    switch (action) {
+                        case 'accept':
+                            $('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
+                            $('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            break;
+                        case 'decline':
+                            $(' .btn-cancel-order').closest('div').removeClass('d-none');
+                            $('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            break;
+                        case 'complete':
+                            $('.btn-complete-order').closest('div').removeClass('d-none');
+                            $('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
+                            break;
+                        case 'cancel':
+                            $('.btn-cancel-order').closest('div').removeClass('d-none');
+                            $('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            break;
+                    }
+                })
+            });
             $('body').on('click', '.edit-featured-service-image-holder', function () {
                 $('#edit-featured-service-image-file').click();
             });
             $('body').on('change', '#add-images-data-file', function () {
                 $('.new-added-mg-temp').remove();
-                for(let i=0;i<this.files.length;++i){
+                for (let i = 0; i < this.files.length; ++i) {
                     let filereader = new FileReader();
-                    let $img=jQuery.parseHTML("<img class='new-added-mg-temp figure-img img-fluid img-thumbnail image-gallery' src=''>");
-                    filereader.onload = function(){
-                        $img[0].src=this.result;
+                    let $img = jQuery.parseHTML("<img class='new-added-mg-temp figure-img img-fluid img-thumbnail image-gallery' src=''>");
+                    filereader.onload = function () {
+                        $img[0].src = this.result;
                     };
                     filereader.readAsDataURL(this.files[i]);
                     $(".service-images").append($img);
