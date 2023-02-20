@@ -23,6 +23,7 @@
         <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/landing/css/mobile.style.css')}}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" integrity="sha512-uvXdJud8WaOlQFjlz9B15Yy2Au/bMAvz79F7Xa6OakCl2jvQPdHD0hb3dEqZRdSwG4/sknePXlE7GiarwA/9Wg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     </head>
@@ -85,13 +86,13 @@
             <div class="container" style="height: 503px;">
 
                 <div class="row">
-                    <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item"  data-aos-once="false" data-aos-mirror="true" data-aos="fade-left">
+                    <div class="top-panel col-lg-6 d-flex flex-column justify-contents-center aos-item"  data-aos-once="false" data-aos-mirror="true" data-aos="fade-left">
                         <div class="content pt-4 pt-lg-0">
-                            <h3 data-aos-once="false" data-aos-mirror="true" data-aos="fade-right">{{__('home.banner')}} </h3>
-                            <p data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
+                            <h3 data-aos-once="false" data-aos-mirror="true" data-aos="fade-right" class="w-auto">{{__('home.banner')}} </h3>
+                            <p data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in" class="w-auto">
                                 {{__('home.banner1')}}
                             </p>
-                            <div class="d-flex justify-content-center" style=" margin-top: 20em;">
+                            <div class="apps-store d-flex justify-content-center" style=" margin-top: 20em;">
                                 <a class="p-2 m-2" data-aos-once="false" data-aos-mirror="true" data-aos="fade-up" href="https://apps.apple.com/">
                                     <img src="{{asset('assets/landing/img/App Store.png')}}" alt="App Store.png">
                                 </a>
@@ -101,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false">
+                    <div class="abt-logo col-lg-6 aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false">
                         <img src="{{ asset('assets/landing/img/about-image.png')}}" class="img-fluid" alt="">
                     </div>
                 </div>
@@ -165,17 +166,17 @@
                             <h3>{{__('home.Fast and easy registration')}}</h3>
                             <p>{{__('home.Fast and easy registration_sub')}}</p>
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
+                        <div class="content pt-4 pt-lg-0 p-5 hpi" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-cards.png')}}" alt="portfolio-cards">
 
                         </div>
-                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
+                        <div class="content pt-4 pt-lg-0 p-5 hpi" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-line-graph.png')}}" alt="portfolio-line-graph">
 
                         </div>
                     </div>
                     <div class="col-lg-6 d-flex flex-column justify-contents-center aos-item">
-                        <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
+                        <div class="content pt-4 pt-lg-0 p-5 hpi" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">
                             <img src="{{asset('assets/landing/img/portfolio-computer.png')}}" alt="portfolio-computer">
                         </div>
                         <div class="content pt-4 pt-lg-0 p-5" data-aos-mirror="true" data-aos-once="false" data-aos="fade-left">

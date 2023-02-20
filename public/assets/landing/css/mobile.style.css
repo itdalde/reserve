@@ -1,0 +1,184 @@
+@media (320px <=width <=480px) and (orientation: portrait) {
+    /* Section */
+    section {
+        padding-top: 0;
+    }
+    
+    /* About ---------- */
+    .about .content h3 {
+        font-size: 23px;
+        line-height: 45px;
+    }
+
+    .about .content p {
+        top: 9em;
+    }
+
+    .about .row .top-panel {
+        z-index: 999;
+    }
+
+    .about .row div {
+        width: 100%;
+        justify-content: center;
+        display: flex;
+    }
+
+    .about .row .abt-logo img {
+        display: flex;
+        margin-top: -8rem;
+    }
+
+    /* Portfolio ----------  */
+    .icon-box img {
+        padding-bottom: 15px;
+    }
+
+    #portfolio .row img {
+        padding-bottom: 10px;
+    }
+
+    #portfolio .hpi {
+        padding: 0 !important;
+    }
+
+    #portfolio .hpi img {
+        width: 100%;
+        padding-bottom: 30px;
+    }
+}
+
+
+@media (481px <=width <=768px) and (orientation: portrait) {
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    .about .row .top-panel {
+        z-index: 999;
+    }
+
+    .about .row div {
+        width: 100%;
+        justify-content: center;
+        display: flex;
+    }
+
+    .about .row img {
+        width: 85%;
+        margin-top: -12rem;
+    }
+
+    .about .row .apps-store img {
+        margin-top: 0
+    }
+}
+
+
+@media (769px <=width <=1023px) and (orientation: portrait) {
+
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    #portfolio .row img {
+        padding-bottom: 10px;
+    }
+
+    #portfolio .hpi img {
+        width: 100%;
+        padding-bottom: 30px;
+    }
+
+    .about .row .abt-logo img {
+        position: absolute;
+        top: 6rem;
+    }
+}
+
+@media (1024px <=width <=1200px) and (orientation: landscape) {
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    #portfolio .hpi {
+        padding: 0 !important;
+    }
+
+    #portfolio .hpi img {
+        width: 100%;
+        padding-bottom: 30px;
+    }
+}
+
+@media (481px <=width <=768px) and (orientation: landscape) {
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -8rem auto;
+        display: flex;
+    }
+}
+
+@media (769px <=width <=1023px) and (orientation: landscape) {
+    .about .content h3 {
+        font-size: 34px;
+    }
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -8rem auto;
+        display: flex;
+    }
+}
+
+
+@media (769px <=width <=1023px) and (orientation: landscape) {
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -11rem auto;
+        display: flex;
+    }
+}
+
+
+@media (800px <=width <=1023px) and (orientation: portrait) {
+
+    .about .row .top-panel {
+        z-index: 99;
+    }
+
+    .about .row .abt-logo img {
+        width: 80%;
+        margin: -11rem auto;
+        display: flex;
+    }
+
+    .about .row .abt-logo img {
+        position: absolute;
+        top: -9rem;
+        margin: -2rem auto;
+        padding-left: 17%;
+    }
+}
+
+
+
