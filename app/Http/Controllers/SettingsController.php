@@ -63,6 +63,7 @@ class SettingsController extends Controller
         }
         $item = OrderItems::where('id',$data['id'])->first();
         $item->status = $status;
+        $item->reason = isset($data['reason']) ? $data['reason'] : '';
         $item->timeline = $timeline;
         $item->save();
 
