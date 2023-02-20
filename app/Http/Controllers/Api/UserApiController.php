@@ -25,8 +25,10 @@ class UserApiController extends Controller
         }
         $firstName = $data['first_name'] ?? $profile->first_name;
         $lastName = $data['last_name'] ?? $profile->last_name;
+        $fcm_token = $data['fcm_token'] ?? $profile->fcm_token;
         $profile->first_name = $firstName;
         $profile->last_name = $lastName;
+        $profile->fcm_token = $fcm_token;
         $profile->location = $data['location'] ?? $profile->location;
         $profile->full_name = $firstName . ' ' . $lastName;
         $profile->phone_number = $data['phone_number'] ?? $profile->phone_number;
