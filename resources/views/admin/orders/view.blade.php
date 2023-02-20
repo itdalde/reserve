@@ -130,6 +130,33 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6 mb-2">
+            <div class="card border-success ">
+                <div class="card-body">
+                    <h3>Admin action</h3>
+                    <form action="{{route('settings.update-status-order')}}}" method="post">
+
+                        @foreach($order['items'] as $item)
+                            <input type="hidden" name="id[]" value="{{$item['id']}}">
+                        @endforeach
+                        <input type="hidden" name="action" value="cancel">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-3">Reason</div>
+                                    <div class="col-sm-9"><textarea name="reason" id="reason" cols="30" rows="10"></textarea></div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-12"><button class="btn btn-warning w-100">Cancel </button></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

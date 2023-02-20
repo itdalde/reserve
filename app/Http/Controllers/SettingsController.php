@@ -61,34 +61,100 @@ class SettingsController extends Controller
                 $status = 'cancelled';
                 $timeline = 'order-cancelled';
         }
-        $item = OrderItems::where('id',$data['id'])->first();
-        $item->status = $status;
-        $item->reason = isset($data['reason']) ? $data['reason'] : '';
-        $item->timeline = $timeline;
-        $item->save();
+        if(is_array($data['id'])) {
+            foreach ($data['id'] as $id) {
+                $item = OrderItems::where('id',$id)->first();
+                $item->status = $status;
+                $item->reason = isset($data['reason']) ? $data['reason'] : '';
+                $item->timeline = $timeline;
+                $item->save();
 
-        $totalItem = OrderItems::where('order_id',$item->order_id)->count();
-        $itemsAccepted = OrderItems::where('order_id',$item->order_id)->where('status',$status)->count();
-        $order = Order::where('id',$item->order_id)->first();
-        if($totalItem == $itemsAccepted) {
+                $order = Order::where('id',$item->order_id)->first();
+                Http::timeout(10)
+                    ->withOptions(['verify' => false])
+                    ->post('http://reservegcc.com:3000/reservation', [
+                        'transaction' => $item->toArray(),
+                        'status' => $status
+                    ]);
+                $response = [
+                    "status" => "success",
+                    "message" => "Transactions Successfully Released!",
+                    "data" => [$item->toArray() ]
+                ];
+                if($order) {
+                    $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+                    NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+                }
+            }
+            $order = Order::where('id',$item->order_id)->first();
             $order->status = $status;
             $order->timeline = $timeline;
+            $order->reason = isset($data['reason']) ? $data['reason'] : '';
             $order->save();
-        }
-        Http::timeout(10)
-            ->withOptions(['verify' => false])
-            ->post('http://reservegcc.com:3000/reservation', [
-                'transaction' => $item->toArray(),
-                'status' => $status
-            ]);
-        $response = [
-            "status" => "success",
-            "message" => "Transactions Successfully Released!",
-            "data" => [$item->toArray() ]
-        ];
-        if($order) {
-            $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-            NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+        } else {
+            if(isset($data['is_order'])) {
+                $orders = OrderItems::where('order_id',$data['id'])->get();
+                foreach ($orders as $item) {
+                    $item->status = $status;
+                    $item->reason = isset($data['reason']) ? $data['reason'] : '';
+                    $item->timeline = $timeline;
+                    $item->save();
+
+                    $order = Order::where('id',$item->order_id)->first();
+                    Http::timeout(10)
+                        ->withOptions(['verify' => false])
+                        ->post('http://reservegcc.com:3000/reservation', [
+                            'transaction' => $item->toArray(),
+                            'status' => $status
+                        ]);
+                    $response = [
+                        "status" => "success",
+                        "message" => "Transactions Successfully Released!",
+                        "data" => [$item->toArray() ]
+                    ];
+                    if($order) {
+                        $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+                        NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+                    }
+                }
+                $order = Order::where('id',$item->order_id)->first();
+                $order->status = $status;
+                $order->timeline = $timeline;
+                $order->reason = isset($data['reason']) ? $data['reason'] : '';
+                $order->save();
+            } else {
+
+                $item = OrderItems::where('id',$data['id'])->first();
+                $item->status = $status;
+                $item->reason = isset($data['reason']) ? $data['reason'] : '';
+                $item->timeline = $timeline;
+                $item->save();
+
+                $totalItem = OrderItems::where('order_id',$item->order_id)->count();
+                $itemsAccepted = OrderItems::where('order_id',$item->order_id)->where('status',$status)->count();
+                $order = Order::where('id',$item->order_id)->first();
+                if($totalItem == $itemsAccepted) {
+                    $order->status = $status;
+                    $order->timeline = $timeline;
+                    $order->reason = isset($data['reason']) ? $data['reason'] : '';
+                    $order->save();
+                }
+                Http::timeout(10)
+                    ->withOptions(['verify' => false])
+                    ->post('http://reservegcc.com:3000/reservation', [
+                        'transaction' => $item->toArray(),
+                        'status' => $status
+                    ]);
+                $response = [
+                    "status" => "success",
+                    "message" => "Transactions Successfully Released!",
+                    "data" => [$item->toArray() ]
+                ];
+                if($order) {
+                    $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+                    NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+                }
+            }
         }
         return redirect::back()->with(['signup' => 'success' ,'order_item' => $item]);
     }

@@ -148,7 +148,7 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6"></div>
-                                <div class="col-sm-6"><button class="btn"> </button></div>
+                                <div class="col-sm-6"><button class="btn btn-orange">Cancel </button></div>
                             </div>
                         </li>
                     </ul>

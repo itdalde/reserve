@@ -81,7 +81,7 @@
                 $.ajax({
                     url: "{{route('settings.update-status-order')}}",
                     method: "POST",
-                    data: {action, id},
+                    data: {action, id, is_order:1},
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
