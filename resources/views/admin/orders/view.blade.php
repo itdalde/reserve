@@ -134,8 +134,8 @@
             <div class="card border-success ">
                 <div class="card-body">
                     <h3>Admin action</h3>
-                    <form action="{{route('settings.update-status-order')}}}" method="post">
-
+                    <form action="{{route('settings.update-status-order')}}" method="POST">
+                        @csrf
                         @foreach($order['items'] as $item)
                             <input type="hidden" name="id[]" value="{{$item['id']}}">
                         @endforeach
@@ -144,7 +144,7 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-sm-3">Reason</div>
-                                    <div class="col-sm-9"><textarea name="reason" id="reason" cols="30" rows="10"></textarea></div>
+                                    <div class="col-sm-9"><textarea name="reason" id="reason" cols="30" rows="10">{{$order['reason']}}</textarea></div>
                                 </div>
                             </li>
                             <li class="list-group-item">

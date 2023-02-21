@@ -81,13 +81,6 @@
                                                         Complete
                                                     </button>
                                                 </div>
-                                                <div class="px-2  {{$order['status'] == 'accepted' ? '' : 'd-none'}}">
-                                                    <button type="button"
-                                                            class="btn btn-action btn-danger btn-cancel-order "
-                                                            data-id="{{$order['order']['id']}}" data-action="cancel">
-                                                        Cancel
-                                                    </button>
-                                                </div>
                                                 <div class="px-2">
                                                     <a href="orders/{{$order['order']['id']}}" class="btn btn-outline-info">View</a>
                                                 </div>

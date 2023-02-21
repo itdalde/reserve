@@ -7,6 +7,8 @@ use App\Models\Auth\User\User;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
 use App\Models\OccasionType;
+use App\Models\Order;
+use App\Models\OrderItems;
 use App\Models\PlanType;
 use App\Models\ServiceType;
 use Arcanedev\LogViewer\Entities\Log;
@@ -41,13 +43,22 @@ class DashboardController extends Controller
             return view('superadmin.dashboard',compact('users'));
         }
         $occasionTypes =  Occasion::all()->toArray();
-        $plan = PlanType::all()->toArray();
-        $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->offset(0)->limit(10)->get();
+        $plan = PlanType::all()->toArray();;
         if(!Auth::user()->company) {
             return redirect()->route('logout');
         }
-        $services =  OccasionEvent::where('company_id',Auth::user()->company->id)->offset(0)->limit(10)->get();
-        return view('admin.dashboard',compact('occasionTypes','plan','users','services' ));
+        $services =  OccasionEvent::where('company_id',Auth::user()->company->id)->get();
+        $serviceIds = $services ?  $services->pluck('id'): [];
+        $orders = OrderItems::whereIn('service_id',$serviceIds)->get();
+        $orderIds = $orders ? $orders->pluck('order_id'): [];
+        $orders = Order::whereIn('id',$orderIds)->get();
+        $userIds = $orders ? $orders->pluck('user_id'): [];
+        $users = User::whereIn('id',$userIds)->sortable(['email' => 'asc'])->offset(0)->limit(10)->get();
+        $orders = OrderItems::whereIn('service_id',$serviceIds)
+            ->whereDate('created_at','>=', Carbon::today())
+            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+
+        return view('admin.dashboard',compact('orders','occasionTypes','plan','users','services' ));
     }
 
 

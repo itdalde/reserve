@@ -84,10 +84,17 @@
                         <tr>
                             <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
                             <th scope="col" style=" background: #F2F1F0;">Order ID</th>
-                            <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Order Type</th>
+                            <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Status</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($orders as $order)
+                            <tr>
+                                <td>{{isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] .' '. $order['order']['user']['last_name']  : ''}}</td>
+                                <td>{{isset($order['order']) ? $order['order']['reference_no'] : ''}}</td>
+                                <td>{{$order['status']}}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
