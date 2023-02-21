@@ -51,4 +51,18 @@ class NotificationApiController extends Controller
         } 
         return sendResponse('Order completed', 'Orders Completed');
     }
+
+    public function invokeNotificationByUser(Request $request)
+    {
+        $fcmTokens = User::where('user_id', $request->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $order = Order::where('user_id', $request->user_id)->where('status', 'pending')->get();
+        $response = [
+            "status" => "success",
+            "message" => "Notification invoke for pending orders",
+            "data" => ['order' => $order ]
+        ];
+        NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
+
+        return sendResponse('Notificatin Invoke', 'User order pending');
+    }
 }

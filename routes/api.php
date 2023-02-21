@@ -147,6 +147,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'notification', 'middleware' => ['cors']], function() {
         Route::post('/order-completed', [NotificationApiController::class, 'checkOrderCompleted'])->name('process-completed-order');
         Route::post('/paid-order', [NotificationApiController::class, 'paidOrders'])->name('process-paid-orders');
+        Route::post('/pending-order/{user_id}', [NotificationApiController::class, 'invokeNotificationByUser'])->name('process-paid-orders');
     });
 
     Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
