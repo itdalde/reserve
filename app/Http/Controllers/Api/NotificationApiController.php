@@ -54,7 +54,7 @@ class NotificationApiController extends Controller
 
     public function invokeNotificationByUser(Request $request)
     {
-        $fcmTokens = User::where('user_id', $request->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $fcmTokens = User::where('id', $request->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
         $order = Order::where('user_id', $request->user_id)->where('status', 'pending')->get();
         $response = [
             "status" => "success",
