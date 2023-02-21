@@ -64,20 +64,16 @@ class PaymentApiController extends Controller
         $pe->visa_id = $request['VisaId'];
         $pe->save();
 
+        
+        // $o = Order::where('reference_no', $os->reference_order)->first();
+        // $oi = OrderItems::where('order_id', $o->id)->get();
+
+        // foreach($oi as $item)
+        // {
+        //     $item->save();
+        // }
+        // $o->save();
         $os = OrderSplit::where('reference_no', $pe->transaction_id)->first();
-        $o = Order::where('reference_no', $os->reference_order)->first();
-        $oi = OrderItems::where('order_id', $o->id)->get();
-
-        $o->status = 'processing';
-        $o->timeline = 'processing';
-        foreach($oi as $item)
-        {
-            $item->status = 'processing';
-            $item->timeline = 'processing';
-            $item->save();
-        }
-        $o->save();
-
         $os->status = $request['StatusId'] == 2 ? 'paid' : 'pending';
         $os->save();
         return sendResponse($pe, "SkipCash Response");
