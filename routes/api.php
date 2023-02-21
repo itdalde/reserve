@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
 use App\Http\Controllers\Api\LocationApiController;
+use App\Http\Controllers\Api\NotificationApiController;
 use App\Http\Controllers\Api\OccasionEventsApiController;
 use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
@@ -141,6 +142,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/processing',[PaymentApiController::class, 'paymentProcessing'])->name('payment-processing');
         Route::post('/success', [PaymentApiController::class, 'paymentSuccess'])->name('payment-success');
         Route::get('/receipt/{reference_no}', [PaymentApiController::class, 'paymentReceipt'])->name('payment-receipt');
+    });
+
+    Route::group(['prefix' => 'notification', 'middleware' => ['cors']], function() {
+        Route::post('/order-completed', [NotificationApiController::class, 'checkOrderCompleted'])->name('process-completed-order');
+        Route::post('/paid-order', [NotificationApiController::class, 'paidOrders'])->name('process-paid-orders');
     });
 
     Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
