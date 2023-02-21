@@ -97,7 +97,7 @@ class RegisterController extends Controller
         $company->description = $data['company_description'];
         $company->location = $data['location'];
         $company->registration_number = $data['registration_number'];
-//        $company->service_type_id = $data['service_type'];
+        $company->service_type_id = 0;
         $company->service_offered = $data['service_type'];
         $company->save();
         $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
