@@ -25,6 +25,7 @@
     <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/auth/css/login.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/auth/css/mobile.style.css') }}" rel="stylesheet">
 
 </head>
 <body data-aos-once="false">
