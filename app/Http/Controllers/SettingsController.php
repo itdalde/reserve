@@ -46,8 +46,8 @@ class SettingsController extends Controller
         $timeline = 'processing';
         switch ($data['action']){
             case 'accept':
-                $status = 'accepted';
-                $timeline = 'order-accepted';
+                $status = 'processing';
+                $timeline = 'processing';
                 break;
             case 'decline':
                 $status = 'declined';
@@ -123,7 +123,6 @@ class SettingsController extends Controller
                 $order->reason = isset($data['reason']) ? $data['reason'] : '';
                 $order->save();
             } else {
-
                 $item = OrderItems::where('id',$data['id'])->first();
                 $item->status = $status;
                 $item->reason = isset($data['reason']) ? $data['reason'] : '';

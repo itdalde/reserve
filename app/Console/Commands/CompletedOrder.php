@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Auth\User\User;
 use App\Models\Order;
 use App\Models\OrderSplit;
+use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class CompletedOrder extends Command
 {
@@ -61,8 +64,8 @@ class CompletedOrder extends Command
             }
 
         }
-        
-        
+
+
         $this->info('Orders who\'s fully paid marks as completed');
     }
 }
