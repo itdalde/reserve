@@ -50,7 +50,7 @@ class OrderScheduler extends Command
                 "message" => "Notification invoke for pending orders",
                 "data" => ['order' => $order ]
             ];
-            $fcmTokens = User::where('user_id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
             NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
         }
         $this->info('Notification invoke for users');
