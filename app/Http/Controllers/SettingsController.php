@@ -77,9 +77,12 @@ class SettingsController extends Controller
                         'transaction' => $item->toArray(),
                         'status' => $status
                     ]);
+
                 $response = [
+                    "type" => "order-update",
+                    "title" => "Order Status Update",
                     "status" => "success",
-                    "message" => "Transactions Successfully Released!",
+                    "message" => "Your order $order->reference_no has been updated",
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
@@ -109,8 +112,10 @@ class SettingsController extends Controller
                             'status' => $status
                         ]);
                     $response = [
+                        "type" => "order-update",
+                        "title" => "Order Status Update",
                         "status" => "success",
-                        "message" => "Transactions Successfully Released!",
+                        "message" => "Your order $order->reference_no has been updated",
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
@@ -146,8 +151,10 @@ class SettingsController extends Controller
                         'status' => $status
                     ]);
                 $response = [
+                    "type" => "order-update",
+                    "title" => "Order Status Update",
                     "status" => "success",
-                    "message" => "Transactions Successfully Released!",
+                    "message" => "Your order $order->reference_no has been updated",
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {

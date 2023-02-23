@@ -202,8 +202,10 @@ class CartApiController extends Controller
                 'status' => 'pending'
             ]);
         $response = [
+            "type" => "order-update",
+            "title" => "Order Status Update",
             "status" => "success",
-            "message" => "Your order has been placed",
+            "message" => "Your order $order->reference_no has been updated",
             "data" => [$data['items']]
         ];
         if($order) {
