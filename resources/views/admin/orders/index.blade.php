@@ -50,6 +50,7 @@
                                                 @case('cancelled')
                                                 <span
                                                     class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                <br> |-> <small>{{$order['reason']}}</small>
                                                 @break
                                                 @default
                                                 <span
