@@ -17,6 +17,7 @@ use Google\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\VarDumper\VarDumper;
 
 class SettingsController extends Controller
 {
@@ -154,6 +155,10 @@ class SettingsController extends Controller
                     NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
                 }
             }
+        }
+
+        if($request->ajax()){
+            return json_encode($item);
         }
         return redirect::back()->with(['signup' => 'success' ,'order_item' => $item]);
     }

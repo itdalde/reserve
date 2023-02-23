@@ -35,7 +35,7 @@
                                                 <span
                                                     class="w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
                                                 @break
-                                                @case('accepted')
+                                                @case('processing')
                                                 <span
                                                     class="w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
                                                 @break
@@ -62,27 +62,27 @@
                                                 <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}}">
                                                     <button type="button"
                                                             class="btn btn-action btn-warning btn-accept-order "
-                                                            data-id="{{$order['order']['id']}}" data-action="accept">
+                                                            data-id="{{$order['id']}}" data-action="accept">
                                                         Accept
                                                     </button>
                                                 </div>
                                                 <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}} ">
                                                     <button type="button"
                                                             class="btn btn-secondary btn-action btn-decline-order "
-                                                            data-id="{{$order['order']['id']}}" data-action="decline">
+                                                            data-id="{{$order['id']}}" data-action="decline">
                                                         Decline
                                                     </button>
                                                 </div>
                                                 <div
-                                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
+                                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' ||$order['status'] == 'completed' || $order['status'] == 'declined' ? 'd-none' : ''}}">
                                                     <button type="button"
                                                             class="btn btn-action btn-warning btn-complete-order  "
-                                                            data-id="{{$order['order']['id']}}" data-action="complete">
+                                                            data-id="{{$order['id']}}" data-action="complete">
                                                         Complete
                                                     </button>
                                                 </div>
                                                 <div class="px-2">
-                                                    <a href="orders/{{$order['order']['id']}}" class="btn btn-outline-info">View</a>
+                                                    <a href="orders/{{$order['id']}}" class="btn btn-outline-info">View</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -159,20 +159,20 @@
                     $('#loader').hide();
                     switch (action) {
                         case 'accept':
-                            $('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
-                            $('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'decline':
-                            $(' .btn-cancel-order').closest('div').removeClass('d-none');
-                            $('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find(' .btn-cancel-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'complete':
-                            $('.btn-complete-order').closest('div').removeClass('d-none');
-                            $('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
                             break;
                         case 'cancel':
-                            $('.btn-cancel-order').closest('div').removeClass('d-none');
-                            $('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find('.btn-cancel-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                     }
                 })

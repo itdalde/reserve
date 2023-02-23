@@ -35,7 +35,7 @@ class OrderController extends Controller
 
         $orders = OrderItems::whereIn('service_id',$services)
             ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
-//       dd($orders);
+
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders','futureOrders' ));
     }
     public function superList() {
