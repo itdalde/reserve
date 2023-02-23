@@ -27,6 +27,7 @@ use App\Http\Controllers\ServiceController;
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 Route::get('/schedules/delete-schedule', [\App\Http\Controllers\SchedulesController::class, 'deleteSchedule'])->name('schedules.delete-schedule');
 
+Route::get('/fetch-available-dates-per-service', [\App\Http\Controllers\AvailableDatesController::class, 'availableDates'])->name('fetch-available-dates-per-service');
 Route::get('/admin/orders', [\App\Http\Controllers\OrderController::class, 'superList'])->name('orders.admin');
 Route::get('/admin/orders/view', [\App\Http\Controllers\OrderController::class, 'superListView'])->name('orders.admin.view');
 

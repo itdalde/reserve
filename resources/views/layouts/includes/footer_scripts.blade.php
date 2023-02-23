@@ -22,6 +22,21 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous"></script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
+
+
+
+<!-- Optional theme -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" type="text/javascript" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+
 <script  type="text/javascript">
     $(document).ready( function () {
         $('body').on('keyup','#head-general-search',function (e) {
@@ -35,5 +50,15 @@
             });
         });
 
+        $('.datepicker').datepicker({
+            dateFormat: "yy-mm-dd",
+            multidate: true,
+            defaultDate: new Date(),
+            clearBtn: true,
+            todayHighlight: true,
+        });
+        $('.datepicker-time').datetimepicker({
+            format: 'HH:mm',
+        });
     });
 </script>

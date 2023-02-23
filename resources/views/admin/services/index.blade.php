@@ -71,6 +71,8 @@
                                     data-available-slot="{{$service->availability_slot}}"
                                     data-end-available-date="{{Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d')}}"
                                     data-start-available-date="{{Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d')}}"
+                                    data-end-available-time="{{Carbon\Carbon::parse($service->availability_time_out)->format('H:m')}}"
+                                    data-start-available-time="{{Carbon\Carbon::parse($service->availability_time_in)->format('H:m')}}"
                                     data-id="{{$service->id}}"
                                     data-description="{{$service->description}}"
                                     data-name="{{$service->name}}"
@@ -101,6 +103,8 @@
                                     data-payment-plans="{{$paymentPlansHolder}}"
                                     data-occasion-types="{{$occasionHolder}}"
                                     data-images="{{$imagesHolder}}"
+                                    data-orders-count="{{count($service->orders)}}"
+
                                     data-service-type="{{$service->serviceType ?  $service->serviceType->name : ''}}"
                                     data-image="{{asset($service->image)}}"
                                     data-rating="{{$service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0}}"
@@ -303,10 +307,27 @@
                                                     class="service-hall-features-available-time badge bg-secondary  px-2 mt-1"></span>
                                             </div>
                                         </div>
-                                        <div class="p-2 bd-highlight"><p>Available date</p>
-                                            <div class="badge bg-secondary d-inline-flex">
-                                                <img src="{{asset('assets/images/icons/calendar-icon.png')}}" alt="..">
-                                                <span class="service-hall-features-available-date  px-2 mt-1"></span>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column bd-highlight mb-3">
+                                    <div class="p-2 bd-highlight">Availability</div>
+                                    <div class="p-2 bd-highlight edit-trigger-display">
+                                        <div class="p-2 w-100">
+                                            <p>Available date</p>
+                                        </div>
+                                        <div class="d-flex flex-row bd-highlight mb-3">
+                                            <div class="p-2 bd-highlight available-date">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-2 bd-highlight edit-trigger-display">
+                                        <div class="p-2 w-100">
+                                            <p>Un-Available date</p>
+                                        </div>
+                                        <div class="d-flex flex-row bd-highlight mb-3">
+                                            <div class="p-2 bd-highlight un-available-date">
+
                                             </div>
                                         </div>
                                     </div>
@@ -333,17 +354,30 @@
                                         <div class="d-flex flex-row bd-highlight mb-3">
                                             <div class="col-sm-12 pe-2 ">
                                                 <div class="row">
-                                                    <label class="form-label">Available Date</label>
                                                     <div class="col-sm-6 ">
-                                                        <input id="edit-service-start_available_date-input" value=""
-                                                               name="start_available_date" class="float-end form-control"
-                                                               type="date">
+                                                        <label class="form-label">Available Start time</label>
+                                                        <input id="edit-service-start_available_time-input" value=""
+                                                               name="start_available_time" class="float-end form-control datepicker-time"
+                                                               type="text">
                                                     </div>
                                                     <div class="col-sm-6 ">
+                                                        <label class="form-label">Available End time</label>
+                                                        <input id="edit-service-end_available_time-input" value=""
+                                                               name="end_available_time" class="float-end form-control  datepicker-time"
+                                                               type="text">
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <label class="form-label">Available Date</label>
+                                                        <input id="edit-service-start_available_date-input" value=""
+                                                               name="available_date" class="float-end form-control datepicker"
+                                                               type="text">
+                                                    </div>
+                                                    <div class="col-sm-6 ">
+                                                        <label class="form-label">Un-Available Date</label>
                                                         <input value=""
                                                                id="edit-service-end_available_date-input"
-                                                               name="end_available_date" class="float-start form-control"
-                                                               type="date">
+                                                               name="un_available_date" class="float-start form-control datepicker"
+                                                               type="text">
                                                     </div>
                                                 </div>
                                             </div>
@@ -544,10 +578,47 @@
                 let maxCapacity = $(this).closest('tr').attr('data-max-capacity');
                 let minCapacity = $(this).closest('tr').attr('data-min-capacity');
                 let availableSlot = $(this).closest('tr').attr('data-available-slot');
-                let endAvailableDate = $(this).closest('tr').attr('data-end-available-date');
-                let startAvailableDate = $(this).closest('tr').attr('data-start-available-date');
-
+                let endAvailableTime = $(this).closest('tr').attr('data-end-available-time');
+                let startAvailableTime= $(this).closest('tr').attr('data-start-available-time');
+                let totalOrders = $(this).closest('tr').attr('data-orders-count');
+                $('#service-no-of-orders').text(totalOrders)
                 let id = $(this).closest('tr').attr('data-id');
+                $.ajax({
+                    url: "{{route('fetch-available-dates-per-service')}}",
+                    method: "GET",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        service_id: id,
+                    },
+                    beforeSend: function () {
+                        window.VIEW_LOADING();
+                    },
+                }).done(function (response) {
+                    window.HIDE_LOADING();
+
+                    let data = JSON.parse(response);
+                    let availablehtml = "";
+                    let unavailablehtml = "";
+                    let availableDates = [];
+                    let unavailableDates = [];
+                    for (let x = 0; x < data.length; x++) {
+                        if(data[x].status == '1') {
+                            availableDates.push(data[x].date) ;
+                            availablehtml += '<div class="badge bg-secondary d-inline-flex"> <img src="{{asset('assets/images/icons/calendar-icon.png')}}" alt="..">';
+                            availablehtml += '<span class="service-hall-features-available-date  px-2 mt-1">'+data[x].date+'</span> </div>';
+                        } else {
+                            unavailableDates.push(data[x].date) ;
+                            unavailablehtml += '<div class="badge bg-secondary d-inline-flex"> <img src="{{asset('assets/images/icons/calendar-icon.png')}}" alt="..">';
+                            unavailablehtml += '<span class="service-hall-features-available-date  px-2 mt-1">'+data[x].date+'</span> </div>';
+                        }
+                    }
+                    $('#edit-service-end_available_date-input').datepicker("setDate",unavailableDates);
+                    $('#edit-service-start_available_date-input').datepicker("setDate",availableDates);
+                    $('.available-date').html(availablehtml)
+                    $('.un-available-date').html(unavailablehtml)
+                })
                 let paymentPlans = $(this).closest('tr').attr('data-payment-plans');
                 $("#service-id").val(id);
                 paymentPlans = paymentPlans.split(',')
@@ -564,8 +635,9 @@
                 });
 
                 $('#edit-service-available_slot-input').val(availableSlot);
-                $('#edit-service-end_available_date-input').val(endAvailableDate);
-                $('#edit-service-start_available_date-input').val(startAvailableDate);
+                $('#edit-service-start_available_time-input').val(startAvailableTime);
+                $('#edit-service-end_available_time-input').val(endAvailableTime);
+$('')
                 $('#edit-service-min-capacity-input').val(minCapacity);
                 $('#edit-service-max-capacity-input').val(maxCapacity);
                 $('#edit-service-location-input').val(location);

@@ -1,5 +1,5 @@
 @if(!Auth::user()->hasRole('superadmin'))
-    <div class="modal fade" id="new-service-modal" tabindex="-1" aria-labelledby="new-service-modalLabel"
+    <div class="modal fade" id="new-service-modal" tabindex="-1" aria-labelledby="new-service-modalLabel" data-backdrop="static" data-keyboard="false"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -227,14 +227,14 @@
                                             <div class="row">
                                                 <label class="form-label">Available Date</label>
                                                 <div class="col-sm-6 ">
-                                                    <input value="<?php echo date('Y-m-d'); ?>"
-                                                           name="start_available_date" class="float-end form-control"
-                                                           type="date">
+                                                    <input
+                                                           name="start_available_date" class="float-end form-control datepicker"
+                                                           type="text">
                                                 </div>
                                                 <div class="col-sm-6 ">
-                                                    <input value="<?php echo date('Y-m-d'); ?>"
-                                                           name="end_available_date" class="float-start form-control"
-                                                           type="date">
+                                                    <input
+                                                           name="end_available_date" class="float-start form-control datepicker"
+                                                           type="text">
                                                 </div>
                                             </div>
                                         </div>
