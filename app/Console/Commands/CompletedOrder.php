@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Auth\User\User;
 use App\Models\Order;
 use App\Models\OrderSplit;
+use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -58,11 +60,16 @@ class CompletedOrder extends Command
                     $order['timeline'] = 'order-completed';
                     $order->save();
                 }
-            }
 
+                $response = [
+                    "status" => "success",
+                    "message" => "Order completed",
+                    "data" => ['order' => $order->items ]
+                ];
+                $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+                NotificationUtility::sendNotification('Completed Order', 'Your order is completed', $fcmTokens, $response);
+            }
         }
-        
-        
         $this->info('Orders who\'s fully paid marks as completed');
     }
 }

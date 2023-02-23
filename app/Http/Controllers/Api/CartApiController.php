@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Auth\User\User;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\OccasionEvent;
@@ -11,8 +12,10 @@ use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\OrderSplit;
 use App\Models\PaymentDetails;
+use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CartApiController extends Controller
 {
@@ -189,6 +192,23 @@ class CartApiController extends Controller
             $orderSplit->amount = $order->total_amount / 2;
             $orderSplit->status = 'pending';
             $orderSplit->save();
+        }
+        $data = $request->order;
+
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/reservation', [
+                'transaction' => $data['items'],
+                'status' => 'pending'
+            ]);
+        $response = [
+            "status" => "success",
+            "message" => "Your order has been placed",
+            "data" => [$data['items']]
+        ];
+        if($order) {
+            $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+            NotificationUtility::sendNotification($order->status, $order->timeline, $fcmTokens, $response);
         }
 
         return sendResponse(['reference_no' => $order->reference_no], 'Order has been placed successfully!');

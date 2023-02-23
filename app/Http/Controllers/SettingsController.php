@@ -46,8 +46,8 @@ class SettingsController extends Controller
         $timeline = 'processing';
         switch ($data['action']){
             case 'accept':
-                $status = 'accepted';
-                $timeline = 'order-accepted';
+                $status = 'processing';
+                $timeline = 'processing';
                 break;
             case 'decline':
                 $status = 'declined';
