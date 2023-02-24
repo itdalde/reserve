@@ -8,6 +8,7 @@ use App\Models\OrderSplit;
 use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class CompletedOrder extends Command
 {

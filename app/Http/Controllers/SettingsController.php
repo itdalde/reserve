@@ -17,6 +17,7 @@ use Google\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\VarDumper\VarDumper;
 
 class SettingsController extends Controller
 {
@@ -76,9 +77,12 @@ class SettingsController extends Controller
                         'transaction' => $item->toArray(),
                         'status' => $status
                     ]);
+
                 $response = [
+                    "type" => "order-update",
+                    "title" => "Order Status Update",
                     "status" => "success",
-                    "message" => "Transactions Successfully Released!",
+                    "message" => "Your order $order->reference_no has been updated",
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
@@ -108,8 +112,10 @@ class SettingsController extends Controller
                             'status' => $status
                         ]);
                     $response = [
+                        "type" => "order-update",
+                        "title" => "Order Status Update",
                         "status" => "success",
-                        "message" => "Transactions Successfully Released!",
+                        "message" => "Your order $order->reference_no has been updated",
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
@@ -123,7 +129,6 @@ class SettingsController extends Controller
                 $order->reason = isset($data['reason']) ? $data['reason'] : '';
                 $order->save();
             } else {
-
                 $item = OrderItems::where('id',$data['id'])->first();
                 $item->status = $status;
                 $item->reason = isset($data['reason']) ? $data['reason'] : '';
@@ -146,8 +151,10 @@ class SettingsController extends Controller
                         'status' => $status
                     ]);
                 $response = [
+                    "type" => "order-update",
+                    "title" => "Order Status Update",
                     "status" => "success",
-                    "message" => "Transactions Successfully Released!",
+                    "message" => "Your order $order->reference_no has been updated",
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
@@ -155,6 +162,10 @@ class SettingsController extends Controller
                     NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
                 }
             }
+        }
+
+        if($request->ajax()){
+            return json_encode($item);
         }
         return redirect::back()->with(['signup' => 'success' ,'order_item' => $item]);
     }

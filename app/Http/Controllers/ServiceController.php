@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ServiceInterface;
+use App\Models\AvailableDates;
 use App\Models\EventImages;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
@@ -63,8 +64,27 @@ class ServiceController extends Controller
             $service->max_capacity = $data['max_capacity'];
             $service->min_capacity = $data['min_capacity'];
             $service->availability_slot = $data['available_slot'];
-            $service->availability_start_date = $data['start_available_date'];
-            $service->availability_end_date = $data['end_available_date'];
+            $data['start_available_time'] ? $service->availability_time_in = $data['start_available_time'] : '';
+            $data['end_available_time'] ? $service->availability_time_out = $data['end_available_time'] : '';
+            AvailableDates::where('service_id',$data['id'])->delete();
+            $availableDates = explode(',',$data['available_date']);
+            $unavailableDates = explode(',',$data['un_available_date']);
+            foreach ($availableDates as $availableDate) {
+                $avail = new AvailableDates();
+                $avail->date = $availableDate;
+                $avail->service_id = $data['id'];
+                $avail->company_id = auth()->user()->company->id;
+                $avail->status = 1;
+                $avail->save();
+            }
+            foreach ($unavailableDates as $availableDate) {
+                $avail = new AvailableDates();
+                $avail->date = $availableDate;
+                $avail->service_id = $data['id'];
+                $avail->company_id = auth()->user()->company->id;
+                $avail->status = 0;
+                $avail->save();
+            }
             if ($request->file('images')) {
                 foreach ($request->file('images') as $file) {
                     $this->uploadImage($file, $service);
@@ -185,14 +205,32 @@ class ServiceController extends Controller
         $service->max_capacity = $data['max_capacity'];
         $service->min_capacity = $data['min_capacity'];
         $service->availability_slot = $data['available_slot'];
-        $service->availability_start_date = $data['start_available_date'];
-        $service->availability_end_date = $data['end_available_date'];
         $service->availability_time_in = $data['start_available_time'];
         $service->availability_time_out = $data['end_available_time'];
+
+        $availableDates = explode(',',$data['start_available_date']);
+        $unavailableDates = explode(',',$data['end_available_time']);
+        $service->availability_start_date = $availableDates && isset($availableDates[0]) ? date('Y-m-d H:i:s', strtotime($availableDates[0]))  : date('Y-m-d H:i:s');;
+        $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s', strtotime(end($availableDates))) : date('Y-m-d H:i:s');;
         $service->active = 1;
         $service->service_type = $data['service_type'];
         $service->save();
-
+        foreach ($availableDates as $availableDate) {
+            $avail = new AvailableDates();
+            $avail->date = $availableDate;
+            $avail->service_id = $service->id;
+            $avail->company_id = auth()->user()->company->id;
+            $avail->status = 1;
+            $avail->save();
+        }
+        foreach ($unavailableDates as $availableDate) {
+            $avail = new AvailableDates();
+            $avail->date = $availableDate;
+            $avail->service_id = $service->id;
+            $avail->company_id = auth()->user()->company->id;
+            $avail->status = 0;
+            $avail->save();
+        }
         if ($request->file('images')) {
             foreach ($request->file('images') as $file) {
                 $this->uploadImage($file, $service);

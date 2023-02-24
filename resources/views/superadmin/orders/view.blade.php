@@ -17,7 +17,8 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6">Name</div>
-                                <div class="col-sm-6">{{$order['user']['first_name'] . ' ' .$order['user']['last_name']}}</div>
+                                <div
+                                    class="col-sm-6">{{$order['user']['first_name'] . ' ' .$order['user']['last_name']}}</div>
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -69,7 +70,8 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-sm-6">Schedule</div>
-                                    <div class="col-sm-6">{{$item['schedule_start_datetime'] }}- {{$item['schedule_end_datetime']}}</div>
+                                    <div class="col-sm-6">{{$item['schedule_start_datetime'] }}
+                                        - {{$item['schedule_end_datetime']}}</div>
                                 </div>
                             </li>
                             <li class="list-group-item">
@@ -127,14 +129,17 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6">Payment URL</div>
-                                <div class="col-sm-6"><a href="{{$order['payment_details']['payment_url'] }}">Go To Skipcash</a></div>
+                                <div class="col-sm-6"><a href="{{$order['payment_details']['payment_url'] }}">Go To
+                                        Skipcash</a></div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 mb-2">
+        <div
+            class="col-sm-6 mb-2 {{  $order['status'] == 'cancelled' ||$order['status'] == 'completed' || $order['status'] == 'declined' ? 'd-none' :''}}">
+
             <div class="card border-success ">
                 <div class="card-body">
                     <h3>Admin action</h3>
@@ -142,13 +147,16 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6">Reason</div>
-                                <div class="col-sm-6"><textarea name="reason" id="reason" cols="30" rows="10"></textarea></div>
+                                <div class="col-sm-6"><textarea name="reason" id="reason" cols="30"
+                                                                rows="10"></textarea></div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6"></div>
-                                <div class="col-sm-6"><button class="btn btn-orange">Cancel </button></div>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-orange">Cancel</button>
+                                </div>
                             </div>
                         </li>
                     </ul>

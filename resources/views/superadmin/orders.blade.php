@@ -10,7 +10,6 @@
                     <th scope="col">Contact Details</th>
                     <th scope="col">Reference No.</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Timeline</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Action</th>
@@ -24,8 +23,32 @@
                         <td>{{$order['user'] ? $order['user']['first_name'] .' ' .$order['user']['last_name'] : ''}}</td>
                         <td>{{$order['contact_details'] }}</td>
                         <td>{{$order['reference_no'] }}</td>
-                        <td>{{$order['status']}}</td>
-                        <td>{{$order['timeline']}}</td>
+                        <td> @switch($order['status'])
+                                @case('pending')
+                                <span
+                                    class="w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
+                                @break
+                                @case('processing')
+                                <span
+                                    class="w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
+                                @break
+                                @case('declined')
+                                <span
+                                    class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                @break
+                                @case('completed')
+                                <span
+                                    class="w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
+                                @break
+                                @case('cancelled')
+                                <span
+                                    class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                <br> |-> <small>{{$order['reason']}}</small>
+                                @break
+                                @default
+                                <span
+                                    class="w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
+                            @endswitch</td>
                         <td>QAD {{ number_format($order['total_amount'],2)}}</td>
                         <td>{{$order['total_items']}}</td>
                         <td>
@@ -45,7 +68,7 @@
                                     </button>
                                 </div>
                                 <div
-                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
+                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'completed' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
                                     <button type="button"
                                             class="btn btn-action btn-warning btn-complete-order  "
                                             data-id="{{$order['id']}}" data-action="complete">
@@ -85,20 +108,20 @@
                     $('#loader').hide();
                     switch (action) {
                         case 'accept':
-                            $('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
-                            $('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'decline':
-                            $(' .btn-cancel-order').closest('div').removeClass('d-none');
-                            $('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find(' .btn-cancel-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'complete':
-                            $('.btn-complete-order').closest('div').removeClass('d-none');
-                            $('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
                             break;
                         case 'cancel':
-                            $('.btn-cancel-order').closest('div').removeClass('d-none');
-                            $('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            $(that).closest('td').find('.btn-cancel-order').closest('div').removeClass('d-none');
+                            $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                     }
                 })

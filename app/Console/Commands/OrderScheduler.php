@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class OrderScheduler extends Command
 {
@@ -51,7 +52,7 @@ class OrderScheduler extends Command
             ];
             $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
             NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
-        }   
+        }
         $this->info('Notification invoke for users');
     }
 }

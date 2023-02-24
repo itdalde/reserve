@@ -130,7 +130,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 mb-2">
+        <div class="col-sm-6 mb-2 {{  $order['status'] == 'cancelled' ||$order['status'] == 'completed' || $order['status'] == 'declined' ? 'd-none' :''}}">
             <div class="card border-success ">
                 <div class="card-body">
                     <h3>Admin action</h3>
