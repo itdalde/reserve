@@ -193,24 +193,6 @@ class CartApiController extends Controller
             $orderSplit->status = 'pending';
             $orderSplit->save();
         }
-        $data = $request->order;
-
-        Http::timeout(10)
-            ->withOptions(['verify' => false])
-            ->post('http://reservegcc.com:3000/reservation', [
-                'transaction' => $data['items'],
-                'status' => 'pending'
-            ]);
-        $response = [
-            "status" => "success",
-            "message" => "Your order has been placed",
-            "data" => [$data['items']]
-        ];
-        if($order) {
-            $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-            NotificationUtility::sendNotification($order->status, $order->timeline, $fcmTokens, $response);
-        }
-
         return sendResponse(['reference_no' => $order->reference_no], 'Order has been placed successfully!');
     }
 }
