@@ -33,28 +33,28 @@
                                             @switch($order['status'])
                                                 @case('pending')
                                                 <span
-                                                    class="w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
+                                                    class="status-field w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
                                                 @break
                                                 @case('processing')
                                                 <span
-                                                    class="w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
+                                                    class="status-field w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
                                                 @break
                                                 @case('declined')
                                                 <span
-                                                    class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                    class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
                                                 @break
                                                 @case('completed')
                                                 <span
-                                                    class="w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
+                                                    class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
                                                 @break
                                                 @case('cancelled')
                                                 <span
-                                                    class="w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                    class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
                                                 <br> |-> <small>{{$order['reason']}}</small>
                                                 @break
                                                 @default
                                                 <span
-                                                    class="w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
+                                                    class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
                                             @endswitch
 
                                         </td>
@@ -160,18 +160,22 @@
                     $('#loader').hide();
                     switch (action) {
                         case 'accept':
+                            $(that).closest('tr').find('.status-field').text('processing')
                             $(that).closest('td').find('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'decline':
+                            $(that).closest('tr').find('.status-field').text('declined')
                             $(that).closest('td').find(' .btn-cancel-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'complete':
+                            $(that).closest('tr').find('.status-field').text('completed')
                             $(that).closest('td').find('.btn-complete-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
                             break;
                         case 'cancel':
+                            $(that).closest('tr').find('.status-field').text('cancelled')
                             $(that).closest('td').find('.btn-cancel-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;

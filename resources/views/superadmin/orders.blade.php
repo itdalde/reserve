@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('content')
     <h3>Customer Orders</h3>
-    <div class="card" >
+    <div class="card">
         <div class="card-body">
             <table class="table" id="user-table">
                 <thead>
@@ -76,9 +76,11 @@
                                     </button>
                                 </div>
                                 <div class="px-2">
-                                    <a href="{{route('orders.admin.view',['id'=> $order['id']])}}" class="btn btn-outline-info">View</a>
+                                    <a href="{{route('orders.admin.view',['id'=> $order['id']])}}"
+                                       class="btn btn-outline-info">View</a>
                                 </div>
-                            </div> </td>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -89,7 +91,7 @@
 
 @section('content_javascript')
     <script type="text/javascript">
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('body').on('click', '.btn-action', function () {
                 let action = $(this).attr('data-action');
                 let id = $(this).attr('data-id');
@@ -97,7 +99,7 @@
                 $.ajax({
                     url: "{{route('settings.update-status-order')}}",
                     method: "POST",
-                    data: {action, id, is_order:1},
+                    data: {action, id, is_order: 1},
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -108,18 +110,22 @@
                     $('#loader').hide();
                     switch (action) {
                         case 'accept':
+                            $(that).closest('tr').find('.status-field').text('processing')
                             $(that).closest('td').find('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'decline':
+                            $(that).closest('tr').find('.status-field').text('declined')
                             $(that).closest('td').find(' .btn-cancel-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'complete':
+                            $(that).closest('tr').find('.status-field').text('completed')
                             $(that).closest('td').find('.btn-complete-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
                             break;
                         case 'cancel':
+                            $(that).closest('tr').find('.status-field').text('cancelled')
                             $(that).closest('td').find('.btn-cancel-order').closest('div').removeClass('d-none');
                             $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
@@ -130,10 +136,10 @@
             let datatable = $('#user-table').DataTable({
                 "pageLength": 10,
             });
-            $('#user-table').on('error.dt', function(e, settings, techNote, message) {
-                console.log( 'An error has been reported by DataTables: ', message);
+            $('#user-table').on('error.dt', function (e, settings, techNote, message) {
+                console.log('An error has been reported by DataTables: ', message);
             })
             $('#user-table_length').remove();
-        } );
+        });
     </script>
 @endsection
