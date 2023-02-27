@@ -87,7 +87,7 @@ class SettingsController extends Controller
                 ];
                 if($order) {
                     $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                    NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+                    NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been updated", $fcmTokens, $response);
                 }
             }
             $order = Order::where('id',$item->order_id)->first();
@@ -120,7 +120,7 @@ class SettingsController extends Controller
                     ];
                     if($order) {
                         $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                        NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+                        NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been updated", $fcmTokens, $response);
                     }
                 }
                 $order = Order::where('id',$item->order_id)->first();
@@ -159,7 +159,7 @@ class SettingsController extends Controller
                 ];
                 if($order) {
                     $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                    NotificationUtility::sendNotification($status, $timeline, $fcmTokens, $response);
+                    NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been updated", $fcmTokens, $response);
                 }
             }
         }
