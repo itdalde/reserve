@@ -19,7 +19,6 @@
 <link href="{{asset('assets/libs/@mdi/font/css/materialdesignicons.min.css')}}" rel="stylesheet" />
 <link href="{{asset('assets/libs/prismjs/themes/prism-okaidia.css')}}" rel="stylesheet">
 
-
 <!-- Theme CSS -->
 <link rel="stylesheet" href="{{asset('assets/css/theme.min.css')}}">
 <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
