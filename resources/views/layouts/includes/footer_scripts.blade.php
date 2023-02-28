@@ -65,7 +65,7 @@
         const socket = io.connect('http://reservegcc.com:3000/reservation', { 'force new connection' : true })
         socket.on('reservation', (msg) => {
             console.log(msg)
-            toastr.success('Order is'+msg.status, 'Order updated')
+            toastr.success('Order is ' + msg.data.status, 'Order updated')
         });
 
     });
