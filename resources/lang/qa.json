@@ -174,5 +174,13 @@
   "views.membership.table_header_5": "Expires",
   "views.membership.table_header_6": "Actions",
   "views.membership.valid": "valid",
-  "views.membership.not_valid": "not valid"
+  "views.membership.not_valid": "not valid",
+
+  "notification.order.approved": ", تمت الموافقة على طلبك، !ﻣبروك .يرجى اتمام دفع العربون لتأكيد الطلب",
+  "notification.order.cancelled": "نأسف ﻹبﻼغك بأنه ﻻ يمكن ﻣعالجة للحصول على.طلبك وتم إلغاؤه .إزعاج",
+  "notification.order.completed": "نأﻣل أن تكون.شكرا لك على ثقتك بنا ﻗد ﺣصلت على تجربة تليق بك! نسعدان نكون جزء ﻣن ﻣناسباتكم",
+  "notification.item.in.cart": "صعب تختار؟ فريق الكونسيرج جاهزين للمساعدة تواصل معانا للمساعدة",
+  "notification.first.reminder": ", تمت الموافقة على طلبك ، !ﻣبروك.يرجى اتمام دفع العربون لتأكيد الطلب",
+  "notification.second.reminder": "!!!تذكير لم يتم سداد المبلغ المستحق يرجى منكم .اتمام عملية الشراء لتفادي اي تاخير",
+  "notification.third.reminder": "!!!تذكير نهائي يرجى اتمام عملية الشراء ودفع الباقي .المستحق لتفادي اي تاخير"
 }

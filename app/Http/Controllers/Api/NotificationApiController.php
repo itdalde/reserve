@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
+use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use App\Models\Order;
@@ -8,6 +10,7 @@ use App\Models\OrderSplit;
 use App\Utility\NotificationUtility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class NotificationApiController extends Controller
 {
@@ -63,5 +66,11 @@ class NotificationApiController extends Controller
         NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
 
         return sendResponse('Notificatin Invoke', 'User order pending');
+    }
+
+    public function getTranslation(Request $request)
+    {
+        $translation = GeneralHelper::getTranslation($request->locale, $request->key);
+        return sendResponse($translation, 'Translated response');
     }
 }
