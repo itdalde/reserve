@@ -154,37 +154,22 @@
                     },
                 }).done(function (response) {
                     $('#loader').hide();
+                    let tr = $(that).closest('tr');
+                    let status = tr.find('.status-field');
                     switch (action) {
                         case 'accept':
-                            $(that).closest('tr').find('.status-field')
-                                .removeClass('bg-warning bg-danger bg-success bg-danger ')
-                                .addClass('.bg-secondary')
-                                .text('processing')
-                            $(that).closest('td').find('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
-                            $(that).closest('td').find('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            status.removeClass('bg-warning bg-danger bg-success').addClass('bg-secondary').text('processing')
+                            tr.find('.btn-complete-order, .btn-cancel-order').closest('div').removeClass('d-none');
+                            tr.find('.btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'decline':
-                            $(that).closest('tr').find('.status-field')
-                                .removeClass('bg-warning bg-secondary bg-success bg-danger ')
-                                .addClass('.bg-danger')
-                                .text('declined')
-                            $(that).closest('td').find(' .btn-cancel-order').closest('div').removeClass('d-none');
-                            $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            status.removeClass('bg-warning bg-secondary bg-success ').addClass('bg-danger').text('declined')
+                            tr.find(' .btn-cancel-order').closest('div').removeClass('d-none');
+                            tr.find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
                             break;
                         case 'complete':
-                            $(that).closest('tr').find('.status-field')
-                                .removeClass('bg-warning bg-secondary bg-danger bg-danger ')
-                                .addClass('.bg-success')
-                                .text('completed')
-                            $(that).closest('td').find('.btn-complete-order').closest('div').removeClass('d-none');
-                            $(that).closest('td').find('.btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
-                            break;
-                        case 'cancel':
-                            $(that).closest('tr').find('.status-field')
-                                .removeClass('bg-warning bg-secondary bg-success bg-danger ')
-                                .addClass('.bg-danger').text('cancelled')
-                            $(that).closest('td').find('.btn-cancel-order').closest('div').removeClass('d-none');
-                            $(that).closest('td').find('.btn-complete-order, .btn-accept-order, .btn-decline-order').closest('div').addClass('d-none');
+                            status.removeClass('bg-warning bg-secondary bg-danger ').addClass('bg-success').text('completed')
+                            tr.find('.btn-complete-order, .btn-accept-order, .btn-decline-order, .btn-cancel-order').closest('div').addClass('d-none');
                             break;
                     }
                 })
