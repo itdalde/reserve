@@ -34,7 +34,7 @@
   }
 
   /**
-   * Easy on scroll event listener 
+   * Easy on scroll event listener
    */
   const onscroll = (el, listener) => {
     el.addEventListener('scroll', listener)
@@ -59,6 +59,27 @@
   }
   window.addEventListener('load', navbarlinksActive)
   onscroll(document, navbarlinksActive)
+
+    /**
+     * Navbar links active state on scroll
+     */
+    let navbarFooterlinks = select('#navbar-footer .scrollto', true)
+    const navbarFooterlinksActive = () => {
+        let position = window.scrollY + 200
+        navbarlinks.forEach(navbarlink => {
+            if (!navbarlink.hash) return
+            let section = select(navbarlink.hash)
+            if (!section) return
+            if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+                navbarlink.classList.add('active')
+            } else {
+                navbarlink.classList.remove('active')
+            }
+        })
+    }
+    window.addEventListener('load', navbarFooterlinksActive)
+    onscroll(document, navbarFooterlinksActive)
+
 
   /**
    * Scrolls to an element with header offset
@@ -106,23 +127,35 @@
     onscroll(document, toggleBacktotop)
   }
 
-  /**
-   * Mobile nav toggle
-   */
-  on('click', '.mobile-nav-toggle', function(e) {
-    select('#navbar').classList.toggle('navbar-mobile')
-    this.classList.toggle('bi-list')
-    this.classList.toggle('bi-x')
-  })
+    /**
+     * Mobile nav toggle
+     */
+    on('click', '.toggle-mobile-top', function(e) {
+        select('#navbar').classList.toggle('navbar-mobile')
+        this.classList.toggle('bi-list')
+        this.classList.toggle('bi-x')
+    })
+    /**
+     * Mobile nav toggle
+     */
+    on('click', '.toggle-mobile-footer', function(e) {
+        select('#navbar-footer').classList.toggle('navbar-mobile')
+        this.classList.toggle('bi-list')
+        this.classList.toggle('bi-x')
+    })
 
   /**
    * Mobile nav dropdowns activate
    */
   on('click', '.navbar .dropdown > a', function(e) {
-    if (select('#navbar').classList.contains('navbar-mobile')) {
-      e.preventDefault()
-      this.nextElementSibling.classList.toggle('dropdown-active')
-    }
+      if (select('#navbar').classList.contains('navbar-mobile')) {
+          e.preventDefault()
+          this.nextElementSibling.classList.toggle('dropdown-active')
+      }
+      if (select('#navbar-footer').classList.contains('navbar-mobile')) {
+          e.preventDefault()
+          this.nextElementSibling.classList.toggle('dropdown-active')
+      }
   }, true)
 
   /**
@@ -132,13 +165,20 @@
     if (select(this.hash)) {
       e.preventDefault()
 
-      let navbar = select('#navbar')
-      if (navbar.classList.contains('navbar-mobile')) {
-        navbar.classList.remove('navbar-mobile')
-        let navbarToggle = select('.mobile-nav-toggle')
-        navbarToggle.classList.toggle('bi-list')
-        navbarToggle.classList.toggle('bi-x')
-      }
+        let navbar = select('#navbar')
+        if (navbar.classList.contains('navbar-mobile')) {
+            navbar.classList.remove('navbar-mobile')
+            let navbarToggle = select('.toggle-mobile-top')
+            navbarToggle.classList.toggle('bi-list')
+            navbarToggle.classList.toggle('bi-x')
+        }
+        let navbarFooter = select('#navbar-footer')
+        if (navbarFooter.classList.contains('navbar-mobile')) {
+            navbarFooter.classList.remove('navbar-mobile')
+            let navbarToggle = select('.toggle-mobile-footer')
+            navbarToggle.classList.toggle('bi-list')
+            navbarToggle.classList.toggle('bi-x')
+        }
       scrollto(this.hash)
     }
   }, true)
@@ -186,7 +226,7 @@
   });
 
   /**
-   * Initiate portfolio lightbox 
+   * Initiate portfolio lightbox
    */
   const portfolioLightbox = GLightbox({
     selector: '.portfolio-lightbox'

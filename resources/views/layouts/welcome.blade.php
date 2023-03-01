@@ -22,8 +22,8 @@
         <link href="{{ asset('assets/landing/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('assets/landing/css/mobile.style.css')}}" rel="stylesheet">
+        <link href="{{ asset('assets/landing/css/style.css?v-1') }}" rel="stylesheet">
+        <link href="{{ asset('assets/landing/css/mobile.style.css?v-1')}}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css" integrity="sha512-uvXdJud8WaOlQFjlz9B15Yy2Au/bMAvz79F7Xa6OakCl2jvQPdHD0hb3dEqZRdSwG4/sknePXlE7GiarwA/9Wg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     </head>
@@ -73,7 +73,7 @@
                         </div>
                     </li>
                 </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
+                <i class="bi bi-list mobile-nav-toggle toggle-mobile-top"></i>
 
             </nav><!-- .navbar -->
         </div>
@@ -248,6 +248,6 @@
     <script src="{{ asset('assets/landing/vendor/php-email-form/validate.js') }}"></script>
 
     <!-- Template Main JS File -->
-    <script src="{{ asset('assets/landing/js/main.js') }}"></script>
+    <script src="{{ asset('assets/landing/js/main.js?v=1.0') }}"></script>
     </body>
 </html>
