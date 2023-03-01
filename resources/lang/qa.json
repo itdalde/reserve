@@ -6,7 +6,7 @@
   "auth.failed": "These credentials do not match our records.",
   "auth.throttle": "Too many login attempts. Please try again in :seconds seconds.",
   "auth.active": "Your account has been suspended",
-  "auth.notconfirmed": "Your account is not confirmed. ",
+  "auth.notconfirmed": "Your account is not confirmed.",
   "auth.confirmed": "Your account confirmed.",
   "auth.confirm": "A confirmation email has been sent.",
   "auth.need_confirm": "Please confirm your e-mail address, confirmation sent to your email.",
@@ -49,8 +49,8 @@
   "views.auth.login.copyright": "All rights reserved",
   "**************************** Registration Form **************": "Registration Form i18n",
   "views.auth.register.header": "Create account",
-    "views.auth.register.first_name": "First Name",
-    "views.auth.register.last_name": "Last Name",
+  "views.auth.register.first_name": "First Name",
+  "views.auth.register.last_name": "Last Name",
   "views.auth.register.input_1": "E-Mail address",
   "views.auth.register.input_2": "Password",
   "views.auth.register.input_3": "Confirm password",
@@ -175,12 +175,11 @@
   "views.membership.table_header_6": "Actions",
   "views.membership.valid": "valid",
   "views.membership.not_valid": "not valid",
-
-  "notification.order.approved": ", تمت الموافقة على طلبك، !ﻣبروك .يرجى اتمام دفع العربون لتأكيد الطلب",
+  "notification.order.approved": " تمت الموافقة على طلبك، !ﻣبروك .يرجى اتمام دفع العربون لتأكيد الطلب ,",
   "notification.order.cancelled": "نأسف ﻹبﻼغك بأنه ﻻ يمكن ﻣعالجة للحصول على.طلبك وتم إلغاؤه .إزعاج",
   "notification.order.completed": "نأﻣل أن تكون.شكرا لك على ثقتك بنا ﻗد ﺣصلت على تجربة تليق بك! نسعدان نكون جزء ﻣن ﻣناسباتكم",
   "notification.item.in.cart": "صعب تختار؟ فريق الكونسيرج جاهزين للمساعدة تواصل معانا للمساعدة",
-  "notification.first.reminder": ", تمت الموافقة على طلبك ، !ﻣبروك.يرجى اتمام دفع العربون لتأكيد الطلب",
-  "notification.second.reminder": "!!!تذكير لم يتم سداد المبلغ المستحق يرجى منكم .اتمام عملية الشراء لتفادي اي تاخير",
-  "notification.third.reminder": "!!!تذكير نهائي يرجى اتمام عملية الشراء ودفع الباقي .المستحق لتفادي اي تاخير"
+  "notification.first.reminder": " تمت الموافقة على طلبك ، !ﻣبروك.يرجى اتمام دفع العربون لتأكيد الطلب",
+  "notification.second.reminder": "!!!تذكير لم يتم سداد المبلغ المستحق يرجى منكم .اتمام عملية الشراء لتفادي اي تاخير ,",
+  "notification.final.reminder": "!!!تذكير نهائي يرجى اتمام عملية الشراء ودفع الباقي .المستحق لتفادي اي تاخير"
 }
