@@ -52,7 +52,7 @@
                                  @endif
                                     <li><a class="nav-link scrollto " href="{{ url('/login') }}">{{__('home.login')}}</a></li>
                             @else
-                                @if(auth()->user()->hasRole('administrator'))
+                                @if(auth()->user())
                                 <li><a class="nav-link scrollto " href="{{ url('/admin') }}">{{ __('views.welcome.admin') }}</a></li>
                                 @endif
                                     <li><a class="nav-link scrollto " href="{{ url('/logout') }}">{{ __('views.welcome.logout') }}</a></li>
