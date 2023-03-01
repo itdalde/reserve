@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\AuditTrail;
 use App\Models\OrderSplit;
+use Illuminate\Support\Facades\File;
 
 class GeneralHelper
 {
@@ -35,5 +36,19 @@ class GeneralHelper
     private static function paymentFailed($code)
     {
         return $code == 3 ? 'Cancelled' : 'Failed';
+    }
+
+    public static function getTranslation($locale, $key)
+    {
+        $lang = File::get(resource_path('lang/'. $locale .'.json'));
+        $decoded_lang = json_decode($lang, true);
+        $translation = $decoded_lang;
+        if ($key)
+        {
+            $translation = $decoded_lang[$key];
+        }
+
+        return $translation;
+        
     }
 }

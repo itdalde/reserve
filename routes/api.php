@@ -150,6 +150,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/pending-order/{user_id}', [NotificationApiController::class, 'invokeNotificationByUser'])->name('invoke-pending-order-by-user');
     });
 
+    Route::group(['prefix' => 'locale', 'middleware' => ['cors']], function() {
+        Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
+        Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
+    });
+    
+
     Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
         Route::get('/', [OrderApiController::class, 'executeCommand'])->name('order-apis');
     });

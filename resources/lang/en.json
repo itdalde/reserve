@@ -173,5 +173,12 @@
   "views.membership.table_header_4": "Status",
   "views.membership.table_header_5": "Expires",
   "views.membership.table_header_6": "Actions",
-  "views.membership.valid": "valid"
+  "views.membership.valid": "valid",
+  "notification.order.approved": "Congratulations! Your order has been approved Please pay the 50% deposit to confirm it.",
+  "notification.order.cancelled": "We regret to inform you that your order has been cancelled. Please reach out to us to discuss other options.",
+  "notification.order.completed": "Thank you for trusting us. We value your loyalty & look forward to serving you again soon!",
+  "notification.item.in.cart": "It looks like you are not sure what you want! Let us help you reach out to our team",
+  "notification.first.reminder": "Don't miss out! Secure your delivery with your final payment now. Pay the remaining balance to complete your order ",
+  "notification.second.reminder": "Hi there, just a reminder that we haven't received your payment yet. Click to complete the payment and avoid any further delays. Thank you!",
+  "notification.third.reminder": "Attention! Your order is awaiting final payment. Act now and secure your items with our hassle-free checkout Don’t miss out!"
 }
