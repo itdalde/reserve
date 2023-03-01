@@ -181,5 +181,21 @@
   "notification.item.in.cart": "It looks like you are not sure what you want! Let us help you reach out to our team",
   "notification.first.reminder": "Don't miss out! Secure your delivery with your final payment now. Pay the remaining balance to complete your order",
   "notification.second.reminder": "Hi there just a reminder that we haven't received your payment yet. Click to complete the payment and avoid any further delays. Thank you!",
-  "notification.final.reminder": "Attention! Your order is awaiting final payment. Act now and secure your items with our hassle-free checkout Don’t miss out!"
+  "notification.final.reminder": "Attention! Your order is awaiting final payment. Act now and secure your items with our hassle-free checkout Don’t miss out!",
+  "order.completed": "Order Completed",
+  "order.completed.message": "Your order is completed",
+  "order.pending": "Order Pending",
+  "order.pending.message": "You have pending item in your cart",
+  "order.status.update": "Order status update",
+  "order.status.update.message": "Your order  with  reference no of __reference_no__ has been updated.",
+  "company.updated.successfully": "Company updated successfully",
+  "status.updated.successfully": "Status updated successfully",
+  "service.type.deleted.successfully": "Service Type deleted successfully",
+  "company": "Company",
+  "action.updated": "Updated",
+  "action.deleted": "Deleted",
+  "action.created": "Created",
+  "success": "Successfully",
+  "service.type": "Service Type",
+  "user": "User"
 }
