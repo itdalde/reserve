@@ -60,13 +60,13 @@ class OrderScheduler extends Command
             foreach ($order->items as $item) {
                 $item->status = 'cancelled';
                 $item->timeline = 'order-cancelled';
-                $item->reason = 'No payment beyond 24 hours after order was placed';
+                $item->reason = 'No Deposit Paid';
                 $item->save();
 
             }
             $order->status = 'cancelled';
             $order->timeline = 'order-cancelled';
-            $order->reason = 'No payment beyond 24 hours after order was placed';
+            $order->reason = 'No Deposit Paid';
             $order->save();
             $response = [
                 "type" => "order-update",
