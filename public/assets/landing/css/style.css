@@ -298,12 +298,20 @@ h6 {
   z-index: 999;
 }
 
-.navbar-mobile .mobile-nav-toggle {
-  position: absolute;
-  top: 15px;
-  right: 15px;
+.navbar-mobile .toggle-mobile-top {
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
 
+.navbar-mobile .toggle-mobile-footer {
+    position: absolute;
+    top: 322px;
+    right: 15px;
+}
+#footer ul {
+    top: 26em;
+}
 .navbar-mobile ul {
   display: block;
   position: absolute;

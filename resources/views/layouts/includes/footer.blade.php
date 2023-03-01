@@ -9,14 +9,14 @@
                         <a href="/"><img src="{{ asset('assets/landing/img/Logo.png') }}" alt="" class="img-fluid"></a>
                     </div>
 
-                    <nav id="navbar" class="navbar order-last order-lg-0">
+                    <nav id="navbar-footer" class="navbar order-last order-lg-0">
                         <ul>
                             <li><a class="nav-link" href="{{route('terms-condition')}}">{{__('home.Terms and Conditions')}}</a></li>
                             <li><a class="nav-link" href="{{route('privacy')}}">{{__('home.Privacy Policy')}}</a></li>
                             <li><a class="nav-link" href="{{route('faq')}}">{{__('home.FAQs')}}</a></li>
                             <li><a class="nav-link" href="{{route('help')}}">{{__('home.Help')}}</a></li>
                         </ul>
-                        <i class="bi bi-list mobile-nav-toggle"></i>
+                        <i class="bi bi-list mobile-nav-toggle toggle-mobile-footer"></i>
                     </nav><!-- .navbar -->
                 </div>
             </div>
