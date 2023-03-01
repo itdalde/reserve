@@ -51,4 +51,12 @@ class GeneralHelper
         return $translation;
         
     }
+
+    public static function getConcatTranslation($locale, $type, $action, $status)
+    {
+        $lang = File::get(resource_path('lang/'. $locale .'.json'));
+        $decoded_lang = json_decode($lang, true);
+        $translation = $decoded_lang[$type] . ' ' . $decoded_lang[$action] . ' ' . $decoded_lang[$status];
+        return $translation;
+    }
 }
