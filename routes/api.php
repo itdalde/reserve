@@ -153,6 +153,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'locale', 'middleware' => ['cors']], function() {
         Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
         Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
+        Route::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])->name('get-current-language');
     });
     
 

@@ -73,4 +73,11 @@ class NotificationApiController extends Controller
         $translation = GeneralHelper::getTranslation($request->locale, $request->key);
         return sendResponse($translation, 'Translated response');
     }
+
+    public function getCurrentLanguage(Request $request)
+    {
+        $lang = $request['lang'];
+        $translation = GeneralHelper::getTranslation($lang);
+        return sendResponse($translation, 'Translated response');
+    }
 }

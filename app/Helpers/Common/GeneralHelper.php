@@ -38,7 +38,7 @@ class GeneralHelper
         return $code == 3 ? 'Cancelled' : 'Failed';
     }
 
-    public static function getTranslation($locale, $key)
+    public static function getTranslation($locale, $key = null)
     {
         $lang = File::get(resource_path('lang/'. $locale .'.json'));
         $decoded_lang = json_decode($lang, true);
