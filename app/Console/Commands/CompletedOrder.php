@@ -68,7 +68,7 @@ class CompletedOrder extends Command
                     "data" => ['order' => $order->items ]
                 ];
                 $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-                NotificationUtility::sendNotification('Completed Order', 'Your order is completed', $fcmTokens, $response);
+                NotificationUtility::sendNotification('Order Completed', 'Your order is completed', $fcmTokens, $response);
             }
         }
         $this->info('Orders who\'s fully paid marks as completed');
