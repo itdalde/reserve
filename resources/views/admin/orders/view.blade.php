@@ -64,14 +64,26 @@
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
+                                    <div class="col-sm-6">Service Location</div>
+                                    <div class="col-sm-6">{{$item['service']['address_1'] }}</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
                                     <div class="col-sm-6">Status</div>
                                     <div class="col-sm-6">{{$item['status'] }}</div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-sm-6">Schedule</div>
-                                    <div class="col-sm-6">{{$item['schedule_start_datetime'] }}- {{$item['schedule_end_datetime']}}</div>
+                                    <div class="col-sm-6">Schedule Date</div>
+                                    <div class="col-sm-6">{{Carbon\Carbon::parse($item['schedule_start_datetime'])->format('F d, Y H:m') }} </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6">Schedule Time</div>
+                                    <div class="col-sm-6">{{Carbon\Carbon::parse($item['schedule_start_datetime'])->format('H:m') }} </div>
                                 </div>
                             </li>
                             <li class="list-group-item">

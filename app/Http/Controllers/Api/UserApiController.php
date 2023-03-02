@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class UserApiController extends Controller
 {
@@ -39,6 +40,18 @@ class UserApiController extends Controller
         $profile->update();
 
         return sendResponse($profile, "Profile Updated");
+    }
+
+    public function updateUserAppLanguage(Request $request) {
+        try {
+
+            $profile = User::where('id', $request->user_id)->first();
+            $profile->app_language = $request->lang;
+            $profile->save();
+            return sendResponse($request->all(), "Language Updated");
+        } catch (\Exception $exception) {
+            return sendError($exception->getMessage(),$request->all(), 401);
+        }
     }
 
     public function updateProfilePicture(Request $request) {

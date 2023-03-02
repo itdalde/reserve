@@ -154,8 +154,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
         Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
         Route::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])->name('get-current-language');
+        Route::post('/', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
     });
-    
+
 
     Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
         Route::get('/', [OrderApiController::class, 'executeCommand'])->name('order-apis');

@@ -30,13 +30,14 @@ class OrderController extends Controller
         $occasionTypes =  Occasion::all()->toArray();
         $plan = PlanType::all()->toArray();
         $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
-        $futureOrders = OrderItems::whereIn('service_id',$services)
-            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
 
         $orders = OrderItems::whereIn('service_id',$services)
-            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
-
-        return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders','futureOrders' ));
+            ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user', 'order.splitOrder')->get()->toArray();
+        foreach ($orders as $k => $order) {
+            $orders[$k]['balance'] = OrderSplit::where('order_id', $order['order']['id'])->where('status', 'pending')->sum('amount');
+            $orders[$k]['total_paid'] = OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
+        }
+        return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders' ));
     }
     public function superList() {
         $orders = Order::with('paymentMethod','user')->get()->toArray();
