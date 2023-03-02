@@ -131,7 +131,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
-        Route::post('app-language', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
         Route::put('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
         Route::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
     });
@@ -155,6 +154,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
         Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
         Route::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])->name('get-current-language');
+        Route::post('/', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
     });
 
 
