@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\EventImages;
@@ -43,6 +44,7 @@ class SettingsController extends Controller
 
     public function updateStatusOrder(Request $request) {
         $data = $request->all();
+        $locale = $request->getLocale();
         $status = 'pending';
         $timeline = 'processing';
         switch ($data['action']){
@@ -78,16 +80,19 @@ class SettingsController extends Controller
                         'status' => $status
                     ]);
 
+                $title = GeneralHelper::getTranslation($locale, 'order.status.update');
+                $orderUpdateMessage = GeneralHelper::getTranslation($locale, 'order.status.update.message');
+                $message = str_replace('__reference_no__', $order->reference_no, $orderUpdateMessage);
                 $response = [
                     "type" => "order-update",
-                    "title" => "Order Status Update",
+                    "title" => $title,
                     "status" => "success",
-                    "message" => "Your order $order->reference_no has been updated",
+                    "message" => $message,
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
                     $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                    NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been updated", $fcmTokens, $response);
+                    NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
                 }
             }
             $order = Order::where('id',$item->order_id)->first();
@@ -111,16 +116,20 @@ class SettingsController extends Controller
                             'transaction' => $item->toArray(),
                             'status' => $status
                         ]);
+
+                    $title = GeneralHelper::getTranslation($locale, 'order.status.update');
+                    $orderUpdateMessage = GeneralHelper::getTranslation($locale, 'order.status.update.message');
+                    $message = str_replace('__reference_no__', $order->reference_no, $orderUpdateMessage);                        
                     $response = [
                         "type" => "order-update",
-                        "title" => "Order Status Update",
+                        "title" => $title,
                         "status" => "success",
-                        "message" => "Your order $order->reference_no has been updated",
+                        "message" => $message,
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
                         $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                        NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been updated", $fcmTokens, $response);
+                        NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
                     }
                 }
                 $order = Order::where('id',$item->order_id)->first();
@@ -150,16 +159,19 @@ class SettingsController extends Controller
                         'transaction' => $item->toArray(),
                         'status' => $status
                     ]);
+                $title = GeneralHelper::getTranslation($locale, 'order.status.update');
+                $orderUpdateMessage = GeneralHelper::getTranslation($locale, 'order.status.update.message');
+                $message = str_replace('__reference_no__', $order->reference_no, $orderUpdateMessage);                     
                 $response = [
                     "type" => "order-update",
-                    "title" => "Order Status Update",
+                    "title" => $title,
                     "status" => "success",
-                    "message" => "Your order $order->reference_no has been updated",
+                    "message" => $message,
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
                     $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                    NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been updated", $fcmTokens, $response);
+                    NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
                 }
             }
         }
@@ -213,6 +225,7 @@ class SettingsController extends Controller
     {
         try {
             $data = $request->all();
+            $locale = $request->getLocale();
             $user = auth()->user();
             $company = $user->company;
             if ($request->file('company_image')) {
@@ -229,7 +242,8 @@ class SettingsController extends Controller
             $company->name = $data['name'];
             $company->is_custom = isset($data['is_custom']) ? 1 : 0;
             $company->save();
-            return redirect()->back()->with('success', 'Company Updated Successfully');
+            $message = GeneralHelper::getConcatTranslation($locale, 'company', 'action.updated', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -240,7 +254,10 @@ class SettingsController extends Controller
         try {
             $data = $request->all();
             Status::where('id',$data['id'])->delete();
-            return redirect()->back()->with('success', 'Company Updated Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'company', 'action.updated', 'success');
+            Status::where('id',$data['id'])->delete();
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -253,7 +270,9 @@ class SettingsController extends Controller
             $status->name = $data['name'];
             $status->active = isset($data['active']) ? 1 : 0;
             $status->save();
-            return redirect()->back()->with('success', 'Status Updated Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'company', 'action.updated', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -266,7 +285,9 @@ class SettingsController extends Controller
             $status->name = $data['name'];
             $status->active = isset($data['active']) ? 1 : 0;
             $status->save();
-            return redirect()->back()->with('success', 'Company Updated Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'company', 'action.updated', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -276,7 +297,9 @@ class SettingsController extends Controller
         try {
             $data = $request->all();
             ServiceType::where('id',$data['id'])->delete();
-            return redirect()->back()->with('success', 'Service Type Deleted Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'service.type', 'action.deleted', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -289,7 +312,9 @@ class SettingsController extends Controller
             $status->name = $data['name'];
             $status->active = isset($data['active']) ? 1 : 0;
             $status->save();
-            return redirect()->back()->with('success', 'Service Type Updated Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'service.type', 'action.updated', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -302,7 +327,9 @@ class SettingsController extends Controller
             $status->name = $data['name'];
             $status->active = isset($data['active']) ? 1 : 0;
             $status->save();
-            return redirect()->back()->with('success', 'Service Type Created Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'service.type', 'action.created', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }
@@ -334,7 +361,9 @@ class SettingsController extends Controller
                 $user->password = bcrypt($data['password']);
             }
             $user->save();
-            return redirect()->back()->with('success', 'User Updated Successfully');
+            $locale = $request->getLocale();
+            $message = GeneralHelper::getConcatTranslation($locale, 'user', 'action.updated', 'success');
+            return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
         }

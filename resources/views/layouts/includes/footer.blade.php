@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
 
-                <div class="container d-flex align-items-center">
+                <div class="container d-flex align-items-center footer-detail-container">
 
                     <div class="logo me-auto">
                         <a href="/"><img src="{{ asset('assets/landing/img/Logo.png') }}" alt="" class="img-fluid"></a>
