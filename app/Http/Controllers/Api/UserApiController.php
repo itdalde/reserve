@@ -41,6 +41,13 @@ class UserApiController extends Controller
         return sendResponse($profile, "Profile Updated");
     }
 
+    public function updateUserAppLanguage(Request $request) {
+        $profile = User::where('id', $request->user_id)->first();
+        $profile->app_language = $request->app_language;
+        $profile->save();
+        return sendResponse($request->all(), "Language Updated");
+    }
+
     public function updateProfilePicture(Request $request) {
         $profile = User::where('id', $request->user_id)->first();
         if ($request->file('profile_picture')) {
