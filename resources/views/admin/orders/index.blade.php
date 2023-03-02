@@ -29,7 +29,7 @@
                                         <td>{{$order['order'] ? $order['order']['reference_no'] : ''}}</td>
                                         <td>{{$order['service'] && $order['service']['price'] && $order['service']['price']['plan_type'] ? $order['service']['price']['plan_type']['name'] : ''}}</td>
                                         <td>{{$order['guests']}}</td>
-                                        <td>{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y H:m')}}</td>
+                                        <td>{{Carbon\Carbon::parse($order['schedule_start_datetime'])->format('F d, Y H:m')}}</td>
                                         <td>
                                             @switch($order['status'])
                                                 @case('pending')
