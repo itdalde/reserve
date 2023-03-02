@@ -83,7 +83,7 @@ class User extends Authenticatable
      */
 
     protected $fillable = ['name','fcm_token', 'email', 'password','first_name',
-        'full_name','last_name','phone_number','position','location','registration_number', 'active', 'confirmation_code', 'confirmed'];
+        'full_name','last_name','phone_number','position','location','registration_number', 'active', 'confirmation_code', 'confirmed','app_language'];
 
     /**
      * The attributes that should be hidden for arrays.

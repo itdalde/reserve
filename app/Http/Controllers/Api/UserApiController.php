@@ -43,7 +43,7 @@ class UserApiController extends Controller
 
     public function updateUserAppLanguage(Request $request) {
         $profile = User::where('id', $request->user_id)->first();
-        $profile->app_language = $request->app_language;
+        $profile->app_language = $request->lang;
         $profile->save();
         return sendResponse($request->all(), "Language Updated");
     }
