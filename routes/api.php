@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\MessageApiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
@@ -152,9 +153,13 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'locale', 'middleware' => ['cors']], function() {
         Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
-        Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
+        Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale-key');
         Route::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])->name('get-current-language');
         Route::post('/', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
+    });
+
+    Route::group(['prefix' => 'message', 'middleware' => ['cors']], function() {
+        Route::post('/send', [MessageApiController::class, 'send'])->name('send-message');
     });
 
 
