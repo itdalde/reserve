@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Models\Auth\User\User;
 use App\Models\Order;
 use App\Models\OrderSplit;
@@ -50,6 +51,11 @@ class CompletedOrder extends Command
         {
             $balance = OrderSplit::where('order_id', $order->id)->where('status', 'pending')->sum('amount');
 
+            $user = User::where('id', $order->user_id)->first();
+            $locale = $user->app_language ?? 'en';
+            $title = GeneralHelper::getTranslation($locale, 'order.completed');
+            $message = GeneralHelper::getTranslation($locale, 'order.completed.message');
+
             foreach($order->items as $item)
             {
                 if ($balance == 0 && Carbon::now()->subDay()->toDateTimeString() > $item->schedule_end_datetime) {
@@ -64,11 +70,11 @@ class CompletedOrder extends Command
 
                 $response = [
                     "status" => "success",
-                    "message" => "Order completed",
+                    "message" => $title,
                     "data" => ['order' => $order->items ]
                 ];
                 $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-                NotificationUtility::sendNotification('Order Completed', 'Your order is completed', $fcmTokens, $response);
+                NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
             }
         }
         $this->info('Orders who\'s fully paid marks as completed');
