@@ -188,6 +188,7 @@
   "order.pending.message": "You have pending item in your cart",
   "order.status.update": "Order status update",
   "order.status.update.message": "Your order  with  reference no of __reference_no__ has been updated.",
+  "order.status.cancelled": "Your order  with  reference no of __reference_no__ has been cancelled",
   "company.updated.successfully": "Company updated successfully",
   "status.updated.successfully": "Status updated successfully",
   "service.type.deleted.successfully": "Service Type deleted successfully",
@@ -197,5 +198,6 @@
   "action.created": "Created",
   "success": "Successfully",
   "service.type": "Service Type",
-  "user": "User"
+  "user": "User",
+  "deposit.no": "No Deposit Paid"
 }
