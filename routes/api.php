@@ -44,7 +44,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function()
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
     Route::get('/me', 'Auth\ApiAuthController@me')->name('me.api');
     Route::get('/users', [UserController::class,'userList'])->name('users.list.api');
-    Route::post('/fcm-token/{fcm_token}', [UserController::class, 'updateToken']);
+    Route::post('/fcm-token', [UserController::class, 'updateToken']);
 });
 
 Route::get('/test-fcm', [UserController::class, 'testFcm']);
