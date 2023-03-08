@@ -44,7 +44,6 @@ class SettingsController extends Controller
 
     public function updateStatusOrder(Request $request) {
         $data = $request->all();
-        $locale = $request->getLocale();
         $status = 'pending';
         $timeline = 'processing';
         switch ($data['action']){
@@ -73,6 +72,8 @@ class SettingsController extends Controller
                 $item->save();
 
                 $order = Order::where('id',$item->order_id)->first();
+                $user = User::where('id', $order->user_id)->first();
+                $locale = $user->app_language ?? 'en';
                 Http::timeout(10)
                     ->withOptions(['verify' => false])
                     ->post('http://reservegcc.com:3000/reservation', [
@@ -110,6 +111,8 @@ class SettingsController extends Controller
                     $item->save();
 
                     $order = Order::where('id',$item->order_id)->first();
+                    $user = User::where('id', $order->user_id)->first();
+                    $locale = $user->app_language ?? 'en';
                     Http::timeout(10)
                         ->withOptions(['verify' => false])
                         ->post('http://reservegcc.com:3000/reservation', [
@@ -147,6 +150,8 @@ class SettingsController extends Controller
                 $totalItem = OrderItems::where('order_id',$item->order_id)->count();
                 $itemsAccepted = OrderItems::where('order_id',$item->order_id)->where('status',$status)->count();
                 $order = Order::where('id',$item->order_id)->first();
+                $user = User::where('id', $order->user_id)->first();
+                $locale = $user->app_language ?? 'en';
                 if($totalItem == $itemsAccepted) {
                     $order->status = $status;
                     $order->timeline = $timeline;
@@ -225,7 +230,6 @@ class SettingsController extends Controller
     {
         try {
             $data = $request->all();
-            $locale = $request->getLocale();
             $user = auth()->user();
             $company = $user->company;
             if ($request->file('company_image')) {
@@ -242,7 +246,7 @@ class SettingsController extends Controller
             $company->name = $data['name'];
             $company->is_custom = isset($data['is_custom']) ? 1 : 0;
             $company->save();
-            $message = GeneralHelper::getConcatTranslation($locale, 'company', 'action.updated', 'success');
+            $message = GeneralHelper::getConcatTranslation($user->app_language ?? 'en', 'company', 'action.updated', 'success');
             return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
@@ -361,8 +365,7 @@ class SettingsController extends Controller
                 $user->password = bcrypt($data['password']);
             }
             $user->save();
-            $locale = $request->getLocale();
-            $message = GeneralHelper::getConcatTranslation($locale, 'user', 'action.updated', 'success');
+            $message = GeneralHelper::getConcatTranslation($user->app_language, 'user', 'action.updated', 'success');
             return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
