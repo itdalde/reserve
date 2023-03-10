@@ -59,4 +59,24 @@ class GeneralHelper
         $translation = $decoded_lang[$type] . ' ' . $decoded_lang[$action] . ' ' . $decoded_lang[$status];
         return $translation;
     }
+
+    public static function getNotification($locale, $status)
+    {
+        $key = '';
+        switch($status)
+        {
+            case 'accept':
+                $key = 'notification.order.approved';
+                break;
+            case 'decline': 
+                $key = 'notification.order.cancelled';
+                break;
+            case 'complete':
+                $key = 'notification.order.completed';
+                break;
+            case 'cancel':
+                $key = 'notification.order.cancelled';
+        }
+        return Self::getTranslation($locale, $key);
+    }
 }

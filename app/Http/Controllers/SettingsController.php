@@ -46,6 +46,7 @@ class SettingsController extends Controller
         $data = $request->all();
         $status = 'pending';
         $timeline = 'processing';
+        var_dump("SATATEA");
         switch ($data['action']){
             case 'accept':
                 $status = 'processing';
@@ -82,13 +83,12 @@ class SettingsController extends Controller
                     ]);
 
                 $title = GeneralHelper::getTranslation($locale, 'order.status.update');
-                $orderUpdateMessage = GeneralHelper::getTranslation($locale, 'order.status.update.message');
-                $message = str_replace('__reference_no__', $order->reference_no, $orderUpdateMessage);
+                $message = GeneralHelper::getNotification($locale, $status);
                 $response = [
                     "type" => "order-update",
                     "title" => $title,
                     "status" => "success",
-                    "message" => $message . ' ' . $user->app_language,
+                    "message" => $message,
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
@@ -121,13 +121,12 @@ class SettingsController extends Controller
                         ]);
 
                     $title = GeneralHelper::getTranslation($locale, 'order.status.update');
-                    $orderUpdateMessage = GeneralHelper::getTranslation($locale, 'order.status.update.message');
-                    $message = str_replace('__reference_no__', $order->reference_no, $orderUpdateMessage);                        
+                    $message = GeneralHelper::getNotification($locale, $status);
                     $response = [
                         "type" => "order-update",
                         "title" => $title,
                         "status" => "success",
-                        "message" => $message . ' ' . $user->app_language,
+                        "message" => $message,
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
@@ -165,13 +164,12 @@ class SettingsController extends Controller
                         'status' => $status
                     ]);
                 $title = GeneralHelper::getTranslation($locale, 'order.status.update');
-                $orderUpdateMessage = GeneralHelper::getTranslation($locale, 'order.status.update.message');
-                $message = str_replace('__reference_no__', $order->reference_no, $orderUpdateMessage);                     
+                $message = GeneralHelper::getNotification($locale, $status);
                 $response = [
                     "type" => "order-update",
                     "title" => $title,
                     "status" => "success",
-                    "message" => $message . ' ' . $user->app_language,
+                    "message" => $message,
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
