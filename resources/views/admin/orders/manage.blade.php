@@ -58,35 +58,43 @@
 
                                             </div>
                                         </td>
-
                                         <td>
-                                            <div class="py-2">
-                                                @switch($order['status'])
-                                                    @case('pending')
-                                                    <span
-                                                        class="status-field w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('accepted')
-                                                    <span
-                                                        class="status-field w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('declined')
-                                                    <span
-                                                        class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('completed')
-                                                    <span
-                                                        class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('cancelled')
-                                                    <span
-                                                        class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @default
-                                                    <span
-                                                        class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
-                                                @endswitch
-                                            </div>
+                                            @switch($order['status'])
+                                                @case('pending')
+                                                <span
+                                                    class="status-field w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
+                                                <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
+                                                @break
+                                                @case('processing')
+                                                <span
+                                                    class="status-field w-100 badge bg-secondary text-capitalize">
+                                                    {{$order['status']}}
+                                                </span>
+                                                <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
+                                                @break
+                                                @case('declined')
+                                                <span
+                                                    class="status-field w-100 badge bg-danger text-capitalize">
+                                                    {{$order['status']}}
+                                                </span>
+                                                <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
+                                                @break
+                                                @case('completed')
+                                                <span
+                                                    class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
+                                                <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
+                                                @break
+                                                @case('cancelled')
+                                                <span
+                                                    class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                <br> |-> <small>{{$order['reason']}}</small>
+                                                <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
+                                                @break
+                                                @default
+                                                <span
+                                                    class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span>
+                                                <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
+                                            @endswitch
 
                                         </td>
                                         <td>
