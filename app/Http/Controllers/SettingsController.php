@@ -88,7 +88,7 @@ class SettingsController extends Controller
                     "type" => "order-update",
                     "title" => $title,
                     "status" => "success",
-                    "message" => $message,
+                    "message" => $message . ' ' . $user->app_language,
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
@@ -127,7 +127,7 @@ class SettingsController extends Controller
                         "type" => "order-update",
                         "title" => $title,
                         "status" => "success",
-                        "message" => $message,
+                        "message" => $message . ' ' . $user->app_language,
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
@@ -171,7 +171,7 @@ class SettingsController extends Controller
                     "type" => "order-update",
                     "title" => $title,
                     "status" => "success",
-                    "message" => $message,
+                    "message" => $message . ' ' . $user->app_language,
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
