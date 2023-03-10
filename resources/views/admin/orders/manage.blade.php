@@ -19,114 +19,116 @@
                                 </div>
                             </div>
                         </div>
-                        <table class="table" id="table-manage-orders" aria-label="Table Order">
-                            <thead class="thead-light">
-                            <tr>
-                                <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
-                                <th scope="col" style=" background: #F2F1F0;">Reference No.</th>
-                                <th scope="col" style=" background: #F2F1F0;">Type</th>
-                                <th scope="col" style=" background: #F2F1F0;">Volume</th>
-                                <th scope="col" style=" background: #F2F1F0;">Date</th>
-                                <th scope="col" style=" background: #F2F1F0;">Status</th>
-                                <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($orders as $order)
-                                @if($order['order']['user'])
-                                    <tr>
-                                        <td>
-                                            <div class="py-2">
-                                                {{$order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name']}}
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="table-manage-orders" aria-label="Table Order">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Reference No.</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Type</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Volume</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Date</th>
+                                    <th scope="col" style=" background: #F2F1F0;">Status</th>
+                                    <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($orders as $order)
+                                    @if($order['order']['user'])
+                                        <tr>
+                                            <td>
+                                                <div class="py-2">
+                                                    {{$order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name']}}
 
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="py-2">
-                                                {{$order['order']['reference_no']}}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="py-2">{{$order['service']['price']['plan_type']['name']}}</td>
-                                        <td>
-                                            <div class="py-2">1 Service
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div
-                                                class="py-2">{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y')}}
-
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div class="py-2">
-                                                @switch($order['status'])
-                                                    @case('pending')
-                                                    <span
-                                                        class="status-field w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('accepted')
-                                                    <span
-                                                        class="status-field w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('declined')
-                                                    <span
-                                                        class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('completed')
-                                                    <span
-                                                        class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @case('cancelled')
-                                                    <span
-                                                        class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                                    @break
-                                                    @default
-                                                    <span
-                                                        class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
-                                                @endswitch
-                                            </div>
-
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center w-100">
-                                                <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}}">
-                                                    <button type="button"
-                                                            class="btn btn-action btn-warning btn-accept-order "
-                                                            data-id="{{$order['id']}}" data-action="accept">
-                                                        Accept
-                                                    </button>
                                                 </div>
-                                                <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}} ">
-                                                    <button type="button"
-                                                            class="btn btn-secondary btn-action btn-decline-order "
-                                                            data-id="{{$order['id']}}" data-action="decline">
-                                                        Decline
-                                                    </button>
+                                            </td>
+                                            <td>
+                                                <div class="py-2">
+                                                    {{$order['order']['reference_no']}}
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <div class="py-2">{{$order['service']['price']['plan_type']['name']}}</td>
+                                            <td>
+                                                <div class="py-2">1 Service
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <div
-                                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
-                                                    <button type="button"
-                                                            class="btn btn-action btn-warning btn-complete-order  "
-                                                            data-id="{{$order['id']}}" data-action="complete">
-                                                        Complete
-                                                    </button>
+                                                    class="py-2">{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y')}}
+
                                                 </div>
-                                                <div class="px-2  {{$order['status'] == 'accepted' ? '' : 'd-none'}}">
-                                                    <button type="button"
-                                                            class="btn btn-action btn-danger btn-cancel-order "
-                                                            data-id="{{$order['id']}}" data-action="cancel">
-                                                        Cancel
-                                                    </button>
+                                            </td>
+
+                                            <td>
+                                                <div class="py-2">
+                                                    @switch($order['status'])
+                                                        @case('pending')
+                                                        <span
+                                                            class="status-field w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
+                                                        @break
+                                                        @case('accepted')
+                                                        <span
+                                                            class="status-field w-100 badge bg-secondary text-capitalize">{{$order['status']}}</span>
+                                                        @break
+                                                        @case('declined')
+                                                        <span
+                                                            class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                        @break
+                                                        @case('completed')
+                                                        <span
+                                                            class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
+                                                        @break
+                                                        @case('cancelled')
+                                                        <span
+                                                            class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                                        @break
+                                                        @default
+                                                        <span
+                                                            class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span
+                                                    @endswitch
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                            </tbody>
-                        </table>
+
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center w-100">
+                                                    <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}}">
+                                                        <button type="button"
+                                                                class="btn btn-action btn-warning btn-accept-order "
+                                                                data-id="{{$order['id']}}" data-action="accept">
+                                                            Accept
+                                                        </button>
+                                                    </div>
+                                                    <div class="px-2 {{$order['status'] == 'pending' ? '' : 'd-none'}} ">
+                                                        <button type="button"
+                                                                class="btn btn-secondary btn-action btn-decline-order "
+                                                                data-id="{{$order['id']}}" data-action="decline">
+                                                            Decline
+                                                        </button>
+                                                    </div>
+                                                    <div
+                                                        class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
+                                                        <button type="button"
+                                                                class="btn btn-action btn-warning btn-complete-order  "
+                                                                data-id="{{$order['id']}}" data-action="complete">
+                                                            Complete
+                                                        </button>
+                                                    </div>
+                                                    <div class="px-2  {{$order['status'] == 'accepted' ? '' : 'd-none'}}">
+                                                        <button type="button"
+                                                                class="btn btn-action btn-danger btn-cancel-order "
+                                                                data-id="{{$order['id']}}" data-action="cancel">
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

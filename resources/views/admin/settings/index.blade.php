@@ -45,35 +45,40 @@
                                         </div>
                                     </div>
                                     <div class="p-2 bd-highlight">
-                                        <div class="row m-3">
-                                            <div class="col">
+                                        <div class="row mt-5">
+                                            <div class="col-xs-12 col-md-6 mt-5">
                                                 <label class="form-label" for="first-name"> First Name</label>
                                                 <input value="{{Auth::user()->first_name}}" type="text" id="first-name" autocomplete="new-password" name="first_name" class="form-control" placeholder="First name" aria-label="First name">
                                             </div>
-                                            <div class="col">
+                                            <div class="col-xs-12 col-md-6 mt-5">
                                                 <label class="form-label" for="last-name"> Last Name</label>
                                                 <input value="{{Auth::user()->last_name}}" id="last-name" type="text" autocomplete="new-password" name="last_name" class="form-control" placeholder="Last name" aria-label="Last name">
                                             </div>
                                         </div>
-                                        <div class="row m-3">
-                                            <div class="col">
+                                        <div class="row mt-5">
+                                            <div class="col-xs-12 col-md-6 mt-5">
                                                 <label class="form-label" for="phone-number"> Phone Number</label>
                                                 <input value="{{Auth::user()->phone_number}}" type="text" id="phone-number"  autocomplete="new-password" name="phone_number" class="form-control" placeholder="Phone number" aria-label="Phone number">
                                             </div>
-                                            <div class="col">
+                                            <div class="col-xs-12 col-md-6 mt-5">
                                                 <label class="form-label" for="address"> Address</label>
                                                 <input value="{{Auth::user()->location}}" id="address" name="location" autocomplete="new-password" type="text" class="form-control" placeholder="Address" aria-label="Address">
                                             </div>
                                         </div>
-                                        <div class="row m-3">
-                                            <div class="col">
+                                        <div class="row mt-5">
+                                            <div class="col-xs-12 col-md-6">
                                                 <label class="form-label" for="password"> Password</label>
                                                 <input  type="password" name="password" id="password" class="form-control"  autocomplete="new-password" placeholder="* * * * * * * " aria-label="Password">
                                             </div>
-                                            <div class="col">
-                                                <div class="d-flex bd-highlight mt-5 mb-3">
-                                                    <div class="ms-auto p-2 w-50 bd-highlight">
-                                                        <button class="btn w-100 btn-warning bg-orange">Save</button>
+                                           
+                                        </div>
+                                        <div class="d-flex justify-content-end button-panel">
+                                            <div class="row button-container">
+                                                <div class="col">
+                                                    <div class="d-flex bd-highlight mt-5 mb-3">
+                                                        <div class="p-2 submit-button bd-highlight">
+                                                            <button class="btn w-100 btn-warning bg-orange">Save</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,51 +115,50 @@
                                         </div>
                                     </div>
                                     <div class="p-2 bd-highlight">
-                                        <div class="row m-3">
-                                            <div class="col">
+                                        <div class="row mt-5">
+                                            <div class="col-xs-12 col-md-6 mt-5">
                                                 <label class="form-label" for="company-name-name"> Company Name</label>
                                                 <input value="{{Auth::user()->company ? Auth::user()->company->name : ''}}" type="text" id="company-name-name" autocomplete="new-password" name="name" class="form-control" placeholder="Company name" aria-label="Company name">
                                             </div>
-                                            <div class="col">
+                                            <div class="col-xs-12 col-md-6 mt-5">
                                                 <label class="form-label" for="phone-number">Company Phone Number</label>
                                                 <input value="{{Auth::user()->company ? Auth::user()->company->phone_number : ''}}" type="text" id="phone-number"  autocomplete="new-password" name="phone_number" class="form-control" placeholder="Phone number" aria-label="Phone number">
                                             </div>
                                         </div>
-                                        <div class="row m-3">
-                                            <div class="col company-tags">
+                                        <div class="row mt-5">
+                                            <div class="col company-tags mt-5">
                                                 <label class="form-label" for="company-tags-input"> Meta Tags</label>
                                                 <input value="{{Auth::user()->company ? Auth::user()->company->tags : ''}}" type="text" id="company-tags-input" autocomplete="new-password" name="tags" class="form-control" placeholder="Company tags" aria-label="Company tags">
                                             </div>
                                         </div>
-                                        <div class="row m-3">
-                                            <div class="col">
+                                        <div class="row mt-5">
+                                            <div class="col-xs-12 col-md-6">
                                                 <label class="form-label" for="address">Company Address</label>
                                                 <input value="{{Auth::user()->company ? Auth::user()->company->location : ''}}" id="address" name="location" autocomplete="new-password" type="text" class="form-control" placeholder="Address" aria-label="Address">
                                             </div>
-                                            <div class="col">
-                                                <div class="form-check form-switch mt-5 pt-3">
+                                            <div class="col-xs-12 col-md-6">
+                                                <div class="form-check form-switch pt-3 mt-5">
                                                     <input {{Auth::user()->company && Auth::user()->company->is_custom == 1 ? 'Checked' : ''}} class="form-check-input" name="is_custom" type="checkbox" id="Accepts-custom-order">
                                                     <label class="form-check-label" for="Accepts-custom-order">Accepts custom order</label>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="row m-3">
-                                            <div class="col">
+                                        <div class="row mt-5">
+                                            <div class="col-12">
                                                 <label class="form-label" for="password">Company Description</label>
-                                                <div class="form-floating">
-                                                    <textarea dir="auto" name="description" class="form-control" placeholder="Company Description"
-                                              id="floatingTextarea2" style="height: 100px">{{Auth::user()->company ? Auth::user()->company->description : ''}}</textarea>
-                                                    <label for="floatingTextarea2">Enter Company description</label>
+                                                <div class="">
+                                                    <textarea dir="auto" name="description" class="form-control" placeholder="Enter Company description"
+                                              id="floatingTextarea2" cols="4" rows="6">{{Auth::user()->company ? Auth::user()->company->description : ''}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end">
-                                        <div class="row w-25">
+                                    <div class="d-flex justify-content-end button-panel">
+                                        <div class="row button-container">
                                             <div class="col">
                                                 <div class="d-flex bd-highlight mt-5 mb-3">
-                                                    <div class=" p-2 w-100 bd-highlight">
+                                                    <div class=" p-2 submit-button bd-highlight">
                                                         <button class="btn w-100 btn-warning bg-orange">Save</button>
                                                     </div>
                                                 </div>

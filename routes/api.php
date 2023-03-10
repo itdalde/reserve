@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\MessageApiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\Api\PaymentMethodApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
+use App\Http\Controllers\Api\WhatsAppApiController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\TransactionController;
@@ -158,8 +158,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
     });
 
-    Route::group(['prefix' => 'message', 'middleware' => ['cors']], function() {
-        Route::post('/send', [MessageApiController::class, 'send'])->name('send-message');
+    Route::group(['prefix' => 'whatsapp', 'middleware' => ['cors']], function() {
+        Route::post('/send', [WhatsAppApiController::class, 'sendWhatsAppMessage'])->name('send-message');
+        Route::post('/send-v2', [WhatsAppApiController::class, 'sendWithTemplate'])->name('send-message-with-template');
     });
 
 
