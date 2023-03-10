@@ -62,10 +62,11 @@ class GeneralHelper
 
     public static function getNotification($locale, $status)
     {
-        $key = '';
+        $key = 'pending';
         switch($status)
         {
             case 'accept':
+            case 'processing':
                 $key = 'notification.order.approved';
                 break;
             case 'decline': 
