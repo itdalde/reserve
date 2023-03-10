@@ -51,4 +51,36 @@ class GeneralHelper
         return $translation;
         
     }
+
+    public static function getConcatTranslation($locale, $type, $action, $status)
+    {
+        $lang = File::get(resource_path('lang/'. $locale .'.json'));
+        $decoded_lang = json_decode($lang, true);
+        $translation = $decoded_lang[$type] . ' ' . $decoded_lang[$action] . ' ' . $decoded_lang[$status];
+        return $translation;
+    }
+
+    public static function getNotification($locale, $status)
+    {
+        $key = 'pending';
+        switch($status)
+        {
+            case 'accept':
+            case 'processing':
+                $key = 'notification.order.approved';
+                break;
+            case 'decline': 
+                $key = 'notification.order.cancelled';
+                break;
+            case 'complete':
+                $key = 'notification.order.completed';
+                break;
+            case 'cancel':
+                $key = 'notification.order.cancelled';
+        }
+        return [
+            'title' => Self::getTranslation($locale, 'order.status.update'),
+            'message' => Self::getTranslation($locale, $key)
+        ];
+    }
 }

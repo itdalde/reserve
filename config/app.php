@@ -183,6 +183,11 @@ return [
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
         \App\Providers\ProtectionProvider::class,
         \App\Providers\RepositoryServiceProvider::class,
+
+        /**
+         * Messages
+         */
+        Infobip\Support\Laravel\InfobipServiceProvider::class,
     ],
 
     /*

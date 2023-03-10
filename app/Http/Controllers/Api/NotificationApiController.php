@@ -77,7 +77,7 @@ class NotificationApiController extends Controller
     public function getCurrentLanguage(Request $request)
     {
         $lang = $request['lang'];
-        $translation = GeneralHelper::getTranslation($lang);
-        return sendResponse($translation, 'Translated response');
+        $user = User::where('id', $request['user_id'])->first();
+        return sendResponse($user->app_language == $lang, 'Current locale-' . $user->app_language);
     }
 }

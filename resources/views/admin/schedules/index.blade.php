@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-4">
+            <div class="col mb-4">
                 <h3>My Schedules</h3>
             </div>
             <div class="card w-100" >
@@ -19,8 +19,8 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="userProfile" role="tabpanel" aria-labelledby="userProfile-tab" style="min-height: 140px;">
 
-                            <div class="d-flex flex-column bd-highlight">
-                                <table class="table" id="service-table">
+                            <div class="d-flex flex-column bd-highlight table-responsive">
+                                <table class="table table-hover" id="service-table">
                                     <thead>
                                     <tr>
                                         <th scope="col">Service Name</th>

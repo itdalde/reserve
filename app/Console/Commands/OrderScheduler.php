@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\Common\GeneralHelper;
 use App\Models\Auth\User\User;
 use App\Models\Order;
 use App\Utility\NotificationUtility;
@@ -45,38 +46,47 @@ class OrderScheduler extends Command
         $this->info('Check orders daily');
         $orders = Order::where('status', 'pending')->where('updated_at', '>=', Carbon::now()->addDay()->toDateTimeString())->get();
         foreach ($orders as $order) {
+            $user = User::where('id', $order->user_id)->first();
+            $title = GeneralHelper::getTranslation($user->app_language ?? 'en', 'order.pending');
+            $message = GeneralHelper::getTranslation($user->app_language ?? 'en', 'order.pending.message');
             $response = [
                 "status" => "success",
-                "message" => "Notification invoke for pending orders",
+                "message" => $title,
                 "data" => ['order' => $order]
             ];
             $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
-            NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
+            NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
         }
         $this->info('Notification invoke for users');
 
         $orders = Order::where('status', 'pending')->with('items', 'splitOrder')->where('updated_at', '<=', Carbon::now()->subDays(1)->toDateTimeString())->get();
         foreach ($orders as $order) {
+            $user = User::where('id', $order->user_id)->first();
+            $locale = $user->app_language ?? 'en';
+            $reason = GeneralHelper::getTranslation($locale, 'deposit.no');
+            $title = GeneralHelper::getTranslation($locale, 'order.status.update');
+            $orderCancelled = GeneralHelper::getTranslation($locale, 'order.status.cancelled');
+            $message = str_replace('__reference_no__', $order->reference_no, $orderCancelled);
             foreach ($order->items as $item) {
                 $item->status = 'cancelled';
                 $item->timeline = 'order-cancelled';
-                $item->reason = 'No Deposit Paid';
+                $item->reason = $reason;
                 $item->save();
 
             }
             $order->status = 'cancelled';
             $order->timeline = 'order-cancelled';
-            $order->reason = 'No Deposit Paid';
+            $order->reason = $reason;
             $order->save();
             $response = [
                 "type" => "order-update",
-                "title" => "Order Status Update",
+                "title" => $title,
                 "status" => "success",
-                "message" => "Your order $order->reference_no has been cancelled",
+                "message" => $orderCancelled,
                 "data" => ['order' => $order]
             ];
             $fcmTokens = User::whereNotNull('fcm_token')->where('id', $order->user_id)->pluck('fcm_token')->toArray();
-            NotificationUtility::sendNotification("Order Status Update", "Your order $order->reference_no has been cancelled", $fcmTokens, $response);
+            NotificationUtility::sendNotification($title, $orderCancelled, $fcmTokens, $response);
 
         }
     }

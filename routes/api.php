@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\PaymentMethodApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
+use App\Http\Controllers\Api\WhatsAppApiController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\TransactionController;
@@ -43,7 +44,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function()
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
     Route::get('/me', 'Auth\ApiAuthController@me')->name('me.api');
     Route::get('/users', [UserController::class,'userList'])->name('users.list.api');
-    Route::post('/fcm-token/{fcm_token}', [UserController::class, 'updateToken']);
+    Route::post('/fcm-token', [UserController::class, 'updateToken']);
 });
 
 Route::get('/test-fcm', [UserController::class, 'testFcm']);
@@ -152,9 +153,14 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'locale', 'middleware' => ['cors']], function() {
         Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
-        Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
+        Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale-key');
         Route::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])->name('get-current-language');
         Route::post('/', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
+    });
+
+    Route::group(['prefix' => 'whatsapp', 'middleware' => ['cors']], function() {
+        Route::post('/send', [WhatsAppApiController::class, 'sendWhatsAppMessage'])->name('send-message');
+        Route::post('/send-v2', [WhatsAppApiController::class, 'sendWithTemplate'])->name('send-message-with-template');
     });
 
 
