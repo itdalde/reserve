@@ -81,18 +81,17 @@ class SettingsController extends Controller
                         'status' => $status
                     ]);
 
-                $title = GeneralHelper::getTranslation($locale, 'order.status.update');
-                $message = GeneralHelper::getNotification($locale, $status);
+                $trans = GeneralHelper::getNotification($locale, $status);
                 $response = [
                     "type" => "order-update",
-                    "title" => $title,
+                    "title" => $trans['title'],
                     "status" => "success",
-                    "message" => $message,
+                    "message" => $trans['message'],
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
                     $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                    NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
+                    NotificationUtility::sendNotification($trans['title'], $trans['message'], $fcmTokens, $response);
                 }
             }
             $order = Order::where('id',$item->order_id)->first();
@@ -119,18 +118,17 @@ class SettingsController extends Controller
                             'status' => $status
                         ]);
 
-                    $title = GeneralHelper::getTranslation($locale, 'order.status.update');
-                    $message = GeneralHelper::getNotification($locale, $status);
+                    $trans = GeneralHelper::getNotification($locale, $status);
                     $response = [
                         "type" => "order-update",
-                        "title" => $title,
+                        "title" => $trans['title'],
                         "status" => "success",
-                        "message" => $message,
+                        "message" => $trans['message'],
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
                         $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                        NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
+                        NotificationUtility::sendNotification($trans['title'], $trans['message'], $fcmTokens, $response);
                     }
                 }
                 $order = Order::where('id',$item->order_id)->first();
@@ -162,18 +160,17 @@ class SettingsController extends Controller
                         'transaction' => $item->toArray(),
                         'status' => $status
                     ]);
-                $title = GeneralHelper::getTranslation($locale, 'order.status.update');
-                $message = GeneralHelper::getNotification($locale, $status);
+                $trans = GeneralHelper::getNotification($locale, $status);
                 $response = [
                     "type" => "order-update",
-                    "title" => $title,
+                    "title" => $trans['title'],
                     "status" => "success",
-                    "message" => $message,
+                    "message" => $trans['message'],
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
                     $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
-                    NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
+                    NotificationUtility::sendNotification($trans['title'], $trans['message'], $fcmTokens, $response);
                 }
             }
         }
