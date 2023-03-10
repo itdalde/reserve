@@ -18,9 +18,9 @@
             @endif
         </div>
         @if(!Auth::user()->hasRole('superadmin') )
-        <div class="mx-2 d-flex justify-content-center">
+        <div class="mx-2 d-flex justify-content-center custom-service-header">
             <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#new-service-modal">
-                <img src="{{asset('assets/images/icons/add.png')}}" alt="...">  &nbsp; &nbsp; &nbsp; &nbsp;Add new service
+                <img src="{{asset('assets/images/icons/add.png')}}" alt="..."> <span class="btn-add-service" style="margin-left: 12px">Add new service</span>
             </button>
         </div>
     @endif

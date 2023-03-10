@@ -73,13 +73,13 @@
                 </div>
             </div>
             <div class="card mb-2">
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <div class="d-md-flex d-sm-block">
                         <div class="p-2 w-75"><h3>New Orders</h3></div>
 
                         <div class="ml-auto p-2 w-25"><a href="{{route('orders.index')}}">See more</a></div>
                     </div>
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead class="thead-light">
                         <tr>
                             <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>

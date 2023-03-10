@@ -78,6 +78,9 @@ class GeneralHelper
             case 'cancel':
                 $key = 'notification.order.cancelled';
         }
-        return Self::getTranslation($locale, $key);
+        return [
+            'title' => Self::getTranslation($locale, 'order.status.update'),
+            'message' => Self::getTranslation($locale, $key)
+        ];
     }
 }
