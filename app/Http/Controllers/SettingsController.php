@@ -46,7 +46,6 @@ class SettingsController extends Controller
         $data = $request->all();
         $status = 'pending';
         $timeline = 'processing';
-        var_dump("SATATEA");
         switch ($data['action']){
             case 'accept':
                 $status = 'processing';
