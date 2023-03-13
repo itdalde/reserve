@@ -57,7 +57,7 @@
                         <div class="mr-auto p-2 bd-highlight w-25"><img
                                 src="{{asset('assets/images/icons/calendar.png')}}"
                                 alt="..."></div>
-                        <div class="p-2 bd-highlight w-50">Recent activity<br> 0% from last mont</div>
+                        <div class="p-2 bd-highlight w-50">Recent activity<br> 0% from last month</div>
                         <div class="p-2 bd-highlight w-25">0% <br>
                             <div class="progress">
                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"

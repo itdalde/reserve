@@ -187,7 +187,7 @@ return [
         /**
          * Messages
          */
-        Infobip\Support\Laravel\InfobipServiceProvider::class,
+//        Infobip\Support\Laravel\InfobipServiceProvider::class,
     ],
 
     /*

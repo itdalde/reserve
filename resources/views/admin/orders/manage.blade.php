@@ -114,6 +114,7 @@
                                                             Decline
                                                         </button>
                                                     </div>
+                                                    @if($order['balance'] == 0)
                                                     <div
                                                         class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' || $order['status'] == 'declined' ? 'd-none' : ''}}">
                                                         <button type="button"
@@ -122,6 +123,7 @@
                                                             Complete
                                                         </button>
                                                     </div>
+                                                    @endif
                                                     <div class="px-2  {{$order['status'] == 'accepted' ? '' : 'd-none'}}">
                                                         <button type="button"
                                                                 class="btn btn-action btn-danger btn-cancel-order "

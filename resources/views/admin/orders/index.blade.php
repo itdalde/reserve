@@ -84,14 +84,17 @@
                                                         Decline
                                                     </button>
                                                 </div>
-                                                <div
-                                                    class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' ||$order['status'] == 'completed' || $order['status'] == 'declined' ? 'd-none' : ''}}">
-                                                    <button type="button"
-                                                            class="btn btn-action btn-warning btn-complete-order  "
-                                                            data-id="{{$order['id']}}" data-action="complete">
-                                                        Complete
-                                                    </button>
-                                                </div>
+
+                                                @if($order['balance'] == 0)
+                                                    <div
+                                                        class="px-2 {{$order['status'] == 'pending' || $order['status'] == 'cancelled' ||$order['status'] == 'completed' || $order['status'] == 'declined' ? 'd-none' : ''}}">
+                                                        <button type="button"
+                                                                class="btn btn-action btn-warning btn-complete-order  "
+                                                                data-id="{{$order['id']}}" data-action="complete">
+                                                            Complete
+                                                        </button>
+                                                    </div>
+                                                @endif
                                                 <div class="px-2">
                                                     <a href="orders/{{$order['id']}}"
                                                        class="btn btn-outline-info">View</a>
