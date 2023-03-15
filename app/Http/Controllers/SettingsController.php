@@ -189,7 +189,8 @@ class SettingsController extends Controller
             $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
             $orders = OrderItems::whereIn('service_id',$services)
                 ->whereDate('created_at', Carbon::today())
-                ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray(); foreach ($orders as $k => $order) {
+                ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+            foreach ($orders as $k => $order) {
                 $orders[$k]['balance'] = OrderSplit::where('order_id', $order['order']['id'])->where('status', 'pending')->sum('amount');
                 $orders[$k]['total_paid'] = OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
             }

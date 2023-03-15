@@ -1,10 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <style>
-        .modal button.close {
-            right: 0;
-            outline: 0;
-        }
 
         #gallery-lightbox img {
             height: 350px;
@@ -22,7 +18,14 @@
             <h3>Order- {{$order['reference_no']}}</h3>
         </div>
         <div class="p-2">
-            <a href="{{route('orders.index')}}" class="btn btn-warning">Back</a>
+            @if($from == 'manage')
+                <a href="{{route('settings.manage_orders')}}" class="btn btn-warning">Back</a>
+            @elseif($from == 'super')
+                <a href="{{route('orders.admin')}}" class="btn btn-warning">Back</a>
+            @else
+                <a href="{{route('orders.index')}}" class="btn btn-warning">Back</a>
+            @endif
+
         </div>
     </div>
     <div class="row">

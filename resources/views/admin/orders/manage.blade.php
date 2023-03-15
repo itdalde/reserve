@@ -131,6 +131,10 @@
                                                             Cancel
                                                         </button>
                                                     </div>
+                                                    <div class="px-2">
+                                                        <a href="{{route('orders.show',['order'=>$order['id'] , 'from' => 'manage'])}}"
+                                                           class="btn btn-outline-info">View</a>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>

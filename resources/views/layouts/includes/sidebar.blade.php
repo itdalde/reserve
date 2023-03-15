@@ -83,7 +83,8 @@
                 </li>
                 <li class="nav-item py-2">
                     <a class="nav-link {{ Request::is('admin/orders*') ? ' active' : '' }}" href="{{ route('orders.admin') }}">
-                        <span class="ml-15px "><i style="font-size: 25px; {{Request::is('admin/orders*') ? 'color:orange' : ''}}" class="bi bi-menu-app-fill"></i>  </span>
+                        <img class="ml-15px " src="{{Request::is('admin/orders*') ? asset('assets/images/icons/Orders Outline active.svg') : asset('assets/images/icons/Orders Outline.svg')}}" alt="....">
+
                         Orders
                     </a>
                 </li>
