@@ -11,7 +11,7 @@ class OrderItems extends Model
 
     public function service()
     {
-        return $this->hasOne(OccasionEvent::class, 'id', 'service_id')->with('providers');
+        return $this->hasOne(OccasionEvent::class, 'id', 'service_id')->with('providers','gallery');
     }
     public function order()
     {

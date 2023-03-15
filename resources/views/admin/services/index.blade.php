@@ -637,7 +637,6 @@
                 $('#edit-service-available_slot-input').val(availableSlot);
                 $('#edit-service-start_available_time-input').val(startAvailableTime);
                 $('#edit-service-end_available_time-input').val(endAvailableTime);
-$('')
                 $('#edit-service-min-capacity-input').val(minCapacity);
                 $('#edit-service-max-capacity-input').val(maxCapacity);
                 $('#edit-service-location-input').val(location);
