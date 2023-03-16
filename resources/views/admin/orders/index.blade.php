@@ -96,7 +96,7 @@
                                                     </div>
                                                 @endif
                                                 <div class="px-2">
-                                                    <a href="{{route('orders.show',['order'=>$order['id'] , 'from' => 'orders'])}}"
+                                                    <a href="orders/{{$order['order_id']}}"
                                                        class="btn btn-outline-info">View</a>
                                                 </div>
                                             </div>

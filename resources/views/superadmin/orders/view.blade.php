@@ -99,7 +99,7 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6">Payment Ref No.</div>
-                                <div class="col-sm-6">{{$order['payment_details']['reference_no'] }}</div>
+                                <div class="col-sm-6">{{$order['payment_details'] ? $order['payment_details']['reference_no'] : '' }}</div>
                             </div>
                         </li>
                         <li class="list-group-item">
