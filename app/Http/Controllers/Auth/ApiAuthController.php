@@ -271,13 +271,24 @@ class ApiAuthController extends Controller
         try {
             $token = $request->token;
             if(!$token) {
-                $response = ["message" =>'Missing required token'];
-                return response()->json($response, 422);
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Missing required token',
+                    'data' => [
+                        'token' => $token,
+                    ]
+                ], 422);
             }
             $decoded = (array)json_decode(base64_decode(str_replace('_', '/', str_replace('-', '+', explode('.', $token)[1]))));
             if (!isset($decoded['email'])) {
-                $response = ["message" =>'Invalid token'];
-                return response()->json($response, 422);
+
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Invalid token',
+                    'data' => [
+                        'token' => $token,
+                    ]
+                ], 422);
             }
             $user = User::where('email', $decoded['email'])->first();
             if (!$user) {
@@ -294,11 +305,23 @@ class ApiAuthController extends Controller
                 $user->save();
             }
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-            $response = ['token' => $token];
-            return response()->json($response, 200);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Successfully login',
+                'data' => [
+                    'token' => $token,
+                    'user' => $user
+                ]
+            ], 200);
         }catch (\Exception $exception) {
-            $response = ["message" =>'Invalid token'];
-            return response()->json($response, 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Invalid token',
+                'data' => [
+                    'token' => $token,
+                    'error_message' => $exception->getMessage()
+                ]
+            ], 401);
         }
     }
 
