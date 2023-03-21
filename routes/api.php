@@ -163,6 +163,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Route::post('/send-v2', [WhatsAppApiController::class, 'sendWithTemplate'])->name('send-message-with-template');
     });
 
+    Route::group(['prefix' => 'service-availability', 'middleware' => ['cors']], function() {
+        Route::post('/', [OccasionEventsApiController::class, 'getPreferences'])->name('get-availability-dates');
+    });
 
     Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
         Route::get('/', [OrderApiController::class, 'executeCommand'])->name('order-apis');
