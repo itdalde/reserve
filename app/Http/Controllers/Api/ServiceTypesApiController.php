@@ -33,10 +33,20 @@ class ServiceTypesApiController extends Controller
      */
     public function getServiceTypesByOccasionId(Request $request, $occasion_id): JsonResponse
     {
+
         $serviceTypes = OccasionServiceTypePivot::leftJoin('occasions as o', 'o.id', '=', 'occasion_service_type_pivots.occasion_id')
-            ->leftJoin('service_types as st', 'st.id' , '=', 'occasion_service_type_pivots.service_type_id')
-            ->where('occasion_service_type_pivots.occasion_id', $occasion_id)
+            ->leftJoin('service_types as st', 'st.id', '=', 'occasion_service_type_pivots.service_type_id');
+
+        if ($request->has('from') && $request->has('to')) {
+            $serviceTypes = $serviceTypes->leftJoin('available_dates as ad', 'ad.service_id', '=', 'o.id')
+                ->where('ad.service_id', $occasion_id)
+                ->where('ad.status', 1)
+                ->whereBetween('ad.date', [$request->input('from'), $request->input('to')]);
+        }
+
+        $serviceTypes = $serviceTypes->where('occasion_service_type_pivots.occasion_id', $occasion_id)
             ->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
+
         return sendResponse($serviceTypes, 'Get services under occasion');
     }
 }
