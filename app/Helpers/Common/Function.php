@@ -13,6 +13,7 @@ function sendResponse($result, $message, int $code = 200): JsonResponse
 {
     $response = [
         'success' => true,
+        'status' => 'success',
         'data' => $result,
         'message' => $message
     ];
@@ -29,7 +30,9 @@ function sendResponse($result, $message, int $code = 200): JsonResponse
 function sendError($error, $message, int $code = 404): JsonResponse {
     $response = [
         'success' => false,
-        'message' => $error
+        'status' => 'fail',
+        'message' => $error,
+        'data' => $error,
     ];
 
     !empty($message) ? $response['data'] = $message : null;
