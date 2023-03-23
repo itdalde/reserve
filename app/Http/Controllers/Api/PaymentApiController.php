@@ -53,7 +53,7 @@ class PaymentApiController extends Controller
     }
 
     public function paymentProcessing(Request $request) {
-     
+
         $pe = new PaymentEvents();
         $pe->payment_id = $request['PaymentId'];
         $pe->amount = $request['Amount'];
@@ -64,7 +64,7 @@ class PaymentApiController extends Controller
         $pe->visa_id = $request['VisaId'];
         $pe->save();
 
-        
+
         // $o = Order::where('reference_no', $os->reference_order)->first();
         // $oi = OrderItems::where('order_id', $o->id)->get();
 
@@ -97,8 +97,8 @@ class PaymentApiController extends Controller
             ],
             'status' => $status ?? '',
             'statusId' => $statusId ?? '',
-        ]; 
-        return sendResponse($data, $status == "Failed" ? "Payment Failed" : "Payment Successfull");
+        ];
+        return sendResponse($data, $status == "Failed" ? "Payment Failed" : "Payment Successful");
     }
 
     public function paymentReceipt(Request $request)
