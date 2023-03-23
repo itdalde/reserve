@@ -31,10 +31,19 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Something went wrong',
+                'data' => $validator->errors()->all()
+            ], 422);
         }
         if(!isset($data['email']) && !isset($data['phone_number'])) {
-            return response(['message'=> 'Please add required email'], 422);
+
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Please add required email',
+                'data' => $data
+            ], 422);
         }
         $request['password']=Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
@@ -54,8 +63,12 @@ class ApiAuthController extends Controller
         }
 
         $this->sendEmail($data,$confirmationCode);
-        $response = ['message' => 'Successfully created. Please check your email to confirm'];
-        return response()->json($response,200);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully created. Please check your email to confirm',
+            'data' => $data
+        ], 200);
     }
 
     private function sendEmail($data,$confirmationCode) {
@@ -201,7 +214,11 @@ class ApiAuthController extends Controller
     public function resendConfirmation(Request $request) {
         $user = User::where('email',$request->email)->first();
         if(!$user) {
-            return response(['message'=>'User not found'], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'User not found',
+                'data' => $request->email
+            ], 422);
         }
         $data = [
             'email' => $user->email,
@@ -211,10 +228,18 @@ class ApiAuthController extends Controller
         try {
             $sent  = $this->sendEmail($data,$user->confirmation_code);
         } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()] ,400);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Something went wrong',
+                'data' => $e->getMessage()
+            ], 422);
         }
-         $response = ['message' => 'Successfully sent confirmation. Please check your email to confirm'];
-        return response()->json($response,200);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully sent confirmation. Please check your email to confirm',
+            'data' => $request->all()
+        ], 200);
+
     }
 
     public function login (Request $request) {
@@ -232,40 +257,63 @@ class ApiAuthController extends Controller
         $validator = Validator::make($data, $validatorRule);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Something went wrong',
+                'data' => $validator->errors()->all()
+            ], 422);
         }
         $user = User::where($searchKey, $search)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 if (config('auth.users.confirm_email') && !$user->confirmed) {
-                    $response = ['message' => 'Please confirm user first'];
-                    return response()->json($response,422);
+                    return response()->json([
+                        'status' => 'fail',
+                        'message' => 'Please confirm user first',
+                        'data' => $request->all()
+                    ], 422);
                 }
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = [
+                return response()->json([
+                    'status' => 'success',
                     'message' => 'Successfully login',
                     'data' => $token
-                ];
+                ], 200);
                 return response()->json($response,200);
             } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Password mismatch',
+                    'data' => $request->all()
+                ], 422);
             }
         } else {
-            $response = ["message" =>'User does not exist'];
-            return response($response, 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'User does not exist',
+                'data' => $request->all()
+            ], 422);
         }
     }
 
     public function me (Request $request) {
         $user = $request->user()->toArray();
-        return response()->json($user, 200);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully fetch data',
+            'data' => $user
+        ], 200);
     }
     public function logout (Request $request) {
         $token = $request->user()->token();
-        $token->revoke();
-        $response = ['message' => 'You have been successfully logged out!'];
-        return response($response, 200);
+        $token->revoke(); ;
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'You have been successfully logged out!',
+            'data' => $token
+        ], 200);
     }
     public function googleLogin(Request $request) {
         try {
@@ -332,18 +380,30 @@ class ApiAuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
         if ($validator->fails()) {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Something went wrong',
+                'data' => $validator->errors()->all()
+            ], 422);
         }
         $user = User::where('email', $request->email)->first();
         if(!$user) {
-            return response(['error'=>'User not found!'], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'User not found!',
+                'data' => $request->all()
+            ], 422);
         }
         $restToken = DB::table('password_resets')
             ->where('token', $request->token)
             ->where('email', $request->email)->first();
 
         if(!$restToken) {
-            return response(['error'=>'Request reset password not found. Please check token!'], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Request reset password not found. Please check token!',
+                'data' => $request->all()
+            ], 422);
         }
         $restToken = DB::table('password_resets')
             ->where('token', $request->token)
@@ -351,23 +411,31 @@ class ApiAuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $response = [
+        return response()->json([
+            'status' => 'success',
             'message' => 'You have been successfully reset password!',
-            'token'=> $token
-        ];
-        return response($response, 200);
+            'data' => $token
+        ], 200);
     }
     public function forgotPassword(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required',
         ]);
         if ($validator->fails()) {
-            return response(['errors'=>$validator->errors()->all()], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'Validation error',
+                'data' => $validator->errors()->all()
+            ], 422);
         }
 
         $user = User::where('email', $request->email)->first();
         if(!$user) {
-            return response(['error'=>'User not found!'], 422);
+            return response()->json([
+                'status' => 'fail',
+                'message' => 'User not found!',
+                'data' => $request->all()
+            ], 422);
         }
         $token = random_int(100000, 999999);
         DB::table('password_resets')->where('email', $request->email)->delete();
@@ -376,6 +444,7 @@ class ApiAuthController extends Controller
             array('email' => $request->email, 'token' => $token)
         );
         return response()->json([
+            'status' => 'success',
             'message' => 'Successfully requested password reset',
             'data' => [
                 'token' => $token,
