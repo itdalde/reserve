@@ -12,9 +12,9 @@
                             <div class="card card-bg-green ">
                                 <div class="card-body">
                                     <img src="{{asset('assets/images/icons/sales.png')}}" alt="..">
-                                    <h2>QAR 0</h2>
+                                    <h2>QAR {{$totalOrder}}</h2>
                                     <p>Total sales</p>
-                                    <small class="error-message"> 0% from last week</small>
+{{--                                    <small class="error-message"> 0% from last week</small>--}}
                                 </div>
                             </div>
                         </div>
@@ -22,9 +22,9 @@
                             <div class="card card-bg-purple">
                                 <div class="card-body">
                                     <img src="{{asset('assets/images/icons/customers.png')}}" alt="..">
-                                    <h2>0</h2>
+                                    <h2>{{count($users)}}</h2>
                                     <p>Customers</p>
-                                    <small class="error-message"> 0% from last week</small>
+{{--                                    <small class="error-message"> 0% from last week</small>--}}
                                 </div>
                             </div>
                         </div>
@@ -32,9 +32,9 @@
                             <div class="card card-bg-blue">
                                 <div class="card-body">
                                     <img src="{{asset('assets/images/icons/cart.png')}}" alt="..">
-                                    <h2>0</h2>
+                                    <h2>{{count($orders)}}</h2>
                                     <p>Total orders</p>
-                                    <small class="error-message"> 0% from last week</small>
+{{--                                    <small class="error-message"> 0% from last week</small>--}}
                                 </div>
                             </div>
                         </div>
@@ -42,9 +42,9 @@
                             <div class="card card-bg-orange">
                                 <div class="card-body">
                                     <img src="{{asset('assets/images/icons/orders.png')}}" alt="..">
-                                    <h2>0</h2>
+                                    <h2>{{count($orders)}}</h2>
                                     <p>Total orders</p>
-                                    <small class="error-message"> 0% from last week</small>
+{{--                                    <small class="error-message"> 0% from last week</small>--}}
                                 </div>
                             </div>
                         </div>
@@ -176,29 +176,42 @@
             myChart.resize();
         });
 
-        var xValues = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var yValues = [2, 3, 4, 5, 4, 1, 2, 11, 14, 14, 15, 0];
-
-        new Chart("myChart", {
-            type: "line",
-            data: {
-                labels: xValues,
-                datasets: [{
-                    fill: false,
-                    lineTension: 0,
-                    lineWidth: 0,
-                    backgroundColor: "rgb(226,134,26)",
-                    borderColor: 'rgb(176,161,104)',
-                    data: yValues,
-                    tension: 0.1
-                }]
-            },
-            options: {
-                legend: {display: false},
-                scales: {
-                    yAxes: [{ticks: {min: 0, max: 15}}],
-                }
+        let SITEURL = "{{ url('/') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        $.ajax({
+            type: "GET",
+            url: SITEURL + '/get-average-order',
+            success: function (response) {
+                var yValues = response.data;
+                var max_of_array = Math.max.apply(Math, yValues);
+                var xValues = response.month;
+                new Chart("myChart", {
+                    type: "line",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            fill: false,
+                            lineTension: 0,
+                            lineWidth: 0,
+                            backgroundColor: "rgb(226,134,26)",
+                            borderColor: 'rgb(176,161,104)',
+                            data: yValues,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        legend: {display: false},
+                        scales: {
+                            yAxes: [{ticks: {min: 0, max: max_of_array}}],
+                        }
+                    }
+                });
+            }
+        });
+
     </script>
 @endsection

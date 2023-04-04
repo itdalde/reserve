@@ -40,6 +40,12 @@
                 </a>
             </li>
             <li class="nav-item py-2">
+                <a class="nav-link {{ Request::is('calendar*') ? ' active' : '' }}" href="{{ route('schedules.calendar') }}">
+                    <i class="ml-15px bi bi-calendar2-week" style="font-size: 25px; color: {{Request::is('calendar*') ? '#c87b1e' : ''}}"></i>
+                    Schedule
+                </a>
+            </li>
+            <li class="nav-item py-2">
                 <a class="nav-link {{ Request::is('helps*') ? ' active' : '' }}" href="{{ route('helps.index') }}">
                     <img class="ml-15px " src="{{Request::is('helps*') ? asset('assets/images/icons/Group active.svg') : asset('assets/images/icons/Group.svg')}}" alt="....">
                     Help

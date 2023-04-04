@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
+use App\Models\AvailableDates;
 use App\Models\EventImages;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
@@ -32,6 +33,65 @@ class SchedulesController extends Controller
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         $schedules = Schedule::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         return view('admin.schedules.index',compact('services','schedules'));
+    }
+    public function list(Request $request)
+    {
+        if($request->ajax()) {
+            $response = [];
+            $data = AvailableDates::whereDate('date_obj', '>=', $request->start)
+                ->whereDate('date_obj',   '<=', $request->end)->where('company_id', auth()->user()->company->id)
+                ->get();
+            foreach ($data as $datum) {
+                $response[] = [
+                    'id' => $datum->id,
+                    'title' => $datum->service->name,
+                    'start' => $datum->date_obj,
+                    'end' => $datum->date_obj,
+                ];
+            }
+            return response()->json($response);
+        }
+        return view('admin.schedules.manage');
+    }
+    public function updateSchedule(Request $request){
+        $start = Carbon::today()->startOfMonth();
+        $end = Carbon::today()->endOfMonth();
+        $date = $start;
+        $dates = [];
+        if($request->type == 2) {
+            while ($date <= $end) {
+                if (! $date->isWeekend() ) {
+                    $dates[] = [
+                        'old_format' => $date->format('d/m/Y'),
+                        'new_format' => $date->format('Y-m-d')
+                    ];
+                }
+                $date->addDays(1);
+            }
+        } else {
+            while ($date <= $end) {
+                $dates[] = [
+                    'old_format' => $date->format('d/m/Y'),
+                    'new_format' => $date->format('Y-m-d')
+                ];
+                $date->addDays(1);
+            }
+        }
+        $response = [];
+        AvailableDates::where('company_id', auth()->user()->company->id)->delete();
+        $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
+        foreach ($services as $service) {
+            foreach ($dates as $date) {
+                $avail = new AvailableDates();
+                $avail->date = $date['old_format'];
+                $avail->date_obj =  $date['new_format'];
+                $avail->service_id = $service->id;
+                $avail->company_id = auth()->user()->company->id;
+                $avail->status = 1;
+                $avail->save();
+            }
+        }
+        return response()->json($response);
     }
 
     /**

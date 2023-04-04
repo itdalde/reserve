@@ -11,7 +11,7 @@ class AvailableDates extends Model
     use HasFactory;
 
     public function service() {
-        return $this->hasOne(OccasionEvent::class, 'service_id', 'id');
+        return $this->hasOne(OccasionEvent::class, 'id', 'service_id');
     }
     public function company() {
         return $this->hasOne(Company::class, 'company_id', 'id');

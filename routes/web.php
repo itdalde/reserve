@@ -21,6 +21,7 @@ use App\Http\Controllers\Auth\ConfirmController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\OccasionController;
+use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServiceController;
@@ -32,6 +33,10 @@ Route::get('/admin/orders', [\App\Http\Controllers\OrderController::class, 'supe
 Route::get('/admin/orders/view', [\App\Http\Controllers\OrderController::class, 'superListView'])->name('orders.admin.view');
 
 Route::group(['middleware' => 'auth'], function(){
+    Route::get('/get-average-order', [\App\Http\Controllers\OrderController::class, 'getAverageOrder'])->name('orders.getAverageOrder');
+    Route::get('/calendar', [\App\Http\Controllers\SchedulesController::class, 'list'])->name('schedules.calendar');
+    Route::post('/update-schedule', [SchedulesController::class, 'updateSchedule'])->name('schedules-update');
+
     Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
     Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
 

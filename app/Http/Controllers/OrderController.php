@@ -14,6 +14,7 @@ use App\Models\PlanType;
 use App\Models\ServiceType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\VarDumper\VarDumper;
 
 class OrderController extends Controller
@@ -39,6 +40,59 @@ class OrderController extends Controller
         }
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders' ));
     }
+    public function getAverageOrder() {
+        $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
+        $data = OrderItems::select(DB::raw('count(service_id) as `data`'),DB::raw("DATE_FORMAT(schedule_start_datetime, '%m') month") )
+            ->whereIn('service_id',$services)
+            ->whereYear('schedule_start_datetime', date('Y'))
+            ->groupBy('month')->orderBy('month')->get()->toArray();
+        $response = [
+            'month' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'data' => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ];
+        foreach ($data as $datum) {
+            switch ($datum['month']) {
+                case '01':
+                    $response['data'][0] = $datum['data'];
+                    break;
+                case '02':
+                    $response['data'][1] = $datum['data'];
+                    break;
+                case '03':
+                    $response['data'][2] = $datum['data'];
+                    break;
+                case '04':
+                    $response['data'][3] = $datum['data'];
+                    break;
+                case '05':
+                    $response['data'][4] = $datum['data'];
+                    break;
+                case '06':
+                    $response['data'][5] = $datum['data'];
+                    break;
+                case '07':
+                    $response['data'][6] = $datum['data'];
+                    break;
+                case '08':
+                    $response['data'][7] = $datum['data'];
+                    break;
+                case '09':
+                    $response['data'][8] = $datum['data'];
+                    break;
+                case '10':
+                    $response['data'][9] = $datum['data'];
+                    break;
+                case '11':
+                    $response['data'][10] = $datum['data'];
+                    break;
+                case '12':
+                    $response['data'][11] = $datum['data'];
+                    break;
+            }
+        }
+        return response()->json($response);
+    }
+
     public function superList() {
         $orders = Order::with('paymentMethod','user')->get()->toArray();
         foreach ($orders as $k => $order) {

@@ -9,6 +9,7 @@ use App\Models\OccasionEvent;
 use App\Models\OccasionType;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\OrderSplit;
 use App\Models\PlanType;
 use App\Models\ServiceType;
 use Arcanedev\LogViewer\Entities\Log;
@@ -57,8 +58,12 @@ class DashboardController extends Controller
         $orders = OrderItems::whereIn('service_id',$serviceIds)
             ->whereDate('created_at','>=', Carbon::today())
             ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
-
-        return view('admin.dashboard',compact('orders','occasionTypes','plan','users','services' ));
+        $totalOrder = 0;
+        foreach ($orders as $k => $order) {
+            $total = OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
+            $totalOrder += $total ;
+        }
+        return view('admin.dashboard',compact('orders','occasionTypes','plan','users','services','totalOrder' ));
     }
 
 
