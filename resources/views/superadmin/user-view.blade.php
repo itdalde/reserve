@@ -38,11 +38,11 @@
                                         <div class="d-flex justify-content-between">
                                             <div class="p-0">
                                                 <img src="{{asset('assets/images/icons/cart-profile.png')}}" alt="cart-profile.png">
-                                                <span>{{count($user->customer_orders)}} Orders</span>
+                                                <span>{{$totalOrders}} Orders</span>
                                             </div>
                                             <div class="p-0">
                                                 <img src="{{asset('assets/images/icons/dollar-profile.png')}}" alt="dollar-profile.png">
-                                                <span>QAD {{number_format($total)}} Spent</span>
+                                                <span>QAD {{number_format($total,2)}} @if($user->company)Sales @else Spent @endif</span>
                                             </div>
                                         </div>
                                         <hr>

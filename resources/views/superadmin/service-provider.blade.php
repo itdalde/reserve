@@ -20,10 +20,9 @@
                         <tr>
                             <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
                             <td>{{$user->company->name }}</td>
-                            <td>0</td>
+                            <td>QAD {{number_format($user->total,2)}}</td>
                             <td>{{$user->location }}</td>
                             <td>
-
                                 <div class="d-flex justify-content-between">
                                     <div style="    padding-top: 6px!important;">
 
