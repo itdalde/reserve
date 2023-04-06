@@ -8,7 +8,7 @@
                 <tr>
                     <th style="display: none">id</th>
                     <th scope="col">Customer name</th>
-                    <th scope="col">Contact Details</th>
+                    <th scope="col">Date</th>
                     <th scope="col">Reference No.</th>
                     <th scope="col">Status</th>
                     <th scope="col">Amount</th>
@@ -22,10 +22,11 @@
 
                     <tr>
                         <td style="display: none">{{$order['id']}}</td>
-                        <td>{{$order['user'] ? $order['user']['first_name'] .' ' .$order['user']['last_name'] : ''}}</td>
-                        <td>{{$order['contact_details'] }}</td>
+                        <td>{{$order['user'] ? $order['user']['first_name'] .' ' .$order['user']['last_name'] : ''}}<br>{{$order['contact_details'] }}</td>
+                        <td data-order="{{Carbon\Carbon::parse($order['created_at'])->format('YmdHms') }}">{{Carbon\Carbon::parse($order['created_at'])->format('F d, Y H:m') }} </td>
                         <td>{{$order['reference_no'] }}</td>
-                        <td>        @switch($order['status'])
+                        <td>
+                            @switch($order['status'])
                                 @case('pending')
                                 <span
                                     class="status-field w-100 badge bg-warning text-dark text-capitalize">{{$order['status']}}</span>
@@ -38,26 +39,20 @@
                                 <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
                                 @break
                                 @case('declined')
-                                <span
-                                    class="status-field w-100 badge bg-danger text-capitalize">
-                                                    {{$order['status']}}
-                                                </span>
+                                <span class="status-field w-100 badge bg-danger text-capitalize"> {{$order['status']}} </span>
                                 <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
                                 @break
                                 @case('completed')
-                                <span
-                                    class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
+                                <span class="status-field w-100 badge bg-success text-capitalize">{{$order['status']}}</span>
                                 <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
                                 @break
                                 @case('cancelled')
-                                <span
-                                    class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
-                                <br> |-> <small>{{$order['reason']}}</small>
+                                <span class="status-field w-100 badge bg-danger text-capitalize">{{$order['status']}}</span>
+                                @if($order['reason'])<br> |-> <small>{{$order['reason']}}</small>@endif
                                 <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
                                 @break
                                 @default
-                                <span
-                                    class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span>
+                                <span class="status-field w-100 badge bg-primary text-capitalize">{{$order['status']}}</span>
                                 <br> |-> <small>{{$order['balance'] == 0 ? 'Final Payment received' : ($order['balance'] == $order['total_paid'] ? 'First payment received' : 'No First payment received') }} </small>
                             @endswitch</td>
                         <td>QAD {{ number_format($order['total_amount'],2)}}</td>
@@ -144,6 +139,7 @@
             $.fn.dataTable.ext.errMode = 'none';
             let datatable = $('#user-table').DataTable({
                 "pageLength": 10,
+                order: [[0, 'desc']],
             });
             $('#user-table').on('error.dt', function (e, settings, techNote, message) {
                 console.log('An error has been reported by DataTables: ', message);

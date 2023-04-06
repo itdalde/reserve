@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\Occasion;
+use App\Models\OrderSplit;
 use App\Utility\NotificationUtility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -182,7 +183,13 @@ class UserController extends Controller
 
     public function view(Request $request) {
         $user = User::where('id',$request->id)->first();
-        return view('superadmin.user-view', compact('user'));
+        $total = 0;
+        foreach($user->customer_orders as $order) {
+            $t =  OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
+            $total +=$t;
+        }
+        $order['balance'] = OrderSplit::where('order_id', $order['id'])->where('status', 'pending')->sum('amount');
+        return view('superadmin.user-view', compact('user','total'));
     }
 
     public function approve(Request $request) {

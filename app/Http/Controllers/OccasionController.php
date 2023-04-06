@@ -51,11 +51,13 @@ class OccasionController extends Controller
 
     public function assignServices(Request $request) {
         $data = $request->all();
-        foreach ($data['services'] as $service) {
-            $service =  OccasionEvent::where('id',$service)->first();
-            if($service) {
-                $service->occasion_type = $data['id'];
-                $service->save();
+        if(isset($data['services'])) {
+            foreach ($data['services'] as $service) {
+                $service =  OccasionEvent::where('id',$service)->first();
+                if($service) {
+                    $service->occasion_type = $data['id'];
+                    $service->save();
+                }
             }
         }
         return redirect()->back()->with('success', 'Occasion Assignment Successful');

@@ -94,8 +94,12 @@ class OrderController extends Controller
     }
 
     public function superList() {
-        $orders = Order::with('paymentMethod','user')->get()->toArray();
+        $orders = Order::with('paymentMethod','user','items')->get()->toArray();
         foreach ($orders as $k => $order) {
+            if(empty($order['items'])) {
+                unset($orders[$k]);
+                continue;
+            }
             $orders[$k]['balance'] = OrderSplit::where('order_id', $order['id'])->where('status', 'pending')->sum('amount');
             $orders[$k]['total_paid'] = OrderSplit::where('order_id', $order['id'])->where('status', 'paid')->sum('amount');
         }
@@ -142,7 +146,6 @@ class OrderController extends Controller
         $order = Order::where('id',$id)->with('user','items','paymentMethod','paymentDetails', 'splitOrder')->first()->toArray();
         $order['total_paid'] = OrderSplit::where('order_id', $order['id'])->where('status', 'paid')->sum('amount');
         $order['balance'] = OrderSplit::where('order_id', $order['id'])->where('status', 'pending')->sum('amount');
-
         return view('admin.orders.view',compact('order','from'));
     }
 

@@ -6,6 +6,7 @@ use App\Models\Auth\User\Traits\Ables\Protectable;
 use App\Models\Auth\User\Traits\Attributes\UserAttributes;
 use App\Models\Company;
 use App\Models\OccasionEventReviews;
+use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Transaction;
 use Illuminate\Notifications\Notifiable;
@@ -112,5 +113,8 @@ class User extends Authenticatable
 
     public function orders() {
         return $this->hasMany(Transaction::class);
+    }
+    public function customer_orders() {
+        return $this->hasMany(Order::class,'user_id','id');
     }
 }

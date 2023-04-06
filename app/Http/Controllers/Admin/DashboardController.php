@@ -39,8 +39,8 @@ class DashboardController extends Controller
      */
     public function index(Request $request )
     {
-        $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
         if(Auth::user()->hasRole('superadmin')) {
+            $users = User::doesntHave('company')->with('roles')->sortable(['email' => 'asc'])->get();
             return view('superadmin.dashboard',compact('users'));
         }
         $occasionTypes =  Occasion::all()->toArray();

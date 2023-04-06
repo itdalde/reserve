@@ -19,7 +19,7 @@
                                 <tr>
                                     <th scope="col">Occasion</th>
                                     <th scope="col">Image</th>
-                                    <th scope="col">Services</th>
+                                    <th scope="col">Provider</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -32,7 +32,7 @@
                                     <td>
                                         @if($occasion->occasionEvents)
                                             @foreach ($occasion->occasionEvents as $service)
-                                                <span class="badge rounded-pill bg-secondary  w-100 p-2 mb-1">{{$service->name}} - {{$service->company->name}}</span>
+                                                <span class="badge rounded-pill bg-secondary  w-100 p-2 mb-1">{{$service->company->name}}  </span>
                                                 <br>
                                             @endforeach
                                         @endif

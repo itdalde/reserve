@@ -31,9 +31,6 @@
                                                 @endif
                                                 {{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}
                                             </div>
-                                            <div class="p-0">
-                                                <span class="badge  bg-secondary">0 unresolved</span>
-                                            </div>
                                         </div>
                                         <hr>
                                     </div>
@@ -41,11 +38,11 @@
                                         <div class="d-flex justify-content-between">
                                             <div class="p-0">
                                                 <img src="{{asset('assets/images/icons/cart-profile.png')}}" alt="cart-profile.png">
-                                                <span>0 Orders</span>
+                                                <span>{{count($user->customer_orders)}} Orders</span>
                                             </div>
                                             <div class="p-0">
                                                 <img src="{{asset('assets/images/icons/dollar-profile.png')}}" alt="dollar-profile.png">
-                                                <span>0 Spent</span>
+                                                <span>QAD {{number_format($total)}} Spent</span>
                                             </div>
                                         </div>
                                         <hr>

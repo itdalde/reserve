@@ -9,7 +9,6 @@
                     <th scope="col">Customer name</th>
                     <th scope="col">Last purchase</th>
                     <th scope="col">Location</th>
-                    <th scope="col">CS Cases</th>
                     <th scope="col">Total orders</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -21,10 +20,9 @@
                     @if(!$user->hasRole('superadmin'))
                         <tr>
                             <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
-                            <td>0</td>
+                            <td>QAD {{$user->customer_orders && $user->customer_orders->last() ? $user->customer_orders->last()->total_amount : 0}}</td>
                             <td>{{$user->location }}</td>
-                            <td><span class="badge bg-secondary w-100">0 unresolved</span></td>
-                            <td>0</td>
+                            <td>{{count($user->customer_orders) }}</td>
                             <td>
                                 <a  href="{{route('users.view-user',['id' => $user->id])}}">
                                     <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
