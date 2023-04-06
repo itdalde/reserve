@@ -45,11 +45,11 @@ class GeneralHelper
         $translation = $decoded_lang;
         if ($key)
         {
-            $translation = $decoded_lang[$key];
+            $translation = isset($decoded_lang[$key]) ? $decoded_lang[$key] : '';
         }
 
         return $translation;
-        
+
     }
 
     public static function getConcatTranslation($locale, $type, $action, $status)
@@ -69,7 +69,7 @@ class GeneralHelper
             case 'processing':
                 $key = 'notification.order.approved';
                 break;
-            case 'decline': 
+            case 'decline':
                 $key = 'notification.order.cancelled';
                 break;
             case 'complete':
