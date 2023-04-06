@@ -364,7 +364,8 @@ class SettingsController extends Controller
                 $user->password = bcrypt($data['password']);
             }
             $user->save();
-            $message = GeneralHelper::getConcatTranslation($user->app_language, 'user', 'action.updated', 'success');
+            $lang = $user->app_language ? $user->app_language : 'en';
+            $message = GeneralHelper::getConcatTranslation($lang, 'user', 'action.updated', 'success');
             return redirect()->back()->with('success', $message);
         } catch (Exception $ex) {
             dd($ex->getMessage());
