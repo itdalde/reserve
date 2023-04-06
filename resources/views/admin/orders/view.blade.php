@@ -186,7 +186,7 @@
                                         <li class="list-group-item">
                                             <div class="row">
                                                 <div class="col-sm-6">Status</div>
-                                                <div class="col-sm-6">{{$item['status'] }}</div>
+                                                <div class="col-sm-6">{{$order['status'] }}</div>
                                             </div>
                                         </li>
                                         <li class="list-group-item">
