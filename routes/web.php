@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ConfirmController;
 use App\Http\Controllers\HelpController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\NotesController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\SettingsController;
@@ -73,8 +74,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
     Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
 
+    Route::get('/notes/remove', [NotesController::class, 'removeNote'])->name('notes.destroy-note');
     Route::resource('settings', 'SettingsController');
     Route::resource('schedules', 'SchedulesController');
+    Route::resource('notes', 'NotesController');
 
 
     Route::resource('notifications', 'NotificationController');

@@ -503,8 +503,50 @@
                                         <div class="tab-pane fade" id="pills-contact" role="tabpanel"
                                              aria-labelledby="pills-contact-tab">
 
-{{--                                            @foreach($user->notes as $order)--}}
-{{--                                            @endforeach--}}
+                                            @foreach($user->notes as $note)
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <div class="card">
+                                                            <div class="card-body ">
+                                                                <div class="d-flex justify-content-between">
+
+                                                                    <div class="p-0">
+                                                                        @if($user->profile_picture )
+                                                                            <img width="35" class="rounded-circle"
+                                                                                 src="{{ asset( $user->profile_picture) }}" alt="...."/>
+                                                                        @else
+                                                                            <img width="35" class="rounded-circle"
+                                                                                 src="https://ui-avatars.com/api/?name={{$user->first_name ? $user->first_name: $user->email}}"
+                                                                                 alt="...">
+                                                                        @endif
+                                                                            <h3>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</h3>
+                                                                    </div>
+                                                                    <div class="p-0">
+
+                                                                        <a
+                                                                           href="{{route('notes.destroy-note',['id' => $note->id])}}"
+                                                                           onclick="return confirm('Are you sure want to delete this note?')">
+                                                                            <i class="bi bi-trash"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <h4>{{$note->subject}}</h4>
+                                                                        <p>{{$note->description}}</p>
+
+                                                                        <small>{{Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:s a')}}</small>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                                <button type="button" class="btn btn-warning text-white text-center w-100"  data-bs-toggle="modal" data-bs-target="#new-notes-modal">
+                                                   Add new note
+                                                </button>
                                         </div>
                                     </div>
                                 </div>
@@ -517,6 +559,58 @@
         </div>
     </div>
 
+    <div class="modal fade" id="new-notes-modal" tabindex="-1" aria-labelledby="new-notes-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="new-notes-modalLabel">Add new note</h5>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close
+                    </button>
+                </div>
+                <form method="post" action="{{route('notes.store')}}"  >
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                    <div class="modal-body">
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto" style="width: 29%;">
+                                <label for="ticket-modal-title-field" class="col-form-label">
+                                    Enter subject
+                                </label>
+                            </div>
+                            <div class="col-auto" style="width: 70%;">
+                                <input dir="auto" name="subject" type="text"
+                                       class="form-control"
+                                       placeholder="Enter subject of note">
+                            </div>
+                        </div>
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto" style="width: 29%; margin-top: -157px;">
+                                <label for="ticket-modal-description-field" class="col-form-label">
+                                    Note description
+                                </label>
+                            </div>
+                            <div class="col-auto" style="width: 70%;">
+                                <textarea dir="auto" rows="8" name="description" type="text"
+                                  class="form-control"
+                                  placeholder="This is a note about..."> </textarea>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="p-2 bd-highlight">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+
+                            <div class="  p-2 bd-highlight">
+                                <button type="submit" class="btn btn-warning">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('content_javascript')

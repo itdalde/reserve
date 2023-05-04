@@ -5,6 +5,7 @@ namespace App\Models\Auth\User;
 use App\Models\Auth\User\Traits\Ables\Protectable;
 use App\Models\Auth\User\Traits\Attributes\UserAttributes;
 use App\Models\Company;
+use App\Models\Notes;
 use App\Models\OccasionEventReviews;
 use App\Models\Order;
 use App\Models\OrderItems;
@@ -116,5 +117,8 @@ class User extends Authenticatable
     }
     public function customer_orders() {
         return $this->hasMany(Order::class,'user_id','id');
+    }
+    public function notes() {
+        return $this->hasMany(Notes::class,'user_id','id');
     }
 }
