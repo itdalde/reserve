@@ -20,7 +20,7 @@
                     @if(!$user->hasRole('superadmin'))
                         <tr>
                             <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
-                            <td>QAD {{$user->customer_orders && $user->customer_orders->last() ? $user->customer_orders->last()->total_amount : 0}}</td>
+                            <td>QAD {{$user->customer_orders && $user->customer_orders->last() ? number_format($user->customer_orders->last()->total_amount,2) : 0.00}}</td>
                             <td>{{$user->location }}</td>
                             <td>{{count($user->customer_orders) }}</td>
                             <td>

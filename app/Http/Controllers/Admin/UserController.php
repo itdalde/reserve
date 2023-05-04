@@ -197,10 +197,10 @@ class UserController extends Controller
        } else {
            $totalOrders = count($user->customer_orders);
            foreach ($user->customer_orders as $order) {
-               $t = OrderSplit::where('order_id', $order->id)->where('status', 'paid')->sum('amount');
-               $total += $t;
+               $total += $order->total_amount;
            }
        }
+
         return view('superadmin.user-view', compact('user', 'total','totalOrders'));
     }
 

@@ -30,5 +30,11 @@ class Order extends Model
     public function splitOrder() {
         return $this->hasMany(OrderSplit::class, 'order_id', 'id');
     }
+    public function balance() {
+        return $this->hasMany(OrderSplit::class, 'order_id', 'id')->where('status', 'pending')->sum('amount');
+    }
+    public function total_paid() {
+        return $this->hasMany(OrderSplit::class, 'order_id', 'id')->where('status', 'paid')->sum('amount');
+    }
 
 }
