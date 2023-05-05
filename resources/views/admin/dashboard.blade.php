@@ -11,40 +11,40 @@
                         <div class="col-sm-12 col-md-3 pb-5">
                             <div class="card card-bg-green ">
                                 <div class="card-body">
-                                    <img src="{{asset('assets/images/icons/sales.png')}}" alt="..">
-                                    <h2>QAR {{$totalOrder}}</h2>
+                                    <img src="{{ asset('assets/images/icons/sales.png') }}" alt="..">
+                                    <h2>QAR {{ $totalOrder }}</h2>
                                     <p>Total sales</p>
-{{--                                    <small class="error-message"> 0% from last week</small>--}}
+                                    {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 pb-5">
                             <div class="card card-bg-purple">
                                 <div class="card-body">
-                                    <img src="{{asset('assets/images/icons/customers.png')}}" alt="..">
-                                    <h2>{{count($users)}}</h2>
+                                    <img src="{{ asset('assets/images/icons/customers.png') }}" alt="..">
+                                    <h2>{{ count($users) }}</h2>
                                     <p>Customers</p>
-{{--                                    <small class="error-message"> 0% from last week</small>--}}
+                                    {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 pb-5">
                             <div class="card card-bg-blue">
                                 <div class="card-body">
-                                    <img src="{{asset('assets/images/icons/cart.png')}}" alt="..">
-                                    <h2>{{count($orders)}}</h2>
+                                    <img src="{{ asset('assets/images/icons/cart.png') }}" alt="..">
+                                    <h2>{{ count($orders) }}</h2>
                                     <p>Total orders</p>
-{{--                                    <small class="error-message"> 0% from last week</small>--}}
+                                    {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 pb-5">
                             <div class="card card-bg-orange">
                                 <div class="card-body">
-                                    <img src="{{asset('assets/images/icons/orders.png')}}" alt="..">
-                                    <h2>{{count($orders)}}</h2>
+                                    <img src="{{ asset('assets/images/icons/orders.png') }}" alt="..">
+                                    <h2>{{ count($orders) }}</h2>
                                     <p>Total orders</p>
-{{--                                    <small class="error-message"> 0% from last week</small>--}}
+                                    {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
                         </div>
@@ -55,18 +55,17 @@
                 <div class="card-body">
                     <div class="d-flex bd-highlight mb-3">
                         <div class="mr-auto p-2 bd-highlight w-25"><img
-                                src="{{asset('assets/images/icons/calendar.png')}}"
-                                alt="..."></div>
+                                src="{{ asset('assets/images/icons/calendar.png') }}" alt="..."></div>
                         <div class="p-2 bd-highlight w-50">Recent activity<br> 0% from last month</div>
                         <div class="p-2 bd-highlight w-25">0% <br>
                             <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%"
-                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
                     <div class="text-center">
-                        <div class="chart-container" style="position: relative; height:52vh; width:100%">
+                        <div class="chart-container" style="position: relative; height:100%; width:100%">
                             <canvas id="myChart"></canvas>
                         </div>
                     </div>
@@ -74,27 +73,46 @@
             </div>
             <div class="card mb-2">
                 <div class="card-body table-responsive">
-                    <div class="d-md-flex d-sm-block">
-                        <div class="p-2 w-75"><h3>New Orders</h3></div>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2 w-75">
+                            <h3>New Orders</h3>
+                        </div>
 
-                        <div class="ml-auto p-2 w-25"><a href="{{route('orders.index')}}">See more</a></div>
+                        <div class="ml-auto p-2"><a href="{{ route('orders.index') }}">See more</a></div>
                     </div>
                     <table class="table table-hover">
                         <thead class="thead-light">
-                        <tr>
-                            <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
-                            <th scope="col" style=" background: #F2F1F0;">Order ID</th>
-                            <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Status</th>
-                        </tr>
+                            <tr style="background-color: #F2F1F0;">
+                                <th scope="col" style="border-top-left-radius: 11px; ">Name</th>
+                                <th scope="col" style="">Order ID</th>
+                                <th scope="col" style="">Order type</th>
+                                <th scope="col" style="border-top-right-radius: 11px;"></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach($orders as $order)
                             <tr>
-                                <td>{{isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] .' '. $order['order']['user']['last_name']  : ''}}</td>
-                                <td>{{isset($order['order']) ? $order['order']['reference_no'] : ''}}</td>
-                                <td>{{$order['status']}}</td>
+                                <td class="d-flex justify-content-between">
+                                    <img src="https://via.placeholder.com/60" alt="..."
+                                        style="width: 36px; height: 36px; border-radius: 20px" />
+                                    <p style="color: #586981" class="m-auto">User name</p>
+                                </td>
+                                <td>
+                                    <p>Order #FFFF</p>
+                                    <p>3 items</p>
+                                </td>
+                                <td>Custom</td>
+                                <td>
+                                    <button class="btn">View Order</button>
+                                </td>
                             </tr>
-                        @endforeach
+                            @foreach ($orders as $order)
+                                <tr>
+                                    <td>{{ isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : '' }}
+                                    </td>
+                                    <td>{{ isset($order['order']) ? $order['order']['reference_no'] : '' }}</td>
+                                    <td>{{ $order['status'] }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -107,22 +125,23 @@
                     <div>
                         <table class="table">
                             <thead class="thead-light">
-                            <tr>
-                                <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
-                                <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">No. of
-                                    orders
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
+                                    <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">No. of
+                                        orders
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($services as $service)
-                                <tr>
-                                    <td><img  style="    height: 35px;width: 35px;object-fit: cover;" src="{{asset($service->image)}}"
-                                             onerror="this.onerror=null; this.src='{{asset('images/no-image.jpg')}}'"
-                                             alt="..."> {{$service->name}}</td>
-                                    <td>{{count($service->orders)}}</td>
-                                </tr>
-                            @endforeach
+                                @foreach ($services as $service)
+                                    <tr>
+                                        <td><img style="    height: 35px;width: 35px;object-fit: cover;"
+                                                src="{{ asset($service->image) }}"
+                                                onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
+                                                alt="..."> {{ $service->name }}</td>
+                                        <td>{{ count($service->orders) }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -135,28 +154,30 @@
 
                         <table class="table">
                             <thead class="thead-light">
-                            <tr>
-                                <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
-                                <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">No. of
-                                    orders
-                                </th>
-                            </tr>
+                                <tr>
+                                    <th scope="col" style="border-top-left-radius: 11px;background: #F2F1F0;">Name</th>
+                                    <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">No. of
+                                        orders
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($users as $customer)
-                                <tr>
-                                    <td>@if($customer->profile_picture )
-                                            <img style="width: 35px;" class="rounded-circle"
-                                                 src="{{ asset( $customer->profile_picture) }}" alt="...."/>
-                                        @else
-                                            <img style="width: 35px;" class="rounded-circle"
-                                                 src="https://ui-avatars.com/api/?name={{$customer->first_name ? $customer->first_name: $customer->email}}"
-                                                 alt="...">
-                                        @endif {{$customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name}}
-                                    </td>
-                                    <td>{{count($customer->orders)}}</td>
-                                </tr>
-                            @endforeach
+                                @foreach ($users as $customer)
+                                    <tr>
+                                        <td>
+                                            @if ($customer->profile_picture)
+                                                <img style="width: 35px;" class="rounded-circle"
+                                                    src="{{ asset($customer->profile_picture) }}" alt="...." />
+                                            @else
+                                                <img style="width: 35px;" class="rounded-circle"
+                                                    src="https://ui-avatars.com/api/?name={{ $customer->first_name ? $customer->first_name : $customer->email }}"
+                                                    alt="...">
+                                            @endif
+                                            {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
+                                        </td>
+                                        <td>{{ count($customer->orders) }}</td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -185,7 +206,7 @@
         $.ajax({
             type: "GET",
             url: SITEURL + '/get-average-order',
-            success: function (response) {
+            success: function(response) {
                 var yValues = response.data;
                 var max_of_array = Math.max.apply(Math, yValues);
                 var xValues = response.month;
@@ -204,14 +225,20 @@
                         }]
                     },
                     options: {
-                        legend: {display: false},
+                        legend: {
+                            display: false
+                        },
                         scales: {
-                            yAxes: [{ticks: {min: 0, max: max_of_array}}],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: max_of_array
+                                }
+                            }],
                         }
                     }
                 });
             }
         });
-
     </script>
 @endsection
