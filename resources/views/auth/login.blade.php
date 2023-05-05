@@ -29,7 +29,7 @@
 
 </head>
 <body data-aos-once="false">
-<div class="container row mx-auto" data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
+<div class="container-fluid row mx-auto" data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
     <div class="forms-container col-sm-12 col-md-12  col-lg-6 ">
         <div class="signin-signup">
             <div class="d-flex align-content-end flex-wrap">
@@ -39,10 +39,7 @@
                         <div class="d-flex flex-column w-100 mx-auto " style="{{__('home.home')  == 'Home' ? 'direction: ltr;' : 'direction: rtl;'}}">
                             <h2 class="title">
                                 <div class="p-2 text-center">
-                                    <a href="/">
-                                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
-                                    </a>
-
+                                   <h4>Login to Reserve</h4>
                                 </div>
                             </h2>
                             @csrf
@@ -81,61 +78,58 @@
                                         <div class="d-flex flex-column w-100 mx-auto">
                                             <h2 class="title">
                                                 <div class="p-2 text-center">
-                                                    <a href="/">
-                                                        <img src="{{asset('assets/landing/img/logo-black.png')}}"
-                                                             alt="logo-black">
-                                                    </a>
+                                                    <h1><strong>Create an Account</strong></h1>
                                                 </div>
                                             </h2>
                                             <div class="p-1 signup-container" style="    max-height: 68vh; overflow-y: auto;">
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Company Name')}} <strong class="text-danger"> * </strong></label> <br>
-                                                    <div class="ms-2 input-field">
+                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-people"></i>
                                                         <input id="company_name" autocomplete="new-password" type="text"
                                                                name="company_name"
+                                                               placeholder="Name of the company"
                                                                class="mb-0 form-control w-100"
                                                                value="{{ old('company_name') }}" required autofocus/>
                                                     </div>
                                                 </div>
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Full Name')}} <strong class="text-danger"> * </strong></label> <br>
-                                                    <div class="ms-2 input-field">
+                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-person-circle"></i>
                                                         <input required type="text" id="first_name"
                                                                value="{{ old('full_name') }}"
                                                                name="full_name"
+                                                               placeholder="Name of the person to contact"
                                                                class="mb-0 form-control w-100" />
                                                     </div>
                                                 </div>
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Position')}} <strong class="text-danger"> * </strong></label> <br>
                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-award"></i>
                                                         <input type="text" id="position" value="{{ old('position') }}"
                                                                name="position"
+                                                               placeholder="Position of the person to contact"
                                                                class="mb-0 form-control w-100" />
                                                     </div>
                                                 </div>
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Phone number')}} <strong class="text-danger"> * </strong></label> <br>
                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-telephone"></i>
                                                         <input required type="text" id="phone_number"
                                                                value="{{ old('phone_number') }}"
                                                                name="phone_number"
+                                                               placeholder="Phone Number"
                                                                class="mb-0 form-control w-100" />
                                                     </div>
                                                 </div>
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Email')}} <strong class="text-danger"> * </strong></label> <br>
                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-envelope"></i>
                                                         <input id="email" type="email" name="email"
                                                                class="mb-0 form-control w-100"
+                                                               placeholder="Email"
                                                                value="{{ old('email') }}"
                                                                required/>
                                                     </div>
@@ -143,28 +137,27 @@
                                                 </div>
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.location')}} </label> <br>
                                                     <div class="ms-2 input-field"><i class="bi bi-geo-alt"></i>
                                                         <input type="text" id="location" value="{{ old('location') }}"
                                                                name="location"
+                                                               placeholder="Company location in Qatar"
                                                                class="mb-0 form-control w-100">
                                                     </div>
                                                 </div>
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.registration_number')}} <strong class="text-danger"> * </strong></label> <br>
-                                                    <div class="ms-2 input-field">
+                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-journal-text"></i>
                                                         <input type="text" id="registration_number"
                                                                value="{{ old('registration_number') }}"
                                                                name="registration_number"
+                                                               placeholder="{{__('login.registration_number')}}"
                                                                class="mb-0 form-control w-100"
                                                                required/>
                                                     </div>
                                                 </div>
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Password')}} <strong class="text-danger"> * </strong></label> <br>
                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-shield-lock"></i>
 
@@ -175,6 +168,7 @@
                                                             id="password"
                                                             type="password"
                                                             name="password"
+                                                            placeholder="{{__('login.Password')}}"
                                                             style="width: 92%;
                                                             border-right: none;"
                                                             autocomplete="new-password"
@@ -206,13 +200,13 @@
 
 
                                                 <div class="control-group p-1 mx-auto">
-                                                    <label for="">{{__('login.Select Service Type')}} <strong class="text-danger"> * </strong></label> <br>
                                                     <div class="ms-2 input-field">
                                                         <i class="bi bi-card-checklist"></i>
 
                                                         <input type="text" id="service_type"
                                                                value="{{ old('service_type') }}"
                                                                name="service_type"
+                                                               placeholder="{{__('login.Select Service Type')}}"
                                                                class="mb-0 form-control w-100"
                                                                required/>
                                                     </div>
@@ -233,7 +227,7 @@
 
                                             <div class="pt-3">
                                                 <button id="btn-submit-change-pass " type="submit"
-                                                        class="btn btn-default bg-orange submit w-100">{{__('login.Sign up')}}
+                                                        class="btn btn-default bg-orange submit w-100">Create my account
                                                 </button>
                                             </div>
                                         </div>
@@ -249,26 +243,41 @@
 
     <div class="panels-container col-sm-12  col-md-12 col-lg-6 ">
         <div class="panel left-panel">
-            <div class="content " data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
-                <h3>{{__('login.have an account')}} </h3>
+            <div class="content text-dark reg-panel text-start" data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
+
+                <div class="d-flex justify-content-start logo-log-in-top">
+
+                    <a href="/">
+                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                    </a>
+                </div>
+                <h1><strong>Welcome Back!</strong></h1>
                 <p>
-                    {{__('login.Welcome to Reservgcc')}}
+                    Don't have a Reserve Vendor account? <br>
+                    Create an account below!
                 </p>
-                <button class="btn transparent w-100" id="sign-up-btn">
-                    {{__('login.Register Service Provider')}}
+                <button class="btn transparent w-50" id="sign-up-btn">
+                    Create an account
                 </button>
             </div>
-            <img data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in" src="/assets/landing/img/6207967.jpg"
-                 class="image img-fluid img-sign-in" alt="..."/>
         </div>
         <div class="panel right-panel">
-            <div class="content">
-                <h3>{{__('login.Already registered')}}</h3>
-                <button class="btn transparent w-100 " id="sign-in-btn">
-                    {{__('login.Login Service Provider')}}
+            <div class="content reg-panel text-dark text-start">
+                <div class="d-flex justify-content-start logo-log-in-top">
+
+                    <a href="/">
+                        <img src="{{asset('assets/landing/img/logo-black.png')}}" alt="logo-black">
+                    </a>
+                </div>
+                <h1><strong>Already <br>Registered?</strong></h1>
+                <p>Already have a Reserve Vendor account?<br>
+                    Login to your account below!
+
+                    </p>
+                <button class="btn transparent w-75 " id="sign-in-btn">
+                    Login
                 </button>
             </div>
-            <img src="/assets/landing/img/6206973.jpg" class="image img-fluid img-sign-up" alt="..."/>
         </div>
     </div>
 </div>
@@ -311,7 +320,7 @@
 <script>
     const sign_in_btn = document.querySelector("#sign-in-btn");
     const sign_up_btn = document.querySelector("#sign-up-btn");
-    const container = document.querySelector(".container");
+    const container = document.querySelector(".container-fluid");
 
     sign_up_btn.addEventListener("click", () => {
         container.classList.add("sign-up-mode");
