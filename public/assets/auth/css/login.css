@@ -347,3 +347,7 @@ form.sign-in-form {
     margin-top: -11em;
 
 }
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    border-bottom: 1px solid #dfe3e8!important;
+    color: #353232;
+}
