@@ -18,6 +18,7 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
+use LaravelApi\Facade as Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,22 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Api::apiKeySecurity ( 'api_key' )
+    ->parameterName ( 'apiKey' )
+    ->inHeader ();
 Route::group(['prefix' => 'v1','middleware' => ['cors']], function () {
-    Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
-    Route::post('/reset-password', 'Auth\ApiAuthController@resetPassword')->name('reset-password.api');
+    Api::post('/login', 'Auth\ApiAuthController@login')
+        ->addFormDataParameter ( 'email', '', true  )
+        ->addFormDataParameter ( 'password', '', true )
+        ->addTag('Auth')
+        ->setOperationId('execute')
+        ->setDescription('Login') ;
+    Api::post('/reset-password', 'Auth\ApiAuthController@resetPassword')
+        ->addFormDataParameter ( 'email', '', true  )
+        ->addFormDataParameter ( 'password', '', true )
+        ->addTag('Auth')
+        ->setOperationId('execute')
+        ->setDescription('Reset Password');
     Route::post('/forgot-password', 'Auth\ApiAuthController@forgotPassword')->name('forgot-password.api');
     Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
     Route::post('/resend-confirmation','Auth\ApiAuthController@resendConfirmation')->name('resend.confirmation.api');
@@ -44,7 +57,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function()
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
     Route::get('/me', 'Auth\ApiAuthController@me')->name('me.api');
     Route::get('/users', [UserController::class,'userList'])->name('users.list.api');
-    Route::post('/fcm-token', [UserController::class, 'updateToken']);
+    Api::post('/fcm-token', [UserController::class, 'updateToken'])
+        ->addTag('Auth')
+        ->setOperationId('execute')
+        ->requiresAuth ( 'oauth2_implicit', [ 'read' ] );
 });
 
 Route::get('/test-fcm', [UserController::class, 'testFcm']);
@@ -65,8 +81,18 @@ Route::group(['prefix' => 'v1/membership', 'middleware' => ['cors']], function()
 Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     Route::group(['prefix' => 'occasions', 'middleware' => ['cors']], function() {
-        Route::get('/', [OccasionsApiController::class, 'getOccasions'])->name('get-occasions');
-        Route::get('/{id}', [OccasionsApiController::class, 'getOccasion'])->name('get-occasion-by-id');
+        Api::get('/', [OccasionsApiController::class, 'getOccasions'])
+            ->addTag('Occasions')
+            ->setDescription('Get Occasions')
+            ->setOperationId('executeAction')
+            ->setConsumes(['application/json'])
+            ->setProduces(['application/json']);
+        Api::get ( '/{id}', 'Api\OccasionsApiController@getOccasion' )
+            ->addTag('Occasions')
+            ->setDescription('Get Occasion by ID')
+            ->setOperationId('executeAction')
+            ->setConsumes(['application/json'])
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
