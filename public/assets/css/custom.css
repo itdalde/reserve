@@ -270,3 +270,8 @@ svg text {
     top: 5px;
     position: relative;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    border-bottom: 1px solid #dfe3e8!important;
+    color: #353232!important;
+}
