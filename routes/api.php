@@ -30,51 +30,92 @@ use LaravelApi\Facade as Api;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Api::apiKeySecurity ( 'api_key' )
-    ->parameterName ( 'apiKey' )
+Api::apiKeySecurity ( 'token' )
+    ->parameterName ( 'Authorization' )
     ->inHeader ();
 Route::group(['prefix' => 'v1','middleware' => ['cors']], function () {
     Api::post('/login', 'Auth\ApiAuthController@login')
         ->addFormDataParameter ( 'email', '', true  )
         ->addFormDataParameter ( 'password', '', true )
         ->addTag('Auth')
-        ->setOperationId('execute')
         ->setDescription('Login') ;
     Api::post('/reset-password', 'Auth\ApiAuthController@resetPassword')
         ->addFormDataParameter ( 'email', '', true  )
         ->addFormDataParameter ( 'password', '', true )
         ->addTag('Auth')
-        ->setOperationId('execute')
         ->setDescription('Reset Password');
-    Route::post('/forgot-password', 'Auth\ApiAuthController@forgotPassword')->name('forgot-password.api');
-    Route::post('/register','Auth\ApiAuthController@register')->name('register.api');
-    Route::post('/resend-confirmation','Auth\ApiAuthController@resendConfirmation')->name('resend.confirmation.api');
-    Route::post('/google-login', 'Auth\ApiAuthController@googleLogin')->name('google.login.api');
-    Route::get('/occasions', [OccasionController::class,'index'])->name('occasions.list.api');
+    Api::post('/forgot-password', 'Auth\ApiAuthController@forgotPassword')
+        ->addFormDataParameter ( 'email', '', true  )
+        ->addTag('Auth')
+        ->setDescription('Forgot Password');
+    Api::post('/register','Auth\ApiAuthController@register')
+        ->addFormDataParameter ( 'first_name', '', true  )
+        ->addFormDataParameter ( 'email', '', true  )
+        ->addFormDataParameter ( 'phone_number', '', true  )
+        ->addFormDataParameter ( 'password', '', true  )
+        ->addTag('Auth')
+        ->setDescription('Forgot Password');
+    Api::post('/resend-confirmation','Auth\ApiAuthController@resendConfirmation')
+        ->addFormDataParameter ( 'email', '', true  )
+        ->addTag('Auth')
+        ->setDescription('Resend Confirmation');
+    Api::post('/google-login', 'Auth\ApiAuthController@googleLogin')
+        ->addFormDataParameter ( 'token', '', true  )
+        ->addTag('Auth')
+        ->setDescription('Google login');
+    Api::get('/occasions', [OccasionController::class,'index'])
+        ->addTag('Occasions')
+        ->setDescription('List')
+        ->setProduces(['application/json']);
 });
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function() {
-    Route::get('/transactions', [TransactionController::class,'index'])->name('transactions.list.api');
+    Api::get('/transactions', [TransactionController::class,'index'])
+        ->addTag('Transactions')
+        ->setDescription('Get List of transactions')
+        ->requiresAuth ( 'token', [ 'read' ] );
     Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
-    Route::get('/me', 'Auth\ApiAuthController@me')->name('me.api');
-    Route::get('/users', [UserController::class,'userList'])->name('users.list.api');
+    Api::get('/me', 'Auth\ApiAuthController@me')
+        ->addTag('User')
+        ->setDescription('Get User Information')
+        ->requiresAuth ( 'token', [ 'read' ] );
+    Api::get('/users', [UserController::class,'userList'])
+        ->addTag('User')
+        ->setDescription('Get User Lists')
+        ->requiresAuth ( 'token', [ 'read' ] );
     Api::post('/fcm-token', [UserController::class, 'updateToken'])
-        ->addTag('Auth')
-        ->setOperationId('execute')
-        ->requiresAuth ( 'oauth2_implicit', [ 'read' ] );
+        ->addFormDataParameter ( 'fcm_token', '', true  )
+        ->addTag('User')
+        ->requiresAuth ( 'token', [ 'read' ] );
 });
 
 Route::get('/test-fcm', [UserController::class, 'testFcm']);
 Route::get('/test-socket', [UserController::class, 'testSocket']);
 //  INFO: Membership Endpoints
 Route::group(['prefix' => 'v1/membership', 'middleware' => ['cors']], function() {
-    Route::get('/', [MembershipController::class, 'index'])->name('index');
-    Route::post('/create', [MembershipController::class, 'create'])->name('create');
-    Route::post('/store', [MembershipController::class, 'store'])->name('store');
-    Route::get('/show/{id}', [MembershipController::class, 'show'])->name('show');
-    Route::get('/edit/{id}', [MembershipController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}', [MembershipController::class, 'update'])->name('update');
-    Route::post('/destroy/{id}', [MembershipController::class, 'destroy'])->name('destroy');
-    Route::get('/members', [MembershipController::class, 'getMembers'])->name('membership');
+    Api::get('/', [MembershipController::class, 'index'])
+        ->addTag('Membership')
+        ->setDescription('Get Membership List');
+    Api::post('/create', [MembershipController::class, 'create'])
+        ->addTag('Membership')
+        ->setDescription('Create Membership');
+    Api::post('/store', [MembershipController::class, 'store'])
+        ->addTag('Membership')
+        ->setDescription('Store Membership') ;
+    Api::get('/show/{id}', [MembershipController::class, 'show'])
+        ->addTag('Membership')
+        ->setDescription('Show Membership') ;
+    Api::get('/edit/{id}', [MembershipController::class, 'edit'])
+        ->addTag('Membership')
+        ->setDescription('Edit Membership') ;
+    Api::put('/update/{id}', [MembershipController::class, 'update'])
+        ->addTag('Membership')
+        ->setDescription('Update Membership') ;
+    Api::post('/destroy/{id}', [MembershipController::class, 'destroy'])
+        ->addTag('Membership')
+        ->setDescription('Delete Member By ID');
+    Api::get('/members', [MembershipController::class, 'getMembers'])
+        ->addTag('Membership')
+        ->setDescription('Get Members');
 });
 
 
@@ -84,62 +125,128 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Api::get('/', [OccasionsApiController::class, 'getOccasions'])
             ->addTag('Occasions')
             ->setDescription('Get Occasions')
-            ->setOperationId('executeAction')
-            ->setConsumes(['application/json'])
             ->setProduces(['application/json']);
         Api::get ( '/{id}', 'Api\OccasionsApiController@getOccasion' )
             ->addTag('Occasions')
             ->setDescription('Get Occasion by ID')
-            ->setOperationId('executeAction')
-            ->setConsumes(['application/json'])
             ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
-        Route::get('/from-to-date', [OccasionEventsApiController::class, 'getOccasionEventsByFromToDate'])->name('get-events-by-occasion-date');
-        Route::get('/service-type/{id}', [OccasionEventsApiController::class, 'getOccasionByServiceType'])->name('get-events-by-event-type');
-        Route::get('/{id}', [OccasionEventsApiController::class, 'getOccasionEventById'])->name('get-occasion-events-by-id');
-        Route::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])->name('get-occasion-events');
+        Api::get('/from-to-date', [OccasionEventsApiController::class, 'getOccasionEventsByFromToDate'])
+            ->addTag('Occasions Events')
+            ->setDescription('getOccasionEventsByFromToDate')
+            ->setProduces(['application/json']);
+        Api::get('/service-type/{id}', [OccasionEventsApiController::class, 'getOccasionByServiceType'])
+            ->addTag('Occasions Events')
+            ->setDescription('getOccasionByServiceType')
+            ->setProduces(['application/json']);
+        Api::get('/{id}', [OccasionEventsApiController::class, 'getOccasionEventById'])
+            ->addTag('Occasions Events')
+            ->setDescription('getOccasionEventById')
+            ->setProduces(['application/json']);
+        Api::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])
+            ->addTag('Occasions Events')
+            ->setDescription('getOccasionEvents')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
-        Route::get('/', [ServiceTypesApiController::class, 'getServices'])->name('get-services');
-        Route::get('/type/{service_type_id}', [ServiceTypesApiController::class, 'getService'])->name('get-service-by-id');
-        Route::get('/occasion-service-type/{occasion_id}', [ServiceTypesApiController::class, 'getServiceTypesByOccasionId'])->name('get-service-type-by-occasion-id');
-
-        Route::get('/occasion-event/{occasion_event_id}', [OccasionEventsApiController::class, 'getOccasionServiceByOccasionId'])->name('get-occasion-service-by-occasion-id');
-        Route::get('/provider/{provider_id}', [ServicesApiController::class, 'getServicesByProviders'])->name('get-services-by-provider');
-
+        Api::get('/', [ServiceTypesApiController::class, 'getServices'])
+            ->addTag('Services')
+            ->setDescription('getServices')
+            ->setProduces(['application/json']);
+        Api::get('/type/{service_type_id}', [ServiceTypesApiController::class, 'getService'])
+            ->addTag('Services')
+            ->setDescription('getService')
+            ->setProduces(['application/json']);
+        Api::get('/occasion-service-type/{occasion_id}', [ServiceTypesApiController::class, 'getServiceTypesByOccasionId'])
+            ->addTag('Services')
+            ->setDescription('getServiceTypesByOccasionId')
+            ->setProduces(['application/json']);
+        Api::get('/occasion-event/{occasion_event_id}', [OccasionEventsApiController::class, 'getOccasionServiceByOccasionId'])
+            ->addTag('Services')
+            ->setDescription('getOccasionServiceByOccasionId')
+            ->setProduces(['application/json']);
+        Api::get('/provider/{provider_id}', [ServicesApiController::class, 'getServicesByProviders'])
+            ->addTag('Services')
+            ->setDescription('getServicesByProviders')
+            ->setProduces(['application/json']);
         // search
-        Route::get('/{service_type_id}/events/{search}', [ServicesApiController::class, 'findOccasionServiceByProvider'])->name('find-occasion-events-by-service-provider');
+        Api::get('/{service_type_id}/events/{search}', [ServicesApiController::class, 'findOccasionServiceByProvider'])
+            ->addTag('Services')
+            ->setDescription('findOccasionServiceByProvider')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'providers', 'middleware' => ['cors']], function() {
-        Route::get('/', [CompanyApiController::class, 'getProviders'])->name('get-all-providers');
-        Route::get('/service-type/{service_type_id}', [ServicesApiController::class, 'getProvidersByServiceType'])->name('get-providers-by-service-type');
-        Route::get('/{provider_id}/service-type/{service_id}', [ServicesApiController::class, 'getServicesByCompanyAndServiceType'])->name('get-services-under-company-group-by-service-type');
+        Api::get('/', [CompanyApiController::class, 'getProviders'])
+            ->addTag('Providers')
+            ->setDescription('findOccasionServiceByProvider')
+            ->setProduces(['application/json']);
+        Api::get('/service-type/{service_type_id}', [ServicesApiController::class, 'getProvidersByServiceType'])
+            ->addTag('Providers')
+            ->setDescription('getProvidersByServiceType')
+            ->setProduces(['application/json']);
+        Api::get('/{provider_id}/service-type/{service_id}', [ServicesApiController::class, 'getServicesByCompanyAndServiceType'])
+            ->addTag('Providers')
+            ->setDescription('getServicesByCompanyAndServiceType')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
-        Route::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])->name('add-service-to-cart');
-        Route::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])->name('get-cart-by-user-id');
-        Route::post('/{cart_id}/remove-service/{service_id}', [CartApiController::class, 'removeServiceFromCart'])->name('remove-service-from-cart');
-        Route::post('/{cart_id}/update-service/{service_id}', [CartApiController::class, 'updateServiceFromCart'])->name('update-service-in-cart');
-        Route::get('/{cart_id}/service/{status}', [CartApiController::class, 'getItemInCartByStatus'])->name('get-service-in-cart-by-status');
-        Route::get('/{cart_id}/service-item/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])->name('get-cart-item-service-by-id');
-
-
-        Route::post('/{cart_id}/place-order/{user_id}', [CartApiController::class, 'placeOrder'])->name('user-placed-order');
+        Api::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])
+            ->addTag('Cart')
+            ->setDescription('addServiceToCart')
+            ->setProduces(['application/json']);
+        Api::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])
+            ->addTag('Cart')
+            ->setDescription('getUserCart')
+            ->setProduces(['application/json']);
+        Api::post('/{cart_id}/remove-service/{service_id}', [CartApiController::class, 'removeServiceFromCart'])
+            ->addTag('Cart')
+            ->setDescription('removeServiceFromCart')
+            ->setProduces(['application/json']);
+        Api::post('/{cart_id}/update-service/{service_id}', [CartApiController::class, 'updateServiceFromCart'])
+            ->addTag('Cart')
+            ->setDescription('updateServiceFromCart')
+            ->setProduces(['application/json']);
+        Api::get('/{cart_id}/service/{status}', [CartApiController::class, 'getItemInCartByStatus'])
+            ->addTag('Cart')
+            ->setDescription('getItemInCartByStatus')
+            ->setProduces(['application/json']);
+        Api::get('/{cart_id}/service-item/{service_id}', [CartApiController::class, 'getServiceByCartAndServiceId'])
+            ->addTag('Cart')
+            ->setDescription('getServiceByCartAndServiceId')
+            ->setProduces(['application/json']);
+        Api::post('/{cart_id}/place-order/{user_id}', [CartApiController::class, 'placeOrder'])
+            ->addTag('Cart')
+            ->setDescription('placeOrder')
+            ->setProduces(['application/json']);
 
     });
 
     Route::group(['prefix' => 'order', 'middleware' => ['cors']], function() {
-        Route::post('/{order_id}/timeline/{timeline}', [OrderApiController::class, 'updateTimelineForOrder'])->name('update-order-timeline-status');
-        Route::post('/{order_id}/status/{status}', [OrderApiController::class, 'updateStatusForOrder'])->name('update-order-status-status');
-        Route::get('/{reference_no}', [OrderApiController::class, 'getOrderByReferenceNo'])->name('get-order-by-reference-no');
-        Route::get('/user/{user_id}/orders', [OrderApiController::class, 'getUserOrders'])->name('get-user-order-history');
-
-        Route::get('/payment-detail/{reference_no}', [OrderApiController::class, 'getPaymentDetailByReferenceNo'])->name('get-payment-detail-by-reference-no');
+        Api::post('/{order_id}/timeline/{timeline}', [OrderApiController::class, 'updateTimelineForOrder'])
+            ->addTag('Order')
+            ->setDescription('updateTimelineForOrder')
+            ->setProduces(['application/json']);
+        Api::post('/{order_id}/status/{status}', [OrderApiController::class, 'getOrderByReferenceNo'])
+            ->addTag('Order')
+            ->setDescription('getOrderByReferenceNo')
+            ->setProduces(['application/json']);
+        Api::get('/{reference_no}', [OrderApiController::class, 'getOrderByReferenceNo'])
+            ->addTag('Order')
+            ->setDescription('getOrderByReferenceNo')
+            ->setProduces(['application/json']);
+        Api::get('/user/{user_id}/orders', [OrderApiController::class, 'getUserOrders'])
+            ->addTag('Order')
+            ->setDescription('getUserOrders')
+            ->setProduces(['application/json']);
+        Api::get('/payment-detail/{reference_no}', [OrderApiController::class, 'getPaymentDetailByReferenceNo'])
+            ->addTag('Order')
+            ->setDescription('getPaymentDetailByReferenceNo')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'transactions', 'middleware' => ['cors']], function() {
@@ -147,55 +254,124 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'payment-method', 'middleware' => ['cors']], function() {
-        Route::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])->name('save-payment-method');
-        Route::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])->name('get-payment-method-by-id');
+        Api::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])
+            ->addTag('Payment Method')
+            ->setDescription('savePaymentMethod')
+            ->setProduces(['application/json']);
+        Api::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])
+            ->addTag('Payment Method')
+            ->setDescription('getPaymentMethodById')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'locations', 'middleware' => ['cors']], function() {
-        Route::post('/', [LocationApiController::class, 'addLocation'])->name('post-new-location');
-        Route::get('/user/{user_id}', [LocationApiController::class, 'getLocations'])->name('get-locations');
-        Route::get('/default/{user_id}', [LocationApiController::class, 'getDefaultLocation'])->name('get-default-location');
+        Api::post('/', [LocationApiController::class, 'addLocation'])
+            ->addTag('Locations')
+            ->setDescription('addLocation')
+            ->setProduces(['application/json']);
+        Api::get('/user/{user_id}', [LocationApiController::class, 'getLocations'])
+            ->addTag('Locations')
+            ->setDescription('getLocations')
+            ->setProduces(['application/json']);
+        Api::get('/default/{user_id}', [LocationApiController::class, 'getDefaultLocation'])
+            ->addTag('Locations')
+            ->setDescription('getDefaultLocation')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
-        Route::put('/{user_id}', [UserApiController::class, 'updateUser'])->name('update-user-profile');
-        Route::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])->name('update-user-profile-image');
+        Api::put('/{user_id}', [UserApiController::class, 'updateUser'])
+            ->addTag('User')
+            ->setDescription('updateUser')
+            ->setProduces(['application/json']);
+        Api::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])
+            ->addTag('User')
+            ->setDescription('updateProfilePicture')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
-        Route::post('/', [PaymentApiController::class, 'processPayment'])->name('process-payment');
-        Route::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])->name('get-payment-by-id');
+        Api::post('/', [PaymentApiController::class, 'processPayment'])
+            ->addTag('Payments')
+            ->setDescription('processPayment')
+            ->setProduces(['application/json']);
+        Api::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])
+            ->addTag('Payments')
+            ->setDescription('getProcessPayment')
+            ->setProduces(['application/json']);
 
-        Route::post('/processing',[PaymentApiController::class, 'paymentProcessing'])->name('payment-processing');
-        Route::post('/success', [PaymentApiController::class, 'paymentSuccess'])->name('payment-success');
-        Route::get('/receipt/{reference_no}', [PaymentApiController::class, 'paymentReceipt'])->name('payment-receipt');
+        Api::post('/processing',[PaymentApiController::class, 'paymentProcessing'])
+            ->addTag('Payments')
+            ->setDescription('paymentProcessing')
+            ->setProduces(['application/json']);
+        Api::post('/success', [PaymentApiController::class, 'paymentSuccess'])
+            ->addTag('Payments')
+            ->setDescription('paymentSuccess')
+            ->setProduces(['application/json']);
+        Api::get('/receipt/{reference_no}', [PaymentApiController::class, 'paymentReceipt'])
+            ->addTag('Payments')
+            ->setDescription('paymentReceipt')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'notification', 'middleware' => ['cors']], function() {
-        Route::post('/order-completed', [NotificationApiController::class, 'checkOrderCompleted'])->name('process-completed-order');
-        Route::post('/paid-order', [NotificationApiController::class, 'paidOrders'])->name('process-paid-orders');
-        Route::post('/pending-order/{user_id}', [NotificationApiController::class, 'invokeNotificationByUser'])->name('invoke-pending-order-by-user');
+        Api::post('/order-completed', [NotificationApiController::class, 'checkOrderCompleted'])
+            ->addTag('Notification')
+            ->setDescription('process-completed-order')
+            ->setProduces(['application/json']);
+        Api::post('/paid-order', [NotificationApiController::class, 'paidOrders'])
+            ->addTag('Notification')
+            ->setDescription('process-paid-orders')
+            ->setProduces(['application/json']);
+        Api::post('/pending-order/{user_id}', [NotificationApiController::class, 'invokeNotificationByUser'])
+            ->addTag('Notification')
+            ->setDescription('invoke-pending-order-by-user')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'locale', 'middleware' => ['cors']], function() {
-        Route::get('/{locale}', [NotificationApiController::class, 'getTranslation'])->name('get-locale');
-        Route::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])->name('get-locale-key');
-        Route::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])->name('get-current-language');
-        Route::post('/', [UserApiController::class, 'updateUserAppLanguage'])->name('update-user-app-language');
+        Api::get('/{locale}', [NotificationApiController::class, 'getTranslation'])
+            ->addTag('Locale')
+            ->setDescription('get-locale')
+            ->setProduces(['application/json']);
+        Api::get('/{locale}/{key}', [NotificationApiController::class, 'getTranslation'])
+            ->addTag('Locale')
+            ->setDescription('get-locale-key')
+            ->setProduces(['application/json']);
+        Api::post('/currentLanguage', [NotificationApiController::class, 'getCurrentLanguage'])
+            ->addTag('Locale')
+            ->setDescription('get-current-language')
+            ->setProduces(['application/json']);
+        Api::post('/', [UserApiController::class, 'updateUserAppLanguage'])
+            ->addTag('Locale')
+            ->setDescription('update-user-app-language')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'whatsapp', 'middleware' => ['cors']], function() {
-        Route::post('/send', [WhatsAppApiController::class, 'sendWhatsAppMessage'])->name('send-message');
-        Route::post('/send-v2', [WhatsAppApiController::class, 'sendWithTemplate'])->name('send-message-with-template');
+        Api::post('/send', [WhatsAppApiController::class, 'sendWhatsAppMessage'])
+            ->addTag('Whatsapp')
+            ->setDescription('send-message')
+            ->setProduces(['application/json']);
+        Api::post('/send-v2', [WhatsAppApiController::class, 'sendWithTemplate'])
+            ->addTag('Whatsapp')
+            ->setDescription('send-message-with-template')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'service-availability', 'middleware' => ['cors']], function() {
-        Route::post('/', [OccasionEventsApiController::class, 'getPreferences'])->name('get-availability-dates');
+        Api::post('/', [OccasionEventsApiController::class, 'getPreferences'])
+            ->addTag('Service Availability')
+            ->setDescription('get-availability-dates')
+            ->setProduces(['application/json']);
     });
 
 
     Route::group(['prefix' => 'command', 'middleware' => ['cors']], function() {
-        Route::get('/', [OrderApiController::class, 'executeCommand'])->name('order-apis');
+        Api::get('/', [OrderApiController::class, 'executeCommand'])
+            ->addTag('Command')
+            ->setDescription('order-apis')
+            ->setProduces(['application/json']);
     });
 });
 
