@@ -10,7 +10,7 @@ return [
     /**
      * The API title.
      */
-    'title' => 'Laravel API',
+    'title' => 'Reservegcc API',
 
     /**
      * The API description.
@@ -48,6 +48,6 @@ return [
     /**
      * The API subpath to the Swagger UI page (false to disable).
      */
-    'swagger_ui_path' => env('APP_DEBUG', false) ? 'docs' : false,
+    'swagger_ui_path' =>  'docs',
 
 ];
