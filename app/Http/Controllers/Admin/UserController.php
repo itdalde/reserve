@@ -283,7 +283,7 @@ class UserController extends Controller
             ]);
         } catch (\Exception $e) {
             report($e);
-            return response()->json([
+            return response()->json([   
                 'success' => false
             ], 500);
         }
