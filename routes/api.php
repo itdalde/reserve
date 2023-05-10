@@ -40,6 +40,7 @@ Route::group(['prefix' => 'v1','middleware' => ['cors']], function () {
         ->addTag('Auth')
         ->setDescription('Login') ;
     Api::post('/reset-password', 'Auth\ApiAuthController@resetPassword')
+        ->addFormDataParameter ( 'token', '', true  )
         ->addFormDataParameter ( 'email', '', true  )
         ->addFormDataParameter ( 'password', '', true )
         ->addTag('Auth')
@@ -80,6 +81,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function()
         ->requiresAuth ( 'token', [ 'read' ] );
     Api::post('/reset-password-with-token', 'Auth\ApiAuthController@resetPasswordWithToken')
         ->addTag('Auth')
+        ->addFormDataParameter ( 'email', '', true  )
+        ->addFormDataParameter ( 'password', '', true )
         ->setDescription('Update password with token')
         ->requiresAuth ( 'token', [ 'read' ] );
     Api::get('/users', [UserController::class,'userList'])
