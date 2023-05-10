@@ -9,6 +9,7 @@ use App\Models\OrderSplit;
 use App\Utility\NotificationUtility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Notes;
 use App\Repositories\Access\User\EloquentUserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -203,6 +204,23 @@ class UserController extends Controller
 //       dd($user->notes[0]->createdBy);
 
         return view('superadmin.user-view', compact('user', 'total','totalOrders'));
+        if ($user->company) {
+            if ($user->company->services) {
+                $total = 0;
+                foreach ($user->company->services as $service) {
+                    $totalOrders += count($user->customer_orders);
+                    foreach ($service->orders as  $order) {
+                        $total += OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
+                    }
+                }
+            }
+        } else {
+            $totalOrders = count($user->customer_orders);
+            foreach ($user->customer_orders as $order) {
+                $total += $order->total_amount;
+            }
+        }
+        return view('superadmin.user-view', compact('user', 'total', 'totalOrders'));
     }
 
     public function approve(Request $request)
@@ -224,7 +242,7 @@ class UserController extends Controller
         $total = 0;
         $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();
         foreach ($users  as $i => $user) {
-            if($user->company && $user->company->services) {
+            if ($user->company && $user->company->services) {
                 $total = 0;
                 foreach ($user->company->services as $service) {
                     foreach ($service->orders as $k => $order) {

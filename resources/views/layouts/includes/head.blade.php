@@ -13,6 +13,9 @@
 <link href="{{ asset('assets/landing/img/favicon.ico') }}" rel="apple-touch-icon">
 
 
+<link href="{{ asset('assets/admin/css/superadmin.css')}}" rel="stylesheet" />
+
+
 <!-- Libs CSS -->
 <link href="{{asset('assets/libs/bootstrap-icons/font/bootstrap-icons.css')}}" rel="stylesheet">
 <link href="{{asset('assets/libs/dropzone/dist/dropzone.css')}}"  rel="stylesheet">
