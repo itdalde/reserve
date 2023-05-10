@@ -136,11 +136,20 @@
                             <tbody>
                                 @foreach ($services as $service)
                                     <tr>
-                                        <td><img style="    height: 35px;width: 35px;object-fit: cover;"
-                                                src="{{ asset($service->image) }}"
-                                                onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                alt="..."> {{ $service->name }}</td>
-                                        <td>{{ count($service->orders) }}</td>
+                                        <td>
+                                            <div>
+                                                <img style="height: 35px;width: 35px;object-fit: cover;"
+                                                    src="{{ asset($service->image) }}"
+                                                    onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
+                                                    alt="..." class="rounded">
+                                                <p style="color: #586981" class="m-auto fs-5 fw-bold mt-2">
+                                                    {{ $service->name }}
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="fw-5 fw-bold mb-0">{{ count($service->orders) }}</p>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -174,9 +183,13 @@
                                                     src="https://ui-avatars.com/api/?name={{ $customer->first_name ? $customer->first_name : $customer->email }}"
                                                     alt="...">
                                             @endif
-                                            {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
+                                            <p style="color: #586981" class="m-auto fs-5 fw-bold mt-2">
+                                                {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
+                                            </p>
                                         </td>
-                                        <td>{{ count($customer->orders) }}</td>
+                                        <td>
+                                            <p class="fw-5 fw-bold mb-0">{{ count($customer->orders) }}</p>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
