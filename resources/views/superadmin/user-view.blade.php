@@ -705,16 +705,16 @@
                                                                 <div class="d-flex justify-content-between">
                                                                     <div class="p-0">
 
-                                                                        @if ($user->profile_picture)
+                                                                        @if ($note->createdBy->profile_picture)
                                                                             <img width="35" class="rounded-circle"
-                                                                                src="{{ asset($user->profile_picture) }}"
+                                                                                src="{{ asset($note->createdBy->profile_picture) }}"
                                                                                 alt="...." />
                                                                         @else
                                                                             <img width="35" class="rounded-circle"
-                                                                                src="https://ui-avatars.com/api/?name={{ $user->first_name ? $user->first_name : $user->email }}"
+                                                                                src="https://ui-avatars.com/api/?name={{ $note->createdBy->first_name ? $note->createdBy->first_name : $note->createdBy->email }}"
                                                                                 alt="...">
                                                                         @endif
-                                                                        <h3>{{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email }}
+                                                                        <h3>{{ $note->createdBy->first_name ? $note->createdBy->first_name . ' ' . $note->createdBy->last_name : $note->createdBy->email }}
                                                                         </h3>
                                                                     </div>
                                                                     <div class="p-0">

@@ -201,26 +201,7 @@ class UserController extends Controller
                $total += $order->total_amount;
            }
        }
-//       dd($user->notes[0]->createdBy);
-
         return view('superadmin.user-view', compact('user', 'total','totalOrders'));
-        if ($user->company) {
-            if ($user->company->services) {
-                $total = 0;
-                foreach ($user->company->services as $service) {
-                    $totalOrders += count($user->customer_orders);
-                    foreach ($service->orders as  $order) {
-                        $total += OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
-                    }
-                }
-            }
-        } else {
-            $totalOrders = count($user->customer_orders);
-            foreach ($user->customer_orders as $order) {
-                $total += $order->total_amount;
-            }
-        }
-        return view('superadmin.user-view', compact('user', 'total', 'totalOrders'));
     }
 
     public function approve(Request $request)

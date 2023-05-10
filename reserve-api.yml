@@ -1,0 +1,168 @@
+openapi: 3.0.3
+info:
+  title: Swagger ReserveGCC - OpenAPI 3.0
+  version: 1.0.11
+  description: Reservegcc api documentations
+servers:
+  - url: https://reservegcc.com/api/v1
+tags:
+  - name: Occasions
+    description: Occasions
+  - name: Occasion Events
+    description: Occasion events
+  - name: Services
+    description: Services
+  - name: Providers
+    description: Providers
+  - name: User Cart
+    description: User Cart
+  - name: Orders
+    description: Orders
+  - name: Transactions
+    description: Transactions
+  - name: Payment Method
+    description: Payment Method
+  - name: Locations
+    description: Locations
+  - name: Payments
+    description: Payments
+  - name: Notifications
+    description: Notifications
+  - name: Locale
+    description: Locale
+  - name: Service Availability
+    description: Service Availability
+  - name: Users
+    description: Users
+paths:
+  /occasions:
+    get:
+      tags:
+        - Occasions
+      responses:
+        200:
+          description: OK
+  /occasions/{id}:
+    get:
+      tags:
+        - Occasions
+      summary: Get occasion by id
+      description: Returns a single occasion
+      operationId: getOccasionById
+      parameters:
+        - name: Occasion ID
+          in: path
+          description: ID of occasion return
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Occasion'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Occasion'
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+
+  /occasion-events:
+    get:
+      tags:
+        - Occasion Events
+      responses:
+        200:
+          description: OK
+  /services:
+    get:
+      tags:
+        - Services
+      responses:
+        200:
+          description: OK
+  /providers:
+    get:
+      tags:
+        - Providers
+      responses:
+        200:
+          description: OK
+  /cart:
+    get:
+      tags:
+        - User Cart
+      responses:
+        200:
+          description: OK
+  /order:
+    get:
+      tags:
+        - Orders
+      responses:
+        200:
+          description: OK
+  /transactions:
+    get:
+      tags:
+        - Transactions
+      responses:
+        200:
+          description: OK
+  /payment-method:
+    get:
+      tags:
+        - Payment Method
+      responses:
+        200:
+          description: OK
+  /locations:
+    get:
+      tags:
+        - Locations
+      responses:
+        200:
+          description: OK
+  /payments:
+    get:
+      tags:
+        - Payments
+      responses:
+        200:
+          description: OK
+  /notification:
+    get:
+      tags:
+        - Notifications
+      responses:
+        200:
+          description: OK
+  /locale:
+    get:
+      tags:
+        - Locale
+      responses:
+        200:
+          description: OK
+  /service-availability:
+    get:
+      tags:
+        - Service Availability
+      responses:
+        200:
+          description: OK
+  /user:
+    get:
+      tags:
+        - Users
+      responses:
+        200:
+          description: OK
+components:
+  schemas:
+    Occasion:
+      type: object
