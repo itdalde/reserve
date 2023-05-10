@@ -90,27 +90,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="d-flex justify-content-between">
-                                    <img src="https://via.placeholder.com/60" alt="..."
-                                        style="width: 36px; height: 36px; border-radius: 20px" />
-                                    <p style="color: #586981" class="m-auto">User name</p>
-                                </td>
-                                <td>
-                                    <p>Order #FFFF</p>
-                                    <p>3 items</p>
-                                </td>
-                                <td>Custom</td>
-                                <td>
-                                    <button class="btn">View Order</button>
-                                </td>
-                            </tr>
                             @foreach ($orders as $order)
                                 <tr>
-                                    <td>{{ isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : '' }}
+                                    <td>
+                                        <div class="d-flex">
+                                            <img src="https://via.placeholder.com/60" alt="..."
+                                                style="width: 36px; height: 36px;" class="rounded-circle" />
+                                            <p style="color: #586981" class="m-auto fs-5 fw-bold">
+                                                {{ isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : '' }}
+                                            </p>
+                                        </div>
                                     </td>
-                                    <td>{{ isset($order['order']) ? $order['order']['reference_no'] : '' }}</td>
-                                    <td>{{ $order['status'] }}</td>
+                                    <p class="fs-5 fw-bold mb-0">
+                                        {{ isset($order['order']) ? $order['order']['reference_no'] : '' }}</p>
+                                    <label class="fs-6 fw-bolder opacity-75">{{ count($order['order']) }} items</label>
+                                    </td>
+                                    <td>
+                                        <p class="fs-5 fw-bold mb-0">{{ $order['status'] }}</p>
+                                    </td>
+                                    <td>
+                                        {{-- TODO: implement redirection to order --}}
+                                        <a href="#" class="btn btn-warning text-light rounded-3">View Order</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -135,11 +136,20 @@
                             <tbody>
                                 @foreach ($services as $service)
                                     <tr>
-                                        <td><img style="    height: 35px;width: 35px;object-fit: cover;"
-                                                src="{{ asset($service->image) }}"
-                                                onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                alt="..."> {{ $service->name }}</td>
-                                        <td>{{ count($service->orders) }}</td>
+                                        <td>
+                                            <div>
+                                                <img style="height: 35px;width: 35px;object-fit: cover;"
+                                                    src="{{ asset($service->image) }}"
+                                                    onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
+                                                    alt="..." class="rounded">
+                                                <p style="color: #586981" class="m-auto fs-5 fw-bold mt-2">
+                                                    {{ $service->name }}
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="fw-5 fw-bold mb-0">{{ count($service->orders) }}</p>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -173,9 +183,13 @@
                                                     src="https://ui-avatars.com/api/?name={{ $customer->first_name ? $customer->first_name : $customer->email }}"
                                                     alt="...">
                                             @endif
-                                            {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
+                                            <p style="color: #586981" class="m-auto fs-5 fw-bold mt-2">
+                                                {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
+                                            </p>
                                         </td>
-                                        <td>{{ count($customer->orders) }}</td>
+                                        <td>
+                                            <p class="fw-5 fw-bold mb-0">{{ count($customer->orders) }}</p>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
