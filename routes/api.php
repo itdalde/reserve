@@ -78,6 +78,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:api','cors']], function()
         ->addTag('User')
         ->setDescription('Get User Information')
         ->requiresAuth ( 'token', [ 'read' ] );
+    Api::get('/reset-password', 'Auth\ApiAuthController@resetPasswordWithToken')
+        ->addTag('Auth')
+        ->setDescription('Update password with token')
+        ->requiresAuth ( 'token', [ 'read' ] );
     Api::get('/users', [UserController::class,'userList'])
         ->addTag('User')
         ->setDescription('Get User Lists')

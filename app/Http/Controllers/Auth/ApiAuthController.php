@@ -373,6 +373,47 @@ class ApiAuthController extends Controller
         }
     }
 
+    public function resetPasswordWithToken(Request $request) {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required',
+                'password' => 'required|string|min:6',
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Something went wrong',
+                    'data' => $validator->errors()->all()
+                ], 422);
+            }
+            $user = User::where('email', $request->email)->first();
+            if (!$user) {
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'User not found!',
+                    'data' => $request->all()
+                ], 422);
+            }
+            $user->password = bcrypt($request->password);
+            $user->save();
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            return response()->json([
+                'status' => 'success',
+                'message' => 'You have been successfully reset password!',
+                'data' => [
+                    'token' => $token,
+                    'user' => $user
+                ]
+            ], 200);
+        } catch ( \Exception $exception) {
+            return response()->json([
+                'status' => 'fail',
+                'message' => $exception->getMessage(),
+                'data' => $request->all()
+            ], 422);
+        }
+    }
+
     public function resetPassword(Request $request) {
         $validator = Validator::make($request->all(), [
             'token' => 'required',
