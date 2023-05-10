@@ -1,7 +1,7 @@
 @extends('layouts.admin')
+
 @section('content')
     <style>
-
         #gallery-lightbox img {
             height: 350px;
             object-fit: cover;
@@ -13,20 +13,28 @@
             transition: 0.5s ease-out;
         }
     </style>
-    <div class="container">
+    <div class="">
         <div class="row">
             <div class="col-4">
                 <div class="d-flex flex-column bd-highlight mb-3">
-                    <div class="p-2 bd-highlight"><a href="javascript: history.go(-1)"><-- @if($user->company)
-                                Service Providers
+                    <div class="p-2 bd-highlight"><a href="javascript: history.go(-1)">
+                            <--
+                                @if ($user->company) Service Providers
                             @else
-                                Customers
-                            @endif</a></div>
+                                Customers @endif</a>
+                    </div>
                     <div class="p-2 bd-highlight">
                         <div class="d-flex justify-content-between">
-                            <h3>Customer details</h3>
+                            <h3>
+                                @if ($user->company)
+                                    Service provider details
+                                @else
+                                    Customer details
+                                @endif
+                            </h3>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="col-8">
@@ -34,10 +42,11 @@
                     <div class="p-2 bd-highlight"></div>
                     <div class="p-1 bd-highlight">
                         <div class="d-flex justify-content-end">
-                            <div class="alert alert-secondary" role="alert">
-                                <img src="{{asset('assets/images/icons/alert-icon.png')}}" alt="alert-icon.png">
+                            <div class="alert bg-white" role="alert">
+                                <img src="{{ asset('assets/images/icons/alert-icon.png') }}" alt="alert-icon.png">
                                 <strong>Abdul</strong> Changed email address
-                                <strong>{{Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:s a')}}</strong>
+                                <strong
+                                    class="fs-5">{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:s a') }}</strong>
                             </div>
                         </div>
                     </div>
@@ -51,115 +60,169 @@
                                 <div class="p-2 bd-highlight">
                                     <div class="d-flex justify-content-between">
                                         <div class="p-0">
-                                            @if($user->profile_picture )
+                                            @if ($user->profile_picture)
                                                 <img width="35" class="rounded-circle"
-                                                     src="{{ asset( $user->profile_picture) }}" alt="...."/>
+                                                    src="{{ asset($user->profile_picture) }}" alt="...." />
                                             @else
                                                 <img width="35" class="rounded-circle"
-                                                     src="https://ui-avatars.com/api/?name={{$user->first_name ? $user->first_name: $user->email}}"
-                                                     alt="...">
+                                                    src="https://ui-avatars.com/api/?name={{ $user->first_name ? $user->first_name : $user->email }}"
+                                                    alt="...">
                                             @endif
-                                            {{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}
+                                            {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email }}
                                         </div>
                                         <div class="p-0">
                                             <span class="status-field p-2 me-4 badge bg-secondary text-dark">
                                                 0 unresolved
                                             </span>
                                             <a class="btn btn-danger"
-                                               href="{{route('users.delete-user',['id' => $user->id])}}"
-                                               onclick="return confirm('Are you sure want to delete this user?')">
+                                                href="{{ route('users.delete-user', ['id' => $user->id]) }}"
+                                                onclick="return confirm('Are you sure want to delete this user?')">
                                                 Delete
                                             </a>
                                             <i data-bs-toggle="tooltip" data-bs-placement="top"
-                                               title="{{Carbon\Carbon::parse($user->created_at)->format('Y-m-d')}}"
-                                               class="bi bi-info-circle ms-4 icon-info"></i>
+                                                title="{{ Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}"
+                                                class="bi bi-info-circle ms-4 icon-info"></i>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center">
-                                        <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab"
-                                            role="tablist">
+                                        <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                                   data-bs-target="#pills-home" type="button" role="tab"
-                                                   aria-controls="pills-home" aria-selected="true">Overview</a>
+                                                    data-bs-target="#pills-home" type="button" role="tab"
+                                                    aria-controls="pills-home" aria-selected="true">Overview</a>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
-                                                   data-bs-target="#pills-profile" type="button" role="tab"
-                                                   aria-controls="pills-profile" aria-selected="false">Order history</a>
+                                                    data-bs-target="#pills-profile" type="button" role="tab"
+                                                    aria-controls="pills-profile" aria-selected="false">Order history</a>
                                             </li>
+                                            @if ($user->company !== null)
+                                                <li class="nav-item" role="presentation">
+                                                    <a class="nav-link" id="pills-vendor-tab" data-bs-toggle="pill"
+                                                        data-bs-target="#pills-vendor" type="button" role="tab"
+                                                        aria-controls="pills-vendor" aria-selected="false">Vendor
+                                                        Category</a>
+                                                </li>
+                                            @endif
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-                                                   data-bs-target="#pills-contact" type="button" role="tab"
-                                                   aria-controls="pills-contact" aria-selected="false">Admin notes</a>
+                                                    data-bs-target="#pills-contact" type="button" role="tab"
+                                                    aria-controls="pills-contact" aria-selected="false">Admin notes</a>
                                             </li>
                                         </ul>
                                     </div>
                                     <hr>
                                     <div class="tab-content" id="pills-tabContent">
-                                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                             aria-labelledby="pills-home-tab">
+                                        <div class="tab-pane fadex" id="pills-home" role="tabpanel"
+                                            aria-labelledby="pills-home-tab">
 
                                             <div class="p-2 bd-highlight">
                                                 <div class="d-flex justify-content-start">
                                                     <div class="p-0">
-                                                        <img src="{{asset('assets/images/icons/cart-profile.png')}}"
-                                                             alt="cart-profile.png">
-                                                        <span>{{$totalOrders}} Orders</span>
+                                                        <img src="{{ asset('assets/images/icons/cart-profile.png') }}"
+                                                            alt="cart-profile.png">
+                                                        <span>{{ $totalOrders }} Orders</span>
                                                     </div>
-                                                    <div class="p-0">
-                                                        <img src="{{asset('assets/images/icons/dollar-profile.png')}}"
-                                                             alt="dollar-profile.png">
-                                                        <span>QAD {{number_format($total,2)}} @if($user->company)
-                                                                Sales @else Spent @endif</span>
+                                                    <div class="ms-9">
+                                                        <img src="{{ asset('assets/images/icons/dollar-profile.png') }}"
+                                                            alt="dollar-profile.png">
+                                                        <span>QAD {{ number_format($total, 2) }}
+                                                            @if ($user->company)
+                                                                Sales
+                                                            @else
+                                                                Spent
+                                                            @endif
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <hr>
                                             </div>
                                             <div class="p-2 bd-highlight">
-                                                <h5>Last {{$user->company ? 'sales' : "purchase"}}</h5>
-                                                <span>{{Carbon\Carbon::parse($user->created_at)->format('Y-m-d')}}</span>
+                                                <h5 class="fw-bold text-secondary">Last
+                                                    {{ $user->company ? 'sales' : 'purchase' }}</h5>
+                                                <span>{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</span>
                                                 <hr>
                                             </div>
                                             <div class="p-2 bd-highlight">
-                                                <h5>Contact Info</h5>
+                                                <h5 class="fw-bold text-secondary">Contact info</h5>
                                                 <div class="d-flex flex-column">
                                                     <div class="p-2">
-                                                        <img src="{{asset('assets/images/icons/email-profile.png')}}"
-                                                             alt="email-profile"> {{$user->email}}
+                                                        <img src="{{ asset('assets/images/icons/email-profile.png') }}"
+                                                            alt="email-profile"> {{ $user->email }}
                                                     </div>
                                                     <div class="p-2">
-                                                        <img src="{{asset('assets/images/icons/phone-profile.png')}}"
-                                                             alt="phone-profile"> {{$user->phone_number}}
+                                                        <img src="{{ asset('assets/images/icons/phone-profile.png') }}"
+                                                            alt="phone-profile"> {{ $user->phone_number }}
                                                     </div>
                                                 </div>
                                                 <hr>
                                             </div>
                                             <div class="p-2 bd-highlight">
-                                                <h5>{{$user->company ? 'Company name' : "Default Address"}}</h5>
-                                                @if($user->company)
-                                                    {{$user->company->name}}
+                                                <h5 class="fw-bold text-secondary">Default Address</h5>
+                                                <p class="text-dark fs-5">
+                                                    {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->full_name }}
+                                                </p>
+                                                <p class="m-0">{{ $user->phone_number }}</p>
+                                                <p class="m-0">{{ $user->location }}</p>
+                                                <hr />
+                                            </div>
+                                            <div class="p-2 bd-highlight">
+                                                <h5 class="fw-bold text-secondary">Billing Address</h5>
+                                                <p class="text-dark fs-5">
+                                                    {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->full_name }}
+                                                </p>
+                                                <p class="m-0">{{ $user->phone_number }}</p>
+                                                <p class="m-0">{{ $user->location }}</p>
+                                                <hr />
+                                            </div>
+                                            <div class="p-2 bd-highlight">
+                                                <h5 class="fw-bold text-secondary pb-2">Card Details</h5>
+                                                <div class="pb-3">
+                                                    <div>Card 1 <img
+                                                            src="{{ asset('assets/images/creditcard/mastercard.svg') }}"
+                                                            alt="..." class="rounded-circle ms-2" /></div>
+                                                    <div>
+                                                        <p class="mb-1">Abdul Rasak</p>
+                                                        <p class="m-0">5073 2489 4274 8293</p>
+                                                        <p class="m-0">19/23 - 443</p>
+                                                    </div>
+                                                </div>
+                                                <div class="pb-3">
+                                                    <div class="pb-1">Card 1 <img
+                                                            src="{{ asset('assets/images/creditcard/mastercard.svg') }}"
+                                                            alt="..." class="rounded-circle ms-2" /></div>
+                                                    <div>
+                                                        <p class="mb-1">Abdul Rasak</p>
+                                                        <p class="m-0">5073 2489 4274 8293</p>
+                                                        <p class="m-0">19/23 - 443</p>
+                                                    </div>
+                                                </div>
+                                                <hr />
+                                            </div>
+                                            {{-- <div class="p-2 bd-highlight">
+                                                <h5>{{ $user->company ? 'Company name' : 'Default Address' }}</h5>
+                                                @if ($user->company)
+                                                    {{ $user->company->name }}
                                                 @else
-                                                    {{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}
+                                                    {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email }}
                                                 @endif
                                                 <br>
-                                                {{$user->phone_number}}
+                                                {{ $user->phone_number }}
                                                 <hr>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                             aria-labelledby="pills-profile-tab">
+                                            aria-labelledby="pills-profile-tab">
                                             <div class="row table-orders-div">
                                                 <div class="col-sm-5">
                                                     <div class="d-flex justify-content-start">
-                                                        <h4>Orders ( {{$totalOrders}} )</h4>
+                                                        <h4>Orders ( {{ $totalOrders }} )</h4>
                                                     </div>
                                                     <div class="d-flex justify-content-start">
 
                                                         <div class="input-group mx-auto" style="    width: 96%;">
-                                                            <input id="search-t"
-                                                                   class="form-control border-end-0 border"
-                                                                   type="search"  >
+                                                            <input id="search-t" class="form-control border-end-0 border"
+                                                                type="search">
                                                             <span class="input-group-append">
                                                                 <button
                                                                     class="btn btn-outline-secondary bg-white border-start-0  border ms-n5"
@@ -171,79 +234,102 @@
                                                     </div>
                                                     <table class="table" id="user-table">
                                                         <thead style="display: none">
-                                                        <tr>
-                                                            <th scope="col">Customer name</th>
-                                                        </tr>
+                                                            <tr>
+                                                                <th scope="col">Customer name</th>
+                                                            </tr>
                                                         </thead>
                                                         <tbody>
-                                                        @foreach($user->customer_orders as $order)
-                                                            @foreach($order->items as $item)
-                                                                <tr>
-                                                                    <td>
-                                                                        <div class="card border-info border">
-                                                                            <div class="card-body">
-                                                                                <div class="row">
-                                                                                    <span>Service Name</span>
-                                                                                    <label
-                                                                                        for="">{{$item->service->name}}</label>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <span>Location</span>
-                                                                                    <label
-                                                                                        for="">{{$item->service->address_1}}</label>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <span>Scheduled date</span>
-                                                                                    <label
-                                                                                        for="">{{Carbon\Carbon::parse($item->schedule_start_datetime)->format('F, d Y')}}</label>
-                                                                                </div>
-                                                                                <div class="row">
-                                                                                    <span>Scheduled time</span>
-                                                                                    <label
-                                                                                        for="">{{Carbon\Carbon::parse($item->schedule_start_datetime)->format('H:s a')}}</label>
-                                                                                </div>
-                                                                                <hr>
+                                                            @foreach ($user->customer_orders as $order)
+                                                                @foreach ($order->items as $item)
+                                                                    <tr>
+                                                                        <td>
+                                                                            <div class="card border-info border">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <span class="p-0">Service
+                                                                                            Name</span>
+                                                                                        <label for=""
+                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ $item->service->name }}</label>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <span
+                                                                                            class="p-0">Location</span>
+                                                                                        <label for=""
+                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ $item->service->address_1 }}</label>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <span class="p-0">Scheduled
+                                                                                            date</span>
+                                                                                        <label for=""
+                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('F, d Y') }}</label>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <span class="p-0">Scheduled
+                                                                                            time</span>
+                                                                                        <label for=""
+                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('H:s a') }}</label>
+                                                                                    </div>
 
-                                                                                <div class="row">
-                                                                                    <div class="col p-0">
-                                                                                        <span>Total cost</span>
-                                                                                        <label for="">
-                                                                                            QAR {{ number_format($item->service->price,2)}}
-                                                                                        </label>
+                                                                                    <div
+                                                                                        class="row border-bottom border-1 border-secondary p-1 opacity-50">
                                                                                     </div>
-                                                                                    <div class="col p-0">
-                                                                                        <span>Paid cost</span>
-                                                                                        <label for="" class="text-success">
-                                                                                            QAR {{ number_format($item->total_paid,2)}}
-                                                                                        </label>
+
+                                                                                    <div class="row pt-2">
+                                                                                        <div class="col p-0">
+                                                                                            <span class="fs-6">Total
+                                                                                                cost</span>
+                                                                                            <label for=""
+                                                                                                class="fs-5 fw-bold text-secondary p-0">
+                                                                                                QAR
+                                                                                                {{ number_format($item->service->price, 2) }}
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="col p-0">
+                                                                                            <span class="fs-6">Paid
+                                                                                                cost</span>
+                                                                                            <label for=""
+                                                                                                class="text-success fs-5 fw-bold text-secondary">
+                                                                                                QAR
+                                                                                                {{ number_format($item->total_paid, 2) }}
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="col p-0">
+                                                                                            <span
+                                                                                                class="fs-6">Outstanding
+                                                                                                cost</span>
+                                                                                            <label for=""
+                                                                                                class="text-danger fs-5 fw-bold text-secondary">
+                                                                                                QAR
+                                                                                                {{ number_format($item->balance, 2) }}
+                                                                                            </label>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <div class="col p-0">
-                                                                                        <span>Outstanding cost</span>
-                                                                                        <label for="" class="text-danger">
-                                                                                            QAR {{ number_format($item->balance,2)}}
-                                                                                        </label>
+                                                                                    <div
+                                                                                        class="row border-bottom border-1 border-secondary p-1 opacity-50">
                                                                                     </div>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <div class="row">
-                                                                                    <span>Order status
-                                                                                        <span class="p-2 me-4 badge bg-secondary text-dark  ms-4 text-capitalize">
-                                                                                            {{$item->status}}
+                                                                                    <div class="row pt-2">
+                                                                                        <span>Order status
+                                                                                            <span
+                                                                                                class="p-2 me-4 badge bg-secondary text-dark  ms-4 text-capitalize">
+                                                                                                {{ $item->status }}
+                                                                                            </span>
                                                                                         </span>
-                                                                                    </span>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="row mt-3 mb-3">
-                                                                            <button data-order-id="{{$order->reference_no}}" class="btn mx-auto btn-warning text-white text-center view-full-order-btn" type="button" style="width:92%">
-                                                                                View full order
-                                                                            </button>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php continue; ?>
+                                                                            <div class="row mt-3 mb-3">
+                                                                                <button
+                                                                                    data-order-id="{{ $order->reference_no }}"
+                                                                                    class="btn mx-auto btn-warning text-white text-center view-full-order-btn"
+                                                                                    type="button" style="width:92%">
+                                                                                    View full order
+                                                                                </button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <?php continue; ?>
+                                                                @endforeach
                                                             @endforeach
-                                                        @endforeach
 
                                                         </tbody>
                                                     </table>
@@ -254,53 +340,69 @@
                                                 <div class="d-flex justify-content-end mb-3">
                                                     <div class="p-1">
 
-                                                        <button class="btn mx-auto btn-warning text-white text-center close-info-order-btn" type="button"  >
+                                                        <button
+                                                            class="btn mx-auto btn-warning text-white text-center close-info-order-btn"
+                                                            type="button">
                                                             Close
                                                         </button>
                                                     </div>
                                                 </div>
-                                                @foreach($user->customer_orders as $order)
-                                                    @foreach($order->items as $i => $item)
-
-                                                        <div class="d-none order-ref-id col-sm-12 order-ref-id-{{$order->reference_no}}">
+                                                @foreach ($user->customer_orders as $order)
+                                                    @foreach ($order->items as $i => $item)
+                                                        <div
+                                                            class="d-none order-ref-id col-sm-12 order-ref-id-{{ $order->reference_no }}">
                                                             <div class="card border border-info">
                                                                 <div class="card-body ">
-                                                                    <span>Order - <span class="order-reference-number">{{$order->reference_no}}</span></span>
+                                                                    <span>Order - <span
+                                                                            class="order-reference-number">{{ $order->reference_no }}</span></span>
                                                                     <div class="row">
                                                                         <div class="col">
                                                                             <div class="card">
                                                                                 <div class="card-body ">
-                                                                                    <ul class="list-group list-group-flush">
+                                                                                    <ul
+                                                                                        class="list-group list-group-flush">
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Name</div>
-                                                                                                <div class="col-sm-6">{{$user->name ? $user->name : ($user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email) }}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Phone No.</div>
-                                                                                                <div class="col-sm-6">{{$user->phone_number}}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Email</div>
-                                                                                                <div class="col-sm-6">{{$user->email }}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Location</div>
+                                                                                                <div class="col-sm-6">Name
+                                                                                                </div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    {{$user->location }}
+                                                                                                    {{ $user->name ? $user->name : ($user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email) }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Gender</div>
-                                                                                                <div class="col-sm-6">-</div>
+                                                                                                <div class="col-sm-6">Phone
+                                                                                                    No.</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $user->phone_number }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">Email
+                                                                                                </div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $user->email }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    Location</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $user->location }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    Gender</div>
+                                                                                                <div class="col-sm-6">-
+                                                                                                </div>
                                                                                             </div>
                                                                                         </li>
                                                                                     </ul>
@@ -310,40 +412,53 @@
                                                                         <div class="col">
                                                                             <div class="card">
                                                                                 <div class="card-body ">
-                                                                                    <ul class="list-group list-group-flush">
+                                                                                    <ul
+                                                                                        class="list-group list-group-flush">
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Card Name</div>
-                                                                                                <div class="col-sm-6">{{$order->paymentMethod->name }}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Payment Ref. No.</div>
-                                                                                                <div class="col-sm-6">{{$order->paymentDetails ? $order->paymentDetails->reference_no : ''}}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Total Paid</div>
+                                                                                                <div class="col-sm-6">Card
+                                                                                                    Name</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    QAR {{ number_format($item->total_paid,2)}}
+                                                                                                    {{ $order->paymentMethod->name }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Total Balance</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    QAR {{ number_format($item->balance,2)}}
+                                                                                                    Payment Ref. No.</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $order->paymentDetails ? $order->paymentDetails->reference_no : '' }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Total Amount To Be Paid</div>
+                                                                                                <div class="col-sm-6">Total
+                                                                                                    Paid</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    QAR {{ number_format($item->service->price,2)}}
+                                                                                                    QAR
+                                                                                                    {{ number_format($item->total_paid, 2) }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">Total
+                                                                                                    Balance</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    QAR
+                                                                                                    {{ number_format($item->balance, 2) }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">Total
+                                                                                                    Amount To Be Paid</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    QAR
+                                                                                                    {{ number_format($item->service->price, 2) }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
@@ -357,52 +472,91 @@
                                                                             <div class="card">
                                                                                 <div class="card-body ">
                                                                                     <h3>Order Items</h3>
-                                                                                    <div class="d-flex justify-content-center ">
-                                                                                        <div id="gallery-lightbox" class="row" data-bs-toggle="modal" data-bs-target="#exampleModal-{{$i+=1}}">
-                                                                                            <div class="col-6 col-md-4 col-lg-3 p-0">
+                                                                                    <div
+                                                                                        class="d-flex justify-content-center ">
+                                                                                        <div id="gallery-lightbox"
+                                                                                            class="row"
+                                                                                            data-bs-toggle="modal"
+                                                                                            data-bs-target="#exampleModal-{{ $i += 1 }}">
+                                                                                            <div
+                                                                                                class="col-6 col-md-4 col-lg-3 p-0">
                                                                                                 <img class="w-100 thumbnail"
-                                                                                                     src="https://reservegcc.com/{{$item->service->image }}"
-                                                                                                     alt="First Slide" data-bs-target="#carouselExampleControls" data-bs-slide-to="0">
+                                                                                                    src="https://reservegcc.com/{{ $item->service->image }}"
+                                                                                                    alt="First Slide"
+                                                                                                    data-bs-target="#carouselExampleControls"
+                                                                                                    data-bs-slide-to="0">
                                                                                             </div>
 
-                                                                                            @foreach($item->service->gallery as $k =>  $image)
-                                                                                                <div class="col-6 col-md-4 col-lg-3 p-0">
-                                                                                                    <img class="w-100 thumbnail" src="https://reservegcc.com/{{$image->image }}"
-                                                                                                         alt="{{$k+=1}} Slide" data-bs-target="#carouselExampleControls" data-bs-slide-to="{{$k+=1}}">
+                                                                                            @foreach ($item->service->gallery as $k => $image)
+                                                                                                <div
+                                                                                                    class="col-6 col-md-4 col-lg-3 p-0">
+                                                                                                    <img class="w-100 thumbnail"
+                                                                                                        src="https://reservegcc.com/{{ $image->image }}"
+                                                                                                        alt="{{ $k += 1 }} Slide"
+                                                                                                        data-bs-target="#carouselExampleControls"
+                                                                                                        data-bs-slide-to="{{ $k += 1 }}">
                                                                                                 </div>
                                                                                             @endforeach
 
-                                                                                            <div class="modal" id="exampleModal-{{$i}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                                                                                <button   type="button" class="btn-close position-absolute right-0 p-2" data-bs-dismiss="modal"
-                                                                                                          aria-label="Close"></button>
-                                                                                                <div class="modal-dialog modal-lg" role="document">
-                                                                                                    <div class="modal-content bg-transparent">
-                                                                                                        <div class="modal-body p-0">
-                                                                                                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                                                                                                <div class="carousel-inner">
+                                                                                            <div class="modal"
+                                                                                                id="exampleModal-{{ $i }}"
+                                                                                                tabindex="-1"
+                                                                                                role="dialog"
+                                                                                                aria-hidden="true">
+                                                                                                <button type="button"
+                                                                                                    class="btn-close position-absolute right-0 p-2"
+                                                                                                    data-bs-dismiss="modal"
+                                                                                                    aria-label="Close"></button>
+                                                                                                <div class="modal-dialog modal-lg"
+                                                                                                    role="document">
+                                                                                                    <div
+                                                                                                        class="modal-content bg-transparent">
+                                                                                                        <div
+                                                                                                            class="modal-body p-0">
+                                                                                                            <div id="carouselExampleControls"
+                                                                                                                class="carousel slide"
+                                                                                                                data-bs-ride="carousel">
+                                                                                                                <div
+                                                                                                                    class="carousel-inner">
 
-                                                                                                                    @foreach($order->items as $item)
-                                                                                                                        <div class="carousel-item active">
+                                                                                                                    @foreach ($order->items as $item)
+                                                                                                                        <div
+                                                                                                                            class="carousel-item active">
                                                                                                                             <img class="d-block w-100"
-                                                                                                                                 src="https://reservegcc.com/{{$item['service']['image'] }}"
-                                                                                                                                 alt="First Slide">
+                                                                                                                                src="https://reservegcc.com/{{ $item['service']['image'] }}"
+                                                                                                                                alt="First Slide">
                                                                                                                         </div>
-                                                                                                                        @foreach($item->service->gallery as $k =>  $image)
-                                                                                                                            <div class="carousel-item">
+                                                                                                                        @foreach ($item->service->gallery as $k => $image)
+                                                                                                                            <div
+                                                                                                                                class="carousel-item">
                                                                                                                                 <img class="d-block w-100"
-                                                                                                                                     src="https://reservegcc.com/{{$image['image'] }}"
-                                                                                                                                     alt="{{$k+=1}} Slide">
+                                                                                                                                    src="https://reservegcc.com/{{ $image['image'] }}"
+                                                                                                                                    alt="{{ $k += 1 }} Slide">
                                                                                                                             </div>
                                                                                                                         @endforeach
                                                                                                                     @endforeach
                                                                                                                 </div>
-                                                                                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                                                                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                                                                    <span class="visually-hidden">Previous</span>
+                                                                                                                <button
+                                                                                                                    class="carousel-control-prev"
+                                                                                                                    type="button"
+                                                                                                                    data-bs-target="#carouselExampleControls"
+                                                                                                                    data-bs-slide="prev">
+                                                                                                                    <span
+                                                                                                                        class="carousel-control-prev-icon"
+                                                                                                                        aria-hidden="true"></span>
+                                                                                                                    <span
+                                                                                                                        class="visually-hidden">Previous</span>
                                                                                                                 </button>
-                                                                                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                                                                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                                                                    <span class="visually-hidden">Next</span>
+                                                                                                                <button
+                                                                                                                    class="carousel-control-next"
+                                                                                                                    type="button"
+                                                                                                                    data-bs-target="#carouselExampleControls"
+                                                                                                                    data-bs-slide="next">
+                                                                                                                    <span
+                                                                                                                        class="carousel-control-next-icon"
+                                                                                                                        aria-hidden="true"></span>
+                                                                                                                    <span
+                                                                                                                        class="visually-hidden">Next</span>
                                                                                                                 </button>
                                                                                                             </div>
                                                                                                         </div>
@@ -420,34 +574,44 @@
                                                                         <div class="col">
                                                                             <div class="card">
                                                                                 <div class="card-body ">
-                                                                                    <ul class="list-group list-group-flush">
+                                                                                    <ul
+                                                                                        class="list-group list-group-flush">
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Service Name</div>
-                                                                                                <div class="col-sm-6">{{$item->service->name }}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Service Location</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    {{$item->service->location }}
+                                                                                                    Service Name</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $item->service->name }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Service Price</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    {{$item->service->price }}
+                                                                                                    Service Location</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $item->service->location }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Capacity</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    min {{$item->service->min_capacity }} - max {{$item->service->max_capacity }}
+                                                                                                    Service Price</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $item->service->price }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    Capacity</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    min
+                                                                                                    {{ $item->service->min_capacity }}
+                                                                                                    - max
+                                                                                                    {{ $item->service->max_capacity }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
@@ -458,32 +622,41 @@
                                                                         <div class="col">
                                                                             <div class="card">
                                                                                 <div class="card-body ">
-                                                                                    <ul class="list-group list-group-flush">
+                                                                                    <ul
+                                                                                        class="list-group list-group-flush">
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Status</div>
-                                                                                                <div class="col-sm-6">{{$item->status }}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Scheduled Date</div>
-                                                                                                <div class="col-sm-6">{{Carbon\Carbon::parse($item->schedule_start_datetime)->format('F, d Y')}}</div>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                        <li class="list-group-item">
-                                                                                            <div class="row">
-                                                                                                <div class="col-sm-6">Scheduled Time</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                    {{Carbon\Carbon::parse($item->schedule_start_datetime)->format('H:m a')}}
+                                                                                                    Status</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $item->status }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
                                                                                         <li class="list-group-item">
                                                                                             <div class="row">
-                                                                                                <div class="col-sm-6">Guest No.</div>
                                                                                                 <div class="col-sm-6">
-                                                                                                     {{ $item->guests}}
+                                                                                                    Scheduled Date</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('F, d Y') }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">
+                                                                                                    Scheduled Time</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('H:m a') }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                        <li class="list-group-item">
+                                                                                            <div class="row">
+                                                                                                <div class="col-sm-6">Guest
+                                                                                                    No.</div>
+                                                                                                <div class="col-sm-6">
+                                                                                                    {{ $item->guests }}
                                                                                                 </div>
                                                                                             </div>
                                                                                         </li>
@@ -500,42 +673,64 @@
                                                 @endforeach
                                             </div>
                                         </div>
+                                        <div class="tab-pane fade show active" id="pills-vendor" role="tabpanel"
+                                            aria-labelledby="pills-profile-tab">
+                                            <div class="">
+                                                <div
+                                                    class="alert alert-light border border-info d-flex ps-4 pe-4 pt-2 pb-2">
+                                                    <div class="col-8 fs-5 m-auto">Catering</div>
+                                                    <div class="col-2 fs-5 m-auto">
+                                                        <h3 class="badge bg-secondary">Active</h3>
+                                                    </div>
+                                                    <div class="col-2 d-flex">
+                                                        <button type="button" data-type="edit"
+                                                            class="btn btn-info action-service" data-bs-toggle="modal"
+                                                            data-bs-target="#edit-service-modal">Edit</button>
+                                                        <button type="button" data-type="delete"
+                                                            class="btn btn-danger ms-2 action-service"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete-service-modal">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                                             aria-labelledby="pills-contact-tab">
+                                            aria-labelledby="pills-contact-tab">
 
-                                            @foreach($user->notes as $note)
+                                            @foreach ($user->notes as $note)
                                                 <div class="row mb-3">
                                                     <div class="col">
                                                         <div class="card">
                                                             <div class="card-body ">
                                                                 <div class="d-flex justify-content-between">
-
                                                                     <div class="p-0">
-                                                                        @if($user->profile_picture )
+
+                                                                        @if ($note->createdBy->profile_picture)
                                                                             <img width="35" class="rounded-circle"
-                                                                                 src="{{ asset( $user->profile_picture) }}" alt="...."/>
+                                                                                src="{{ asset($note->createdBy->profile_picture) }}"
+                                                                                alt="...." />
                                                                         @else
                                                                             <img width="35" class="rounded-circle"
-                                                                                 src="https://ui-avatars.com/api/?name={{$user->first_name ? $user->first_name: $user->email}}"
-                                                                                 alt="...">
+                                                                                src="https://ui-avatars.com/api/?name={{ $note->createdBy->first_name ? $note->createdBy->first_name : $note->createdBy->email }}"
+                                                                                alt="...">
                                                                         @endif
-                                                                            <h3>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</h3>
+                                                                        <h3>{{ $note->createdBy->first_name ? $note->createdBy->first_name . ' ' . $note->createdBy->last_name : $note->createdBy->email }}
+                                                                        </h3>
                                                                     </div>
                                                                     <div class="p-0">
 
-                                                                        <a
-                                                                           href="{{route('notes.destroy-note',['id' => $note->id])}}"
-                                                                           onclick="return confirm('Are you sure want to delete this note?')">
+                                                                        <a href="{{ route('notes.destroy-note', ['id' => $note->id]) }}"
+                                                                            onclick="return confirm('Are you sure want to delete this note?')">
                                                                             <i class="bi bi-trash"></i>
                                                                         </a>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col">
-                                                                        <h4>{{$note->subject}}</h4>
-                                                                        <p>{{$note->description}}</p>
+                                                                        <h4>{{ $note->subject }}</h4>
+                                                                        <p>{{ $note->description }}</p>
 
-                                                                        <small>{{Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:s a')}}</small>
+                                                                        <small>{{ Carbon\Carbon::parse($note->created_at)->format('d/m/Y H:s a') }}</small>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -544,9 +739,10 @@
                                                 </div>
                                             @endforeach
 
-                                                <button type="button" class="btn btn-warning text-white text-center w-100"  data-bs-toggle="modal" data-bs-target="#new-notes-modal">
-                                                   Add new note
-                                                </button>
+                                            <button type="button" class="btn btn-warning text-white text-center w-100"
+                                                data-bs-toggle="modal" data-bs-target="#new-notes-modal">
+                                                Add new note
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -560,7 +756,7 @@
     </div>
 
     <div class="modal fade" id="new-notes-modal" tabindex="-1" aria-labelledby="new-notes-modalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -568,9 +764,9 @@
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close
                     </button>
                 </div>
-                <form method="post" action="{{route('notes.store')}}"  >
+                <form method="post" action="{{ route('notes.store') }}">
                     @csrf
-                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <div class="modal-body">
                         <div class="row g-3 align-items-center mb-3">
                             <div class="col-auto" style="width: 29%;">
@@ -579,9 +775,8 @@
                                 </label>
                             </div>
                             <div class="col-auto" style="width: 70%;">
-                                <input dir="auto" name="subject" type="text"
-                                       class="form-control"
-                                       placeholder="Enter subject of note">
+                                <input dir="auto" name="subject" type="text" class="form-control"
+                                    placeholder="Enter subject of note">
                             </div>
                         </div>
                         <div class="row g-3 align-items-center mb-3">
@@ -591,9 +786,8 @@
                                 </label>
                             </div>
                             <div class="col-auto" style="width: 70%;">
-                                <textarea dir="auto" rows="8" name="description" type="text"
-                                  class="form-control"
-                                  placeholder="This is a note about..."> </textarea>
+                                <textarea dir="auto" rows="8" name="description" type="text" class="form-control"
+                                    placeholder="This is a note about..."> </textarea>
                             </div>
                         </div>
 
@@ -611,28 +805,81 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="delete-service-modal" tabindex="-1" aria-labelledby="delete-service-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="" method="post">
+                @csrf
+                <input type="hidden" name="service_id" value="{{ $user->id }}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete-service-modal-title">Service</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+                            <i class="fa-sharp fa-light fa-triangle-exclamation"></i> Are you sure to delete this service?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="edit-service-modal" tabindex="-1" aria-labelledby="edit-service-modalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="" method="post">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit-service-modal-title">Service</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Service" aria-label="Service" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('content_javascript')
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('body').on('click','.view-full-order-btn',function (e) {
+        $(document).ready(function() {
+            $('body').on('click', '.view-full-order-btn', function(e) {
                 let orderId = $(this).attr('data-order-id');
                 $('.info-orders-div').removeClass('d-none');
                 $('.table-orders-div').addClass('d-none');
-                $('.order-ref-id-'+orderId).removeClass('d-none')
+                $('.order-ref-id-' + orderId).removeClass('d-none')
             });
-            $('body').on('click','.close-info-order-btn',function (e) {
+            $('body').on('click', '.close-info-order-btn', function(e) {
                 $('.info-orders-div,.order-ref-id').addClass('d-none');
                 $('.table-orders-div').removeClass('d-none');
             });
 
+            $('body').on('click', '.action-service', function(e) {
+                let actionService = $(this).attr('data-type');
+                console.log('actionService', actionService);
+            });
+
+
             $.fn.dataTable.ext.errMode = 'none';
             let datatable = $('#user-table').DataTable({});
-            $('#user-table').on('error.dt', function (e, settings, techNote, message) {
+            $('#user-table').on('error.dt', function(e, settings, techNote, message) {
                 console.log('An error has been reported by DataTables: ', message);
             })
-            $('#search-t').keyup(function () {
+            $('#search-t').keyup(function() {
                 datatable.search($(this).val()).draw();
             })
             $('#user-table_length, .dataTables_paginate, .dataTables_info,.dataTables_filter').remove();

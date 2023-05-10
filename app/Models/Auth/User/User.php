@@ -16,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Auth\User\Traits\Ables\Rolable;
 use App\Models\Auth\User\Traits\Scopes\UserScopes;
 use App\Models\Auth\User\Traits\Relations\UserRelations;
+use App\Models\Location;
 use Kyslik\ColumnSortable\Sortable;
 use Laravel\Passport\HasApiTokens;
 
@@ -59,8 +60,8 @@ use Laravel\Passport\HasApiTokens;
  */
 class User extends Authenticatable
 {
-     use HasApiTokens,
-         Rolable,
+    use HasApiTokens,
+        Rolable,
         UserAttributes,
         UserScopes,
         UserRelations,
@@ -69,7 +70,7 @@ class User extends Authenticatable
         Sortable,
         Protectable;
 
-    public $sortable = ['name','first_name','last_name','phone_number','confirmed','confirmation_code', 'email', 'created_at', 'updated_at'];
+    public $sortable = ['name', 'first_name', 'last_name', 'phone_number', 'confirmed', 'confirmation_code', 'email', 'created_at', 'updated_at'];
 
     /**
      * The database table used by the model.
@@ -84,8 +85,10 @@ class User extends Authenticatable
      * @var array
      */
 
-    protected $fillable = ['name','fcm_token', 'email', 'password','first_name',
-        'full_name','last_name','phone_number','position','location','registration_number', 'active', 'confirmation_code', 'confirmed','app_language'];
+    protected $fillable = [
+        'name', 'fcm_token', 'email', 'password', 'first_name',
+        'full_name', 'last_name', 'phone_number', 'position', 'location', 'registration_number', 'active', 'confirmation_code', 'confirmed', 'app_language'
+    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -102,23 +105,34 @@ class User extends Authenticatable
     protected $dates = ['deleted_at', 'last_login'];
 
 
-    public function occasionEventReviews() {
+    public function occasionEventReviews()
+    {
         return $this->hasMany(OccasionEventReviews::class);
     }
-    public function transactions() {
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class);
     }
-    public function company() {
+    public function company()
+    {
         return $this->hasOne(Company::class);
     }
 
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany(Transaction::class);
     }
-    public function customer_orders() {
-        return $this->hasMany(Order::class,'user_id','id');
+    public function customer_orders()
+    {
+        return $this->hasMany(Order::class, 'user_id', 'id');
     }
-    public function notes() {
-        return $this->hasMany(Notes::class,'user_id','id');
+    public function notes()
+    {
+        return $this->hasMany(Notes::class, 'user_id', 'id');
+    }
+
+    public function locations()
+    {
+        return $this->hasMany(Location::class, 'user_id', 'id');
     }
 }
