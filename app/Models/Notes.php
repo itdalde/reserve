@@ -10,7 +10,7 @@ class Notes extends Model
 {
     use HasFactory;
 
-    public function creator() {
-        return $this->hasOne(User::class,'created_by','id');
+    public function createdBy() {
+        return $this->hasOne(User::class,'id','created_by');
     }
 }

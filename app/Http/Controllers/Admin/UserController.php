@@ -200,6 +200,7 @@ class UserController extends Controller
                $total += $order->total_amount;
            }
        }
+//       dd($user->notes[0]->createdBy);
 
         return view('superadmin.user-view', compact('user', 'total','totalOrders'));
     }
