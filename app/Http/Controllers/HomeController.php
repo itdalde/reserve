@@ -13,8 +13,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct() {
-        $this->middleware('auth', ['except' => ['index','privacy','termsCondition','faq','help','successRegister']]);
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'privacy', 'termsCondition', 'faq', 'help', 'successRegister']]);
     }
 
     /**
@@ -24,10 +25,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->get('test')) {
-            return view('welcome');
-        }
-        return view('maintenance');
+        // if($request->get('test')) {
+        //     return view('welcome');
+        // }
+        return view('welcome');
     }
     public function privacy()
     {
@@ -37,14 +38,16 @@ class HomeController extends Controller
     {
         return view('terms');
     }
-    public function faq() {
+    public function faq()
+    {
         return view('faq');
     }
-    public function help() {
+    public function help()
+    {
         return view('help');
     }
-    public function successRegister() {
+    public function successRegister()
+    {
         return view('auth.success-register');
     }
-
 }
