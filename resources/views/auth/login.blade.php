@@ -260,11 +260,7 @@
                         Create an account
                     </button>
                 </div>
-                <div class="position-absolute top-0 left-0 signup-background" data-aos-mirror="true"
-                    style="z-index: -1">
-                    <img class="position-relative top-0 left-0"
-                        src="{{ asset('assets/landing/img/background-asset.png') }}" alt="background-asset">
-                </div>
+
             </div>
             <div class="panel right-panel">
                 <div class="content reg-panel text-dark text-start">
@@ -284,10 +280,6 @@
                         Login
                     </button>
 
-                </div>
-                <div class="position-absolute top-0 signin-background hide"  data-aos-mirror="true" style="z-index: -1; right: 0">
-                    <img class="position-relative top-0 right-0" src="{{ asset('assets/landing/img/background-asset.png') }}"
-                        alt="background-asset">
                 </div>
             </div>
         </div>
@@ -374,7 +366,7 @@
                     $('.sign-up-form').addClass('show').removeClass('hide')
                     $('.signup-background').removeClass('show').addClass('hide');
                     $('.signin-background').removeClass('hide').addClass('show');
-                    
+
                 }, 1000);
             });
 
