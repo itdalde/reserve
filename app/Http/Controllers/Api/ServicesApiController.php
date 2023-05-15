@@ -53,7 +53,7 @@ class ServicesApiController extends Controller
                     $usersIds[] = $user->company->id;
                 }
             }
-            $providers = Company::with('tags', 'serviceType', 'services', 'reviews', 'user', 'user.roles')
+            $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
                 ->whereIn('id',$usersIds)
                 ->where('service_type_id',(int) $service_type_id)
                 ->get();
