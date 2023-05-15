@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Auth\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +14,10 @@ class Company extends Model
         return $this->belongsTo(ServiceType::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->with('roles');
+    }
     public function services() {
         return $this->hasMany(OccasionEvent::class)->with(
             'serviceReviews',

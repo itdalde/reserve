@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OccasionServiceByProviderRequest;
 use App\Http\Requests\ProviderByServiceTypeRequest;
+use App\Models\Auth\User\User;
 use App\Models\Company;
 use App\Models\OccasionEvent;
 use Illuminate\Http\JsonResponse;
@@ -42,11 +43,23 @@ class ServicesApiController extends Controller
 
     public function getProvidersByServiceType(ProviderByServiceTypeRequest $request, $service_type_id): JsonResponse
     {
-        $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
-            ->where('service_type_id', $service_type_id)
-            ->get();
-        foreach($providers as $provider) {
-            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        $service_type_id = (int) $service_type_id;
+        $providers = [];
+        if($service_type_id) {
+            $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();
+            $usersIds = [];
+            foreach ($users as $user) {
+                if((!$user->hasRole('superadmin'))) {
+                    $usersIds[] = $user->company->id;
+                }
+            }
+            $providers = Company::with('tags', 'serviceType', 'services', 'reviews', 'user', 'user.roles')
+                ->whereIn('id',$usersIds)
+                ->where('service_type_id',(int) $service_type_id)
+                ->get();
+            foreach($providers as $k => $provider) {
+                $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+            }
         }
         return sendResponse($providers, 'Get providers by service type');
     }

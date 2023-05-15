@@ -16,7 +16,7 @@ class ServiceTypesApiController extends Controller
      */
     public function getServices(): JsonResponse
     {
-        $serviceTypes = ServiceType::get(['id', 'name', 'active']);
+        $serviceTypes = ServiceType::where('active', 1)->get(['id', 'name', 'active']);
         return sendResponse($serviceTypes, "Service types");
     }
 
@@ -42,10 +42,11 @@ class ServiceTypesApiController extends Controller
                 ->where('ad.service_id', $occasion_id)
                 ->where('ad.status', 1)
                 ->whereBetween('ad.date', [$request->input('from'), $request->input('to')]);
+        } else {
+            $serviceTypes = $serviceTypes->where('occasion_service_type_pivots.occasion_id', $occasion_id);
         }
 
-        $serviceTypes = $serviceTypes->where('occasion_service_type_pivots.occasion_id', $occasion_id)
-            ->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
+        $serviceTypes = $serviceTypes->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
 
         return sendResponse($serviceTypes, 'Get services under occasion');
     }
