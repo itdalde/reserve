@@ -2,11 +2,49 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col mb-4">
-                <h3>Schedules</h3>
-            </div>
             <div class="card w-100">
+
                 <div class="card-body">
+                    <div class="">
+                        <h3 class="text-secondary fs-3 mb-0">Schedule</h3>
+                        <p class="fs-6">Click the dates multiple to set your availability on different days</p>
+                    </div>
+                    {{-- Buttons --}}
+                    <div class="d-flex gap-3">
+                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                            data-type="1" id="block-weekends">Block
+                            Weekends</button>
+                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                            data-type="2" id="block-all-days">Set all days as
+                            available</button>
+                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                            data-type="3" id="unblock-all-days">Set all days an
+                            unavailable</button>
+                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                            data-type="4" id="clear-block">Clear all</button>
+                    </div>
+                    <div class="mt-4 mb-6 d-flex">
+                        <label class="d-flex"><i class="bg-success rounded-circle me-1 m-auto"
+                                style="display: inline-block; width: 16px; height: 16px;"
+                                aria-hidden="true"></i>Available</label>
+                        <label class="d-flex ms-3"><i class="bg-danger rounded-circle me-1 m-auto"
+                                style="display: inline-block; width: 16px; height: 16px;"
+                                aria-hidden="true"></i>Unavailable</label>
+                        <label class="border rounded-circle"
+                            style="width: 20px;
+                        height: 20px;
+                        text-align: center;
+                        align-items: center;
+                        display: flex;
+                        justify-content: center;
+                        font-style: italic;
+                        margin-left: 10px;
+                        margin-top: 2px;"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Dates without availability set are considered as available days">
+                            i
+                        </label>
+                    </div>
                     <div id='calendar'></div>
                 </div>
             </div>
@@ -16,7 +54,7 @@
 
 @section('content_javascript')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             let SITEURL = "{{ url('/') }}";
 
@@ -26,46 +64,101 @@
                 }
             });
 
+            var selectedRange = null;
+
             var calendar = $('#calendar').fullCalendar({
                 events: SITEURL + "/calendar",
                 displayEventTime: false,
                 editable: true,
-                eventRender: function (event, element, view) {
-                    event.allDay = event.allDay === 'true';
-                },
                 selectable: true,
                 selectHelper: true,
+                eventRender: function(event, element, view) {
+                    event.allDay = event.allDay === 'true';
+                },
+                dayRender: function(date, cell) {
+                    // console.log('date', date);
+                    // console.log('cell', cell);
+                    // cell.css("background-color", "red");
+                },
+                dayClick: function(date) {
+                    var selectedDate = date.format('DD/MM/YYYY');
+                    $.ajax({
+                        type: "POST",
+                        url: SITEURL + '/update-schedule',
+                        data: {
+                            date: selectedDate
+                        },
+                        success: function(response) {
+                            console.log('response', response);
+                            $('#calendar').fullCalendar(
+                                'removeEvents');
+                            $('#calendar').fullCalendar(
+                                'refetchEvents');
+                            displayMessage(
+                                "Event Updated Successfully");
+                        }
+
+                    })
+                },
                 header: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'add_event'
-                } ,
+                },
                 eventAfterAllRender: function(events) {
-                    if($("select[id=set-schedule]").length < 1) {
-                        let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
-                            "<option selected>Setup Availability</option>"+
-                            "<option value='1'>Mark all days as available</option>" +
-                            "<option value='2'>Mark all days as available except weekends</option>" +
-                            "</select>";
-
-
-                        $(selectHTML).appendTo('.fc-right');
-                        $("#set-schedule").on('change', function() {
-                            let type = $(this).val();
+                    $('.block-calendar').on(
+                        'click',
+                        function(event) {
+                            event.stopPropagation();
+                            var type = $(this).attr('data-type');
                             $.ajax({
                                 type: "POST",
                                 url: SITEURL + '/update-schedule',
                                 data: {
                                     type: type,
                                 },
-                                success: function (response) {
-                                    $('#calendar').fullCalendar('removeEvents');
-                                    $('#calendar').fullCalendar('refetchEvents');
-                                    displayMessage("Event Updated Successfully");
+                                success: function(response) {
+                                    $('#calendar').fullCalendar(
+                                        'removeEvents');
+                                    $('#calendar').fullCalendar(
+                                        'refetchEvents');
+                                    displayMessage(
+                                        "Event Updated Successfully");
                                 }
                             });
-                        });
-                    }
+                        })
+                    // if ($("select[id=set-schedule]").length < 1) {
+                    //     let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
+                    //         "<option selected>Setup Availability</option>" +
+                    //         "<option value='1'>Mark all days as available</option>" +
+                    //         "<option value='2'>Mark all days as available except weekends</option>" +
+                    //         "</select>";
+
+                    //     $(selectHTML).appendTo('.fc-right');
+
+
+
+
+                    //     $("#set-schedule").on('change', function() {
+                    //         let type = $(this).val();
+                    //         console.log('type', type);
+                    //         $.ajax({
+                    //             type: "POST",
+                    //             url: SITEURL + '/update-schedule',
+                    //             data: {
+                    //                 type: type,
+                    //             },
+                    //             success: function(response) {
+                    //                 $('#calendar').fullCalendar(
+                    //                     'removeEvents');
+                    //                 $('#calendar').fullCalendar(
+                    //                     'refetchEvents');
+                    //                 displayMessage(
+                    //                     "Event Updated Successfully");
+                    //             }
+                    //         });
+                    //     });
+                    // }
                 },
                 // select: function (start, end, allDay) {
                 //     var title = prompt('Event Title:');
@@ -110,20 +203,20 @@
                 // eventClick: function (event) {
                 //     var deleteMsg = confirm("Do you really want to delete?");
                 //     console.log(event)
-                    // if (deleteMsg) {
-                    //     $.ajax({
-                    //         type: "POST",
-                    //         url: SITEURL + '/remove-schedule',
-                    //         data: {
-                    //             id: event.id,
-                    //             type: 'delete'
-                    //         },
-                    //         success: function (response) {
-                    //             calendar.fullCalendar('removeEvents', event.id);
-                    //             displayMessage("Event Deleted Successfully");
-                    //         }
-                    //     });
-                    // }
+                // if (deleteMsg) {
+                //     $.ajax({
+                //         type: "POST",
+                //         url: SITEURL + '/remove-schedule',
+                //         data: {
+                //             id: event.id,
+                //             type: 'delete'
+                //         },
+                //         success: function (response) {
+                //             calendar.fullCalendar('removeEvents', event.id);
+                //             displayMessage("Event Deleted Successfully");
+                //         }
+                //     });
+                // }
                 // }
 
             });
@@ -132,6 +225,5 @@
         function displayMessage(message) {
             toastr.success(message, 'Event');
         }
-
     </script>
 @endsection

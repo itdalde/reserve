@@ -15,6 +15,7 @@ use App\Models\ServiceType;
 use App\Models\Status;
 use App\Utility\NotificationUtility;
 use Carbon\Carbon;
+use DateTime;
 use Google\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -32,35 +33,49 @@ class SchedulesController extends Controller
 
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         $schedules = Schedule::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
-        return view('admin.schedules.index',compact('services','schedules'));
+        return view('admin.schedules.index', compact('services', 'schedules'));
     }
     public function list(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $response = [];
             $data = AvailableDates::whereDate('date_obj', '>=', $request->start)
                 ->whereDate('date_obj',   '<=', $request->end)->where('company_id', auth()->user()->company->id)
                 ->get();
-            foreach ($data as $datum) {
-                $response[] = [
-                    'id' => $datum->id,
-                    'title' => $datum->service->name,
-                    'start' => $datum->date_obj,
-                    'end' => $datum->date_obj,
-                ];
+            foreach ($data as $event) {
+                if ($event->status != 0) {
+                    $response[] = [
+                        'id' => $event->id,
+                        'title' => $event->service->name,
+                        'start' => $event->date_obj,
+                        'end' => $event->date_obj,
+                        'overlap' => false,
+                        'display' => 'background',
+                        'color' => $event->status == 1 ? '#25b900' : ($event->status == 2 ? '#FF0000' : ''), #FF0000' // #25b900 // green
+                    ];
+                }
             }
             return response()->json($response);
         }
         return view('admin.schedules.manage');
     }
-    public function updateSchedule(Request $request){
+    public function updateSchedule(Request $request)
+    {
         $start = Carbon::today()->startOfMonth();
         $end = Carbon::today()->endOfMonth();
         $date = $start;
         $dates = [];
-        if($request->type == 2) {
+        /**
+         * Request Type:
+         * 1 - Block all weekends (sat-sun only)
+         * 2 - Block all days
+         * 3 - Unblock all days
+         * 4 - Clear blocked
+         */
+        $response = [];
+        if ($request->type == 1) {
             while ($date <= $end) {
-                if (! $date->isWeekend() ) {
+                if ($date->isWeekend()) {
                     $dates[] = [
                         'old_format' => $date->format('d/m/Y'),
                         'new_format' => $date->format('Y-m-d')
@@ -68,7 +83,7 @@ class SchedulesController extends Controller
                 }
                 $date->addDays(1);
             }
-        } else {
+        } else if ($request->type == 2 || $request->type == 3) {
             while ($date <= $end) {
                 $dates[] = [
                     'old_format' => $date->format('d/m/Y'),
@@ -76,8 +91,45 @@ class SchedulesController extends Controller
                 ];
                 $date->addDays(1);
             }
+        } else if ($request->date) {
+            $existingDate = AvailableDates::where('company_id', auth()->user()->company->id)->where('date', $request->date)->first();
+            if ($existingDate) {
+                $existingDate->status = $existingDate->status == 1 ? 2 : ($existingDate->status == 2 ? 0 : 1);
+                $existingDate->save();
+            } else {
+                $service = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->first();
+                $avail = new AvailableDates();
+                $avail->date = $request->date;
+                $avail->date_obj =  date('Y-m-d h:m:s', strtotime($request->date));
+                $avail->service_id = $service->id;
+                $avail->company_id = auth()->user()->company->id;
+                $avail->status = 1;
+                $avail->save();
+            }
+            return response()->json($response);
+        } else {
         }
-        $response = [];
+
+        // if($request->type == 2) {
+        //     while ($date <= $end) {
+        //         if (! $date->isWeekend() ) {
+        //             $dates[] = [
+        //                 'old_format' => $date->format('d/m/Y'),
+        //                 'new_format' => $date->format('Y-m-d')
+        //             ];
+        //         }
+        //         $date->addDays(1);
+        //     }
+        // } else {
+        //     while ($date <= $end) {
+        //         $dates[] = [
+        //             'old_format' => $date->format('d/m/Y'),
+        //             'new_format' => $date->format('Y-m-d')
+        //         ];
+        //         $date->addDays(1);
+        //     }
+        // }
+
         AvailableDates::where('company_id', auth()->user()->company->id)->delete();
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         foreach ($services as $service) {
@@ -87,7 +139,7 @@ class SchedulesController extends Controller
                 $avail->date_obj =  $date['new_format'];
                 $avail->service_id = $service->id;
                 $avail->company_id = auth()->user()->company->id;
-                $avail->status = 1;
+                $avail->status = $request->type == 2 ? 1 : 2;
                 $avail->save();
             }
         }
@@ -128,9 +180,10 @@ class SchedulesController extends Controller
         }
     }
 
-    public function deleteSchedule(Request $request) {
+    public function deleteSchedule(Request $request)
+    {
         $data = $request->all();
-        Schedule::where('id',$data['id'])->delete();
+        Schedule::where('id', $data['id'])->delete();
         return redirect()->route('schedules.index')->with('success', 'Schedule Removed Successfully');
     }
 
