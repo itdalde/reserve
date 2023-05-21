@@ -309,7 +309,7 @@
                                         <div class="mb-3">
                                             <div class="d-flex flex-row bd-highlight mb-3">
                                                 <div class="pe-2 bd-highlight w-100">
-                                                    <labe class="form-label">Package details</labe>
+                                                    <label class="form-label">Package details</label>
                                                     <div class="bd-highlight w-100 mt-2">
                                                         <input dir="auto" name="package_details"
                                                                class="float-end form-control" type="text">
