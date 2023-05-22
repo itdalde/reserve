@@ -326,7 +326,7 @@ svg text {
     border-top: unset !important;
     border-left: unset !important;
     border-right: unset !important;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 #service-tab .nav-item .nav-link:not(:hover) {
