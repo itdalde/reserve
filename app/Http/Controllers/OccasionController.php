@@ -8,6 +8,7 @@ use App\Models\Occasion;
 use App\Models\OccasionEvent;
 use Google\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class OccasionController extends Controller
 {
@@ -52,13 +53,21 @@ class OccasionController extends Controller
     public function assignServices(Request $request) {
         $data = $request->all();
         if(isset($data['services'])) {
+            $transaction = [];
             foreach ($data['services'] as $service) {
                 $service =  OccasionEvent::where('id',$service)->first();
                 if($service) {
                     $service->occasion_type = $data['id'];
                     $service->save();
+                    $transaction[] = $service->toArray();
                 }
             }
+            Http::timeout(10)
+                ->withOptions(['verify' => false])
+                ->post('http://reservegcc.com:3000/reservation', [
+                    'transaction' => $transaction,
+                    'status' => 'Assigned'
+                ]);
         }
         return redirect()->back()->with('success', 'Occasion Assignment Successful');
     }
