@@ -4,6 +4,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\OccasionEvent;
+use App\Models\OccasionEventsPivot;
 use App\Models\OccasionServiceTypePivot;
 use App\Models\ServiceType;
 use Illuminate\Http\JsonResponse;
@@ -27,6 +29,15 @@ class ServiceTypesApiController extends Controller
         return sendResponse($serviceTypes, "Service type by id");
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
+    {
+        $services = OccasionEvent::where('occasion_type', $occasion_type_id)->get()->toArray();
+        return sendResponse($services, 'Get services by occasion type');
+    }
     /**
      * @param Request $request
      * @return JsonResponse

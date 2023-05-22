@@ -13,4 +13,8 @@ class OccasionEventsPivot extends Model
     {
         return $this->belongsTo(Occasion::class,'occasion_id','id');
     }
+    public function service()
+    {
+        return $this->hasOne(OccasionEvent::class,'id','occasion_event_id');
+    }
 }
