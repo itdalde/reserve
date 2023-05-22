@@ -99,8 +99,9 @@ class SchedulesController extends Controller
             } else {
                 $service = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->first();
                 $avail = new AvailableDates();
+                $selectedDate = Carbon::createFromFormat('d/m/Y',  $request->date);
                 $avail->date = $request->date;
-                $avail->date_obj =  date('Y-m-d h:m:s', strtotime($request->date));
+                $avail->date_obj =  $selectedDate->format('Y-m-d');
                 $avail->service_id = $service->id;
                 $avail->company_id = auth()->user()->company->id;
                 $avail->status = 1;
