@@ -39,7 +39,9 @@
                         justify-content: center;
                         font-style: italic;
                         margin-left: 10px;
-                        margin-top: 2px;"
+                        margin-top: 2px;
+                        font-weight: 700;
+                        "
                             data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="Dates without availability set are considered as available days">
                             i
@@ -81,12 +83,12 @@
                     // cell.css("background-color", "red");
                 },
                 dayClick: function(date) {
-                    var selectedDate = date.format('DD/MM/YYYY');
+                    var selectedDate = $.fullCalendar.formatDate(date, "DD/MM/YYYY");
                     $.ajax({
                         type: "POST",
                         url: SITEURL + '/update-schedule',
                         data: {
-                            date: selectedDate
+                            date: selectedDate,
                         },
                         success: function(response) {
                             console.log('response', response);
@@ -94,6 +96,7 @@
                                 'removeEvents');
                             $('#calendar').fullCalendar(
                                 'refetchEvents');
+                            console.log('dayClick Evnt');
                             displayMessage(
                                 "Event Updated Successfully");
                         }
@@ -109,7 +112,6 @@
                     $('.block-calendar').on(
                         'click',
                         function(event) {
-                            event.stopPropagation();
                             var type = $(this).attr('data-type');
                             $.ajax({
                                 type: "POST",
@@ -118,6 +120,7 @@
                                     type: type,
                                 },
                                 success: function(response) {
+                                    console.log('afterRendered Called')
                                     $('#calendar').fullCalendar(
                                         'removeEvents');
                                     $('#calendar').fullCalendar(
@@ -127,7 +130,6 @@
                                 }
                             });
                         })
-                    // if ($("select[id=set-schedule]").length < 1) {
                     //     let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
                     //         "<option selected>Setup Availability</option>" +
                     //         "<option value='1'>Mark all days as available</option>" +

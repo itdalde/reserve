@@ -47,11 +47,11 @@ class SchedulesController extends Controller
                     $response[] = [
                         'id' => $event->id,
                         'title' => $event->service->name,
-                        'start' => $event->date_obj,
-                        'end' => $event->date_obj,
+                        'start' => date('Y-m-d', strtotime($event->date_obj)),
+                        'end' => date('Y-m-d', strtotime($event->date_obj)),
                         'overlap' => false,
-                        'display' => 'background',
-                        'color' => $event->status == 1 ? '#25b900' : ($event->status == 2 ? '#FF0000' : ''), #FF0000' // #25b900 // green
+                        'rendering' => 'background',
+                        'color' => $event->status == 1 ? '#198754 !important' : ($event->status == 2 ? '#dc3545 !important' : ''), #FF0000' // #25b900 // green
                     ];
                 }
             }
