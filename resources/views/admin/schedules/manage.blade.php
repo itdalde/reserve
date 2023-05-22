@@ -67,7 +67,7 @@
             });
 
             var selectedRange = null;
-
+            var buttonClicked = false;
             var calendar = $('#calendar').fullCalendar({
                 events: SITEURL + "/calendar",
                 displayEventTime: false,
@@ -109,27 +109,32 @@
                     right: 'add_event'
                 },
                 eventAfterAllRender: function(events) {
-                    $('.block-calendar').on(
-                        'click',
-                        function(event) {
-                            var type = $(this).attr('data-type');
-                            $.ajax({
-                                type: "POST",
-                                url: SITEURL + '/update-schedule',
-                                data: {
-                                    type: type,
-                                },
-                                success: function(response) {
-                                    console.log('afterRendered Called')
-                                    $('#calendar').fullCalendar(
-                                        'removeEvents');
-                                    $('#calendar').fullCalendar(
-                                        'refetchEvents');
-                                    displayMessage(
-                                        "Event Updated Successfully");
-                                }
-                            });
-                        })
+
+                    if (buttonClicked == false) {
+                        buttonClicked = true
+                        $('.block-calendar').on(
+                            'click',
+                            function(event) {
+                                var type = $(this).attr('data-type');
+                                $.ajax({
+                                    type: "POST",
+                                    url: SITEURL + '/update-schedule',
+                                    data: {
+                                        type: type,
+                                    },
+                                    success: function(response) {
+                                        console.log('afterRendered Called')
+                                        $('#calendar').fullCalendar(
+                                            'removeEvents');
+                                        $('#calendar').fullCalendar(
+                                            'refetchEvents');
+                                        displayMessage(
+                                            "Event Updated Successfully");
+                                    }
+                                });
+                            })
+                    }
+
                     //     let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
                     //         "<option selected>Setup Availability</option>" +
                     //         "<option value='1'>Mark all days as available</option>" +
