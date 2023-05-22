@@ -357,26 +357,22 @@
                 $('.sign-in-form').removeClass('show').addClass('hide')
                 setTimeout(function() {
                     $('.sign-up-form').addClass('show').removeClass('hide');
-                }, 1000);
+                }, 500);
             }
 
             $('body').on('click', '#sign-up-btn', function(e) {
                 $('.sign-in-form').removeClass('show').addClass('hide')
                 setTimeout(function() {
                     $('.sign-up-form').addClass('show').removeClass('hide')
-                    $('.signup-background').removeClass('show').addClass('hide');
-                    $('.signin-background').removeClass('hide').addClass('show');
 
-                }, 1000);
+                }, 500);
             });
 
             $('body').on('click', '#sign-in-btn', function(e) {
                 $('.sign-up-form').removeClass('show').addClass('hide')
                 setTimeout(function() {
                     $('.sign-in-form').addClass('show').removeClass('hide')
-                    $('.signup-background').removeClass('hide').addClass('show');
-                    $('.signin-background').removeClass('show').addClass('hide');
-                }, 1000);
+                }, 500);
             });
             $(".toggle-password").click(function() {
 
