@@ -268,7 +268,7 @@
 
             $.fn.dataTable.ext.errMode = 'none';
             $('#service-table').DataTable({
-                "pageLength": 20,
+                "pageLength": 120,
             });
             $('#occasions-table').DataTable({
                 "pageLength": 10,
