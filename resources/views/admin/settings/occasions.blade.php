@@ -268,7 +268,7 @@
 
             $.fn.dataTable.ext.errMode = 'none';
             $('#service-table').DataTable({
-                "pageLength": 5,
+                "pageLength": 20,
             });
             $('#occasions-table').DataTable({
                 "pageLength": 10,
@@ -276,6 +276,7 @@
             $('#occasions-table, #service-table').on('error.dt', function (e, settings, techNote, message) {
                 console.log('An error has been reported by DataTables: ', message);
             })
+            $('#service-table_info').remove();
             $('#occasions-table_length,#service-table_length').remove();
             $('body').on('click','.update-occasion-btn',function (e) {
                 let id = $(this).attr('data-id');
