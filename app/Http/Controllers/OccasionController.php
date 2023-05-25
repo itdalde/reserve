@@ -64,7 +64,7 @@ class OccasionController extends Controller
             }
             Http::timeout(10)
                 ->withOptions(['verify' => false])
-                ->post('http://reservegcc.com:3000/reservation', [
+                ->post('http://reservegcc.com:3000/alert', [
                     'transaction' => $transaction,
                     'status' => 'Assigned'
                 ]);
