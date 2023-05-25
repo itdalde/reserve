@@ -17,24 +17,12 @@ take the stress out of planning and
 leave you free to enjoy your
 occasion.',
     'how_it_works' => 'How it works',
-    'card1' => 'Experience Unmatched Services for
-Every Occasion!',
-    'card1_body' => 'Discover and select from our various
-suppliers for individual services or
-events.',
-    'card2' => 'Experience Simplicity and Efficiency
-with an Easy-to-Use App and
-Straightforward Process!',
-    'card2_body' => 'Create a single reservation with
-multiple vendors by selecting the
-needed items and adding them to the
-cart. Finalize the agreement with a
-single click.',
-    'card3' => 'Unparalleled Quality Assurance -
-Guaranteed!',
-    'card3_body' => 'Reach out to us and rest assured that
-you will receive what you have
-ordered, we are here to help!',
+    'card1' => 'Experience Unmatched Services for Every Occasion!',
+    'card1_body' => 'Whether it is a single service or an occasion search and plan what you need in the palm of your hand. Request what you need and we will work with the vendors on your behalf.',
+    'card2' => 'Simplicity and Efficiency with an Easy-to-use app',
+    'card2_body' => 'Create a single reservation with multiple vendors by selecting the needed items and adding them to the cart. Finalize the agreement with a single click.',
+    'card3' => 'Unparalleled Quality Assurance Granted',
+    'card3_body' => 'Reach out to us and rest assured that you will receive what you have ordered, we are here to help!',
     'for_vendors_title' => 'Join our platform as a vendor',
     'for_vendors_sub' => 'Join us and deliver the best to our users! Are you a vendor or company interested in collaborating with us? Find out more below.',
     'simple_ui' => 'Simple UI',
