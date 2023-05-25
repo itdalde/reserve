@@ -326,16 +326,26 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     });
 
     Route::group(['prefix' => 'notification', 'middleware' => ['cors']], function() {
+        Api::get('/{user_id}', [NotificationApiController::class, 'getNotificationByUserID'])
+            ->addTag('Notifications')
+            ->setDescription('getNotificationByUserID')
+            ->setProduces(['application/json']);
+
+        Api::post('/enable/{user_id}', [NotificationApiController::class, 'enableNotification'])
+            ->addTag('Notifications')
+            ->addFormDataParameter ( 'enable_notification', 'This is value is 1 or 0. 1 to enable the notification', true ,'integer' )
+            ->setDescription('Enable/Disable Notification')
+            ->setProduces(['application/json']);
         Api::post('/order-completed', [NotificationApiController::class, 'checkOrderCompleted'])
-            ->addTag('Notification')
+            ->addTag('Notifications')
             ->setDescription('process-completed-order')
             ->setProduces(['application/json']);
         Api::post('/paid-order', [NotificationApiController::class, 'paidOrders'])
-            ->addTag('Notification')
+            ->addTag('Notifications')
             ->setDescription('process-paid-orders')
             ->setProduces(['application/json']);
         Api::post('/pending-order/{user_id}', [NotificationApiController::class, 'invokeNotificationByUser'])
-            ->addTag('Notification')
+            ->addTag('Notifications')
             ->setDescription('invoke-pending-order-by-user')
             ->setProduces(['application/json']);
     });

@@ -91,7 +91,7 @@ class SettingsController extends Controller
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
-                    $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+                    $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->where('enable_notification',1)->pluck('fcm_token')->toArray();
                     NotificationUtility::sendNotification($trans['title'], $trans['message'], $fcmTokens, $response);
                 }
             }
@@ -128,7 +128,7 @@ class SettingsController extends Controller
                         "data" => [$item->toArray() ]
                     ];
                     if($order) {
-                        $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+                        $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->where('enable_notification',1)->pluck('fcm_token')->toArray();
                         NotificationUtility::sendNotification($trans['title'], $trans['message'], $fcmTokens, $response);
                     }
                 }
@@ -170,7 +170,7 @@ class SettingsController extends Controller
                     "data" => [$item->toArray() ]
                 ];
                 if($order) {
-                    $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->pluck('fcm_token')->toArray();
+                    $fcmTokens = User::whereNotNull('fcm_token')->where('id',$order->user_id)->where('enable_notification',1)->pluck('fcm_token')->toArray();
                     NotificationUtility::sendNotification($trans['title'], $trans['message'], $fcmTokens, $response);
                 }
             }

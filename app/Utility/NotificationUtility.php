@@ -3,13 +3,15 @@
 namespace App\Utility;
 
 
+use App\Models\Auth\User\User;
+use App\Models\Notification;
 use Illuminate\Bus\Queueable;
 
 class NotificationUtility
 {
     use Queueable;
 
-    public static function  sendNotification($title,$body,$fcmTokens,$data=[])
+    public static function sendNotification($title, $body, $fcmTokens, $data = [])
     {
         $fcmUrl = 'https://fcm.googleapis.com/fcm/send';
         $apiKey = config('larafirebase.authentication_key');
@@ -22,17 +24,26 @@ class NotificationUtility
             ],
             "data" => [
                 'title' => $title,
-                'data' =>$data
+                'data' => $data
             ]
         ];
         $headers = [
             "Authorization: key=" . $apiKey,
             "Content-Type: application/json"
         ];
-
+        foreach ($fcmTokens as $fcmToken) {
+            $user = User::where('fcm_token', $fcmToken)->first();
+            $notification = new Notification();
+            $notification->title = $title;
+            $notification->description = $body;
+            $notification->company_id =  $user ? $user->id : null;
+            $notification->user_id = $user ? $user->id : null;
+            $notification->notification_type = 'order';
+            $notification->save();
+        }
         $encodedData = json_encode($fcmNotification);
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$fcmUrl);
+        curl_setopt($ch, CURLOPT_URL, $fcmUrl);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

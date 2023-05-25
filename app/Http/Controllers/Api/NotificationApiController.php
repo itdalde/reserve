@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderSplit;
 use App\Utility\NotificationUtility;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -48,21 +50,22 @@ class NotificationApiController extends Controller
                 "message" => "Notification invoke for pending orders",
                 "data" => ['order' => $order ]
             ];
-            $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $fcmTokens = User::where('id', $order->user_id)->where('enable_notification',1)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
             NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
-        } 
+        }
         return sendResponse('Order completed', 'Orders Completed');
     }
 
     public function invokeNotificationByUser(Request $request)
     {
-        $fcmTokens = User::where('id', $request->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $fcmTokens = User::where('id', $request->user_id)->where('enable_notification',1)->whereNotNull('fcm_token')->where('enable_notification',1)->pluck('fcm_token')->toArray();
         $order = Order::where('user_id', $request->user_id)->where('status', 'pending')->get();
         $response = [
             "status" => "success",
             "message" => "Notification invoke for pending orders",
             "data" => ['order' => $order ]
         ];
+
         NotificationUtility::sendNotification('Pending Order', 'You still have pending order in your cart.', $fcmTokens, $response);
 
         return sendResponse('Notificatin Invoke', 'User order pending');
@@ -80,4 +83,17 @@ class NotificationApiController extends Controller
         $user = User::where('id', $request['user_id'])->first();
         return sendResponse($user->app_language == $lang, 'Current locale-' . $user->app_language);
     }
+
+    public function getNotificationByUserID(Request $request, $user_id) : JsonResponse {
+        $notifications = Notification::where('user_id',$user_id)->get();
+        return sendResponse($notifications, 'Fetched Notification');
+    }
+
+    public function enableNotification(Request $request, $user_id) : JsonResponse {
+        $user = User::where('id',$user_id)->first();
+        $user->enable_notification = (int)$request->enable_notification;
+        $user->save();
+        return sendResponse($user, 'Updated Notification');
+    }
+
 }

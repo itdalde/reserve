@@ -73,7 +73,7 @@ class CompletedOrder extends Command
                     "message" => $title,
                     "data" => ['order' => $order->items ]
                 ];
-                $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+                $fcmTokens = User::where('id', $order->user_id)->where('enable_notification',1)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
                 NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
             }
         }

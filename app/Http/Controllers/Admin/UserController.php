@@ -245,7 +245,7 @@ class UserController extends Controller
             "data" => ['test' => 'ni']
         ];
 
-        $fcmTokens = User::whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+        $fcmTokens = User::whereNotNull('fcm_token')->where('enable_notification',1)->pluck('fcm_token')->toArray();
         NotificationUtility::sendNotification('Test', 'Approved by ', $fcmTokens, $response);
 
         return response()->json([
@@ -283,7 +283,7 @@ class UserController extends Controller
             ]);
         } catch (\Exception $e) {
             report($e);
-            return response()->json([   
+            return response()->json([
                 'success' => false
             ], 500);
         }

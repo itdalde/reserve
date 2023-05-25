@@ -54,7 +54,7 @@ class OrderScheduler extends Command
                 "message" => $title,
                 "data" => ['order' => $order]
             ];
-            $fcmTokens = User::where('id', $order->user_id)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
+            $fcmTokens = User::where('id', $order->user_id)->where('enable_notification',1)->whereNotNull('fcm_token')->pluck('fcm_token')->toArray();
             NotificationUtility::sendNotification($title, $message, $fcmTokens, $response);
         }
         $this->info('Notification invoke for users');
@@ -85,7 +85,7 @@ class OrderScheduler extends Command
                 "message" => $orderCancelled,
                 "data" => ['order' => $order]
             ];
-            $fcmTokens = User::whereNotNull('fcm_token')->where('id', $order->user_id)->pluck('fcm_token')->toArray();
+            $fcmTokens = User::whereNotNull('fcm_token')->where('id', $order->user_id)->where('enable_notification',1)->pluck('fcm_token')->toArray();
             NotificationUtility::sendNotification($title, $orderCancelled, $fcmTokens, $response);
 
         }
