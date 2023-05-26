@@ -4,6 +4,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Auth\User\User;
+use App\Models\Company;
 use App\Models\OccasionEvent;
 use App\Models\OccasionEventsPivot;
 use App\Models\OccasionServiceTypePivot;
@@ -36,7 +38,17 @@ class ServiceTypesApiController extends Controller
     public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
     {
         $services = OccasionEvent::where('occasion_type', $occasion_type_id)->get()->toArray();
-        return sendResponse($services, 'Get services by occasion type');
+        $companyIds = [];
+        foreach ($services as $service) {
+            $companyIds[] = $service['company_id'];
+        }
+        $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
+            ->whereIn('id',  $companyIds)
+            ->get();
+        foreach($providers as $k => $provider) {
+            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        }
+        return sendResponse($providers, 'Get services by occasion type');
     }
     /**
      * @param Request $request
