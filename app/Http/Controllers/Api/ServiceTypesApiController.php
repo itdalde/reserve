@@ -54,7 +54,7 @@ class ServiceTypesApiController extends Controller
                 } else {
                     $providers[$k]['services'] = [];
                     $providers[$k]['base_price'] = $service['price'];
-                    $providers[$k]['services'][1][] = $service;
+                    $providers[$k]['services'][] = $service;
                     break;
                 }
             }
