@@ -46,17 +46,18 @@ class ServiceTypesApiController extends Controller
         }
         $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
             ->whereIn('id',  $companyIds)
-            ->get();
+            ->get()->toArray();
         foreach($providers as $k => $provider) {
-            foreach ($provider->services as $key => $service) {
-                if(!in_array($service->id,$serviceIds)) {
+            foreach ($provider['services'] as $key => $service) {
+                if(!in_array($service['id'],$serviceIds)) {
 //                    unset($provider->services[$key]);
                 } else {
-                    $providers[$k]->services[1] = $service;
+                    $providers[$k]['services'] = [];
+                    $providers[$k]['base_price'] = ['price'];
+                    $providers[$k]['services'][1][] = $service;
                     break;
                 }
             }
-            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
         }
         return sendResponse($providers, 'Get services by occasion type');
     }
