@@ -50,7 +50,7 @@ class ServiceTypesApiController extends Controller
         foreach($providers as $k => $provider) {
             foreach ($provider->services as $key => $service) {
                 if(!in_array($service->id,$serviceIds)) {
-                    unset($provider->services[$key]);
+//                    unset($provider->services[$key]);
                 } else {
                     $providers[$k]->services[1] = $service;
                     break;
