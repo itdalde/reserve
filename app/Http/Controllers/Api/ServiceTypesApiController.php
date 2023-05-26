@@ -56,7 +56,7 @@ class ServiceTypesApiController extends Controller
                     $services[] = $service;
                 }
             }
-            $provider->services = $services;
+            $providers[$k]->services = $services;
             $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
         }
         return sendResponse($providers, 'Get services by occasion type');
