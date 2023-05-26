@@ -37,13 +37,25 @@ class ServiceTypesApiController extends Controller
      */
     public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
     {
-        $services = OccasionEvent::where('occasion_type', $occasion_type_id)
-            ->with('company.tags', 'company.serviceType', 'company.services', 'company.reviews')->get();
-
+        $services = OccasionEvent::where('occasion_type', $occasion_type_id)->get()->toArray();
+        $companyIds = [];
+        $serviceIds = [];
         foreach ($services as $service) {
-            $service->base_price = $service->price;
+            $companyIds[] = $service['company_id'];
+            $serviceIds[] = $service['id'];
         }
-        return sendResponse($services, 'Get services by occasion type');
+        $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
+            ->whereIn('id',  $companyIds)
+            ->get();
+        foreach($providers as $k => $provider) {
+            foreach ($provider->services as $key => $service) {
+                if(!in_array($service->id,$serviceIds)) {
+                    unset($provider->services[$key]);
+                }
+            }
+            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        }
+        return sendResponse($providers, 'Get services by occasion type');
     }
     /**
      * @param Request $request
