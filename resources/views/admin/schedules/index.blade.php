@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col mb-4">
-                <h3>My Schedules</h3>
+                <h3>My Bookings</h3>
             </div>
             <div class="card w-100" >
                 <div class="card-body">

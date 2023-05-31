@@ -47,7 +47,7 @@
                         <img class="ml-15px "
                             src="{{ Request::is('settings/manage-orders*') ? asset('assets/images/icons/Orders Outline active.svg') : asset('assets/images/icons/Orders Outline.svg') }}"
                             alt="....">
-                        Manage orders
+                        Orders
                     </a>
                 </li>
                 <li class="nav-item py-2">
@@ -88,13 +88,13 @@
                         <li class="nav-item {{ Request::is('orders*') || Request::is('settings*') ? 'show' : '' }}">
                             <a class="nav-link pl-5 d-flex align-items-center custom-tooltip"
                                 href="{{ route('orders.index') }}">
-                                <span class="pl-1 ml-2">Orders</span>
+                                <span class="pl-1 ml-2">Order History</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::is('schedules*') || Request::is('settings*') ? 'show' : '' }}">
+                        <li class="nav-item d-none {{ Request::is('schedules*') || Request::is('settings*') ? 'show' : '' }}">
                             <a class="nav-link pl-5 d-flex align-items-center custom-tooltip"
                                 href="{{ route('schedules.index') }}">
-                                <span class="pl-1 ml-2">My Schedule</span>
+                                <span class="pl-1 ml-2">My Bookings</span>
                             </a>
                         </li>
                     </ul>

@@ -90,6 +90,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if (count($orders) > 0)
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>
@@ -114,6 +115,13 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @else
+                            <tr>
+                                <td colspan="4" style="text-align: center; align-items: middle;">
+                                    <p>There is no latest order</p>
+                                </td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

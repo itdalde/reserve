@@ -133,7 +133,7 @@
 
         <!-- ======= Services Section ======= -->
         <section id="services" class="services section-bg mb-5">
-            <div class="container" style="width: 1080px;">
+            <div class="container">
 
                 <div class="section-title aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false"
                     style="margin-top: 8em;">

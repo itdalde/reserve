@@ -46,10 +46,41 @@
         width: 100%;
         padding-bottom: 30px;
     }
+
+    .about {
+        padding-bottom: 11rem;
+    }
+
+    .about .homepage-banner {
+        margin-left: unset;
+        margin-top: 3rem !important;
+    }
+
+    .section-bg {
+        margin-top: -25rem;
+        background-size: 2000vw 100%;
+/*        margin-bottom: -5rem !important;*/
+        padding-bottom: 30px;
+    }
+    .section-bg .container {
+        margin-top: 24rem;
+/*        padding-top: 11rem;*/
+    }
+
+    #services .section-title h3 {
+/*        margin-top: 16rem;*/
+    }
+
+    .portfolio .section-title {
+        padding-bottom: 0;
+    }
 }
 
 
 @media (481px <=width <=768px) and (orientation: portrait) {
+    .about {
+        padding-bottom: 16.7rem
+    }
     .about .content h3 {
         font-size: 34px;
     }
@@ -66,12 +97,28 @@
 
     .about .row img {
         width: 85%;
-        margin-top: -12rem;
+        margin-top: 50px;
+    }
+
+    .about .homepage-banner {
+        margin-left: unset;
     }
 
     .about .row .apps-store img {
         margin-top: 0
     }
+
+    .section-bg {
+        margin-top: -15rem;
+        background-size: 1000px 90%;
+        margin-bottom: -5rem !important;
+        padding-bottom: 10rem;
+    }
+
+    #services .section-title h3 {
+        margin-top: 14rem;
+    }
+
 }
 
 
@@ -109,7 +156,26 @@
         width: 100%;
         padding-bottom: 30px;
     }
+
+    .section-bg {
+        margin-top: -14rem;
+    }
+
+    .about .top-panel {
+        margin-top: -2rem;
+    }
 }
+
+
+@media (1200px <= width <= 1400px) and (orientation: landscape) {
+    .about .content h3 {
+        font-size: 40px;
+    }
+    .section-bg {
+        margin-top: -9rem;
+    }
+}
+
 
 @media (481px <=width <=768px) and (orientation: landscape) {
     .about .content h3 {
@@ -128,7 +194,7 @@
     }
 }
 
-@media (769px <=width <=1023px) and (orientation: landscape) {
+@media (769px <=width <=1024px) and (orientation: landscape) {
     .about .content h3 {
         font-size: 34px;
     }
@@ -143,6 +209,11 @@
         margin: -8rem auto;
         display: flex;
     }
+
+    .about .homepage-banner {
+        margin-top: -25px !important;
+        width: 100% !important;
+    }
 }
 
 
@@ -157,6 +228,37 @@
         margin: -11rem auto;
         display: flex;
     }
+
+    .about .homepage-banner {
+        padding-top: 8rem !important;
+    }
+}
+
+@media (768px <= width <= 992px) and (orientation: landscape) {
+  section {
+    overflow: visible;
+  }
+
+  .section-bg {
+    margin-top: 20.7rem;
+  }
+
+  .section-bg .container {
+    padding-top: 40px !important;
+  }
+}
+
+@media (680px <= width <= 769px) and (orientation: landscape) {
+    section {
+        overflow: visible;
+    }
+    .about .homepage-banner {
+        margin-top: 80px !important;
+    }
+
+    .section-bg {
+    margin-top: 13.7rem !important;
+  }
 }
 
 
@@ -167,16 +269,16 @@
     }
 
     .about .row .abt-logo img {
-        width: 80%;
-        margin: -11rem auto;
-        display: flex;
+        
     }
 
     .about .row .abt-logo img {
         position: absolute;
-        top: -9rem;
         margin: -2rem auto;
         padding-left: 17%;
+        margin: -11rem auto;
+        display: flex;
+        top: 19rem;
     }
 }
 
