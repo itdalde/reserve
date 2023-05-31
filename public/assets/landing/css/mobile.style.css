@@ -234,13 +234,18 @@
     }
 }
 
-@media (768px <= width <= 992px) and (orientation: landscape) {
+@media (768px <= width <= 992px) {
   section {
     overflow: visible;
   }
 
+  .about .homepage-banner {
+    margin: -14rem auto !important;
+    padding-left: 9% !important;
+  }
+
   .section-bg {
-    margin-top: 20.7rem;
+    margin-top: 14.7rem;
   }
 
   .section-bg .container {
@@ -279,6 +284,18 @@
         margin: -11rem auto;
         display: flex;
         top: 19rem;
+    }
+}
+
+@media (640px <= width <= 800px) and (orientation: portrait) {
+    .about .homepage-banner {
+        top: 19rem !important;
+    }
+}
+
+@media only screen and (width: 500px) and (orientation: portrait) {
+    .section-bg {
+        margin-top: -19rem !important;
     }
 }
 
