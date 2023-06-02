@@ -9,14 +9,13 @@
         <div class="col-sm-12 col-md-6">
             <div class="card mb-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-between">
 
                         <div class="p-1 w-25">
-                            <h5 class="card-title">Services</h5>
+                            <h5 class="card-title align-middle m-auto">Services</h5>
                         </div>
-                        <div class="p-1 w-15">
-                        </div>
-                        <div class="p-1 ">
+                        <div class="p-1 d-flex" style="border-left: 1px solid;">
+                            <label class="" style="width: 75px; margin: auto;">Sort by</label>
                             <input type="text" class="form-control" placeholder="Search..." id="search-service-name"
                                 value="">
                         </div>
@@ -122,12 +121,18 @@
                                                 data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
                                                 data-image="{{ asset($service->image) }}"
                                                 data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
-                                                <td><img width="100" src="{{ asset($service->image) }}"
+                                                <td width="20%">
+                                                    <img width="100" height="100" src="{{ asset($service->image) }}"
                                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                        alt="..."></td>
+                                                        alt="..."
+                                                        class="rounded-3" style="object-fit: cover;">
+                                                </td>
 
-                                                <td dir="auto">{{ $service->name }}
-                                                    <p dir="auto">{{ $service->address_1 }}</p>
+                                                <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
+                                                    <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
+                                                    <p dir="auto" class="fw-bolder fw-4">{{ $service->address_1 }}</p>
+                                                    <div>
+                                                        <label class="fw-bold">4.0</label>
                                                     @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
                                                         <span
                                                             class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
@@ -146,14 +151,19 @@
                                                         <span class="bi bi-star"></span>
                                                         <span class="bi bi-star"></span>
                                                     @endif
+                                                    </div>
+
                                                 </td>
-                                                <td><small dir="auto">Occasion Type</small><br>
-                                                    @if ($service->occasion)
-                                                        @foreach ($service->occasion as $srv)
-                                                            <span
-                                                                class="badge bg-secondary">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
-                                                        @endforeach
-                                                    @endif
+                                                <td width="20%">
+                                                    <div dir="auto" class="fw-light">Occasion Type</div>
+                                                    <div class="fs-5 fw-light">
+                                                        @if ($service->occasion)
+                                                            @foreach ($service->occasion as $srv)
+                                                                <span
+                                                                    class="badge" style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -164,95 +174,7 @@
 
                         {{-- Paused --}}
                         <div class="tab-pane fade show" id="paused">
-                            <div class="p2">
-                                <hr>
-                                <table class="table w-100" id="myTable">
-                                    <thead>
-                                        <tr class="d-none">
-                                            <th scope="col">Image</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Occasion Type</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($services as $service)
-                                            <tr style="cursor: pointer;"
-                                                data-available-slot="{{ $service->availability_slot }}"
-                                                data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
-                                                data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
-                                                data-end-available-time="{{ Carbon\Carbon::parse($service->availability_time_out)->format('H:m') }}"
-                                                data-start-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('H:m') }}"
-                                                data-id="{{ $service->id }}"
-                                                data-description="{{ $service->description }}"
-                                                data-name="{{ $service->name }}"
-                                                data-location="{{ $service->address_1 ?? '' }}"
-                                                data-max-capacity="{{ $service->min_capacity }}"
-                                                data-min-capacity="{{ $service->max_capacity }}"
-                                                data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
-                                                data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
-                                                data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
-                                                @php $occasionHolder = '';
-                                            $paymentPlansHolder= '';
-                                            $imagesHolder = ''; @endphp
-                                                @if ($service->images) @foreach ($service->images as $image)
-                                        @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
-                                        @endforeach @endif
-                                                @if ($service->occasion) @foreach ($service->occasion as $srv)
-                                        @php $occasionHolder .= $srv->occasion ? $srv->occasion->name.',' : ''; @endphp
-                                        @endforeach @endif
-                                                @if ($service->occasionEventPrice) @foreach ($service->occasionEventPrice as $price)
-                                        @php $paymentPlansHolder .= $price->planType ? $price->id.'id'. $price->planType->name.':QAD '.number_format($price->service_price).',' : ''; @endphp
-                                        @endforeach @endif
-                                                data-payment-plans="{{ $paymentPlansHolder }}"
-                                                data-occasion-types="{{ $occasionHolder }}"
-                                                data-images="{{ $imagesHolder }}"
-                                                data-orders-count="{{ count($service->orders) }}"
-                                                data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
-                                                data-image="{{ asset($service->image) }}"
-                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
-                                                <td><img width="100" src="{{ asset($service->image) }}"
-                                                        onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                        alt="..."></td>
-
-                                                <td dir="auto">{{ $service->name }}
-                                                    <p dir="auto">{{ $service->address_1 }}</p>
-                                                    @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 2 ? 'checked' : '' }}"></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 3 ? 'checked' : '' }}"></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 4 ? 'checked' : '' }}"></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 5 ? 'checked' : '' }}"></span>
-                                                    @else
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                    @endif
-                                                </td>
-                                                <td><small dir="auto">Occasion Type</small><br>
-                                                    @if ($service->occasion)
-                                                        @foreach ($service->occasion as $srv)
-                                                            <span
-                                                                class="badge bg-secondary">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
-                                                        @endforeach
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        {{-- Saved --}}
-                        <div class="tab-pane fade show" id="saved">
-                            <div class="p2">
+                          <div class="p2">
                                 <hr>
                                 <table class="table w-100" id="myTable">
                                     <thead>
@@ -298,12 +220,15 @@
                                                 data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
                                                 data-image="{{ asset($service->image) }}"
                                                 data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
-                                                <td><img width="100" src="{{ asset($service->image) }}"
+                                                <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                        alt="..."></td>
+                                                        alt="..." style="border-radius: 5px; object-fit: cover;"></td>
 
-                                                <td dir="auto">{{ $service->name }}
+                                                <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
+                                                    <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
                                                     <p dir="auto">{{ $service->address_1 }}</p>
+                                                    <div>
+                                                        <label class="fw-bold">4.0</label>
                                                     @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
                                                         <span
                                                             class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
@@ -322,14 +247,115 @@
                                                         <span class="bi bi-star"></span>
                                                         <span class="bi bi-star"></span>
                                                     @endif
+                                                    </div>
+
                                                 </td>
-                                                <td><small dir="auto">Occasion Type</small><br>
-                                                    @if ($service->occasion)
-                                                        @foreach ($service->occasion as $srv)
-                                                            <span
-                                                                class="badge bg-secondary">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
-                                                        @endforeach
+                                                <td width="20%">
+                                                    <div dir="auto" class="fw-light">Occasion Type</div>
+                                                    <div class="fs-5 fw-light">
+                                                        @if ($service->occasion)
+                                                            @foreach ($service->occasion as $srv)
+                                                                <span
+                                                                    class="badge" style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {{-- Saved --}}
+                        <div class="tab-pane fade show" id="saved">
+                           <div class="p2">
+                                <hr>
+                                <table class="table w-100" id="myTable">
+                                    <thead>
+                                        <tr class="d-none">
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Occasion Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($services as $service)
+                                            <tr style="cursor: pointer;"
+                                                data-available-slot="{{ $service->availability_slot }}"
+                                                data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
+                                                data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
+                                                data-end-available-time="{{ Carbon\Carbon::parse($service->availability_time_out)->format('H:m') }}"
+                                                data-start-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('H:m') }}"
+                                                data-id="{{ $service->id }}"
+                                                data-description="{{ $service->description }}"
+                                                data-name="{{ $service->name }}"
+                                                data-location="{{ $service->address_1 ?? '' }}"
+                                                data-max-capacity="{{ $service->min_capacity }}"
+                                                data-min-capacity="{{ $service->max_capacity }}"
+                                                data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
+                                                data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
+                                                data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
+                                                @php $occasionHolder = '';
+                                                $paymentPlansHolder= '';
+                                                $imagesHolder = ''; @endphp
+                                                @if ($service->images) @foreach ($service->images as $image)
+                                            @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
+                                            @endforeach @endif
+                                                @if ($service->occasion) @foreach ($service->occasion as $srv)
+                                            @php $occasionHolder .= $srv->occasion ? $srv->occasion->name.',' : ''; @endphp
+                                            @endforeach @endif
+                                                @if ($service->occasionEventPrice) @foreach ($service->occasionEventPrice as $price)
+                                            @php $paymentPlansHolder .= $price->planType ? $price->id.'id'. $price->planType->name.':QAD '.number_format($price->service_price).',' : ''; @endphp
+                                            @endforeach @endif
+                                                data-payment-plans="{{ $paymentPlansHolder }}"
+                                                data-occasion-types="{{ $occasionHolder }}"
+                                                data-images="{{ $imagesHolder }}"
+                                                data-orders-count="{{ count($service->orders) }}"
+                                                data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
+                                                data-image="{{ asset($service->image) }}"
+                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
+                                                <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
+                                                        onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
+                                                        alt="..." style="border-radius: 5px; object-fit: cover;"></td>
+
+                                                <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
+                                                    <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
+                                                    <p dir="auto">{{ $service->address_1 }}</p>
+                                                    <div>
+                                                        <label class="fw-bold">4.0</label>
+                                                    @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 2 ? 'checked' : '' }}"></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 3 ? 'checked' : '' }}"></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 4 ? 'checked' : '' }}"></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 5 ? 'checked' : '' }}"></span>
+                                                    @else
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
                                                     @endif
+                                                    </div>
+
+                                                </td>
+                                                <td width="20%">
+                                                    <div dir="auto" class="fw-light">Occasion Type</div>
+                                                    <div class="fs-5 fw-light">
+                                                        @if ($service->occasion)
+                                                            @foreach ($service->occasion as $srv)
+                                                                <span
+                                                                    class="badge" style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -366,16 +392,24 @@
                                         onchange="document.getElementById('edit-featured-service-image-view').src = window.URL.createObjectURL(this.files[0])"
                                         id="edit-featured-service-image-file" accept="image/png, image/gif, image/jpeg"
                                         type="file" class="d-none" name="featured_image">
-                                    <img class="edit-trigger-display" id="image-display-view" width="100"
+                                    <img 
+                                    class="edit-trigger-display rounded rounded-3" 
+                                    id="image-display-view" 
+                                    width="200"
+                                     height="200" 
                                         src=""
                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                        alt="...">
+                                        alt="..."
+                                        style="object-fit: cover;"
+                                        >
                                 </div>
                                 <div class="p-2 bd-highlight">
                                     <div class="d-flex flex-row bd-highlight mb-3">
-                                        <div class="p-2 bd-highlight"><span id="service-no-of-orders">0</span> Orders
+                                        <div class="p-2 bd-highlight border rounded-2 fw-bold fs-4" style="background-color: #d3d3d3;">
+                                            <span id="service-no-of-orders">0</span> Orders
                                         </div>
                                         <div class="p-2 bd-highlight">
+                                            <label class="fw-bolder fs-4">4.0</label>
                                             <span class="bi bi-star" id="service-ratings-1"></span>
                                             <span class="bi bi-star" id="service-ratings-2"></span>
                                             <span class="bi bi-star" id="service-ratings-3"></span>

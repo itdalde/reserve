@@ -38,7 +38,7 @@
                         <img class="ml-15px "
                             src="{{ Request::is('service*') ? asset('assets/images/icons/Services Outline active.svg') : asset('assets/images/icons/Services Outline.svg') }}"
                             alt="....">
-                        Service
+                        Services
                     </a>
                 </li>
                 <li class="nav-item py-2">
