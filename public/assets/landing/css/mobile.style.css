@@ -3,6 +3,10 @@
     section {
         padding-top: 0;
     }
+
+    #about {
+        margin-top: 60px !important;
+    }
     
     /* About ---------- */
     .about .content h3 {
@@ -30,7 +34,7 @@
     }
 
     .about .apps-store {
-        margin-top: 21rem !important;
+        margin-top: 19rem !important;
     }
 
     /* Portfolio ----------  */
@@ -57,7 +61,7 @@
 
     .about .homepage-banner {
         margin-left: unset;
-        margin-top: 3rem !important;
+        margin-top: 1rem !important;
     }
 
     .section-bg {
@@ -157,9 +161,16 @@
         position: absolute;
         top: 6rem;
     }
+
+    .apps-store {
+        margin-top: 16rem !important;
+    }
 }
 
 @media (1024px <=width <=1200px) and (orientation: landscape) {
+
+   
+
     .about .content h3 {
         font-size: 34px;
     }
@@ -184,6 +195,10 @@
 
 
 @media (1200px <= width <= 1400px) and (orientation: landscape) {
+    .apps-store {
+        margin-top: 19rem !important;
+    }
+
     .about .content h3 {
         font-size: 40px;
     }
