@@ -58,9 +58,6 @@ form.sign-up-form {
 
 form.sign-in-form {
     z-index: 2;
-    width: 80% !important;
-}
-.signin-p1 .sign-in-form {
 }
 
 .title {
@@ -72,7 +69,7 @@ form.sign-in-form {
 .input-field {
     border-radius: 1px;
     border: 2px solid #CCCCCC;
-/*    max-width: 380px;*/
+    max-width: 440px;
     width: 100%;
     margin: 10px 0;
     height: 55px;
@@ -82,9 +79,9 @@ form.sign-in-form {
     padding: 0 0.4rem;
     position: relative;
 }
-.signin-p1.sign-in-form {
-    width: 80%;
-}
+
+
+.sign-up-form .input-field .form-control,
 .signin-p1.sign-in-form .input-field .form-control:focus {
     color: unset !important;
     background-color: unset !important;
@@ -341,10 +338,13 @@ form.sign-in-form {
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
+.signup-p1 .signup-container {
+    margin-right: 5px;
+}
 
 .signup-p1 .signup-container::-webkit-scrollbar
 {
-	width: 12px;
+	width: 3px;
 	background-color: #F5F5F5;
 }
 
