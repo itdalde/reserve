@@ -38,7 +38,7 @@
   "exception.unauthenticated": "Unauthenticated.",
   "**************************** Login Form ********************": "Login Form i18n",
   "views.auth.login.header": "Log in form",
-  "views.auth.login.input_0": "E-Mail address",
+  "views.auth.login.input_0": "Email Address",
   "views.auth.login.input_1": "Password",
   "views.auth.login.input_2": "Remember Me",
   "views.auth.login.action_0": "Log in",

@@ -50,7 +50,7 @@
                                 <div class="input-field">
                                     <i class="bi bi-person-circle"></i>
                                     <input type="email" class="form-control" name="email"
-                                        value="{{ old('email') }}" placeholder="{{ __('login.E-Mail address') }}"
+                                        value="{{ old('email') }}" placeholder="Email Address"
                                         required autofocus>
                                 </div>
                                 <div class="input-field">
