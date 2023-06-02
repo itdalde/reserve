@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\WhatsAppApiController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\OccasionController;
 use App\Http\Controllers\TransactionController;
+use App\Models\PaymentMethod;
 use Illuminate\Support\Facades\Route;
 use LaravelApi\Facade as Api;
 
@@ -142,6 +143,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'occasion-events', 'middleware' => ['cors']], function() {
         Api::get('/from-to-date', [OccasionEventsApiController::class, 'getOccasionEventsByFromToDate'])
             ->addTag('Occasions Events')
+            ->addFormDataParameter('occasion_event_id', '', true  )
+            ->addFormDataParameter('date_from', '', true  )
+            ->addFormDataParameter('date_to', '', true  )
             ->setDescription('getOccasionEventsByFromToDate')
             ->setProduces(['application/json']);
         Api::get('/service-type/{id}', [OccasionEventsApiController::class, 'getOccasionByServiceType'])
@@ -208,6 +212,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
         Api::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])
             ->addTag('Cart')
+            ->addFormDataParameter('user_id', '', true  )
+            ->addFormDataParameter('cart', '', true  )
             ->setDescription('addServiceToCart')
             ->setProduces(['application/json']);
         Api::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])
@@ -240,10 +246,13 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'order', 'middleware' => ['cors']], function() {
         Api::post('/{order_id}/timeline/{timeline}', [OrderApiController::class, 'updateTimelineForOrder'])
             ->addTag('Order')
+            ->addFormDataParameter('timeline', '', true  )
+            ->addFormDataParameter('order_id', '', true  )
             ->setDescription('updateTimelineForOrder')
             ->setProduces(['application/json']);
         Api::post('/{order_id}/status/{status}', [OrderApiController::class, 'getOrderByReferenceNo'])
             ->addTag('Order')
+            ->addFormDataParameter('reference_no', '', true  )
             ->setDescription('getOrderByReferenceNo')
             ->setProduces(['application/json']);
         Api::get('/{reference_no}', [OrderApiController::class, 'getOrderByReferenceNo'])
@@ -267,7 +276,13 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'payment-method', 'middleware' => ['cors']], function() {
         Api::post('/', [PaymentMethodApiController::class, 'savePaymentMethod'])
             ->addTag('Payment Method')
-            ->setDescription('savePaymentMethod')
+            ->addFormDataParameter('payment_method["card_type"]', 'This is ', true )
+            ->addFormDataParameter('payment_method["name"]', '', true )
+            ->addFormDataParameter('payment_method["expiry_date"]', '', true )
+            ->addFormDataParameter('payment_method["last_four_digit"]', '', true )
+            ->addFormDataParameter('payment_method["cvv"]', '', true )
+            ->addFormDataParameter('payment_method["is_active"]', '', true )
+            ->setDescription('savePaymentMethod this is not testable')
             ->setProduces(['application/json']);
         Api::get('/{payment_method_id}', [PaymentMethodApiController::class, 'getPaymentMethodById'])
             ->addTag('Payment Method')
@@ -278,7 +293,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'locations', 'middleware' => ['cors']], function() {
         Api::post('/', [LocationApiController::class, 'addLocation'])
             ->addTag('Locations')
-            ->setDescription('addLocation')
+            ->addFormDataParameter('location["user_id"]', '', true )
+            ->addFormDataParameter('location["address"]', '', true )
+            ->addFormDataParameter('location["default"]', '', true )
+            ->setDescription('addLocation  this is not testable')
             ->setProduces(['application/json']);
         Api::get('/user/{user_id}', [LocationApiController::class, 'getLocations'])
             ->addTag('Locations')
@@ -293,17 +311,28 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'user', 'middleware' => ['cors']], function() {
         Api::put('/{user_id}', [UserApiController::class, 'updateUser'])
             ->addTag('User')
-            ->setDescription('updateUser')
+            ->addFormDataParameter('user["first_name"]', '', true )
+            ->addFormDataParameter('user["last_name"]', '', true )
+            ->addFormDataParameter('user["fcm_token"]', '', true )
+            ->addFormDataParameter('user["location"]', '', true )
+            ->addFormDataParameter('user["phone_number"]', '', true )
+            ->addFormDataParameter('user["email"]', '', true )
+            ->addFormDataParameter('user["gender"]', '', true )
+            ->addFormDataParameter('user["birth_date"]', '', true )
+            ->setDescription('updateUser this is not testable')
             ->setProduces(['application/json']);
         Api::put('/profile-image/{user_id}', [UserApiController::class, 'updateProfilePicture'])
             ->addTag('User')
-            ->setDescription('updateProfilePicture')
+            ->addFormDataParameter('user_id', '', true )
+            ->addFormDataParameter('profile_picture', '', true )
+            ->setDescription('updateProfilePicture this is not testable')
             ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
         Api::post('/', [PaymentApiController::class, 'processPayment'])
             ->addTag('Payments')
+            ->addFormDataParameter('user_id', '', true )
             ->setDescription('processPayment')
             ->setProduces(['application/json']);
         Api::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])

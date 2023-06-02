@@ -15,7 +15,7 @@ class PaymentMethodApiController extends Controller
 
         $paymentMethod = PaymentMethod::where('id', $request->payment_method_id)->first();
 
-        return sendResponse($paymentMethod, 'Payment method with id '. $request->id);
+        return sendResponse($paymentMethod, 'Payment method with id '. $request->payment_method_id);
     }
 
     public function savePaymentMethod(Request $request) {
