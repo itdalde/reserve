@@ -36,7 +36,7 @@
 <body data-aos-once="false">
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top d-flex align-items-center">
-        <div class="container d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
 
             <div class="logo me-auto">
                 <a href="/"><img src="{{ asset('assets/landing/img/logo-black.png') }}" alt=""
@@ -283,12 +283,12 @@
                                     {{ __('home.Download a World of Hospitality') }}</h3>
                             </div>
                             <div class="p-2">
-                                <div class="d-flex flex-row">
-                                    <a class="p-2 m-2" href="https://apps.apple.com/">
+                                <div class="d-flex flex-row app-icons">
+                                    <a class="" href="https://apps.apple.com/">
                                         <img src="{{ asset('assets/landing/img/App Store.png') }}"
                                             alt="App Store.png">
                                     </a>
-                                    <a class="p-2 m-2" href="https://play.google.com/store/apps">
+                                    <a class="" href="https://play.google.com/store/apps">
                                         <img src="{{ asset('assets/landing/img/Google Play.png') }}"
                                             alt="Google Play.png">
                                     </a>

@@ -29,6 +29,10 @@
         margin-top: -8rem;
     }
 
+    .about .apps-store {
+        margin-top: 21rem !important;
+    }
+
     /* Portfolio ----------  */
     .icon-box img {
         padding-bottom: 15px;
@@ -73,6 +77,18 @@
 
     .portfolio .section-title {
         padding-bottom: 0;
+    }
+
+    .contact .app-icons {
+        justify-content: center !important;
+    }
+
+    .contact .app-icons a {
+        padding: unset !important;
+    }
+
+    .contact .app-icons a:last-child {
+        padding-left: 8px !important;
     }
 }
 
