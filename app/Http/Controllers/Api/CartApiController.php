@@ -22,7 +22,6 @@ class CartApiController extends Controller
     //
 
 
-
     public function addServiceToCart(Request $request)
     {
         $data = $request->cart;
@@ -144,6 +143,18 @@ class CartApiController extends Controller
             return sendResponse('There is no item in your cart', 'Unable to place an order');
         }
 
+        foreach ($data['items'] as $k => $item) {
+            $event = OccasionEvent::where('id', $item['service_id'])->first();
+            if (!$event) {
+                unset($data['items'][$k]);
+            }
+            if ($event->active == 0) {
+                unset($data['items'][$k]);
+            }
+        }
+        if (count($data['items']) == 0) {
+            return sendResponse('Items are inactive', 'Unable to place an order');
+        }
         $order = new Order();
         $order->cart_id = $request->cart_id;
         $order->user_id = $request->user_id;
@@ -166,21 +177,23 @@ class CartApiController extends Controller
             $event = OccasionEvent::where('id', $item['service_id'])
                 ->first();
 
-            $cartItem = CartItem::where('cart_id', $request->cart_id)
-                ->where('service_id', $item['service_id'])->where('status', 'active')->first();
+            if ($event && $event->active) {
+                $cartItem = CartItem::where('cart_id', $request->cart_id)
+                    ->where('service_id', $item['service_id'])->where('status', 'active')->first();
 
-            $orderItems = new OrderItems();
-            $orderItems->order_id = $order->id;
-            $orderItems->service_id = $item['service_id'];
-            $orderItems->schedule_start_datetime = $cartItem->schedule_start_datetime;
-            $orderItems->schedule_end_datetime = $cartItem->schedule_end_datetime;
-            $orderItems->guests = $cartItem->guests;
-            $orderItems->status = ($serviceTotalOrder + 1) > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'accepted');
-            $orderItems->is_custom = $cartItem->is_custom;
-            $orderItems->save();
+                $orderItems = new OrderItems();
+                $orderItems->order_id = $order->id;
+                $orderItems->service_id = $item['service_id'];
+                $orderItems->schedule_start_datetime = $cartItem->schedule_start_datetime;
+                $orderItems->schedule_end_datetime = $cartItem->schedule_end_datetime;
+                $orderItems->guests = $cartItem->guests;
+                $orderItems->status = ($serviceTotalOrder + 1) > $event['availability_slot'] ? 'pending' : ((bool)$cartItem->is_custom ? 'pending' : 'accepted');
+                $orderItems->is_custom = $cartItem->is_custom;
+                $orderItems->save();
 
-            $cartItem->status = 'ordered';
-            $cartItem->save();
+                $cartItem->status = 'ordered';
+                $cartItem->save();
+            }
         }
 
         $cart->active = 0;
