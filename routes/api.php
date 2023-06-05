@@ -167,6 +167,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
             ->addTag('Services')
             ->setDescription('getServices')
             ->setProduces(['application/json']);
+        Api::get('/check_status/{id}', [ServiceTypesApiController::class, 'checkStatusById'])
+            ->addTag('Services')
+            ->setDescription('checkStatusById')
+            ->setProduces(['application/json']);
         Api::get('/{occasion_type_id}', [ServiceTypesApiController::class, 'getServicesByOccasionId'])
             ->addTag('Services')
             ->setDescription('getServicesByOccasionType')

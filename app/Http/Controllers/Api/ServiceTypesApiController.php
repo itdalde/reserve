@@ -23,6 +23,21 @@ class ServiceTypesApiController extends Controller
         $serviceTypes = ServiceType::where('active', 1)->get(['id', 'name', 'active']);
         return sendResponse($serviceTypes, "Service types");
     }
+    /**
+     * @return JsonResponse
+     */
+    public function checkStatusById(Request $request, $id): JsonResponse
+    {
+        $response = [
+            'is_active' => false,
+        ];
+        $service = OccasionEvent::where('id', $id)->first();
+        if($service && $service->active == 1) {
+            $response['is_active'] = true;
+        }
+        return sendResponse($response, "Service status");
+    }
+
 
     public function getService(Request $request, $service_type_id)
     {
