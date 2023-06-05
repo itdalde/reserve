@@ -43,7 +43,7 @@ class OrderApiController extends Controller
         {
             $order['total_paid'] = GeneralHelper::orderBalance($order->id, 'paid');
             $order['balance'] = GeneralHelper::orderBalance($order->id, 'pending');
-            
+
             $osPending = OrderSplit::where('status', 'pending')->first();
             $order['payment_details'] = $osPending ? PaymentDetails::where('reference_no', $osPending->reference_no)->orderBy('created_at', 'desc')->first() : null;
         }
@@ -58,6 +58,6 @@ class OrderApiController extends Controller
 
     public function executeCommand(Request $request)
     {
-        return sendResponse('For Command', 'For Command');   
+        return sendResponse('For Command', 'For Command');
     }
 }
