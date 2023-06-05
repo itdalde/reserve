@@ -50,7 +50,7 @@
                                 <div class="input-field">
                                     <i class="bi bi-person-circle"></i>
                                     <input type="email" class="form-control" name="email"
-                                        value="{{ old('email') }}" placeholder="{{ __('login.E-Mail address') }}"
+                                        value="{{ old('email') }}" placeholder="Email Address"
                                         required autofocus>
                                 </div>
                                 <div class="input-field">
@@ -354,25 +354,27 @@
 
             function onCLickSignUp() {
                 $('#sign-up-btn').click();
-                $('.sign-in-form').removeClass('show').addClass('hide')
+                
                 setTimeout(function() {
+                    $('.sign-in-form').removeClass('show').addClass('hide')
                     $('.sign-up-form').addClass('show').removeClass('hide');
-                }, 500);
+                }, 1200);
             }
 
             $('body').on('click', '#sign-up-btn', function(e) {
-                $('.sign-in-form').removeClass('show').addClass('hide')
+
                 setTimeout(function() {
+                    $('.sign-in-form').removeClass('show').addClass('hide')
                     $('.sign-up-form').addClass('show').removeClass('hide')
 
-                }, 500);
+                }, 1200);
             });
 
             $('body').on('click', '#sign-in-btn', function(e) {
-                $('.sign-up-form').removeClass('show').addClass('hide')
                 setTimeout(function() {
+                    $('.sign-up-form').removeClass('show').addClass('hide')
                     $('.sign-in-form').addClass('show').removeClass('hide')
-                }, 500);
+                }, 1200);
             });
             $(".toggle-password").click(function() {
 

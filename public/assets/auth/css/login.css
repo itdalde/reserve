@@ -67,9 +67,10 @@ form.sign-in-form {
 }
 
 .input-field {
-    max-width: 380px;
+    border-radius: 1px;
+    border: 2px solid #CCCCCC;
+    max-width: 440px;
     width: 100%;
-    background-color: #f0f0f0;
     margin: 10px 0;
     height: 55px;
     border-radius: 3px;
@@ -77,6 +78,16 @@ form.sign-in-form {
     grid-template-columns: 15% 85%;
     padding: 0 0.4rem;
     position: relative;
+}
+
+
+.sign-up-form .input-field .form-control,
+.signin-p1.sign-in-form .input-field .form-control:focus {
+    color: unset !important;
+    background-color: unset !important;
+    border-color: unset !important;
+    outline: unset !important;
+    box-shadow: unset !important;
 }
 
 .input-field i {
@@ -163,7 +174,7 @@ form.sign-in-form {
 .container-fluid:before {
     content: "";
     position: absolute;
-    height: 2000px;
+    height: 3000px;
     width: 2000px;
     top: -10%;
     right: 50% !important;
@@ -327,10 +338,13 @@ form.sign-in-form {
 	border-radius: 10px;
 	background-color: #F5F5F5;
 }
+.signup-p1 .signup-container {
+    margin-right: 5px;
+}
 
 .signup-p1 .signup-container::-webkit-scrollbar
 {
-	width: 12px;
+	width: 3px;
 	background-color: #F5F5F5;
 }
 
