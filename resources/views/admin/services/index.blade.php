@@ -14,10 +14,19 @@
                         <div class="p-1 w-25">
                             <h5 class="card-title align-middle m-auto">Services</h5>
                         </div>
-                        <div class="p-1 d-flex" style="border-left: 1px solid;">
-                            <label class="" style="width: 75px; margin: auto;">Sort by</label>
-                            <input type="text" class="form-control" placeholder="Search..." id="search-service-name"
-                                value="">
+                        <div class="p-1 d-flex">
+                            <div class="d-flex justify-content-between">
+                                <div class="separator " style="border-left: 2px solid #ccc;
+                                                        width: 1px;
+                                                        height: 30px!important;
+                                                        margin: auto 0;"></div>
+                                <div class="d-flex ps-4">
+                                    <label class="" style="width: 75px; margin: auto;">Sort by</label>
+                                    <input type="text" class="form-control" placeholder="Search..." id="search-service-name"
+                                        value="">
+                                </div>    
+                            </div>
+                            
                         </div>
                         <div class="p-1 d-none">
                             <div class="dropdown">
@@ -128,31 +137,40 @@
                                                         class="rounded-3" style="object-fit: cover;">
                                                 </td>
 
-                                                <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
-                                                    <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
-                                                    <p dir="auto" class="fw-bolder fw-4">{{ $service->address_1 }}</p>
-                                                    <div>
-                                                        <label class="fw-bold">4.0</label>
-                                                    @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 2 ? 'checked' : '' }}"></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 3 ? 'checked' : '' }}"></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 4 ? 'checked' : '' }}"></span>
-                                                        <span
-                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 5 ? 'checked' : '' }}"></span>
-                                                    @else
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                        <span class="bi bi-star"></span>
-                                                    @endif
+                                                <td dir="auto" width="60%">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div>
+                                                        <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
+                                                        <p dir="auto" class="fw-bolder fw-4">{{ $service->address_1 }}</p>
+                                                        <div>
+                                                            <label class="fw-bold">4.0</label>
+                                                        @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
+                                                            <span
+                                                                class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
+                                                            <span
+                                                                class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 2 ? 'checked' : '' }}"></span>
+                                                            <span
+                                                                class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 3 ? 'checked' : '' }}"></span>
+                                                            <span
+                                                                class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 4 ? 'checked' : '' }}"></span>
+                                                            <span
+                                                                class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 5 ? 'checked' : '' }}"></span>
+                                                        @else
+                                                            <span class="bi bi-star"></span>
+                                                            <span class="bi bi-star"></span>
+                                                            <span class="bi bi-star"></span>
+                                                            <span class="bi bi-star"></span>
+                                                            <span class="bi bi-star"></span>
+                                                        @endif
+                                                        </div>
+                                                        </div>
+                                                        <div class="separator h-100 w-10" style="border-right: 2px solid #ccc;
+                                                            width: 47px;
+                                                            height: 86px!important;
+                                                            margin: auto 0;">
+                                                            
+                                                        </div>
                                                     </div>
-
                                                 </td>
                                                 <td width="20%">
                                                     <div dir="auto" class="fw-light">Occasion Type</div>
@@ -375,6 +393,27 @@
                             enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex flex-column bd-highlight mb-3">
+                                <div class="d-flex justify-content-between">
+                                    {{-- ICON --}}
+                                    <div>
+                                        {{-- if status us paused --}}
+                                  {{--       <i class="bi bi-info-circle icon-info"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Please pause this service to access the edit option"
+                                        ></i> --}}
+
+                                        <p class="bg-warning text-white px-4">This service has been paused</p>
+                                       
+                                    </div>
+
+                                    {{-- ACTION --}}
+                                    <div class="">
+                                        <button type="button" class="btn btn-sm btn-warning text-white px-5" data-id="paused" id="paused-service-action" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Pause</button>
+                                        <button type="button" class="btn btn-sm btn-danger text-white px-5">Delete</button>
+                                    </div>
+                                </div>
+
+
                                 <div class="p-2 bd-highlight ">
                                     <h2 class="service-title edit-trigger-display"></h2>
                                     <input dir="auto" name="service_name" id="edit-service-title-input"
@@ -416,8 +455,8 @@
                                             <span class="bi bi-star" id="service-ratings-4"></span>
                                             <span class="bi bi-star" id="service-ratings-5"></span>
                                         </div>
-                                        <div class="p-2 bd-highlight">
-                                            <a href="#" class="see-reviews-link"> See Reviews</a>
+                                        <div class="p-2 bd-highlight" style="height: 100%; margin: auto 0;">
+                                            <a href="#" class="see-reviews-link text-decoration-underline"> See Reviews</a>
                                             <input type="hidden" name="id" id="service-id">
                                             <a href="#" class="show-order-details-link d-none"> Show order
                                                 details</a>
@@ -735,6 +774,21 @@
             $('#new-service-modal').on('hidden.bs.modal', function() {
                 generateReviewList();
             })
+
+            $('#paused-service-action').on('click', function() {
+                let status = $(this).attr('data-id');
+                let modalBody = 'Are you sure you want to pause this service?'
+                let modalTitle = '<i class="bi bi-info-circle icon-info text-warning"></i> Paused ?'
+                if (status == 'paused') {
+                    modalBody = 'Are you sure you want to resume this service?'
+                    modalTitle = '<i class="bi bi-info-circle icon-info text-success"></i> Resume ?'
+                }
+
+                $('#pause-service-modal .modal-title').html(modalTitle);
+                $('#pause-service-modal .modal-body').html(modalBody);
+
+                
+            });
 
             function generateReviewList(sort = 'DESC') {
                 $.ajax({

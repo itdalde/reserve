@@ -518,4 +518,24 @@
             </div>
         </div>
     </div>
+
+
+    {{-- Paused Service Modal --}}
+    <div class="modal fade" id="pause-service-modal" tabindex="-1" aria-labelledby="pause-service-modal" data-id="paused-modal" data-bs-backdrop="static" data-bs-keyboard="false" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel"></h5>
+            
+          </div>
+          <div class="modal-body">
+            Are you sure you want to pause this service?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-warning text-white">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
 @endif
