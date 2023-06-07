@@ -140,7 +140,7 @@ class CartApiController extends Controller
             ->first();
 
         if ($cart == null) {
-            return sendResponse('There is no item in your cart', 'Unable to place an order');
+            return sendError('There is no item in your cart', 'Unable to place an order');
         }
 
         foreach ($data['items'] as $k => $item) {
@@ -153,7 +153,7 @@ class CartApiController extends Controller
             }
         }
         if (count($data['items']) == 0) {
-            return sendResponse('Items are inactive', 'Unable to place an order');
+            return sendError('Items are inactive', 'Unable to place an order');
         }
         $order = new Order();
         $order->cart_id = $request->cart_id;
