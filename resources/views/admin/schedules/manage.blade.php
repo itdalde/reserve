@@ -30,22 +30,9 @@
                         <label class="d-flex ms-3"><i class="bg-danger rounded-circle me-1 m-auto"
                                 style="display: inline-block; width: 16px; height: 16px;"
                                 aria-hidden="true"></i>Unavailable</label>
-                        <label class="border rounded-circle"
-                            style="width: 20px;
-                        height: 20px;
-                        text-align: center;
-                        align-items: center;
-                        display: flex;
-                        justify-content: center;
-                        font-style: italic;
-                        margin-left: 10px;
-                        margin-top: 2px;
-                        font-weight: 700;
-                        "
-                            data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Dates without availability set are considered as available days">
-                            i
-                        </label>
+                         <i class="bi bi-info-circle icon-info"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            title="Dates without availability set are considered as available days"></i>
                     </div>
                     <div id='calendar'></div>
                 </div>
