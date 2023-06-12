@@ -79,7 +79,7 @@
                                 <button class="nav-link" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved"
                                         type="button" role="tab" aria-controls="saved" aria-selected="true">Saved</button>
                             </li>
-                            <li class="nav-item d-none">
+                            <li class="nav-item ">
                                 <button class="nav-link" id="deleted-tab" data-bs-toggle="tab" data-bs-target="#deleted"
                                         type="button" role="tab" aria-controls="deleted" aria-selected="true">Deleted</button>
                             </li>
