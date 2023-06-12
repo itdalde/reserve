@@ -16,7 +16,7 @@ handle all the work for you. Let us
 take the stress out of planning and
 leave you free to enjoy your
 occasion.',
-    'how_it_works' => 'How it works',
+    'how_it_works' => 'How It Works',
     'card1' => 'Experience Unmatched Services for Every Occasion!',
     'card1_body' => 'Whether it is a single service or an occasion search and plan what you need in the palm of your hand. Request what you need and we will work with the vendors on your behalf.',
     'card2' => 'Simplicity and Efficiency with an Easy-to-use app',

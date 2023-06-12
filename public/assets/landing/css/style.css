@@ -463,14 +463,19 @@ section {
 }
 
 .section-bg {
-  background-image: url("../img/banner-background.png");
+  /* background-image: url("../img/banner-background.png"); */
   background-size: 100% 100%;
   background-repeat: no-repeat, repeat;
   padding-bottom: 130px;
-  padding-top: 90px;
   width: 100%;
-  margin-top: -7.3rem;
   position: relative;
+  background-color: #F6E9DF;
+  padding-top: 0;
+}
+
+.about-buttom-img {
+  position: relative;
+  margin-top: -130px;
 }
 
 .service-section-title {

@@ -129,6 +129,9 @@
                     </div>
                 </div>
             </div>
+            <div class="about-buttom-img">
+                <img src="{{ asset('assets/landing/img/bg-top.png') }}" alt="..." class="w-100 aos-item" data-aos-mirror="true" data-aos="fade-up">
+            </div>
         </section><!-- End About Section -->
 
         <!-- ======= Services Section ======= -->
@@ -136,7 +139,7 @@
             <div class="container">
 
                 <div class="section-title aos-item" data-aos-mirror="true" data-aos="fade-up" data-aos-once="false"
-                    style="margin-top: 8em;">
+                    style="margin-top: 5em; margin-bottom: 2em;">
                     <h3> {{ __('home.how_it_works') }}</h3>
                 </div>
 
