@@ -327,4 +327,19 @@ class ServiceController extends Controller
     {
         //
     }
+
+    // 0 - Saved, 1 - Published, 2 - Delete (soft delete)
+    public function pausedService(Request $request, $id) {
+        $event = OccasionEvent::where('id', $id)->first();
+        $event->active = 2; // paused 
+        $event->save();
+        return response()->json('Service is paused', 'Updated');
+    }
+
+    public function resumeService(Request $request, $id) {
+     $event = OccasionEvent::where('id', $id)->first();
+        $event->active = 1; // resume
+        $event->save();
+        return response()->json('Service is resume', 'Updated');   
+    }
 }
