@@ -1,4 +1,11 @@
+@media only screen and (width: 320px) {
+    .about .about-buttom-img {
+        padding-top: 15.6rem !important;
+    }
+}
+
 @media (320px <=width <=480px) and (orientation: portrait) {
+
     /* Section */
     section {
         padding-top: 0;
@@ -7,7 +14,7 @@
     #about {
         margin-top: 60px !important;
     }
-    
+
     /* About ---------- */
     .about .content h3 {
         font-size: 23px;
@@ -56,27 +63,33 @@
     }
 
     .about {
-        padding-bottom: 11rem;
+        /* padding-bottom: 11rem; */
     }
 
     .about .homepage-banner {
         margin-left: unset;
-        margin-top: 1rem !important;
+        margin-top: 2rem !important;
     }
 
     .section-bg {
-        margin-top: -25rem;
+        /* margin-top: -25rem; */
         background-size: 2000vw 100%;
-/*        margin-bottom: -5rem !important;*/
+        /*        margin-bottom: -5rem !important;*/
         padding-bottom: 30px;
+        margin-top: -1px;
     }
+
+    .about .about-buttom-img {
+        padding-top: 18rem;
+    }
+
     .section-bg .container {
-        margin-top: 24rem;
-/*        padding-top: 11rem;*/
+        margin-top: 4rem;
+        /*        padding-top: 11rem;*/
     }
 
     #services .section-title h3 {
-/*        margin-top: 16rem;*/
+        /*        margin-top: 16rem;*/
     }
 
     .portfolio .section-title {
@@ -99,8 +112,13 @@
 
 @media (481px <=width <=768px) and (orientation: portrait) {
     .about {
-        padding-bottom: 16.7rem
+        /* padding-bottom: 16.7rem */
     }
+
+    .about-buttom-img {
+        margin-top: 32px;
+    }
+
     .about .content h3 {
         font-size: 34px;
     }
@@ -136,7 +154,15 @@
     }
 
     #services .section-title h3 {
-        margin-top: 14rem;
+        margin-top: 0rem;
+    }
+
+    #portfolio {
+        padding-top: 10rem;
+    }
+
+    .about .homepage-banner {
+        margin: 3rem auto !important;
     }
 
 }
@@ -169,7 +195,7 @@
 
 @media (1024px <=width <=1200px) and (orientation: landscape) {
 
-   
+
 
     .about .content h3 {
         font-size: 34px;
@@ -185,16 +211,20 @@
     }
 
     .section-bg {
-        margin-top: -14rem;
+        margin-top: 0;
     }
 
     .about .top-panel {
         margin-top: -2rem;
     }
+
+    .about-buttom-img {
+        margin-top: -180px;
+    }
 }
 
 
-@media (1200px <= width <= 1400px) and (orientation: landscape) {
+@media (1200px <=width <=1400px) and (orientation: landscape) {
     .apps-store {
         margin-top: 19rem !important;
     }
@@ -202,8 +232,9 @@
     .about .content h3 {
         font-size: 40px;
     }
+
     .section-bg {
-        margin-top: -9rem;
+        margin-top: 0;
     }
 }
 
@@ -265,36 +296,37 @@
     }
 }
 
-@media (768px <= width <= 992px) {
-  section {
-    overflow: visible;
-  }
-
-  .about .homepage-banner {
-    margin: -14rem auto !important;
-    padding-left: 9% !important;
-  }
-
-  .section-bg {
-    margin-top: 14.7rem;
-  }
-
-  .section-bg .container {
-    padding-top: 40px !important;
-  }
-}
-
-@media (680px <= width <= 769px) and (orientation: landscape) {
+@media (768px <=width <=992px) {
     section {
         overflow: visible;
     }
+
+    .about .homepage-banner {
+        margin: -14rem auto !important;
+        padding-left: 9% !important;
+    }
+
+    .section-bg {
+        margin-top: -0.3rem;
+    }
+
+    .section-bg .container {
+        padding-top: 40px !important;
+    }
+}
+
+@media (680px <=width <=769px) and (orientation: landscape) {
+    section {
+        overflow: visible;
+    }
+
     .about .homepage-banner {
         margin-top: 80px !important;
     }
 
     .section-bg {
-    margin-top: 13.7rem !important;
-  }
+        margin-top: 13.7rem !important;
+    }
 }
 
 
@@ -304,9 +336,7 @@
         z-index: 99;
     }
 
-    .about .row .abt-logo img {
-        
-    }
+    .about .row .abt-logo img {}
 
     .about .row .abt-logo img {
         position: absolute;
@@ -318,7 +348,7 @@
     }
 }
 
-@media (640px <= width <= 800px) and (orientation: portrait) {
+@media (640px <=width <=800px) and (orientation: portrait) {
     .about .homepage-banner {
         top: 19rem !important;
     }
@@ -340,16 +370,19 @@
         display: flex;
         justify-content: center;
         margin: auto !important;
-        padding-bottom: 30px;;
+        padding-bottom: 30px;
+        ;
     }
 
     .footer-top .footer-detail-container nav>i::before {
         content: none;
     }
+
     .footer-top .footer-detail-container nav {
         display: flex;
         justify-content: center;
     }
+
     .footer-top .footer-detail-container nav ul {
         display: flex;
     }
