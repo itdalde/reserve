@@ -161,6 +161,7 @@ form.sign-in-form {
 .btn:hover {
     background-color: #D28F5D;
 }
+
 .panels-container {
     position: absolute;
     height: 100%;
@@ -386,6 +387,15 @@ form.sign-in-form {
         background-image: unset;
     }
 
+    .signin-signup {
+        margin-top: 8rem;
+    }
+
+    .left-panel .reg-panel {
+        margin-left: 1rem;
+        padding-top: 85px !important;
+    }
+
 }
 
 
@@ -393,6 +403,19 @@ form.sign-in-form {
     .container-fluid::before {
         background-image: unset;
     }
+
+
+    .signin-signup {
+        margin-top: 8rem;
+    }
+
+    .left-panel .reg-panel {
+        margin-left: 4rem;
+        padding-top: 85px !important;
+    }
+
+    /* Adjust to hide the logo */
+    .right-panel {}
 }
 
 
@@ -421,6 +444,7 @@ form.sign-in-form {
 
     .left-panel .reg-panel {
         margin-left: 18rem;
+        padding-top: 45px !important;
     }
 
     .right-panel {}
@@ -431,7 +455,7 @@ form.sign-in-form {
 
 @media only screen and (769px <=width <=1024px) {
     .left-panel .reg-panel {
-        /* margin-left: 195px; */
+        margin-left: 195px;
     }
 }
 
