@@ -569,4 +569,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="publish-service-modal" tabindex="-1" aria-labelledby="publish-service-modal"
+         data-id="publish-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{{route('services.publish_service')}}">
+                    @csrf
+                    <input type="hidden" name="service_id" id="service_id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel"><i class="bi bi-info-circle icon-info text-success"></i> Resume ?</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to publish this service?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-warning text-white">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endif

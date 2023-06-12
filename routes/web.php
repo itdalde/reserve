@@ -72,6 +72,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
     Route::post('/services/delete-service', [ServiceController::class, 'deleteService'])->name('services-delete');
     Route::post('/services/paused-service', [ServiceController::class, 'pausedService'])->name('services.paused_service');
+    Route::post('/services/publish-service', [ServiceController::class, 'publishService'])->name('services.publish_service');
     Route::post('/services/resume-service', [ServiceController::class, 'resumeService'])->name('services.resume_service');
     Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
     Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');

@@ -86,7 +86,7 @@
                         <div class="tab-pane fade show active" id="published">
                             <div class="p2">
                                 <hr>
-                                <table class="table w-100 service-table">
+                                <table class="table w-100 service-table" id="published-table">
                                     <thead>
                                         <tr class="d-none">
                                             <th scope="col">Image</th>
@@ -97,6 +97,7 @@
                                     <tbody>
                                         @foreach ($services->where('active', 1) as $service)
                                             <tr style="cursor: pointer;"
+                                                data-table-elem="published"
                                                 data-available-slot="{{ $service->availability_slot }}"
                                                 data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
                                                 data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
@@ -195,7 +196,7 @@
                         <div class="tab-pane fade show" id="paused">
                           <div class="p2">
                                 <hr>
-                                <table class="table w-100 service-table" >
+                                <table class="table w-100 service-table" id="paused-table">
                                     <thead>
                                         <tr class="d-none">
                                             <th scope="col">Image</th>
@@ -206,6 +207,7 @@
                                     <tbody>
                                         @foreach ($services->where('active', 2) as $service)
                                             <tr style="cursor: pointer;"
+                                                data-table-elem="paused"
                                                 data-available-slot="{{ $service->availability_slot }}"
                                                 data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
                                                 data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
@@ -292,7 +294,7 @@
                         <div class="tab-pane fade show" id="saved">
                            <div class="p2">
                                 <hr>
-                                <table class="table w-100 service-table">
+                                <table class="table w-100 service-table" id="saved-table">
                                     <thead>
                                         <tr class="d-none">
                                             <th scope="col">Image</th>
@@ -303,6 +305,7 @@
                                     <tbody>
                                         @foreach ($services->where('active', 3) as $service)
                                             <tr style="cursor: pointer;"
+                                                data-table-elem="saved"
                                                 data-available-slot="{{ $service->availability_slot }}"
                                                 data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
                                                 data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
@@ -766,6 +769,10 @@
                 let id = $(this).attr('data-service_id');
                 $('#resume-service-modal #service_id').val(id);
             });
+            $('body').on('click','#publish-service-action', function() {
+                let id = $(this).attr('data-service_id');
+                $('#publish-service-modal #service_id').val(id);
+            });
 
             $('body').on('click','#pause-service-action', function() {
                 let id = $(this).attr('data-service_id');
@@ -897,7 +904,21 @@
             setTimeout(function() {
                 $('#db-wrapper').removeClass('blur-bg');
                 $('#loader').hide();
-                $('.service-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
+                if($('#paused-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
+                    $('#paused-tab').click();
+                    $('#paused-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
+                    return;
+                }
+                if($('#published-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
+                    $('#published-tab').click();
+                    $('#published-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
+                    return;
+                }
+                if($('#saved-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
+                    $('#saved-tab').click();
+                    $('#saved-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
+                    return;
+                }
             }, 2000);
             $('.dataTable').on('click', 'tbody td', function() {
                 previewElement()
@@ -1068,6 +1089,16 @@
                         +'</div>');
                 }
 
+                if (serviceStatus == '3') {
+                    $('.added-elem').remove();
+                    $('.service-action').append('<div class="added-elem">'
+                        +'<p class="bg-warning text-white px-4">This service is not yet published</p>'
+                        +'</div>'
+                        +'<div class="added-elem" style="margin: auto 0;">'
+                        +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-service_id="'+id+'" data-id="1" id="publish-service-action" data-bs-toggle="modal" data-bs-target="#publish-service-modal">Publish</button>'
+                        +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'">Delete</button>'
+                        +'</div>');
+                }
             })
         });
     </script>

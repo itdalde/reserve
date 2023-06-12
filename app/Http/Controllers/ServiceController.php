@@ -348,6 +348,20 @@ class ServiceController extends Controller
         ]);
         die;
     }
+
+    public function publishService(Request $request) {
+        $event = OccasionEvent::where('id', $request->service_id)->first();
+        $event->active = 1; // publish
+        $event->save();
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/alert', [
+                'transaction' => $event,
+                'status' => 'Published'
+            ]);
+        return redirect()->back()->with('success', 'Service is published');
+    }
+
     public function pausedService(Request $request) {
         $event = OccasionEvent::where('id', $request->service_id)->first();
         $event->active = 2; // paused
