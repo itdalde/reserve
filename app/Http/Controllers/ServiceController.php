@@ -342,11 +342,7 @@ class ServiceController extends Controller
                 'transaction' => $event,
                 'status' => 'Deactivated'
             ]);
-        echo json_encode([
-            'action' => 'Deleted',
-            'message' => 'Service is deleted',
-        ]);
-        die;
+        return redirect()->back()->with('success', 'Service is deleted');
     }
 
     public function publishService(Request $request) {

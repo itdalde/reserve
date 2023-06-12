@@ -77,7 +77,11 @@
                             </li>
                             <li class="nav-item">
                                 <button class="nav-link" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved"
-                                    type="button" role="tab" aria-controls="saved" aria-selected="true">Saved</button>
+                                        type="button" role="tab" aria-controls="saved" aria-selected="true">Saved</button>
+                            </li>
+                            <li class="nav-item d-none">
+                                <button class="nav-link" id="deleted-tab" data-bs-toggle="tab" data-bs-target="#deleted"
+                                        type="button" role="tab" aria-controls="deleted" aria-selected="true">Deleted</button>
                             </li>
                         </ul>
                     </div>
@@ -292,63 +296,63 @@
 
                         {{-- Saved --}}
                         <div class="tab-pane fade show" id="saved">
-                           <div class="p2">
+                            <div class="p2">
                                 <hr>
                                 <table class="table w-100 service-table" id="saved-table">
                                     <thead>
-                                        <tr class="d-none">
-                                            <th scope="col">Image</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Occasion Type</th>
-                                        </tr>
+                                    <tr class="d-none">
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Occasion Type</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($services->where('active', 3) as $service)
-                                            <tr style="cursor: pointer;"
-                                                data-table-elem="saved"
-                                                data-available-slot="{{ $service->availability_slot }}"
-                                                data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
-                                                data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
-                                                data-end-available-time="{{ Carbon\Carbon::parse($service->availability_time_out)->format('H:m') }}"
-                                                data-start-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('H:m') }}"
-                                                data-id="{{ $service->id }}"
-                                                data-description="{{ $service->description }}"
-                                                data-name="{{ $service->name }}"
-                                                data-location="{{ $service->address_1 ?? '' }}"
-                                                data-max-capacity="{{ $service->min_capacity }}"
-                                                data-min-capacity="{{ $service->max_capacity }}"
-                                                data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
-                                                data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
-                                                data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
-                                                @php $occasionHolder = '';
+                                    @foreach ($services->where('active', 3) as $service)
+                                        <tr style="cursor: pointer;"
+                                            data-table-elem="saved"
+                                            data-available-slot="{{ $service->availability_slot }}"
+                                            data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
+                                            data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
+                                            data-end-available-time="{{ Carbon\Carbon::parse($service->availability_time_out)->format('H:m') }}"
+                                            data-start-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('H:m') }}"
+                                            data-id="{{ $service->id }}"
+                                            data-description="{{ $service->description }}"
+                                            data-name="{{ $service->name }}"
+                                            data-location="{{ $service->address_1 ?? '' }}"
+                                            data-max-capacity="{{ $service->min_capacity }}"
+                                            data-min-capacity="{{ $service->max_capacity }}"
+                                            data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
+                                            data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
+                                            data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
+                                            @php $occasionHolder = '';
                                                 $paymentPlansHolder= '';
                                                 $imagesHolder = ''; @endphp
-                                                @if ($service->images) @foreach ($service->images as $image)
+                                            @if ($service->images) @foreach ($service->images as $image)
                                             @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
                                             @endforeach @endif
-                                                @if ($service->occasion) @foreach ($service->occasion as $srv)
+                                            @if ($service->occasion) @foreach ($service->occasion as $srv)
                                             @php $occasionHolder .= $srv->occasion ? $srv->occasion->name.',' : ''; @endphp
                                             @endforeach @endif
-                                                @if ($service->occasionEventPrice) @foreach ($service->occasionEventPrice as $price)
+                                            @if ($service->occasionEventPrice) @foreach ($service->occasionEventPrice as $price)
                                             @php $paymentPlansHolder .= $price->planType ? $price->id.'id'. $price->planType->name.':QAD '.number_format($price->service_price).',' : ''; @endphp
                                             @endforeach @endif
-                                                data-payment-plans="{{ $paymentPlansHolder }}"
-                                                data-occasion-types="{{ $occasionHolder }}"
-                                                data-images="{{ $imagesHolder }}"
-                                                data-orders-count="{{ count($service->orders) }}"
-                                                data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
-                                                data-image="{{ asset($service->image) }}"
-                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
-                                                data-active="{{ $service->active }}">
-                                                <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
-                                                        onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                        alt="..." style="border-radius: 5px; object-fit: cover;"></td>
+                                            data-payment-plans="{{ $paymentPlansHolder }}"
+                                            data-occasion-types="{{ $occasionHolder }}"
+                                            data-images="{{ $imagesHolder }}"
+                                            data-orders-count="{{ count($service->orders) }}"
+                                            data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
+                                            data-image="{{ asset($service->image) }}"
+                                            data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
+                                            data-active="{{ $service->active }}">
+                                            <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
+                                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
+                                                                 alt="..." style="border-radius: 5px; object-fit: cover;"></td>
 
-                                                <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
-                                                    <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
-                                                    <p dir="auto">{{ $service->address_1 }}</p>
-                                                    <div>
-                                                        <label class="fw-bold">4.0</label>
+                                            <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
+                                                <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
+                                                <p dir="auto">{{ $service->address_1 }}</p>
+                                                <div>
+                                                    <label class="fw-bold">4.0</label>
                                                     @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
                                                         <span
                                                             class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
@@ -367,22 +371,118 @@
                                                         <span class="bi bi-star"></span>
                                                         <span class="bi bi-star"></span>
                                                     @endif
-                                                    </div>
+                                                </div>
 
-                                                </td>
-                                                <td width="20%">
-                                                    <div dir="auto" class="fw-light">Occasion Type</div>
-                                                    <div class="fs-5 fw-light">
-                                                        @if ($service->occasion)
-                                                            @foreach ($service->occasion as $srv)
-                                                                <span
-                                                                    class="badge" style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                            </td>
+                                            <td width="20%">
+                                                <div dir="auto" class="fw-light">Occasion Type</div>
+                                                <div class="fs-5 fw-light">
+                                                    @if ($service->occasion)
+                                                        @foreach ($service->occasion as $srv)
+                                                            <span
+                                                                class="badge" style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show" id="deleted">
+                            <div class="p2">
+                                <hr>
+                                <table class="table w-100 service-table" id="deleted-table">
+                                    <thead>
+                                    <tr class="d-none">
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Occasion Type</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($services->where('active', 0) as $service)
+                                        <tr style="cursor: pointer;"
+                                            data-table-elem="deleted"
+                                            data-available-slot="{{ $service->availability_slot }}"
+                                            data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
+                                            data-start-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('Y-m-d') }}"
+                                            data-end-available-time="{{ Carbon\Carbon::parse($service->availability_time_out)->format('H:m') }}"
+                                            data-start-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('H:m') }}"
+                                            data-id="{{ $service->id }}"
+                                            data-description="{{ $service->description }}"
+                                            data-name="{{ $service->name }}"
+                                            data-location="{{ $service->address_1 ?? '' }}"
+                                            data-max-capacity="{{ $service->min_capacity }}"
+                                            data-min-capacity="{{ $service->max_capacity }}"
+                                            data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
+                                            data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
+                                            data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
+                                            @php $occasionHolder = '';
+                                                $paymentPlansHolder= '';
+                                                $imagesHolder = ''; @endphp
+                                            @if ($service->images) @foreach ($service->images as $image)
+                                            @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
+                                            @endforeach @endif
+                                            @if ($service->occasion) @foreach ($service->occasion as $srv)
+                                            @php $occasionHolder .= $srv->occasion ? $srv->occasion->name.',' : ''; @endphp
+                                            @endforeach @endif
+                                            @if ($service->occasionEventPrice) @foreach ($service->occasionEventPrice as $price)
+                                            @php $paymentPlansHolder .= $price->planType ? $price->id.'id'. $price->planType->name.':QAD '.number_format($price->service_price).',' : ''; @endphp
+                                            @endforeach @endif
+                                            data-payment-plans="{{ $paymentPlansHolder }}"
+                                            data-occasion-types="{{ $occasionHolder }}"
+                                            data-images="{{ $imagesHolder }}"
+                                            data-orders-count="{{ count($service->orders) }}"
+                                            data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
+                                            data-image="{{ asset($service->image) }}"
+                                            data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
+                                            data-active="{{ $service->active }}">
+                                            <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
+                                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
+                                                                 alt="..." style="border-radius: 5px; object-fit: cover;"></td>
+
+                                            <td dir="auto" width="60%" style="border-right: 1px solid #ccc">
+                                                <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
+                                                <p dir="auto">{{ $service->address_1 }}</p>
+                                                <div>
+                                                    <label class="fw-bold">4.0</label>
+                                                    @if ($service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]))
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 1 ? 'checked' : '' }} "></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 2 ? 'checked' : '' }}"></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 3 ? 'checked' : '' }}"></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 4 ? 'checked' : '' }}"></span>
+                                                        <span
+                                                            class="bi bi-star {{ $service->occasionEventsReviewsAverage[0]->aggregate >= 5 ? 'checked' : '' }}"></span>
+                                                    @else
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                        <span class="bi bi-star"></span>
+                                                    @endif
+                                                </div>
+
+                                            </td>
+                                            <td width="20%">
+                                                <div dir="auto" class="fw-light">Occasion Type</div>
+                                                <div class="fs-5 fw-light">
+                                                    @if ($service->occasion)
+                                                        @foreach ($service->occasion as $srv)
+                                                            <span
+                                                                class="badge" style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion ? $srv->occasion->name : '' }}</span>
+                                                        @endforeach
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -776,9 +876,15 @@
 
             $('body').on('click','#pause-service-action', function() {
                 let id = $(this).attr('data-service_id');
-                alert(id)
-
                 $('#pause-service-modal #service_id').val(id);
+            });
+            $('body').on('click','#delete-service-action', function() {
+                let id = $(this).attr('data-service_id');
+                $('#delete-service-modal #service_id').val(id);
+            });
+            $('body').on('click','#activate-service-action', function() {
+                let id = $(this).attr('data-service_id');
+                $('#activate-service-modal #service_id').val(id);
             });
 
             function generateReviewList(sort = 'DESC') {
@@ -833,48 +939,6 @@
                 });
             });
 
-            $('body').on('click', '.delete-service-btn', function() {
-                let id = $(this).attr('data-service_id')
-                $.ajax({
-                    url: "{{ route('services.paused_service') }}",
-                    method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        service_id: id,
-                    },
-                    beforeSend: function() {
-                        window.VIEW_LOADING();
-                    },
-                }).done(function(response) {
-                    window.HIDE_LOADING();
-                    location.reload();
-                })
-            });
-            $('body').on('click', '.delete-service-btn', function() {
-                if(confirm("Are you sure you want to delete this service?")){
-                    let id = $(this).attr('data-service_id')
-                    $.ajax({
-                        url: "{{ route('services-delete') }}",
-                        method: "POST",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            service_id: id,
-                        },
-                        beforeSend: function() {
-                            window.VIEW_LOADING();
-                        },
-                    }).done(function(response) {
-                        window.HIDE_LOADING();
-                        location.reload();
-                    })
-                } else{
-                    return false;
-                }
-            });
             $('body').on('click', '.close-service-images', function() {
                 let that = this;
                 $.ajax({
@@ -922,6 +986,10 @@
             }, 2000);
             $('.dataTable').on('click', 'tbody td', function() {
                 previewElement()
+                if($(this).closest('tr').attr('data-table-elem') == 'deleted') {
+                    $('#edit-service-btn').addClass('d-none')
+                    $('#edit-service-cancel-btn').addClass('d-none')
+                }
                 let name = $(this).closest('tr').attr('data-name');
                 let image = $(this).closest('tr').attr('data-image');
                 let location = $(this).closest('tr').attr('data-location');
@@ -1074,7 +1142,7 @@
                         +'</div>'
                         +'<div class="added-elem" style="margin: auto 0;">'
                             +'<button type="button" class="btn btn-sm btn-warning text-white px-5" data-service_id="'+id+'" data-id="2" id="pause-service-action" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Pause</button>'
-                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'">Delete</button>'
+                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'" id="delete-service-action" data-bs-toggle="modal" data-bs-target="#delete-service-modal">Delete</button>'
                         +'</div>');
                 }
 
@@ -1085,7 +1153,7 @@
                         +'</div>'
                         +'<div class="added-elem" style="margin: auto 0;">'
                             +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-service_id="'+id+'" data-id="1" id="resume-service-action" data-bs-toggle="modal" data-bs-target="#resume-service-modal">Resume</button>'
-                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'">Delete</button>'
+                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'"  id="delete-service-action" data-bs-toggle="modal" data-bs-target="#delete-service-modal">Delete</button>'
                         +'</div>');
                 }
 
@@ -1096,7 +1164,16 @@
                         +'</div>'
                         +'<div class="added-elem" style="margin: auto 0;">'
                         +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-service_id="'+id+'" data-id="1" id="publish-service-action" data-bs-toggle="modal" data-bs-target="#publish-service-modal">Publish</button>'
-                        +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'">Delete</button>'
+                        +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'" id="delete-service-action" data-bs-toggle="modal" data-bs-target="#delete-service-modal" >Delete</button>'
+                        +'</div>');
+                }
+                if (serviceStatus == '0') {
+                    $('.added-elem').remove();
+                    $('.service-action').append('<div class="added-elem">'
+                        +'<p class="bg-warning text-white px-4">This service is deactivated</p>'
+                        +'</div>'
+                        +'<div class="added-elem" style="margin: auto 0;">'
+                        +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-service_id="'+id+'" data-id="1" id="activate-service-action" data-bs-toggle="modal" data-bs-target="#activate-service-modal">Activate</button>'
                         +'</div>');
                 }
             })
