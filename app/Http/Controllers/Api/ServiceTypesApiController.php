@@ -28,24 +28,29 @@ class ServiceTypesApiController extends Controller
      */
     public function checkStatusById(Request $request, $id): JsonResponse
     {
-        $stat = 1;
-        $response = [
-            'status' => 'InActive',
-            'is_active' => false,
-        ];
         $service = OccasionEvent::where('id', $id)->first();
-        $stat = $service && $service->active;
-        if($service)  {
-
-            switch ($stat) {
-                case 1:
-                    break;
-            }
+        $stat = $service && $service->active ? $service->active : 0;
+        switch ($stat) {
+            case 1:
+                $status = 'Published';
+                $isActive = true;
+                break;
+            case 2:
+                $status = 'Paused';
+                $isActive = true;
+                break;
+            case 3:
+                $status = 'Saved';
+                $isActive = true;
+                break;
+            default :
+                $status = 'InActive';
+                $isActive = false;
         }
-        if($service && $service->active == 1) {
-            $response['status'] = 'Active';
-            $response['is_active'] = true;
-        }
+        $response = [
+            'status' => $status,
+            'is_active' => $isActive,
+        ];
         return sendResponse($response, "Service status");
     }
 

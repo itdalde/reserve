@@ -24,9 +24,9 @@
                                     <label class="" style="width: 75px; margin: auto;">Sort by</label>
                                     <input type="text" class="form-control" placeholder="Search..." id="search-service-name"
                                         value="">
-                                </div>    
+                                </div>
                             </div>
-                            
+
                         </div>
                         <div class="p-1 d-none">
                             <div class="dropdown">
@@ -86,7 +86,7 @@
                         <div class="tab-pane fade show active" id="published">
                             <div class="p2">
                                 <hr>
-                                <table class="table w-100" id="myTable">
+                                <table class="table w-100 service-table">
                                     <thead>
                                         <tr class="d-none">
                                             <th scope="col">Image</th>
@@ -169,7 +169,7 @@
                                                             width: 47px;
                                                             height: 86px!important;
                                                             margin: auto 0;">
-                                                            
+
                                                         </div>
                                                     </div>
                                                 </td>
@@ -195,7 +195,7 @@
                         <div class="tab-pane fade show" id="paused">
                           <div class="p2">
                                 <hr>
-                                <table class="table w-100" id="myTable">
+                                <table class="table w-100 service-table" >
                                     <thead>
                                         <tr class="d-none">
                                             <th scope="col">Image</th>
@@ -292,7 +292,7 @@
                         <div class="tab-pane fade show" id="saved">
                            <div class="p2">
                                 <hr>
-                                <table class="table w-100" id="myTable">
+                                <table class="table w-100 service-table">
                                     <thead>
                                         <tr class="d-none">
                                             <th scope="col">Image</th>
@@ -397,7 +397,7 @@
                             @csrf
                             <div class="d-flex flex-column bd-highlight mb-3">
                                 <div class="d-flex justify-content-between service-action">
-                               
+
                                 </div>
 
 
@@ -418,11 +418,11 @@
                                         onchange="document.getElementById('edit-featured-service-image-view').src = window.URL.createObjectURL(this.files[0])"
                                         id="edit-featured-service-image-file" accept="image/png, image/gif, image/jpeg"
                                         type="file" class="d-none" name="featured_image">
-                                    <img 
-                                    class="edit-trigger-display rounded rounded-3" 
-                                    id="image-display-view" 
+                                    <img
+                                    class="edit-trigger-display rounded rounded-3"
+                                    id="image-display-view"
                                     width="200"
-                                     height="200" 
+                                     height="200"
                                         src=""
                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                         alt="..."
@@ -762,16 +762,16 @@
                 generateReviewList();
             })
 
-            $('body #paused-service-action').on('click', function() {
-                let status = $(this).attr('data-id');
-                let modalBody = 'Are you sure you want to pause this service?'
-                let modalTitle = '<i class="bi bi-info-circle icon-info text-warning"></i> Paused ?'
-                if (status == 2) {
-                    modalBody = 'Are you sure you want to resume this service?'
-                    modalTitle = '<i class="bi bi-info-circle icon-info text-success"></i> Resume ?'
-                }
-                $('#pause-service-modal .modal-title').append(modalTitle);
-                $('#pause-service-modal .modal-body').append(modalBody);
+            $('body').on('click','#resume-service-action', function() {
+                let id = $(this).attr('data-service_id');
+                $('#resume-service-modal #service_id').val(id);
+            });
+
+            $('body').on('click','#pause-service-action', function() {
+                let id = $(this).attr('data-service_id');
+                alert(id)
+
+                $('#pause-service-modal #service_id').val(id);
             });
 
             function generateReviewList(sort = 'DESC') {
@@ -809,13 +809,13 @@
             }
 
             $.fn.dataTable.ext.errMode = 'none';
-            let datatable = $('#myTable').DataTable({
+            let datatable = $('.service-table').DataTable({
                 "pageLength": 10,
             });
-            $('#myTable').on('error.dt', function(e, settings, techNote, message) {
+            $('.service-table').on('error.dt', function(e, settings, techNote, message) {
                 console.log('An error has been reported by DataTables: ', message);
             })
-            $('#myTable_length, #myTable_filter').remove();
+            $('.dataTables_length, .dataTables_filter').remove();
 
 
             $(document).on('focus', '#search-service-name', function() {
@@ -824,6 +824,49 @@
                         datatable.search(this.value).draw();
                     }
                 });
+            });
+
+            $('body').on('click', '.delete-service-btn', function() {
+                let id = $(this).attr('data-service_id')
+                $.ajax({
+                    url: "{{ route('services.paused_service') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        service_id: id,
+                    },
+                    beforeSend: function() {
+                        window.VIEW_LOADING();
+                    },
+                }).done(function(response) {
+                    window.HIDE_LOADING();
+                    location.reload();
+                })
+            });
+            $('body').on('click', '.delete-service-btn', function() {
+                if(confirm("Are you sure you want to delete this service?")){
+                    let id = $(this).attr('data-service_id')
+                    $.ajax({
+                        url: "{{ route('services-delete') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            service_id: id,
+                        },
+                        beforeSend: function() {
+                            window.VIEW_LOADING();
+                        },
+                    }).done(function(response) {
+                        window.HIDE_LOADING();
+                        location.reload();
+                    })
+                } else{
+                    return false;
+                }
             });
             $('body').on('click', '.close-service-images', function() {
                 let that = this;
@@ -854,7 +897,7 @@
             setTimeout(function() {
                 $('#db-wrapper').removeClass('blur-bg');
                 $('#loader').hide();
-                $('#myTable > tbody > tr:nth-child(1) > td:nth-child(2)').click();
+                $('.service-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
             }, 2000);
             $('.dataTable').on('click', 'tbody td', function() {
                 previewElement()
@@ -998,28 +1041,30 @@
                 $('#image-display-view, #edit-featured-service-image-view').attr('src', image)
                 $('#paused-service-action').attr('data-id', serviceStatus);
 
-                if (serviceStatus == 1) {
+                if (serviceStatus == '1') {
 
-                $('.service-action').append('<div>'
+                    $('.added-elem').remove();
+                    $('.service-action').append('<div class="added-elem">'
                             +'<i class="bi bi-info-circle icon-info"'
                                 +'data-bs-toggle="tooltip" data-bs-placement="bottom"'
                                 +'title="Please pause this service to access the edit option"'
                                 +'>'
                             +'</i>'
                         +'</div>'
-                        +'<div style="margin: auto 0;">'
-                            +'<button type="button" class="btn btn-sm btn-warning text-white px-5" data-id="1" id="paused-service-action" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Paused</button>'
-                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2">Delete</button>'
+                        +'<div class="added-elem" style="margin: auto 0;">'
+                            +'<button type="button" class="btn btn-sm btn-warning text-white px-5" data-service_id="'+id+'" data-id="2" id="pause-service-action" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Pause</button>'
+                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'">Delete</button>'
                         +'</div>');
                 }
 
-                if (serviceStatus == 2) {
-                    $('.service-action').append('<div>'
+                if (serviceStatus == '2') {
+                    $('.added-elem').remove();
+                    $('.service-action').append('<div class="added-elem">'
                             +'<p class="bg-warning text-white px-4">This service has been paused</p>'
                         +'</div>'
-                        +'<div style="margin: auto 0;">'
-                            +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-id="2" id="paused-service-action1" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Resume</button>'
-                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2">Delete</button>'
+                        +'<div class="added-elem" style="margin: auto 0;">'
+                            +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-service_id="'+id+'" data-id="1" id="resume-service-action" data-bs-toggle="modal" data-bs-target="#resume-service-modal">Resume</button>'
+                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2 delete-service-btn" data-service_id="'+id+'">Delete</button>'
                         +'</div>');
                 }
 

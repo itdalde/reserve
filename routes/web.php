@@ -70,8 +70,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/users/approve', [UserController::class, 'approve'])->name('users.approve-user');
     Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
     Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
-    Route::post('/services/paused-service', [ServiceController::class], 'pausedService')->name('services.paused_service');
-    Route::post('/services/resume-service', [ServiceController::class], 'resumeService')->name('services.resume_service');
+    Route::post('/services/delete-service', [ServiceController::class, 'deleteService'])->name('services-delete');
+    Route::post('/services/paused-service', [ServiceController::class, 'pausedService'])->name('services.paused_service');
+    Route::post('/services/resume-service', [ServiceController::class, 'resumeService'])->name('services.resume_service');
     Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
     Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
     Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');

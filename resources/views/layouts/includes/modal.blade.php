@@ -1,5 +1,6 @@
 @if(!Auth::user()->hasRole('superadmin'))
-    <div class="modal fade" id="new-service-modal" tabindex="-1" aria-labelledby="new-service-modalLabel" data-backdrop="static" data-keyboard="false"
+    <div class="modal fade" id="new-service-modal" tabindex="-1" aria-labelledby="new-service-modalLabel"
+         data-backdrop="static" data-keyboard="false"
          aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -86,7 +87,8 @@
                                                    id="arabic-service-name" value="">
                                             <div class="form-floating">
                                             <textarea dir="rtl" name="service_description_arabic" class="form-control"
-                                              placeholder="أدخل وصف الخدمة" id="arabic-description" style="height: 100px"></textarea>
+                                                      placeholder="أدخل وصف الخدمة" id="arabic-description"
+                                                      style="height: 100px"></textarea>
                                                 <label style="margin-left: 78%;" dir="rtl" for="arabic-description">أدخل
                                                     وصف الخدمة</label>
                                             </div>
@@ -228,13 +230,15 @@
                                                 <label class="form-label">Available Date</label>
                                                 <div class="col-sm-6 ">
                                                     <input
-                                                           name="start_available_date" class="float-end form-control datepicker"
-                                                           type="text">
+                                                        name="start_available_date"
+                                                        class="float-end form-control datepicker"
+                                                        type="text">
                                                 </div>
                                                 <div class="col-sm-6 ">
                                                     <input
-                                                           name="end_available_date" class="float-start form-control datepicker"
-                                                           type="text">
+                                                        name="end_available_date"
+                                                        class="float-start form-control datepicker"
+                                                        type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -488,9 +492,10 @@
                                     description</label>
                             </div>
                             <div class="col-auto" style="width: 70%;">
-                            <textarea dir="auto" rows="8" name="description" type="text" id="schedule-modal-description-field"
-                                  class="form-control"
-                                  placeholder="Enter schedule description"> </textarea>
+                            <textarea dir="auto" rows="8" name="description" type="text"
+                                      id="schedule-modal-description-field"
+                                      class="form-control"
+                                      placeholder="Enter schedule description"> </textarea>
                             </div>
                         </div>
 
@@ -499,7 +504,7 @@
                                 <label for="ticket-modal-date-field" class="col-form-label">Date</label>
                             </div>
                             <div class="col-auto" style="width: 70%;">
-                                <input dir="auto"  name="date" type="date" id="schedule-modal-date-field"
+                                <input dir="auto" name="date" type="date" id="schedule-modal-date-field"
                                        class="form-control"
                                        placeholder="Enter schedule date">
                             </div>
@@ -520,22 +525,48 @@
     </div>
 
 
-    {{-- Paused Service Modal --}}
-    <div class="modal fade" id="pause-service-modal" tabindex="-1" aria-labelledby="pause-service-modal" data-id="paused-modal" data-bs-backdrop="static" data-bs-keyboard="false" >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel"></h5>
-            
-          </div>
-          <div class="modal-body">
-            Are you sure you want to pause this service?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-warning text-white">Confirm</button>
-          </div>
+    <div class="modal fade" id="pause-service-modal" tabindex="-1" aria-labelledby="pause-service-modal"
+         data-id="paused-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{{route('services.paused_service')}}" >
+                    @csrf
+                    <input type="hidden" name="service_id" id="service_id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel"><i class="bi bi-info-circle icon-info text-warning"></i> Pause ?</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to pause this service?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-warning text-white">Confirm</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
+    </div>
+    <div class="modal fade" id="resume-service-modal" tabindex="-1" aria-labelledby="resume-service-modal"
+         data-id="paused-modal" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{{route('services.resume_service')}}">
+                    @csrf
+                    <input type="hidden" name="service_id" id="service_id">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel"><i class="bi bi-info-circle icon-info text-success"></i> Resume ?</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to resume this service?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-warning text-white">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endif

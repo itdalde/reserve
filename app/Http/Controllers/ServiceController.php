@@ -14,9 +14,11 @@ use App\Models\OccasionEventsPivot;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
+use Carbon\Carbon;
 use Google\Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
@@ -212,7 +214,7 @@ class ServiceController extends Controller
         $unavailableDates = explode(',',$data['end_available_time']);
         $service->availability_start_date = $availableDates && isset($availableDates[0]) ? date('Y-m-d H:i:s', strtotime($availableDates[0]))  : date('Y-m-d H:i:s');;
         $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s', strtotime(end($availableDates))) : date('Y-m-d H:i:s');;
-        $service->active = 1;
+        $service->active = 3;
         $service->service_type = $data['service_type'];
         $service->save();
         foreach ($availableDates as $availableDate) {
@@ -328,18 +330,47 @@ class ServiceController extends Controller
         //
     }
 
-    // 0 - Saved, 1 - Published, 2 - Delete (soft delete)
-    public function pausedService(Request $request, $id) {
-        $event = OccasionEvent::where('id', $id)->first();
-        $event->active = 2; // paused 
+    public function deleteService(Request $request) {
+        $event = OccasionEvent::where('id', $request->service_id)->first();
+        $event->active = 0; // inactive
+        $event->deleted_at = Carbon::now();
         $event->save();
-        return response()->json('Service is paused', 'Updated');
+
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/alert', [
+                'transaction' => $event,
+                'status' => 'Deactivated'
+            ]);
+        echo json_encode([
+            'action' => 'Deleted',
+            'message' => 'Service is deleted',
+        ]);
+        die;
+    }
+    public function pausedService(Request $request) {
+        $event = OccasionEvent::where('id', $request->service_id)->first();
+        $event->active = 2; // paused
+        $event->save();
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/alert', [
+                'transaction' => $event,
+                'status' => 'Paused'
+            ]);
+        return redirect()->back()->with('success', 'Service is paused');
     }
 
-    public function resumeService(Request $request, $id) {
-     $event = OccasionEvent::where('id', $id)->first();
+    public function resumeService(Request $request) {
+        $event = OccasionEvent::where('id', $request->service_id)->first();
         $event->active = 1; // resume
         $event->save();
-        return response()->json('Service is resume', 'Updated');   
+        Http::timeout(10)
+            ->withOptions(['verify' => false])
+            ->post('http://reservegcc.com:3000/alert', [
+                'transaction' => $event,
+                'status' => 'Resumed'
+            ]);
+        return redirect()->back()->with('success', 'Service is resumed');
     }
 }
