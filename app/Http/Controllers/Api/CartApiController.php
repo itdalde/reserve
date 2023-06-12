@@ -151,6 +151,12 @@ class CartApiController extends Controller
             if ($event->active == 0) {
                 unset($data['items'][$k]);
             }
+            if ($event->active == 2) {
+                unset($data['items'][$k]);
+            }
+            if ($event->active == 3) {
+                unset($data['items'][$k]);
+            }
         }
         if (count($data['items']) == 0) {
             return sendError('Items are inactive', 'Unable to place an order');
