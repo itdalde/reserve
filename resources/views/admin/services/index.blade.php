@@ -21,8 +21,8 @@
                                                         height: 30px!important;
                                                         margin: auto 0;"></div>
                                 <div class="d-flex ps-4">
-                                    <label class="" style="width: 75px; margin: auto;">Sort by</label>
-                                    <input type="text" class="form-control" placeholder="Search..." id="search-service-name"
+                                    <label class="" style="width: 75px; margin: auto;">Search</label>
+                                    <input type="text" class="form-control" placeholder="" id="search-service-name"
                                         value="">
                                 </div>
                             </div>
