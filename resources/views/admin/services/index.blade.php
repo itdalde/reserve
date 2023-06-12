@@ -95,7 +95,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($services as $service)
+                                        @foreach ($services->where('active', 1) as $service)
                                             <tr style="cursor: pointer;"
                                                 data-available-slot="{{ $service->availability_slot }}"
                                                 data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
@@ -129,7 +129,8 @@
                                                 data-orders-count="{{ count($service->orders) }}"
                                                 data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
                                                 data-image="{{ asset($service->image) }}"
-                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
+                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
+                                                data-active="{{ $service->active }}">
                                                 <td width="20%">
                                                     <img width="100" height="100" src="{{ asset($service->image) }}"
                                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -203,7 +204,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($services as $service)
+                                        @foreach ($services->where('active', 2) as $service)
                                             <tr style="cursor: pointer;"
                                                 data-available-slot="{{ $service->availability_slot }}"
                                                 data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
@@ -237,7 +238,8 @@
                                                 data-orders-count="{{ count($service->orders) }}"
                                                 data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
                                                 data-image="{{ asset($service->image) }}"
-                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
+                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
+                                                data-active="{{ $service->active }}">
                                                 <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                         alt="..." style="border-radius: 5px; object-fit: cover;"></td>
@@ -299,7 +301,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($services as $service)
+                                        @foreach ($services->where('active', 3) as $service)
                                             <tr style="cursor: pointer;"
                                                 data-available-slot="{{ $service->availability_slot }}"
                                                 data-end-available-date="{{ Carbon\Carbon::parse($service->availability_end_date)->format('Y-m-d') }}"
@@ -333,7 +335,8 @@
                                                 data-orders-count="{{ count($service->orders) }}"
                                                 data-service-type="{{ $service->serviceType ? $service->serviceType->name : '' }}"
                                                 data-image="{{ asset($service->image) }}"
-                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}">
+                                                data-rating="{{ $service->occasionEventsReviewsAverage && isset($service->occasionEventsReviewsAverage[0]) ? $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
+                                                data-active="{{ $service->active }}">
                                                 <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                         onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                         alt="..." style="border-radius: 5px; object-fit: cover;"></td>
@@ -393,24 +396,8 @@
                             enctype="multipart/form-data">
                             @csrf
                             <div class="d-flex flex-column bd-highlight mb-3">
-                                <div class="d-flex justify-content-between">
-                                    {{-- ICON --}}
-                                    <div>
-                                        {{-- if status us paused --}}
-                                  {{--       <i class="bi bi-info-circle icon-info"
-                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Please pause this service to access the edit option"
-                                        ></i> --}}
-
-                                        <p class="bg-warning text-white px-4">This service has been paused</p>
-                                       
-                                    </div>
-
-                                    {{-- ACTION --}}
-                                    <div class="">
-                                        <button type="button" class="btn btn-sm btn-warning text-white px-5" data-id="paused" id="paused-service-action" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Pause</button>
-                                        <button type="button" class="btn btn-sm btn-danger text-white px-5">Delete</button>
-                                    </div>
+                                <div class="d-flex justify-content-between service-action">
+                               
                                 </div>
 
 
@@ -775,19 +762,16 @@
                 generateReviewList();
             })
 
-            $('#paused-service-action').on('click', function() {
+            $('body #paused-service-action').on('click', function() {
                 let status = $(this).attr('data-id');
                 let modalBody = 'Are you sure you want to pause this service?'
                 let modalTitle = '<i class="bi bi-info-circle icon-info text-warning"></i> Paused ?'
-                if (status == 'paused') {
+                if (status == 2) {
                     modalBody = 'Are you sure you want to resume this service?'
                     modalTitle = '<i class="bi bi-info-circle icon-info text-success"></i> Resume ?'
                 }
-
-                $('#pause-service-modal .modal-title').html(modalTitle);
-                $('#pause-service-modal .modal-body').html(modalBody);
-
-                
+                $('#pause-service-modal .modal-title').append(modalTitle);
+                $('#pause-service-modal .modal-body').append(modalBody);
             });
 
             function generateReviewList(sort = 'DESC') {
@@ -891,6 +875,7 @@
                 let endAvailableTime = $(this).closest('tr').attr('data-end-available-time');
                 let startAvailableTime = $(this).closest('tr').attr('data-start-available-time');
                 let totalOrders = $(this).closest('tr').attr('data-orders-count');
+                let serviceStatus = $(this).closest('tr').attr('data-active')
                 $('#service-no-of-orders').text(totalOrders)
                 let id = $(this).closest('tr').attr('data-id');
                 $.ajax({
@@ -1011,7 +996,32 @@
                 $('.service-location').text(location)
                 $('.service-title').text(name)
                 $('#image-display-view, #edit-featured-service-image-view').attr('src', image)
+                $('#paused-service-action').attr('data-id', serviceStatus);
 
+                if (serviceStatus == 1) {
+
+                $('.service-action').append('<div>'
+                            +'<i class="bi bi-info-circle icon-info"'
+                                +'data-bs-toggle="tooltip" data-bs-placement="bottom"'
+                                +'title="Please pause this service to access the edit option"'
+                                +'>'
+                            +'</i>'
+                        +'</div>'
+                        +'<div style="margin: auto 0;">'
+                            +'<button type="button" class="btn btn-sm btn-warning text-white px-5" data-id="1" id="paused-service-action" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Paused</button>'
+                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2">Delete</button>'
+                        +'</div>');
+                }
+
+                if (serviceStatus == 2) {
+                    $('.service-action').append('<div>'
+                            +'<p class="bg-warning text-white px-4">This service has been paused</p>'
+                        +'</div>'
+                        +'<div style="margin: auto 0;">'
+                            +'<button type="button" class="btn btn-sm btn-success text-white px-5" data-id="2" id="paused-service-action1" data-bs-toggle="modal" data-bs-target="#pause-service-modal">Resume</button>'
+                            +'<button type="button" class="btn btn-sm btn-danger text-white px-5 ms-2">Delete</button>'
+                        +'</div>');
+                }
 
             })
         });
