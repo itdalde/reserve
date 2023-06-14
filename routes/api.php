@@ -162,6 +162,38 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
             ->setProduces(['application/json']);
     });
 
+    Route::group(['prefix' => 'reviews', 'middleware' => ['cors']], function() {
+        Api::get('service/{service_id}', [ServicesApiController::class, 'getReviewsByServiceId'])
+            ->addTag('Reviews')
+            ->setDescription('getReviewsByServiceId')
+            ->setProduces(['application/json']);
+        Api::get('provider/{provider_id}', [ServicesApiController::class, 'getReviewsByProviderId'])
+            ->addTag('Reviews')
+            ->setDescription('getReviewsByProviderId')
+            ->setProduces(['application/json']);
+        Api::get('user/{user_id}', [ServicesApiController::class, 'getReviewsByUserId'])
+            ->addTag('Reviews')
+            ->setDescription('getReviewsByUserId')
+            ->setProduces(['application/json']);
+
+        Api::post('/', [ServicesApiController::class, 'addReviewToService'])
+            ->addTag('Reviews')
+            ->addFormDataParameter('service_id', '', true  )
+            ->addFormDataParameter('user_id', '', true  )
+            ->addFormDataParameter('title', '', false  )
+            ->addFormDataParameter('description', '', false  )
+            ->addFormDataParameter('rate', 'Rate will be from 0 to 5', true ,'integer' )
+            ->setDescription('addReviewToService')
+            ->setProduces(['application/json']);
+        Api::post('/update', [ServicesApiController::class, 'updateReviewToService'])
+            ->addTag('Reviews')
+            ->addFormDataParameter('id', '', true  )
+            ->addFormDataParameter('title', '', false  )
+            ->addFormDataParameter('description', '', false  )
+            ->addFormDataParameter('rate', 'Rate will be from 0 to 5', true ,'integer' )
+            ->setDescription('updateReviewToService')
+            ->setProduces(['application/json']);
+    });
     Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
         Api::get('/', [ServiceTypesApiController::class, 'getServices'])
             ->addTag('Services')

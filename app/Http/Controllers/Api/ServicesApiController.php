@@ -8,8 +8,10 @@ use App\Http\Requests\ProviderByServiceTypeRequest;
 use App\Models\Auth\User\User;
 use App\Models\Company;
 use App\Models\OccasionEvent;
+use App\Models\OccasionEventReviews;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ServicesApiController extends Controller
 {
@@ -27,6 +29,84 @@ class ServicesApiController extends Controller
             ->where('occasion_events.service_type', '=', $serviceId)
             ->get();
         return sendResponse($services, 'Search occasion events by wildcard {name} under service type');
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getReviewsByServiceId(Request $request, $service_id): JsonResponse
+    {
+        $services = OccasionEventReviews::where('occasion_event_id', $service_id)->with('user', 'occasionEvent')
+            ->orderBy('rate', 'DESC')->get()->toArray();
+        usort($services, function ($a, $b) {
+            return $a['rate'] <=> $b['rate'];
+        });
+        return sendResponse($services, 'Fetch all reviews by service ID');
+    }
+    /**
+     * @return JsonResponse
+     */
+    public function getReviewsByUserId(Request $request, $user_id): JsonResponse
+    {
+        $services = OccasionEventReviews::where('user_id', $user_id)->with('user', 'occasionEvent')
+            ->orderBy('rate', 'DESC')->get()->toArray();
+        usort($services, function ($a, $b) {
+            return $a['rate'] <=> $b['rate'];
+        });
+        return sendResponse($services, 'Fetch all reviews by service ID');
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function getReviewsByProviderId(Request $request, $provider_id): JsonResponse
+    {
+        $response = [];
+        $serviceIds = OccasionEvent::where('company_id', $provider_id)->get()->pluck('id')->toArray();
+        if($serviceIds) {
+            $response = OccasionEventReviews::whereIn('occasion_event_id', $serviceIds)->with('user', 'occasionEvent')
+                ->orderBy('rate', 'DESC')->get()->toArray();
+            usort($response, function ($a, $b) {
+                return $a['rate'] <=> $b['rate'];
+            });
+        }
+        return sendResponse($response, 'Fetch all reviews by provider ID');
+    }
+
+    public function updateReviewToService(Request $request) : JsonResponse {
+        $data = $request->all();
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'rate' => 'required|integer',
+        ]);
+        if ($validator->fails())  {
+            return sendError('Something went wrong',$validator->errors()->all(),422);
+        }
+        $review = OccasionEventReviews::whereIn('id', $data['id'])->first();
+        $review->title = $data['title'] ?? '';
+        $review->description = $data['description'] ?? '';
+        $review->rate = (int)$data['rate'];
+        $review->save();
+        return sendResponse($review, 'Review is Updated');
+    }
+    public function addReviewToService(Request $request) : JsonResponse {
+        $data = $request->all();
+        $validator = Validator::make($request->all(), [
+            'service_id' => 'required',
+            'user_id' =>  'required',
+            'rate' => 'required|integer',
+        ]);
+        if ($validator->fails())  {
+            return sendError('Something went wrong',$validator->errors()->all(),422);
+        }
+        $review = new OccasionEventReviews();
+        $review->occasion_event_id = $data['service_id'];
+        $review->user_id = $data['user_id'];
+        $review->title = $data['title'] ?? '';
+        $review->description = $data['description'] ?? '';
+        $review->rate = (int)$data['rate'];
+        $review->save();
+        return sendResponse($review, 'Review is added');
     }
 
     /**
