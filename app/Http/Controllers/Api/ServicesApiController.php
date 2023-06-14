@@ -99,6 +99,14 @@ class ServicesApiController extends Controller
         if ($validator->fails())  {
             return sendError('Something went wrong',$validator->errors()->all(),422);
         }
+        $service= OccasionEvent::where('id', $data['service_id'])->first();
+        if(!$service) {
+            return sendError('Something went wrong','Service is not found on system',422);
+        }
+        $user = User::where('id', $data['user_id'])->first();
+        if(!$user) {
+            return sendError('Something went wrong','User is not found on system',422);
+        }
         $review = new OccasionEventReviews();
         $review->occasion_event_id = $data['service_id'];
         $review->user_id = $data['user_id'];
