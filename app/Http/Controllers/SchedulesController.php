@@ -67,7 +67,7 @@ class SchedulesController extends Controller
         $dates = [];
         /**
          * Request Type:
-         * 1 - Block all weekends (sat-sun only)
+         * 1 - Block all weekends (sat-sun only) (update to fri-sat)
          * 2 - Block all days
          * 3 - Unblock all days
          * 4 - Clear blocked
@@ -75,7 +75,7 @@ class SchedulesController extends Controller
         $response = [];
         if ($request->type == 1) {
             while ($date <= $end) {
-                if ($date->isWeekend()) {
+                if ($date->isFriday() || $date->isSaturday()) {
                     $dates[] = [
                         'old_format' => $date->format('d/m/Y'),
                         'new_format' => $date->format('Y-m-d')
