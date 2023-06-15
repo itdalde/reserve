@@ -47,7 +47,7 @@
 
       <nav id="navbar" class="navbar">
         <ul style=" {{ __('home.home') == 'Home' ? 'direction: ltr;' : 'direction: rtl;' }}">
-          <li><a class="nav-link scrollto active" href="#about">{{ __('home.home') }}</a></li>
+          <li><a class="nav-link scrollto active" href="#header">{{ __('home.home') }}</a></li>
           <li><a class="nav-link scrollto" href="#services">{{ __('home.what_we_offer') }}</a></li>
           <li><a class="nav-link scrollto" href="#vendor">{{ __('home.for_vendors') }}</a></li>
           <li><a class="nav-link " href="{{ route('login', ['register' => '1']) }}"><span
