@@ -51,7 +51,7 @@
           <li><a class="nav-link scrollto" href="#services">{{ __('home.what_we_offer') }}</a></li>
           <li><a class="nav-link scrollto" href="#vendor">{{ __('home.for_vendors') }}</a></li>
           <li><a class="nav-link " href="{{ route('login', ['register' => '1']) }}"><span
-                class="btn text-white bg-warning">
+                class="btn text-white btn-solid">
                 {{ __('home.download_for_free') }}
               </span></a></li>
           @if (Route::has('login'))
@@ -284,7 +284,7 @@
 
               <div class="col-md-12" data-aos="fade-up">
                 <div>
-                  <h4 class="text-lg fs-1">{{ __('home.Download a World of Hospitality') }}</h4>
+                  <h4 class="text-lg fs-1 fw-bold">{{ __('home.Download a World of Hospitality') }}</h4>
                 </div>
                 <div data-aos="fade-up" data-aos-delay="600">
                   <div class="text-lg-start pt-5">
