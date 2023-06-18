@@ -34,266 +34,281 @@
 
     <div class="container-fluid">
         <div class="row h-100 login-form">
+
             <!-- Form Header -->
-            <div class="col-md-12 col-lg-6 form-details p-0" data-aos="fade-right" data-aos-delay="100"
-                data-aos-mirror="true" data-aos-once="false">
-                <div class="mt-5">
-                    <div class="row g-0 mt-5">
-                        <div class="pt-5">
-                            <div class="text-center">
-                                <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
+            <div class="col-md-12 col-lg-6 login-form-header content left-content p-0" data-aos="fade-right"
+                data-aos-delay="100" data-aos-mirror="true" data-aos-once="false">
+                <!-- for Login -->
+                <div class="top h-100 form-welcome-message">
+                    <div class="pt-5">
+                        <div class="row g-0 pt-5">
+                            <div class="pt-5">
+                                <div class="text-center">
+                                    <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center pt-5 position-relative" style="z-index: 9;">
+                            <div class="mt-5 w-50">
+                                <div class="text-start">
+                                    <h1 class="mb-3 fw-bolder">Welcome Back!</h1>
+                                    <p class="mb-0">Don't have a Reserve Vendor account?</p>
+                                    <p class="">Create an account below!</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <div class="w-50">
+                                    <button
+                                        class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 create-account-btn"
+                                        role="button">create an account</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row d-flex justify-content-center pt-5 position-relative" style="z-index: 9;">
-                        <div class="mt-5 w-50">
-                            <div class="text-start">
-                                <h1 class="mb-3 fw-bolder">Welcome Back!</h1>
-                                <p class="mb-0">Don't have a Reserve Vendor account?</p>
-                                <p class="">Create an account below!</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-3">
-                            <div class="w-50">
-                                <button class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 create-account-btn"
-                                    role="button" id="sign-up-btn">create
-                                    an
-                                    account</button>
-                            </div>
-                        </div>
+                    <div class="w-100">
+                        <img src="{{ asset('assets/landing/img/top-asset.png') }}" alt="top-asset"
+                            class="w-100 position-absolute top-0" />
+                        <img src="{{ asset('assets/landing/img/base-asset.png') }}" alt="base-asset"
+                            class="w-100 position-absolute bottom-0" />
                     </div>
                 </div>
-                <div class="w-100">
-                    <img src="{{ asset('assets/landing/img/top-asset.png') }}" alt="top-asset"
-                        class="w-100 position-absolute top-0" />
-                    <img src="{{ asset('assets/landing/img/base-asset.png') }}" alt="base-asset"
-                        class="w-100 position-absolute bottom-0" />
+
+                <!-- for Registration -->
+                <div class="bottom h-100 d-none form-welcome-message">
+                    <div class="col-md-12 col-lg-6 w-100 h-100" data-aos="fade-right" data-aos-delay="100"
+                        data-aos-mirror="true" data-aos-once="false">
+                        <div class="row g-0 pt-5">
+                            <div class="pt-5">
+                                <div class="text-center pt-5">
+                                    <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center pt-5 position-relative" style="z-index: 9;">
+                            <div class="pt-5">
+                                <div class="text-center">
+                                    <h1 class="fw-bolder">Already Registered?</h1>
+                                    <div class="my-5">
+                                        <p class="mb-0">Already have a Reserve Vendor account?</p>
+                                        <p class="">Login to your account below!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button role="button" id="sign-in-btn"
+                                    class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 login-btn">Login</button>
+                            </div>
+                        </div>
+                        <div class="w-100">
+                            <img src="{{ asset('assets/landing/img/top-asset.png') }}" alt="top-asset"
+                                class="w-100 position-absolute top-0" />
+                            <img src="{{ asset('assets/landing/img/base-asset.png') }}" alt="base-asset"
+                                class="w-100 position-absolute bottom-0" />
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
             <!-- Login Form -->
-            <div class="col-md-12 col-lg-6 login-form-right" data-aos="fade-left" data-aos-delay="100"
+            <div class="col-md-12 col-lg-6 p-0 right-content content" data-aos="fade-left" data-aos-delay="100"
                 data-aos-mirror="true" data-aos-once="false">
-                <div class="row d-flex justify-content-center">
-                    <div class="pt-5">
-                        <h3 class="text-center mt-5">Login to Reserve</h3>
+
+                <!-- for Login -->
+                <div class="top" style="z-index: 999;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="pt-5">
+                            <h3 class="text-center mt-5">Login to Reserve</h3>
+                        </div>
+                    </div>
+                    <div class="container w-50 mt-5">
+                        <div class="row pt-5">
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
+                                <div class="input-group input-group-lg first">
+                                    <span class="input-group-text rounded-0 bg-white" id="email">
+                                        <i class="bi bi-person-circle"></i>
+                                    </span>
+                                    <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                        placeholder="Email Address" id="email" name="email" value="{{ old('email')}}"
+                                        required autofocus autocomplete="false">
+                                </div>
+
+                                <div class="input-group input-group-lg second pt-4">
+                                    <span class="input-group-text rounded-0 bg-white" id="password">
+                                        <i class="bi bi-shield-lock"></i>
+                                    </span>
+
+                                    <input type="password"
+                                        class="form-control shadow-none rounded-0 border-start-0 border-end-0"
+                                        placeholder="{{ __('login.Password')}}" id="password" name="password" required>
+
+                                    <span class="input-group-text rounded-0 bg-white" role="button"
+                                        style="margin-left: -1px;">
+                                        <i class="bi bi-eye-slash toggle-password"></i>
+                                    </span>
+                                </div>
+
+                                <div class="text-end pt-2 mb-3 pb-1">
+                                    <a class="text-muted" href="#!">Forgot password?</a>
+                                </div>
+
+                                <input type="submit" value="{{ __('login.login_btn') }}"
+                                    class="btn btn-solid rounded-0 mt-4 w-100 h-25 fs-4">
+                                @if (!old('first_name') && !$errors->isEmpty())
+                                <div class="alert alert-danger" role="alert">
+                                    {!! $errors->first() !!}
+                                </div>
+                                @endif
+                            </form>
+                        </div>
                     </div>
                 </div>
-                <div class="container w-50 mt-5">
-                    <div class="row pt-5">
-                        <form action="{{ route('login') }}" method="POST">
-                            @csrf
-                            <div class="input-group input-group-lg first">
-                                <span class="input-group-text rounded-0 bg-white" id="email">
-                                    <i class="bi bi-person-circle"></i>
-                                </span>
-                                <input type="email" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Email Address" id="email" name="email" value="{{ old('email')}}"
-                                    required autofocus autocomplete="false">
+
+
+                <!-- for Registration -->
+                <div class="bottom d-none">
+                    <div class="col-md-12 col-lg-6 w-100" data-aos="fade-left" data-aos-delay="100"
+                        data-aos-mirror="true" data-aos-once="false">
+                        <div class="row d-flex justify-content-center">
+                            <div class="pt-5">
+                                <h3 class="text-center">Create an Account</h3>
                             </div>
+                        </div>
+                        <div class="container w-75 mt-5">
+                            <div class="row">
+                                <form action="{{ route('register') }}" method="POST">
+                                    @csrf
+                                    <!-- Company name -->
+                                    <div class="input-group input-group-lg first">
+                                        <span class="input-group-text rounded-0 bg-white" id="company_name">
+                                            <i class="bi bi-people"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Name of the Company" id="company_name" name="company_name"
+                                            value="{{ old('company_name') }}" required autofocus>
+                                    </div>
 
-                            <div class="input-group input-group-lg second pt-4">
-                                <span class="input-group-text rounded-0 bg-white" id="password">
-                                    <i class="bi bi-shield-lock"></i>
-                                </span>
+                                    <!-- Contact Person -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="full_name">
+                                            <i class="bi bi-person-circle"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Name of the person to contact" id="first_name"
+                                            value="{{ old('full_name') }}" name="full_name">
+                                    </div>
+                                    <!-- Contact Person Position -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="position">
+                                            <i class="bi bi-award"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Position of the contact person" id="position"
+                                            value="{{ old('position') }}" name="position">
+                                    </div>
+                                    <!-- Phone number -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="phone_number">
+                                            <i class="bi bi-telephone"></i>
+                                        </span>
+                                        <input type="phone" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Phone Number" id="phone_number"
+                                            value="{{ old('phone_number') }}" name="phone_number">
+                                    </div>
+                                    <!-- Email -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="email">
+                                            <i class="bi bi-envelope"></i>
+                                        </span>
+                                        <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Email" id="email" name="email" value="{{ old('email')}}"
+                                            required>
+                                    </div>
+                                    <!-- Location -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="location">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Company location in Qatar" id="location"
+                                            value="{{ old('location') }}" name="location">
+                                    </div>
 
-                                <input type="password"
-                                    class="form-control shadow-none rounded-0 border-start-0 border-end-0"
-                                    placeholder="{{ __('login.Password')}}" id="password" name="password" required>
+                                    <!-- Registration No. -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="registration_number">
+                                            <i class="bi bi-journal-text"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Commercial Registration Number" id="registration_number"
+                                            value="{{ old('registration_number') }}" name="registration_number">
+                                    </div>
+                                    <!-- Password -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="password">
+                                            <i class="bi bi-shield-lock"></i>
+                                        </span>
+                                        <input type="password"
+                                            class="form-control shadow-none rounded-0 border-start-0 hide-if-valid"
+                                            placeholder="Password" id="password"
+                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
+                                            title="{{ __('login.password_role') }}" required>
+                                    </div>
 
-                                <span class="input-group-text rounded-0 bg-white" role="button"
-                                    style="margin-left: -1px;">
-                                    <i class="bi bi-eye-slash toggle-password"></i>
-                                </span>
+                                    <!-- Password Rules -->
+                                    <div class="d-flex flex-column validations px-3 d-none">
+                                        <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role1') }}
+                                            <i class="ps-2 bi bi-x-circle"></i>
+                                        </span>
+                                        <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role2') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                        <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role3') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                        <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role4') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                        <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role5') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                    </div>
+
+                                    <!-- Services Offered -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white" id="email">
+                                            <i class="bi bi-card-checklist"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Which services would you like to sign up for?" id="email"
+                                            value="{{ old('service_type') }}" name="service_type">
+                                    </div>
+
+                                    <!-- Description  -->
+                                    <input type="hidden" name="company_description">
+                                    @if (old('first_name') && !$errors->isEmpty())
+                                    <div class="alert alert-danger" role="alert">
+                                        {!! $errors->first() !!}
+                                    </div>
+                                    @endif
+
+                                    @if (config('auth.captcha.registration'))
+                                    @captcha()
+                                    @endif
+
+                                    <button type="submit" id="btn-submit-change-pass"
+                                        class="btn btn-solid rounded-0 mt-4 w-100 fs-4 btn-create-account">Create
+                                        Account</button>
+                                </form>
                             </div>
-
-                            <div class="text-end pt-2 mb-3 pb-1">
-                                <a class="text-muted" href="#!">Forgot password?</a>
-                            </div>
-
-                            <input type="submit" value="{{ __('login.login_btn') }}"
-                                class="btn btn-solid rounded-0 mt-4 w-100 h-25 fs-4">
-                            @if (!old('first_name') && !$errors->isEmpty())
-                            <div class="alert alert-danger" role="alert">
-                                {!! $errors->first() !!}
-                            </div>
-                            @endif
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row h-100 registration-form d-none">
-            <!-- Registration Form -->
-            <div class="col-md-12 col-lg-6" data-aos="fade-left" data-aos-delay="100" data-aos-mirror="true"
-                data-aos-once="false">
-                <div class="row d-flex justify-content-center">
-                    <div class="pt-5">
-                        <h3 class="text-center">Create an Account</h3>
-                    </div>
-                </div>
-                <div class="container w-75 mt-5">
-                    <div class="row">
-                        <form action="{{ route('register') }}" method="POST">
-                            @csrf
-                            <!-- Company name -->
-                            <div class="input-group input-group-lg first">
-                                <span class="input-group-text rounded-0 bg-white" id="company_name">
-                                    <i class="bi bi-people"></i>
-                                </span>
-                                <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Name of the Company" id="company_name" name="company_name"
-                                    value="{{ old('company_name') }}" required autofocus>
-                            </div>
-
-                            <!-- Contact Person -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="full_name">
-                                    <i class="bi bi-person-circle"></i>
-                                </span>
-                                <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Name of the person to contact" id="first_name"
-                                    value="{{ old('full_name') }}" name="full_name">
-                            </div>
-                            <!-- Contact Person Position -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="position">
-                                    <i class="bi bi-award"></i>
-                                </span>
-                                <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Position of the contact person" id="position"
-                                    value="{{ old('position') }}" name="position">
-                            </div>
-                            <!-- Phone number -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="phone_number">
-                                    <i class="bi bi-telephone"></i>
-                                </span>
-                                <input type="phone" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Phone Number" id="phone_number" value="{{ old('phone_number') }}"
-                                    name="phone_number">
-                            </div>
-                            <!-- Email -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="email">
-                                    <i class="bi bi-envelope"></i>
-                                </span>
-                                <input type="email" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Email" id="email" name="email" value="{{ old('email')}}" required>
-                            </div>
-                            <!-- Location -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="location">
-                                    <i class="bi bi-geo-alt"></i>
-                                </span>
-                                <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Company location in Qatar" id="location" value="{{ old('location') }}"
-                                    name="location">
-                            </div>
-
-                            <!-- Registration No. -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="registration_number">
-                                    <i class="bi bi-journal-text"></i>
-                                </span>
-                                <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Commercial Registration Number" id="registration_number"
-                                    value="{{ old('registration_number') }}" name="registration_number">
-                            </div>
-                            <!-- Password -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="password">
-                                    <i class="bi bi-shield-lock"></i>
-                                </span>
-                                <input type="password"
-                                    class="form-control shadow-none rounded-0 border-start-0 hide-if-valid"
-                                    placeholder="Password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                    autocomplete="new-password" title="{{ __('login.password_role') }}" required>
-                            </div>
-
-                            <!-- Password Rules -->
-                            <div class="d-flex flex-column validations px-3 d-none">
-                                <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{
-                                    __('login.password_role1') }}
-                                    <i class="ps-2 bi bi-x-circle"></i>
-                                </span>
-                                <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{
-                                    __('login.password_role2') }}
-                                    <i class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{
-                                    __('login.password_role3') }}
-                                    <i class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{
-                                    __('login.password_role4') }}
-                                    <i class="ps-2 bi bi-x-circle"></i> </span>
-                                <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{
-                                    __('login.password_role5') }}
-                                    <i class="ps-2 bi bi-x-circle"></i> </span>
-                            </div>
-
-                            <!-- Services Offered -->
-                            <div class="input-group input-group-lg first pt-3">
-                                <span class="input-group-text rounded-0 bg-white" id="email">
-                                    <i class="bi bi-card-checklist"></i>
-                                </span>
-                                <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                    placeholder="Which services would you like to sign up for?" id="email"
-                                    value="{{ old('service_type') }}" name="service_type">
-                            </div>
-
-                            <!-- Description  -->
-                            <input type="hidden" name="company_description">
-                            @if (old('first_name') && !$errors->isEmpty())
-                            <div class="alert alert-danger" role="alert">
-                                {!! $errors->first() !!}
-                            </div>
-                            @endif
-
-                            @if (config('auth.captcha.registration'))
-                            @captcha()
-                            @endif
-
-                            <button type="submit" id="btn-submit-change-pass"
-                                class="btn btn-solid rounded-0 mt-4 w-100 fs-4 btn-create-account">Create
-                                Account</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Form header -->
-            <div class="col-md-12 col-lg-6 form-details p-0" data-aos="fade-right" data-aos-delay="100"
-                data-aos-mirror="true" data-aos-once="false">
-                <div class="row g-0">
-                    <div class="pt-5">
-                        <div class="text-center">
-                            <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
-                        </div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-center pt-5 position-relative" style="z-index: 9;">
-                    <div class="pt-5">
-                        <div class="text-center">
-                            <h1 class="fw-bolder">Already Registered?</h1>
-                            <div class="my-5">
-                                <p class="mb-0">Already have a Reserve Vendor account?</p>
-                                <p class="">Login to your account below!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <button role="button" id="sign-in-btn"
-                            class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 login-account">Login</button>
-                    </div>
-                </div>
-                <div class="w-100">
-                    <img src="{{ asset('assets/landing/img/top-asset.png') }}" alt="top-asset"
-                        class="w-100 position-absolute top-0" />
-                    <img src="{{ asset('assets/landing/img/base-asset.png') }}" alt="base-asset"
-                        class="w-100 position-absolute bottom-0" />
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Modal -->
@@ -335,19 +350,6 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/landing/js/main.js') }}"></script>
-    <script>
-        const sign_in_btn = document.querySelector("#sign-in-btn");
-        const sign_up_btn = document.querySelector("#sign-up-btn");
-        const container = document.querySelector(".container-fluid");
-        debugger;
-        sign_up_btn.addEventListener("click", () => {
-            container.classList.add("sign-up-mode");
-        });
-
-        sign_in_btn.addEventListener("click", () => {
-            container.classList.remove("sign-up-mode");
-        });
-    </script>
 
     <script>
         $(document).ready(function () {
@@ -380,27 +382,26 @@
 
         });
 
-        $('body').on('click', '.create-account-btn', function (e) {
-            setTimeout(function () {
-                $('.login-form').addClass('d-none')
-                $('.registration-form').removeClass('d-none')
-            }, 1000)
+            $('body').on('click', '.create-account-btn', function (e) {
+            $('.top').addClass('d-none');
+            $('.bottom').removeClass('d-none');
+            $('.right-content').addClass('animate-left animate');
+            $('.left-content').addClass('animate-right animate').css('z-index', '9');
         });
 
-        $('body').on('click', '.login-account', function (e) {
-            setTimeout(function () {
-                $('.login-form').removeClass('d-none')
-                $('.registration-form').addClass('d-none')
-            }, 1000)
+        $('body').on('click', '.login-btn', function (e) {
+            $('.bottom').addClass('d-none');
+            $('.top').removeClass('d-none');
+
+            $('.right-content').removeClass('animate-left animate');
+            $('.left-content').removeClass('animate-right animate').css('z-index');
         })
 
         $('body').on('click', '#sign-up-btn', function (e) {
 
-            setTimeout(function () {
-                $('.sign-in-form').removeClass('show').addClass('hide')
-                $('.sign-up-form').addClass('show').removeClass('hide')
+            $('.sign-in-form').removeClass('show').addClass('hide')
+            $('.sign-up-form').addClass('show').removeClass('hide')
 
-            }, 1200);
         });
 
         $('body').on('click', '#sign-in-btn', function (e) {

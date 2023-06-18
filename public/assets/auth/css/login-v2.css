@@ -25,13 +25,12 @@ body {
   color: #48484A;
 }
 
-.login-account,
+.login-btn,
 .create-account-btn {
   height: 60px;
 }
 
-.registration-form input,
-.login-form-right input {
+input {
   height: 60px;
 }
 
@@ -47,6 +46,12 @@ body {
   color: #F0F0F0;
 }
 
+.top,
+.bottom {
+  flex: 1;
+  transition: transform 0.5s ease;
+}
+
 .btn-outline {
   border: 2px solid #D28F5D;
   color: #D28F5D
@@ -57,4 +62,38 @@ body {
 .btn-outline:hover {
   border: 2px solid #D28F5D;
   color: #F1B88C
+}
+
+.form-welcome-message {
+  background-color: #F6E9DF;
+}
+
+/* ======== Animations ======== */
+
+.content {
+  transition: transform 0.5s ease !important;
+}
+
+.animate-left {
+  transition: ease-in-out;
+  transform: translateX(-100%) !important;
+}
+
+.animate-right {
+  transition: ease-in-out;
+  transform: translateX(100%) !important;
+}
+
+@keyframes fadeAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate {
+  animation: fadeAnimation 0.5s ease;
 }
