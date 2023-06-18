@@ -363,171 +363,170 @@
             $(document).on('shown.bs.modal', '.modal', function () {
                 $('.modal-backdrop').before($(this));
             });
-            @if (Session:: has('signup'))
-        $('#signupSuccessModal').modal('show');
-        @endif
-        @if (app('request') -> input('register'))
-            onCLickSignUp()
-        @endif
-        let data = "{{ old('first_name') }}";
-        if (data) {
-            onCLickSignUp()
-        }
-
-        $('#signupSuccessModal').modal('show');
-
-        function onCLickSignUp() {
-            $('.create-account-btn').click();
-            $('.top').addClass('d-none');
-            $('.bottom').removeClass('d-none');
-            $('.right-content').addClass('animate-left animate');
-            $('.left-content').addClass('animate-right animate').css('z-index', '9');
-            // setTimeout(function () {
-            //     $('.sign-in-form').removeClass('show').addClass('d-none')
-            //     $('.sign-up-form').addClass('show').removeClass('d-none');
-            // }, 1200);
-        }
-
-        $('body').on('click', '.login-btn', function (e) {
-            $('.login-form').removeClass('d-none')
-            $('.registration-form').addClass('d-none');
-
-        });
-
-        $('body').on('click', '.create-account-btn', function (e) {
-            $('.top').addClass('d-none');
-            $('.bottom').removeClass('d-none');
-            $('.right-content').addClass('animate-left animate');
-            $('.left-content').addClass('animate-right animate').css('z-index', '9');
-        });
-
-        $('body').on('click', '.login-btn', function (e) {
-            $('.bottom').addClass('d-none');
-            $('.top').removeClass('d-none');
-
-            $('.right-content').removeClass('animate-left animate');
-            $('.left-content').removeClass('animate-right animate').css('z-index');
-        })
-
-        $('body').on('click', '#sign-up-btn', function (e) {
-
-            $('.sign-in-form').removeClass('show').addClass('hide')
-            $('.sign-up-form').addClass('show').removeClass('hide')
-
-        });
-
-        $('body').on('click', '#sign-in-btn', function (e) {
-            setTimeout(function () {
-                $('.sign-up-form').removeClass('show').addClass('hide')
-                $('.sign-in-form').addClass('show').removeClass('hide')
-            }, 1200);
-        });
-        $(".toggle-password").click(function () {
-
-            $(this).toggleClass("bi-eye bi-eye-slash");
-            let input = $(this).closest('div').find('input');
-            if (input.attr("type") == "password") {
-                input.attr("type", "text");
-            } else {
-                input.attr("type", "password");
+            @if (Session::has('signup'))
+            $('#signupSuccessModal').modal('show');
+            @endif
+            @if (app('request')->input('register'))
+                onCLickSignUp()
+            @endif
+            let data = "{{ old('first_name') }}";
+            if (data) {
+                onCLickSignUp()
             }
-        });
 
-        $('body').on('keyup change blur', '#password', function (e) {
-            let lowerCaseLetters = /[a-z]/g;
-            let upperCaseLetters = /[A-Z]/g;
-            let numbers = /[0-9]/g;
-            let char = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
-            let btn = $('#btn-submit-change-pass');
-            let pass = $('#password').val();
-            let hideIfValid = false;
-            if ($(this).hasClass('hide-if-valid')) {
-                hideIfValid = true;
+
+            function onCLickSignUp() {
+                $('.create-account-btn').click();
+                $('.top').addClass('d-none');
+                $('.bottom').removeClass('d-none');
+                $('.right-content').addClass('animate-left animate');
+                $('.left-content').addClass('animate-right animate').css('z-index', '9');
+                // setTimeout(function () {
+                //     $('.sign-in-form').removeClass('show').addClass('d-none')
+                //     $('.sign-up-form').addClass('show').removeClass('d-none');
+                // }, 1200);
             }
-            if ($(this).val() != '') {
-                if (pass.match(lowerCaseLetters)) {
-                    if (hideIfValid) {
-                        $('.lcase').addClass('hide');
-                    }
-                    $('.lcase').addClass('valid').removeClass('invalid')
-                    $('.lcase span').text('check_circle_outline');
 
+            $('body').on('click', '.login-btn', function (e) {
+                $('.login-form').removeClass('d-none')
+                $('.registration-form').addClass('d-none');
+
+            });
+
+            $('body').on('click', '.create-account-btn', function (e) {
+                $('.top').addClass('d-none');
+                $('.bottom').removeClass('d-none');
+                $('.right-content').addClass('animate-left animate');
+                $('.left-content').addClass('animate-right animate').css('z-index', '9');
+            });
+
+            $('body').on('click', '.login-btn', function (e) {
+                $('.bottom').addClass('d-none');
+                $('.top').removeClass('d-none');
+
+                $('.right-content').removeClass('animate-left animate');
+                $('.left-content').removeClass('animate-right animate').css('z-index');
+            })
+
+            $('body').on('click', '#sign-up-btn', function (e) {
+
+                $('.sign-in-form').removeClass('show').addClass('hide')
+                $('.sign-up-form').addClass('show').removeClass('hide')
+
+            });
+
+            $('body').on('click', '#sign-in-btn', function (e) {
+                setTimeout(function () {
+                    $('.sign-up-form').removeClass('show').addClass('hide')
+                    $('.sign-in-form').addClass('show').removeClass('hide')
+                }, 1200);
+            });
+            $(".toggle-password").click(function () {
+
+                $(this).toggleClass("bi-eye bi-eye-slash");
+                let input = $(this).closest('div').find('input');
+                if (input.attr("type") == "password") {
+                    input.attr("type", "text");
                 } else {
-                    if (hideIfValid) {
-                        $('.lcase').removeClass('hide');
-                    }
-                    $('.lcase').addClass('invalid').removeClass('valid')
-                    $('.lcase span').text('highlight_off');
+                    input.attr("type", "password");
                 }
+            });
 
-                if (pass.match(upperCaseLetters)) {
-                    if (hideIfValid) {
-                        $('.ucase').addClass('hide');
+            $('body').on('keyup change blur', '#password', function (e) {
+                let lowerCaseLetters = /[a-z]/g;
+                let upperCaseLetters = /[A-Z]/g;
+                let numbers = /[0-9]/g;
+                let char = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+                let btn = $('#btn-submit-change-pass');
+                let pass = $('#password').val();
+                let hideIfValid = false;
+                if ($(this).hasClass('hide-if-valid')) {
+                    hideIfValid = true;
+                }
+                if ($(this).val() != '') {
+                    if (pass.match(lowerCaseLetters)) {
+                        if (hideIfValid) {
+                            $('.lcase').addClass('hide');
+                        }
+                        $('.lcase').addClass('valid').removeClass('invalid')
+                        $('.lcase span').text('check_circle_outline');
+
+                    } else {
+                        if (hideIfValid) {
+                            $('.lcase').removeClass('hide');
+                        }
+                        $('.lcase').addClass('invalid').removeClass('valid')
+                        $('.lcase span').text('highlight_off');
                     }
-                    $('.ucase').addClass('valid').removeClass('invalid')
-                    $('.ucase span').text('check_circle_outline');
+
+                    if (pass.match(upperCaseLetters)) {
+                        if (hideIfValid) {
+                            $('.ucase').addClass('hide');
+                        }
+                        $('.ucase').addClass('valid').removeClass('invalid')
+                        $('.ucase span').text('check_circle_outline');
+                    } else {
+                        if (hideIfValid) {
+                            $('.ucase').removeClass('hide');
+                        }
+                        $('.ucase').addClass('invalid').removeClass('valid')
+                        $('.ucase span').text('highlight_off');
+                    }
+
+                    if (pass.match(numbers)) {
+                        if (hideIfValid) {
+                            $('.onum').addClass('hide');
+                        }
+                        $('.onum').addClass('valid').removeClass('invalid')
+                        $('.onum span').text('check_circle_outline');
+                    } else {
+                        if (hideIfValid) {
+                            $('.onum').removeClass('hide');
+                        }
+                        $('.onum').addClass('invalid').removeClass('valid')
+                        $('.onum span').text('highlight_off');
+
+                    }
+
+                    if (pass.match(char)) {
+                        if (hideIfValid) {
+                            $('.schar').addClass('hide');
+                        }
+                        $('.schar').addClass('valid').removeClass('invalid')
+                        $('.schar span').text('check_circle_outline');
+                    } else {
+                        if (hideIfValid) {
+                            $('.schar').removeClass('hide');
+                        }
+                        $('.schar').addClass('invalid').removeClass('valid')
+                        $('.schar span').text('highlight_off');
+                    }
+
+                    if (pass.length >= 8) {
+                        if (hideIfValid) {
+                            $('.mchar').addClass('hide');
+                        }
+                        $('.mchar').addClass('valid').removeClass('invalid')
+                        $('.mchar span').text('check_circle_outline');
+                    } else {
+                        if (hideIfValid) {
+                            $('.mchar').removeClass('hide');
+                        }
+                        $('.mchar').addClass('invalid').removeClass('valid')
+                        $('.mchar span').text('highlight_off');
+                    }
+
+                    if (pass.length >= 8 && pass.match(char) && pass.match(numbers) && pass.match(
+                        upperCaseLetters) && pass.match(lowerCaseLetters)) {
+                        btn.attr('disabled', false)
+                    } else {
+                        btn.attr('disabled', true)
+                    }
                 } else {
-                    if (hideIfValid) {
-                        $('.ucase').removeClass('hide');
-                    }
-                    $('.ucase').addClass('invalid').removeClass('valid')
-                    $('.ucase span').text('highlight_off');
-                }
-
-                if (pass.match(numbers)) {
-                    if (hideIfValid) {
-                        $('.onum').addClass('hide');
-                    }
-                    $('.onum').addClass('valid').removeClass('invalid')
-                    $('.onum span').text('check_circle_outline');
-                } else {
-                    if (hideIfValid) {
-                        $('.onum').removeClass('hide');
-                    }
-                    $('.onum').addClass('invalid').removeClass('valid')
-                    $('.onum span').text('highlight_off');
-
-                }
-
-                if (pass.match(char)) {
-                    if (hideIfValid) {
-                        $('.schar').addClass('hide');
-                    }
-                    $('.schar').addClass('valid').removeClass('invalid')
-                    $('.schar span').text('check_circle_outline');
-                } else {
-                    if (hideIfValid) {
-                        $('.schar').removeClass('hide');
-                    }
-                    $('.schar').addClass('invalid').removeClass('valid')
-                    $('.schar span').text('highlight_off');
-                }
-
-                if (pass.length >= 8) {
-                    if (hideIfValid) {
-                        $('.mchar').addClass('hide');
-                    }
-                    $('.mchar').addClass('valid').removeClass('invalid')
-                    $('.mchar span').text('check_circle_outline');
-                } else {
-                    if (hideIfValid) {
-                        $('.mchar').removeClass('hide');
-                    }
-                    $('.mchar').addClass('invalid').removeClass('valid')
-                    $('.mchar span').text('highlight_off');
-                }
-
-                if (pass.length >= 8 && pass.match(char) && pass.match(numbers) && pass.match(
-                    upperCaseLetters) && pass.match(lowerCaseLetters)) {
                     btn.attr('disabled', false)
-                } else {
-                    btn.attr('disabled', true)
+                    //$('.validations').find('span').addClass('hide');
                 }
-            } else {
-                btn.attr('disabled', false)
-                //$('.validations').find('span').addClass('hide');
-            }
-        });
+            });
         });
     </script>
 </body>
