@@ -25,290 +25,325 @@
     <link href="{{ asset('assets/landing/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/landing/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/landing/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/auth/css/login.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/auth/css/mobile.style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/auth/css/login-v2.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('assets/auth/css/mobile.style.css') }}" rel="stylesheet"> -->
 
 </head>
 
 <body data-aos-once="false">
-    <div class="container-fluid row mx-auto" data-aos-once="false" data-aos-mirror="true" data-aos="zoom-in">
-        <div class="forms-container col-sm-12 col-md-12  col-lg-6 ">
-            <div class="signin-signup">
-                <div class="d-flex align-content-end flex-wrap">
-                    <div class="signin-p1 sign-in-form mx-auto">
-                        <form method="POST" action="{{ route('login') }}" class=" ">
 
-                            <div class="d-flex flex-column w-100 mx-auto "
-                                style="{{ __('home.home') == 'Home' ? 'direction: ltr;' : 'direction: rtl;' }}">
-                                <h2 class="title">
-                                    <div class="p-2 text-center">
-                                        <h4>Login to Reserve</h4>
-                                    </div>
-                                </h2>
-                                @csrf
+    <div class="container-fluid">
+        <div class="row h-100 login-form">
 
-                                <div class="input-field">
-                                    <i class="bi bi-person-circle"></i>
-                                    <input type="email" class="form-control" name="email"
-                                        value="{{ old('email') }}" placeholder="Email Address"
-                                        required autofocus>
+            <!-- Form Header -->
+            <div class="col-md-12 col-lg-6 login-form-header content left-content p-0" data-aos="fade-right"
+                data-aos-delay="100" data-aos-mirror="true" data-aos-once="false">
+                <!-- for Login -->
+                <div class="top h-100 form-welcome-message">
+                    <div class="pt-5">
+                        <div class="row g-0 pt-5">
+                            <div class="pt-5">
+                                <div class="text-center">
+                                    <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
                                 </div>
-                                <div class="input-field">
-                                    <i class="bi bi-shield-lock"></i>
-                                    <input autocomplete="new-password" type="password" class="form-control"
-                                        name="password" placeholder="{{ __('login.Password') }}" required />
-                                    <i class="bi bi-eye-slash toggle-password"
-                                        style="cursor: pointer;  {{ __('home.home') == 'Home' ? 'margin-left: 590%;' : 'margin-left: 0;' }}   margin-top: -57px;"></i>
-                                </div>
-                                <input type="submit" value="{{ __('login.login_btn') }}" class="btn solid  w-100" />
-                                @if (!old('first_name') && !$errors->isEmpty())
-                                    <div class="alert alert-danger" role="alert">
-                                        {!! $errors->first() !!}
-                                    </div>
-                                @endif
                             </div>
-                        </form>
+                        </div>
+                        <div class="row d-flex justify-content-center pt-5 position-relative" style="z-index: 9;">
+                            <div class="mt-5 w-50">
+                                <div class="text-start">
+                                    <h1 class="mb-3 fw-bolder">Welcome Back!</h1>
+                                    <p class="mb-0">Don't have a Reserve Vendor account?</p>
+                                    <p class="">Create an account below!</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <div class="w-50">
+                                    <button
+                                        class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 create-account-btn"
+                                        id="sign-up-btn" role="button">create an account</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="signup-p1 sign-up-form mx-auto hide">
-                        <div class="row">
+                    <div class="w-100">
+                        <img src="{{ asset('assets/landing/img/top-asset.png') }}" alt="top-asset"
+                            class="w-100 position-absolute top-0" />
+                        <img src="{{ asset('assets/landing/img/base-asset.png') }}" alt="base-asset"
+                            class="w-100 position-absolute bottom-0" />
+                    </div>
+                </div>
 
-                            <form method="POST" action="{{ route('register') }}" class=" ">
-                                @csrf
-                                <div class="p-3">
-                                    <div class="card"
-                                        style="    min-width: 100%;
-                                    width: 106%;
-                                    max-width: 200%; border: none">
-                                        <div class="card-body"
-                                            style="{{ __('home.home') == 'Home' ? 'direction: ltr;' : 'direction: rtl;' }}">
-                                            <div class="d-flex flex-column w-100 mx-auto">
-                                                <h2 class="title">
-                                                    <div class="p-2 text-center">
-                                                        <h1><strong>Create an Account</strong></h1>
-                                                    </div>
-                                                </h2>
-                                                <div class="p-1 signup-container"
-                                                    style="    max-height: 68vh; overflow-y: auto;">
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-people"></i>
-                                                            <input id="company_name" autocomplete="new-password"
-                                                                type="text" name="company_name"
-                                                                placeholder="Name of the company"
-                                                                class="mb-0 form-control w-100"
-                                                                value="{{ old('company_name') }}" required autofocus />
-                                                        </div>
-                                                    </div>
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-person-circle"></i>
-                                                            <input required type="text" id="first_name"
-                                                                value="{{ old('full_name') }}" name="full_name"
-                                                                placeholder="Name of the person to contact"
-                                                                class="mb-0 form-control w-100" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-award"></i>
-                                                            <input type="text" id="position"
-                                                                value="{{ old('position') }}" name="position"
-                                                                placeholder="Position of the person to contact"
-                                                                class="mb-0 form-control w-100" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-telephone"></i>
-                                                            <input required type="text" id="phone_number"
-                                                                value="{{ old('phone_number') }}" name="phone_number"
-                                                                placeholder="Phone Number"
-                                                                class="mb-0 form-control w-100" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-envelope"></i>
-                                                            <input id="email" type="email" name="email"
-                                                                class="mb-0 form-control w-100" placeholder="Email"
-                                                                value="{{ old('email') }}" required />
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field"><i class="bi bi-geo-alt"></i>
-                                                            <input type="text" id="location"
-                                                                value="{{ old('location') }}" name="location"
-                                                                placeholder="Company location in Qatar"
-                                                                class="mb-0 form-control w-100">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-journal-text"></i>
-                                                            <input type="text" id="registration_number"
-                                                                value="{{ old('registration_number') }}"
-                                                                name="registration_number"
-                                                                placeholder="{{ __('login.registration_number') }}"
-                                                                class="mb-0 form-control w-100" required />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-shield-lock"></i>
-
-                                                            <input
-                                                                class="form-control password block mb-0 hide-if-valid w-100"
-                                                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                                title="{{ __('login.password_role') }}"
-                                                                id="password" type="password" name="password"
-                                                                placeholder="{{ __('login.Password') }}"
-                                                                style="width: 92%;
-                                                            border-right: none;"
-                                                                autocomplete="new-password" required />
-                                                            <i class="bi bi-eye-slash toggle-password"
-                                                                style="cursor: pointer;  {{ __('home.home') == 'Home' ? 'margin-left: 590%;' : 'margin-left: 0;' }}   margin-top: -57px;"></i>
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="d-flex flex-column validations px-3">
-                                                        <span
-                                                            class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{ __('login.password_role1') }}
-                                                            <i class="ps-2 bi bi-x-circle"></i>
-                                                        </span>
-                                                        <span
-                                                            class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{ __('login.password_role2') }}
-                                                            <i class="ps-2 bi bi-x-circle"></i> </span>
-                                                        <span
-                                                            class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{ __('login.password_role3') }}
-                                                            <i class="ps-2 bi bi-x-circle"></i> </span>
-                                                        <span
-                                                            class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{ __('login.password_role4') }}
-                                                            <i class="ps-2 bi bi-x-circle"></i> </span>
-                                                        <span
-                                                            class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{ __('login.password_role5') }}
-                                                            <i class="ps-2 bi bi-x-circle"></i> </span>
-                                                    </div>
-
-
-                                                    <div class="control-group p-1 mx-auto">
-                                                        <div class="ms-2 input-field">
-                                                            <i class="bi bi-card-checklist"></i>
-
-                                                            <input type="text" id="service_type"
-                                                                value="{{ old('service_type') }}" name="service_type"
-                                                                placeholder="{{ __('login.Select Service Type') }}"
-                                                                class="mb-0 form-control w-100" required />
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="company_description">
-
-                                                    @if (old('first_name') && !$errors->isEmpty())
-                                                        <div class="alert alert-danger" role="alert">
-                                                            {!! $errors->first() !!}
-                                                        </div>
-                                                    @endif
-
-                                                    @if (config('auth.captcha.registration'))
-                                                        @captcha()
-                                                    @endif
-                                                </div>
-
-
-                                                <div class="pt-3">
-                                                    <button id="btn-submit-change-pass " type="submit"
-                                                        class="btn btn-default bg-orange submit w-100">Create my
-                                                        account
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                <!-- for Registration -->
+                <div class="bottom h-100 d-none form-welcome-message">
+                    <div class="col-md-12 col-lg-6 w-100 h-100" data-aos="fade-right" data-aos-delay="100"
+                        data-aos-mirror="true" data-aos-once="false">
+                        <div class="row g-0 pt-5">
+                            <div class="pt-5">
+                                <div class="text-center pt-5">
+                                    <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center pt-5 position-relative" style="z-index: 9;">
+                            <div class="pt-5">
+                                <div class="text-center">
+                                    <h1 class="fw-bolder">Already Registered?</h1>
+                                    <div class="my-5">
+                                        <p class="mb-0">Already have a Reserve Vendor account?</p>
+                                        <p class="">Login to your account below!</p>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <button role="button" id="sign-in-btn"
+                                    class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 login-btn">Login</button>
+                            </div>
+                        </div>
+                        <div class="w-100">
+                            <img src="{{ asset('assets/landing/img/top-asset.png') }}" alt="top-asset"
+                                class="w-100 position-absolute top-0" />
+                            <img src="{{ asset('assets/landing/img/base-asset.png') }}" alt="base-asset"
+                                class="w-100 position-absolute bottom-0" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Login Form -->
+            <div class="col-md-12 col-lg-6 p-0 right-content content" data-aos="fade-left" data-aos-delay="100"
+                data-aos-mirror="true" data-aos-once="false">
+
+                <!-- for Login -->
+                <div class="top sign-in-form" style="z-index: 999;">
+                    <div class="row d-flex justify-content-center">
+                        <div class="pt-5">
+                            <h3 class="text-center mt-5">Login to Reserve</h3>
+                        </div>
+                    </div>
+                    <div class="container w-50 mt-5">
+                        <div class="row pt-5">
+                            <form action="{{ route('login') }}" method="POST">
+                                @csrf
+                                <div class="input-group input-group-lg first">
+                                    <span class="input-group-text rounded-0 bg-white">
+                                        <i class="bi bi-person-circle"></i>
+                                    </span>
+                                    <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                        placeholder="Email Address" name="email" value="{{ old('email')}}" required
+                                        autofocus autocomplete="false">
+                                </div>
+
+                                <div class="input-group input-group-lg second pt-4">
+                                    <span class="input-group-text rounded-0 bg-white" id="password-icon">
+                                        <i class="bi bi-shield-lock"></i>
+                                    </span>
+
+                                    <input type="password"
+                                        class="form-control shadow-none rounded-0 border-start-0 border-end-0"
+                                        placeholder="{{ __('login.Password')}}" name="password" required>
+
+                                    <span class="input-group-text rounded-0 bg-white" role="button"
+                                        style="margin-left: -1px;">
+                                        <i class="bi bi-eye-slash toggle-password"></i>
+                                    </span>
+                                </div>
+
+                                <div class="text-end pt-2 mb-3 pb-1">
+                                    <a class="text-muted" href="#!">Forgot password?</a>
+                                </div>
+
+                                <input type="submit" value="{{ __('login.login_btn') }}"
+                                    class="btn btn-solid rounded-0 mt-4 w-100 h-25 fs-4">
+                                @if (!old('first_name') && !$errors->isEmpty())
+                                <div class="alert alert-danger" role="alert">
+                                    {!! $errors->first() !!}
+                                </div>
+                                @endif
                             </form>
                         </div>
                     </div>
                 </div>
+
+
+                <!-- for Registration -->
+                <div class="bottom d-none sign-up-form">
+                    <div class="col-md-12 col-lg-6 w-100" data-aos="fade-left" data-aos-delay="100"
+                        data-aos-mirror="true" data-aos-once="false">
+                        <div class="row d-flex justify-content-center">
+                            <div class="pt-5">
+                                <h3 class="text-center">Create an Account</h3>
+                            </div>
+                        </div>
+                        <div class="container w-75 mt-5">
+                            <div class="row">
+                                <form method="POST" action="{{ route('register') }}" class="">
+                                    @csrf
+                                    <!-- Company name -->
+                                    <div class="input-group input-group-lg first">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-people"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Name of the Company" id="company_name" name="company_name"
+                                            value="{{ old('company_name') }}" required autofocus>
+                                    </div>
+
+                                    <!-- Contact Person -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-person-circle"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Name of the person to contact" id="first_name"
+                                            value="{{ old('full_name') }}" name="full_name" required>
+                                    </div>
+
+                                    <!-- Contact Person Position -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-award"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Position of the contact person" id="position"
+                                            value="{{ old('position') }}" name="position" required>
+                                    </div>
+
+                                    <!-- Phone number -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-telephone"></i>
+                                        </span>
+                                        <input type="phone" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Phone Number" id="phone_number"
+                                            value="{{ old('phone_number') }}" name="phone_number" required>
+                                    </div>
+                                    
+                                    <!-- Email -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-envelope"></i>
+                                        </span>
+                                        <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Email" id="email" name="email" value="{{ old('email')}}"
+                                            required>
+                                    </div>
+
+                                    <!-- Location -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Company location in Qatar" id="location"
+                                            value="{{ old('location') }}" name="location" required>
+                                    </div>
+
+                                    <!-- Registration No. -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-journal-text"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="{{ __('login.registration_number') }}" id="registration_number"
+                                            value="{{ old('registration_number') }}" name="registration_number"
+                                            required>
+                                    </div>
+                                    
+                                    <!-- Password -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-shield-lock"></i>
+                                        </span>
+                                        <input type="password"
+                                            class="form-control shadow-none rounded-0 border-start-0 hide-if-valid"
+                                            placeholder="Password" id="password"
+                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
+                                            title="{{ __('login.password_role') }}" required>
+                                    </div>
+
+                                    <!-- Password Rules -->
+                                    <div class="d-flex flex-column validations px-3 d-none">
+                                        <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role1') }}
+                                            <i class="ps-2 bi bi-x-circle"></i>
+                                        </span>
+                                        <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role2') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                        <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role3') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                        <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role4') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                        <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{
+                                            __('login.password_role5') }}
+                                            <i class="ps-2 bi bi-x-circle"></i> </span>
+                                    </div>
+
+                                    <!-- Services Offered -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-card-checklist"></i>
+                                        </span>
+                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                            placeholder="Which services would you like to sign up for?"
+                                            id="service_type" value="{{ old('service_type') }}" name="service_type">
+                                    </div>
+
+                                    <!-- Description  -->
+                                    <input type="hidden" name="company_description">
+                                    @if (old('first_name') && !$errors->isEmpty())
+                                    <div class="alert alert-danger" role="alert">
+                                        {!! $errors->first() !!}
+                                    </div>
+                                    @endif
+
+                                    @if (config('auth.captcha.registration'))
+                                    @captcha()
+                                    @endif
+
+                                    <button type="submit" id="btn-submit-change-pass"
+                                        class="btn btn-solid rounded-0 mt-4 w-100  fs-4 btn-create-account">Create
+                                        Account</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="panels-container col-sm-12  col-md-12 col-lg-6 ">
+    </div>
 
-            <div class="panel left-panel">
-                <div class="content text-dark reg-panel text-start" data-aos-once="false" data-aos-mirror="true"
-                    data-aos="zoom-in">
+    <!-- Modal -->
 
-                    <div class="d-flex justify-content-start logo-log-in-top">
-
-                        <a href="/">
-                            <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
-                        </a>
-                    </div>
-                    <h1><strong>Welcome Back!</strong></h1>
-                    <p>
-                        Don't have a Reserve Vendor account? <br>
-                        Create an account below!
-                    </p>
-                    <button class="btn transparent w-50" id="sign-up-btn">
-                        Create an account
-                    </button>
+    @if (Session::has('signup'))
+    <div class="modal fade" id="signupSuccessModal" tabindex="-1" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content py-4 px-md-4 px-sm-4 px-3">
+                <div class="modal-header justify-content-center border-0">
+                    <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
                 </div>
+                <div class="modal-body "
+                    style="{{ __('home.home') == 'Home' ? 'direction: ltr;' : 'direction: rtl;' }}">
+                    <div class="text-center par-2 ">
+                        <p class="text-black"> {{ __('login.Application sent successfully!') }}</p>
+                        <p>{{ __('login.review') }}</p>
 
-            </div>
-            <div class="panel right-panel">
-                <div class="content reg-panel text-dark text-start">
-
-                    <div class="d-flex justify-content-start logo-log-in-top">
-
-                        <a href="/">
-                            <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
-                        </a>
                     </div>
-                    <h1><strong>Already <br>Registered?</strong></h1>
-                    <p>Already have a Reserve Vendor account?<br>
-                        Login to your account below!
-
-                    </p>
-                    <button class="btn transparent w-75 " id="sign-in-btn">
-                        Login
-                    </button>
-
+                </div>
+                <div class="modal-footer bg-transparent text-center border-0">
+                    <a class="w-100 btn btn-solid " style="    line-height: 36px;" href="/">
+                        {{ __('login.Return Home') }}
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
-    @if (Session::has('signup'))
-        <div class="modal fade" id="signupSuccessModal" tabindex="-1" data-backdrop="static"
-            data-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content py-4 px-md-4 px-sm-4 px-3">
-                    <div class="modal-header justify-content-center border-0">
-                        <img src="{{ asset('assets/landing/img/logo-black.png') }}" alt="logo-black">
-                    </div>
-                    <div class="modal-body "
-                        style="{{ __('home.home') == 'Home' ? 'direction: ltr;' : 'direction: rtl;' }}">
-                        <div class="text-center par-2 ">
-                            <p class="text-black"> {{ __('login.Application sent successfully!') }}</p>
-                            <p>{{ __('login.review') }}</p>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-transparent text-center border-0">
-                        <a class="w-100 btn bg-orange solid " style="    line-height: 36px;"
-                            href="/">{{ __('login.Return Home') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
     @endif
+
     <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -322,166 +357,177 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/landing/js/main.js') }}"></script>
-    <script>
-        const sign_in_btn = document.querySelector("#sign-in-btn");
-        const sign_up_btn = document.querySelector("#sign-up-btn");
-        const container = document.querySelector(".container-fluid");
-
-        sign_up_btn.addEventListener("click", () => {
-            container.classList.add("sign-up-mode");
-        });
-
-        sign_in_btn.addEventListener("click", () => {
-            container.classList.remove("sign-up-mode");
-        });
-    </script>
 
     <script>
-        $(document).ready(function() {
-            $(document).on('shown.bs.modal', '.modal', function() {
+        $(document).ready(function () {
+            $(document).on('shown.bs.modal', '.modal', function () {
                 $('.modal-backdrop').before($(this));
             });
-            @if (Session::has('signup'))
-                $('#signupSuccessModal').modal('show');
-            @endif
-            @if (app('request')->input('register'))
-                onCLickSignUp()
-            @endif
-            let data = "{{ old('first_name') }}";
-            if (data) {
-                onCLickSignUp()
+            @if (Session:: has('signup'))
+        $('#signupSuccessModal').modal('show');
+        @endif
+        @if (app('request') -> input('register'))
+            onCLickSignUp()
+        @endif
+        let data = "{{ old('first_name') }}";
+        if (data) {
+            onCLickSignUp()
+        }
+
+        $('#signupSuccessModal').modal('show');
+
+        function onCLickSignUp() {
+            $('.create-account-btn').click();
+            $('.top').addClass('d-none');
+            $('.bottom').removeClass('d-none');
+            $('.right-content').addClass('animate-left animate');
+            $('.left-content').addClass('animate-right animate').css('z-index', '9');
+            // setTimeout(function () {
+            //     $('.sign-in-form').removeClass('show').addClass('d-none')
+            //     $('.sign-up-form').addClass('show').removeClass('d-none');
+            // }, 1200);
+        }
+
+        $('body').on('click', '.login-btn', function (e) {
+            $('.login-form').removeClass('d-none')
+            $('.registration-form').addClass('d-none');
+
+        });
+
+        $('body').on('click', '.create-account-btn', function (e) {
+            $('.top').addClass('d-none');
+            $('.bottom').removeClass('d-none');
+            $('.right-content').addClass('animate-left animate');
+            $('.left-content').addClass('animate-right animate').css('z-index', '9');
+        });
+
+        $('body').on('click', '.login-btn', function (e) {
+            $('.bottom').addClass('d-none');
+            $('.top').removeClass('d-none');
+
+            $('.right-content').removeClass('animate-left animate');
+            $('.left-content').removeClass('animate-right animate').css('z-index');
+        })
+
+        $('body').on('click', '#sign-up-btn', function (e) {
+
+            $('.sign-in-form').removeClass('show').addClass('hide')
+            $('.sign-up-form').addClass('show').removeClass('hide')
+
+        });
+
+        $('body').on('click', '#sign-in-btn', function (e) {
+            setTimeout(function () {
+                $('.sign-up-form').removeClass('show').addClass('hide')
+                $('.sign-in-form').addClass('show').removeClass('hide')
+            }, 1200);
+        });
+        $(".toggle-password").click(function () {
+
+            $(this).toggleClass("bi-eye bi-eye-slash");
+            let input = $(this).closest('div').find('input');
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
             }
+        });
 
-            function onCLickSignUp() {
-                $('#sign-up-btn').click();
-                
-                setTimeout(function() {
-                    $('.sign-in-form').removeClass('show').addClass('hide')
-                    $('.sign-up-form').addClass('show').removeClass('hide');
-                }, 1200);
+        $('body').on('keyup change blur', '#password', function (e) {
+            let lowerCaseLetters = /[a-z]/g;
+            let upperCaseLetters = /[A-Z]/g;
+            let numbers = /[0-9]/g;
+            let char = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
+            let btn = $('#btn-submit-change-pass');
+            let pass = $('#password').val();
+            let hideIfValid = false;
+            if ($(this).hasClass('hide-if-valid')) {
+                hideIfValid = true;
             }
+            if ($(this).val() != '') {
+                if (pass.match(lowerCaseLetters)) {
+                    if (hideIfValid) {
+                        $('.lcase').addClass('hide');
+                    }
+                    $('.lcase').addClass('valid').removeClass('invalid')
+                    $('.lcase span').text('check_circle_outline');
 
-            $('body').on('click', '#sign-up-btn', function(e) {
-
-                setTimeout(function() {
-                    $('.sign-in-form').removeClass('show').addClass('hide')
-                    $('.sign-up-form').addClass('show').removeClass('hide')
-
-                }, 1200);
-            });
-
-            $('body').on('click', '#sign-in-btn', function(e) {
-                setTimeout(function() {
-                    $('.sign-up-form').removeClass('show').addClass('hide')
-                    $('.sign-in-form').addClass('show').removeClass('hide')
-                }, 1200);
-            });
-            $(".toggle-password").click(function() {
-
-                $(this).toggleClass("bi-eye bi-eye-slash");
-                let input = $(this).closest('div').find('input');
-                if (input.attr("type") == "password") {
-                    input.attr("type", "text");
                 } else {
-                    input.attr("type", "password");
+                    if (hideIfValid) {
+                        $('.lcase').removeClass('hide');
+                    }
+                    $('.lcase').addClass('invalid').removeClass('valid')
+                    $('.lcase span').text('highlight_off');
                 }
-            });
 
-            $('body').on('keyup change blur', '#password', function(e) {
-                let lowerCaseLetters = /[a-z]/g;
-                let upperCaseLetters = /[A-Z]/g;
-                let numbers = /[0-9]/g;
-                let char = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g;
-                let btn = $('#btn-submit-change-pass');
-                let pass = $('#password').val();
-                let hideIfValid = false;
-                if ($(this).hasClass('hide-if-valid')) {
-                    hideIfValid = true;
-                }
-                if ($(this).val() != '') {
-                    if (pass.match(lowerCaseLetters)) {
-                        if (hideIfValid) {
-                            $('.lcase').addClass('hide');
-                        }
-                        $('.lcase').addClass('valid').removeClass('invalid')
-                        $('.lcase span').text('check_circle_outline');
-
-                    } else {
-                        if (hideIfValid) {
-                            $('.lcase').removeClass('hide');
-                        }
-                        $('.lcase').addClass('invalid').removeClass('valid')
-                        $('.lcase span').text('highlight_off');
+                if (pass.match(upperCaseLetters)) {
+                    if (hideIfValid) {
+                        $('.ucase').addClass('hide');
                     }
-
-                    if (pass.match(upperCaseLetters)) {
-                        if (hideIfValid) {
-                            $('.ucase').addClass('hide');
-                        }
-                        $('.ucase').addClass('valid').removeClass('invalid')
-                        $('.ucase span').text('check_circle_outline');
-                    } else {
-                        if (hideIfValid) {
-                            $('.ucase').removeClass('hide');
-                        }
-                        $('.ucase').addClass('invalid').removeClass('valid')
-                        $('.ucase span').text('highlight_off');
-                    }
-
-                    if (pass.match(numbers)) {
-                        if (hideIfValid) {
-                            $('.onum').addClass('hide');
-                        }
-                        $('.onum').addClass('valid').removeClass('invalid')
-                        $('.onum span').text('check_circle_outline');
-                    } else {
-                        if (hideIfValid) {
-                            $('.onum').removeClass('hide');
-                        }
-                        $('.onum').addClass('invalid').removeClass('valid')
-                        $('.onum span').text('highlight_off');
-
-                    }
-
-                    if (pass.match(char)) {
-                        if (hideIfValid) {
-                            $('.schar').addClass('hide');
-                        }
-                        $('.schar').addClass('valid').removeClass('invalid')
-                        $('.schar span').text('check_circle_outline');
-                    } else {
-                        if (hideIfValid) {
-                            $('.schar').removeClass('hide');
-                        }
-                        $('.schar').addClass('invalid').removeClass('valid')
-                        $('.schar span').text('highlight_off');
-                    }
-
-                    if (pass.length >= 8) {
-                        if (hideIfValid) {
-                            $('.mchar').addClass('hide');
-                        }
-                        $('.mchar').addClass('valid').removeClass('invalid')
-                        $('.mchar span').text('check_circle_outline');
-                    } else {
-                        if (hideIfValid) {
-                            $('.mchar').removeClass('hide');
-                        }
-                        $('.mchar').addClass('invalid').removeClass('valid')
-                        $('.mchar span').text('highlight_off');
-                    }
-
-                    if (pass.length >= 8 && pass.match(char) && pass.match(numbers) && pass.match(
-                            upperCaseLetters) && pass.match(lowerCaseLetters)) {
-                        btn.attr('disabled', false)
-                    } else {
-                        btn.attr('disabled', true)
-                    }
+                    $('.ucase').addClass('valid').removeClass('invalid')
+                    $('.ucase span').text('check_circle_outline');
                 } else {
+                    if (hideIfValid) {
+                        $('.ucase').removeClass('hide');
+                    }
+                    $('.ucase').addClass('invalid').removeClass('valid')
+                    $('.ucase span').text('highlight_off');
+                }
+
+                if (pass.match(numbers)) {
+                    if (hideIfValid) {
+                        $('.onum').addClass('hide');
+                    }
+                    $('.onum').addClass('valid').removeClass('invalid')
+                    $('.onum span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.onum').removeClass('hide');
+                    }
+                    $('.onum').addClass('invalid').removeClass('valid')
+                    $('.onum span').text('highlight_off');
+
+                }
+
+                if (pass.match(char)) {
+                    if (hideIfValid) {
+                        $('.schar').addClass('hide');
+                    }
+                    $('.schar').addClass('valid').removeClass('invalid')
+                    $('.schar span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.schar').removeClass('hide');
+                    }
+                    $('.schar').addClass('invalid').removeClass('valid')
+                    $('.schar span').text('highlight_off');
+                }
+
+                if (pass.length >= 8) {
+                    if (hideIfValid) {
+                        $('.mchar').addClass('hide');
+                    }
+                    $('.mchar').addClass('valid').removeClass('invalid')
+                    $('.mchar span').text('check_circle_outline');
+                } else {
+                    if (hideIfValid) {
+                        $('.mchar').removeClass('hide');
+                    }
+                    $('.mchar').addClass('invalid').removeClass('valid')
+                    $('.mchar span').text('highlight_off');
+                }
+
+                if (pass.length >= 8 && pass.match(char) && pass.match(numbers) && pass.match(
+                    upperCaseLetters) && pass.match(lowerCaseLetters)) {
                     btn.attr('disabled', false)
-                    //$('.validations').find('span').addClass('hide');
+                } else {
+                    btn.attr('disabled', true)
                 }
-            });
+            } else {
+                btn.attr('disabled', false)
+                //$('.validations').find('span').addClass('hide');
+            }
+        });
         });
     </script>
 </body>
