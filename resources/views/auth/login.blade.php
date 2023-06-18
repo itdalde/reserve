@@ -257,7 +257,7 @@
                                         </span>
                                         <input type="password"
                                             class="form-control shadow-none rounded-0 border-start-0 hide-if-valid"
-                                            placeholder="Password" id="password"
+                                            placeholder="Password" id="password" name="password"
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
                                             title="{{ __('login.password_role') }}" required>
                                     </div>
