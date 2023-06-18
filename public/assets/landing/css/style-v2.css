@@ -474,6 +474,16 @@ section {
   display: block;
 }
 
+.btn-solid {
+  background-color: #D28F5D;
+  color: #FFF;
+}
+
+.btn-solid:hover {
+  background-color: #D28F5D;
+  color: #F0F0F0;
+}
+
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/

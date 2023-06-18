@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+input {
+  font-family: "Poppins", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.container-fluid {
+  height: 100%;
+}
+
+.form-details {
+  background-color: #f6e9df;
+  color: #48484A;
+}
+
+.login-btn,
+.create-account-btn {
+  height: 60px;
+}
+
+input {
+  height: 60px;
+}
+
+.btn-solid {
+  background-color: #D28F5D;
+  color: #FFF;
+}
+
+.btn-solid:active,
+.btn-solid:focus,
+.btn-solid:hover {
+  background-color: #D28F5D;
+  color: #F0F0F0;
+}
+
+.top,
+.bottom {
+  flex: 1;
+  transition: transform 0.5s ease;
+}
+
+.btn-outline {
+  border: 2px solid #D28F5D;
+  color: #D28F5D
+}
+
+.btn-outline:active,
+.btn-outline:focus,
+.btn-outline:hover {
+  border: 2px solid #D28F5D;
+  color: #F1B88C
+}
+
+.form-welcome-message {
+  background-color: #F6E9DF;
+}
+
+/* ======== Animations ======== */
+
+.content {
+  transition: transform 0.5s ease !important;
+}
+
+.animate-left {
+  transition: ease-in-out;
+  transform: translateX(-100%) !important;
+}
+
+.animate-right {
+  transition: ease-in-out;
+  transform: translateX(100%) !important;
+}
+
+@keyframes fadeAnimation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate {
+  animation: fadeAnimation 0.5s ease;
+}
