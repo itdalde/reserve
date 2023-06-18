@@ -60,7 +60,7 @@
                                 <div class="w-50">
                                     <button
                                         class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 create-account-btn"
-                                        role="button">create an account</button>
+                                        id="sign-up-btn" role="button">create an account</button>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                 data-aos-mirror="true" data-aos-once="false">
 
                 <!-- for Login -->
-                <div class="top" style="z-index: 999;">
+                <div class="top sign-in-form" style="z-index: 999;">
                     <div class="row d-flex justify-content-center">
                         <div class="pt-5">
                             <h3 class="text-center mt-5">Login to Reserve</h3>
@@ -126,22 +126,22 @@
                             <form action="{{ route('login') }}" method="POST">
                                 @csrf
                                 <div class="input-group input-group-lg first">
-                                    <span class="input-group-text rounded-0 bg-white" id="email">
+                                    <span class="input-group-text rounded-0 bg-white">
                                         <i class="bi bi-person-circle"></i>
                                     </span>
                                     <input type="email" class="form-control shadow-none rounded-0 border-start-0"
-                                        placeholder="Email Address" id="email" name="email" value="{{ old('email')}}"
-                                        required autofocus autocomplete="false">
+                                        placeholder="Email Address" name="email" value="{{ old('email')}}" required
+                                        autofocus autocomplete="false">
                                 </div>
 
                                 <div class="input-group input-group-lg second pt-4">
-                                    <span class="input-group-text rounded-0 bg-white" id="password">
+                                    <span class="input-group-text rounded-0 bg-white" id="password-icon">
                                         <i class="bi bi-shield-lock"></i>
                                     </span>
 
                                     <input type="password"
                                         class="form-control shadow-none rounded-0 border-start-0 border-end-0"
-                                        placeholder="{{ __('login.Password')}}" id="password" name="password" required>
+                                        placeholder="{{ __('login.Password')}}" name="password" required>
 
                                     <span class="input-group-text rounded-0 bg-white" role="button"
                                         style="margin-left: -1px;">
@@ -167,7 +167,7 @@
 
 
                 <!-- for Registration -->
-                <div class="bottom d-none">
+                <div class="bottom d-none sign-up-form">
                     <div class="col-md-12 col-lg-6 w-100" data-aos="fade-left" data-aos-delay="100"
                         data-aos-mirror="true" data-aos-once="false">
                         <div class="row d-flex justify-content-center">
@@ -177,11 +177,11 @@
                         </div>
                         <div class="container w-75 mt-5">
                             <div class="row">
-                                <form action="{{ route('register') }}" method="POST">
+                                <form method="POST" action="{{ route('register') }}" class="">
                                     @csrf
                                     <!-- Company name -->
                                     <div class="input-group input-group-lg first">
-                                        <span class="input-group-text rounded-0 bg-white" id="company_name">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-people"></i>
                                         </span>
                                         <input type="text" class="form-control shadow-none rounded-0 border-start-0"
@@ -191,62 +191,68 @@
 
                                     <!-- Contact Person -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="full_name">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-person-circle"></i>
                                         </span>
                                         <input type="text" class="form-control shadow-none rounded-0 border-start-0"
                                             placeholder="Name of the person to contact" id="first_name"
-                                            value="{{ old('full_name') }}" name="full_name">
+                                            value="{{ old('full_name') }}" name="full_name" required>
                                     </div>
+
                                     <!-- Contact Person Position -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="position">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-award"></i>
                                         </span>
                                         <input type="text" class="form-control shadow-none rounded-0 border-start-0"
                                             placeholder="Position of the contact person" id="position"
-                                            value="{{ old('position') }}" name="position">
+                                            value="{{ old('position') }}" name="position" required>
                                     </div>
+
                                     <!-- Phone number -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="phone_number">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-telephone"></i>
                                         </span>
                                         <input type="phone" class="form-control shadow-none rounded-0 border-start-0"
                                             placeholder="Phone Number" id="phone_number"
-                                            value="{{ old('phone_number') }}" name="phone_number">
+                                            value="{{ old('phone_number') }}" name="phone_number" required>
                                     </div>
+                                    
                                     <!-- Email -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="email">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-envelope"></i>
                                         </span>
                                         <input type="email" class="form-control shadow-none rounded-0 border-start-0"
                                             placeholder="Email" id="email" name="email" value="{{ old('email')}}"
                                             required>
                                     </div>
+
                                     <!-- Location -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="location">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-geo-alt"></i>
                                         </span>
                                         <input type="text" class="form-control shadow-none rounded-0 border-start-0"
                                             placeholder="Company location in Qatar" id="location"
-                                            value="{{ old('location') }}" name="location">
+                                            value="{{ old('location') }}" name="location" required>
                                     </div>
 
                                     <!-- Registration No. -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="registration_number">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-journal-text"></i>
                                         </span>
                                         <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                            placeholder="Commercial Registration Number" id="registration_number"
-                                            value="{{ old('registration_number') }}" name="registration_number">
+                                            placeholder="{{ __('login.registration_number') }}" id="registration_number"
+                                            value="{{ old('registration_number') }}" name="registration_number"
+                                            required>
                                     </div>
+                                    
                                     <!-- Password -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="password">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-shield-lock"></i>
                                         </span>
                                         <input type="password"
@@ -278,12 +284,12 @@
 
                                     <!-- Services Offered -->
                                     <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white" id="email">
+                                        <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-card-checklist"></i>
                                         </span>
                                         <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                            placeholder="Which services would you like to sign up for?" id="email"
-                                            value="{{ old('service_type') }}" name="service_type">
+                                            placeholder="Which services would you like to sign up for?"
+                                            id="service_type" value="{{ old('service_type') }}" name="service_type">
                                     </div>
 
                                     <!-- Description  -->
@@ -299,7 +305,7 @@
                                     @endif
 
                                     <button type="submit" id="btn-submit-change-pass"
-                                        class="btn btn-solid rounded-0 mt-4 w-100 fs-4 btn-create-account">Create
+                                        class="btn btn-solid rounded-0 mt-4 w-100  fs-4 btn-create-account">Create
                                         Account</button>
                                 </form>
                             </div>
@@ -329,8 +335,9 @@
                     </div>
                 </div>
                 <div class="modal-footer bg-transparent text-center border-0">
-                    <a class="w-100 btn bg-orange solid " style="    line-height: 36px;" href="/">{{ __('login.Return
-                        Home') }}</a>
+                    <a class="w-100 btn btn-solid " style="    line-height: 36px;" href="/">
+                        {{ __('login.Return Home') }}
+                    </a>
                 </div>
             </div>
         </div>
@@ -367,13 +374,18 @@
             onCLickSignUp()
         }
 
-        function onCLickSignUp() {
-            $('#sign-up-btn').click();
+        $('#signupSuccessModal').modal('show');
 
-            setTimeout(function () {
-                $('.sign-in-form').removeClass('show').addClass('d-none')
-                $('.sign-up-form').addClass('show').removeClass('d-none');
-            }, 1200);
+        function onCLickSignUp() {
+            $('.create-account-btn').click();
+            $('.top').addClass('d-none');
+            $('.bottom').removeClass('d-none');
+            $('.right-content').addClass('animate-left animate');
+            $('.left-content').addClass('animate-right animate').css('z-index', '9');
+            // setTimeout(function () {
+            //     $('.sign-in-form').removeClass('show').addClass('d-none')
+            //     $('.sign-up-form').addClass('show').removeClass('d-none');
+            // }, 1200);
         }
 
         $('body').on('click', '.login-btn', function (e) {
@@ -382,7 +394,7 @@
 
         });
 
-            $('body').on('click', '.create-account-btn', function (e) {
+        $('body').on('click', '.create-account-btn', function (e) {
             $('.top').addClass('d-none');
             $('.bottom').removeClass('d-none');
             $('.right-content').addClass('animate-left animate');
