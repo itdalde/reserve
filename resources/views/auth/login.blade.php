@@ -218,7 +218,7 @@
                                             placeholder="Phone Number" id="phone_number"
                                             value="{{ old('phone_number') }}" name="phone_number" required>
                                     </div>
-                                    
+
                                     <!-- Email -->
                                     <div class="input-group input-group-lg first pt-3">
                                         <span class="input-group-text rounded-0 bg-white">
@@ -249,7 +249,7 @@
                                             value="{{ old('registration_number') }}" name="registration_number"
                                             required>
                                     </div>
-                                    
+
                                     <!-- Password -->
                                     <div class="input-group input-group-lg first pt-3">
                                         <span class="input-group-text rounded-0 bg-white">
@@ -363,18 +363,17 @@
             $(document).on('shown.bs.modal', '.modal', function () {
                 $('.modal-backdrop').before($(this));
             });
-            @if (Session:: has('signup'))
-        $('#signupSuccessModal').modal('show');
-        @endif
-        @if (app('request') -> input('register'))
-            onCLickSignUp()
-        @endif
-        let data = "{{ old('first_name') }}";
-        if (data) {
-            onCLickSignUp()
-        }
+            @if (Session::has('signup'))
+            $('#signupSuccessModal').modal('show');
+            @endif
+            @if (app('request')->input('register'))
+                onCLickSignUp()
+            @endif
+            let data = "{{ old('first_name') }}";
+            if (data) {
+                onCLickSignUp()
+            }
 
-        $('#signupSuccessModal').modal('show');
 
         function onCLickSignUp() {
             $('.create-account-btn').click();
