@@ -1054,6 +1054,12 @@ section {
   top: 100px;
 }
 
+@media (144px <=width <=2750px) {
+  .services {
+    margin-top: -27.5rem;
+  }
+}
+
 @media (max-width: 1440px) {
   .services {
     margin-top: -20.5rem;
