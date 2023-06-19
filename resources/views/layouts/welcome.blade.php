@@ -94,7 +94,7 @@
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="hero d-flex align-items-center">
-    <div class="container ">
+    <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
           <h1 data-aos="fade-up">{{ __('home.banner') }}</h1>
