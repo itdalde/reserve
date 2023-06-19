@@ -68,6 +68,12 @@ input {
   background-color: #F6E9DF;
 }
 
+@media (320px <=width <=576px) {
+  .mobile-view {
+    display: block !important;
+  }
+}
+
 /* ======== Animations ======== */
 
 .content {
