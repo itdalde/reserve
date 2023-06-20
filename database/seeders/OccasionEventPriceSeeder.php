@@ -17,7 +17,7 @@ class OccasionEventPriceSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->truncate('occasion_event_prices');
+        $this->truncate('services_prices');
         OccasionEventPrice::factory()->times(10)->create();
     }
 }

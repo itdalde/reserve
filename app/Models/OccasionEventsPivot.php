@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OccasionEventsPivot extends Model
 {
     use HasFactory;
+    protected $table = 'services_pivots';
 
     public function occasion()
     {

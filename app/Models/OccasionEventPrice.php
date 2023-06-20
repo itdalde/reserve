@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class OccasionEventPrice extends Model
 {
     use HasFactory;
+    protected $table = 'services_prices';
 
     public function planType()
     {

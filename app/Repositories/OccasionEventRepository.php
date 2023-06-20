@@ -50,7 +50,7 @@ class OccasionEventRepository implements OccasionEventInterface
      */
     public function getOccasionEventByType($eventType, $dateFrom, $dateTo): Collection
     {
-        return DB::table('occasion_events')
+        return DB::table('services')
             ->where('occasion_type', $eventType)
             ->where('availability_date', [$dateFrom, $dateTo])->get();
     }

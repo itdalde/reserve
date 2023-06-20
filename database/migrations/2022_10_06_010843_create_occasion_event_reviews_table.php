@@ -13,7 +13,7 @@ class CreateOccasionEventReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('occasion_event_reviews', function (Blueprint $table) {
+        Schema::create('services_reviews', function (Blueprint $table) {
             $table->id();
             $table->integer('occasion_event_id')->unsigned();
             $table->integer('user_id')->unsigned();
@@ -32,6 +32,6 @@ class CreateOccasionEventReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('occasion_event_reviews');
+        Schema::dropIfExists('services_reviews');
     }
 }

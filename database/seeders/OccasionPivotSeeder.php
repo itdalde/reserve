@@ -19,7 +19,7 @@ class OccasionPivotSeeder extends Seeder
     {
         //
 
-        $this->truncate('occasion_events_pivots');
+        $this->truncate('services_pivots');
 
         $occasionEvents = [
             [

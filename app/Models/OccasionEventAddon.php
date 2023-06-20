@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OccasionEventAddon extends Model
 {
+    protected $table = 'services_addons';
+
     use HasFactory;
 }

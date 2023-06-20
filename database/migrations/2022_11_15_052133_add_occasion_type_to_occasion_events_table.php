@@ -13,7 +13,7 @@ class AddOccasionTypeToOccasionEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             //
             // $table->integer('occasion_type');
         });
@@ -26,7 +26,7 @@ class AddOccasionTypeToOccasionEventsTable extends Migration
      */
     public function down()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             //
             // $table->dropColumn('occasion_type');
         });

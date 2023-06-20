@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class OccasionEvent extends Model
 {
     use HasFactory;
+    protected $table = 'services';
+
     public function occasion()
     {
         return $this->hasMany(OccasionEventsPivot::class);
