@@ -95,7 +95,7 @@ class ServicesApiController extends Controller
         if ($validator->fails())  {
             return sendError('Something went wrong',$validator->errors()->all(),422);
         }
-        if($data['service_id']) {
+        if(isset($data['service_id'])) {
             $service= OccasionEvent::where('id', $data['service_id'])->first();
             if(!$service) {
                 return sendError('Something went wrong','Service is not found on system',422);
