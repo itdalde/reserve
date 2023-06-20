@@ -18,7 +18,7 @@ class OccasionEventsPivotSeeder extends Seeder
     public function run()
     {
         //
-        $this->truncate('occasion_events_pivots');
+        $this->truncate('services_pivots');
         OccasionEventsPivot::factory()->times(20)->create();
     }
 }

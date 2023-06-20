@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class OccasionEventReviews extends Model
 {
     use HasFactory;
+    protected $table = 'services_reviews';
 
     public function occasionEvent() {
         return $this->belongsTo(OccasionEvent::class,'occasion_event_id','id');

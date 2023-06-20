@@ -13,7 +13,7 @@ class AddNameDescriptionArabicInOccasionEvent extends Migration
      */
     public function up()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             //
             $table->string('price')->default(0);
             $table->string('name_arabic')->nullable();
@@ -28,7 +28,7 @@ class AddNameDescriptionArabicInOccasionEvent extends Migration
      */
     public function down()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             //
             $table->dropColumn('price');
             $table->dropColumn('name_arabic');

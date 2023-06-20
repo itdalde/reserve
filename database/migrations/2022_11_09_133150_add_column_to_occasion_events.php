@@ -13,7 +13,7 @@ class AddColumnToOccasionEvents extends Migration
      */
     public function up()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             //
             $table->string('service_type')->nullable();
             $table->string('occasion_type')->nullable();
@@ -27,7 +27,7 @@ class AddColumnToOccasionEvents extends Migration
      */
     public function down()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             //
         });
     }

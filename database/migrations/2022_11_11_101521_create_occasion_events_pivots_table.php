@@ -13,7 +13,7 @@ class CreateOccasionEventsPivotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('occasion_events_pivots', function (Blueprint $table) {
+        Schema::create('services_pivots', function (Blueprint $table) {
             $table->id();
             $table->integer('occasion_event_id')->unsigned();
             $table->integer('occasion_id')->nullable();
@@ -28,6 +28,6 @@ class CreateOccasionEventsPivotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('occasion_events_pivots');
+        Schema::dropIfExists('services_pivots');
     }
 }

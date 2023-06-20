@@ -63,8 +63,8 @@ class CartApiController extends Controller
                 'status'
             );
         }])->join('cart_items', 'cart.id', '=', 'cart_items.cart_id')
-            ->join('occasion_events', 'cart_items.service_id', '=', 'occasion_events.id')
-            ->where('occasion_events.active', 1)
+            ->join('services', 'cart_items.service_id', '=', 'services.id')
+            ->where('services.active', 1)
             ->where('cart.user_id', $request->user_id)
             ->where('cart.active', 1)
             ->get([

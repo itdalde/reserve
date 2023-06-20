@@ -20,7 +20,7 @@ class OccasionEventSeeder extends Seeder
     public function run(): void
     {
         //
-        $this->truncate('occasion_events');
+        $this->truncate('services');
         $faker = Faker::create();
         $occasionEvents = [
             [

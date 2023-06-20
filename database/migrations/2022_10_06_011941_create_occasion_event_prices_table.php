@@ -13,7 +13,7 @@ class CreateOccasionEventPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('occasion_event_prices', function (Blueprint $table) {
+        Schema::create('services_prices', function (Blueprint $table) {
             $table->id();
             $table->integer('occasion_event_id')->unsigned();
             $table->integer('plan_id')->unsigned();
@@ -37,6 +37,6 @@ class CreateOccasionEventPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('occasion_event_prices');
+        Schema::dropIfExists('services_prices');
     }
 }

@@ -13,7 +13,7 @@ class CreateOccasionEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('occasion_events', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->integer('company_id')->unsigned();
             $table->string('name')->nullable();
@@ -44,6 +44,6 @@ class CreateOccasionEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('occasion_events');
+        Schema::dropIfExists('services');
     }
 }

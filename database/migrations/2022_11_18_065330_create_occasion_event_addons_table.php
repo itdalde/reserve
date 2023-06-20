@@ -13,7 +13,7 @@ class CreateOccasionEventAddonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('occasion_event_addons', function (Blueprint $table) {
+        Schema::create('services_addons', function (Blueprint $table) {
 
             $table->id();
             $table->string('name');
@@ -32,6 +32,6 @@ class CreateOccasionEventAddonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('occasion_event_addons');
+        Schema::dropIfExists('services_addons');
     }
 }

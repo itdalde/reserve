@@ -13,7 +13,7 @@ class AddAvailabilitySlotToOccasionEventsTable extends Migration
      */
     public function up()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
 
             $table->string('availability_slot');
         });
@@ -26,7 +26,7 @@ class AddAvailabilitySlotToOccasionEventsTable extends Migration
      */
     public function down()
     {
-        Schema::table('occasion_events', function (Blueprint $table) {
+        Schema::table('services', function (Blueprint $table) {
             $table->dropColumn(['availability_slot']);
         });
     }
