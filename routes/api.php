@@ -178,7 +178,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
         Api::post('/', [ServicesApiController::class, 'addReviewToService'])
             ->addTag('Reviews')
-            ->addFormDataParameter('service_id', '', true  )
+            ->addFormDataParameter('service_id', '', false  )
+            ->addFormDataParameter('provider_id', '', true  )
             ->addFormDataParameter('user_id', '', true  )
             ->addFormDataParameter('title', '', false  )
             ->addFormDataParameter('description', '', false  )
