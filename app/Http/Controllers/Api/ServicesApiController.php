@@ -61,15 +61,11 @@ class ServicesApiController extends Controller
      */
     public function getReviewsByProviderId(Request $request, $provider_id): JsonResponse
     {
-        $response = [];
-        $serviceIds = OccasionEvent::where('company_id', $provider_id)->get()->pluck('id')->toArray();
-        if($serviceIds) {
-            $response = OccasionEventReviews::whereIn('occasion_event_id', $serviceIds)->with('user', 'occasionEvent')
-                ->orderBy('rate', 'DESC')->get()->toArray();
-            usort($response, function ($a, $b) {
-                return $a['rate'] <=> $b['rate'];
-            });
-        }
+        $response = OccasionEventReviews::whereIn('provider_id', $provider_id)->with('user', 'occasionEvent')
+            ->orderBy('rate', 'DESC')->get()->toArray();
+        usort($response, function ($a, $b) {
+            return $a['rate'] <=> $b['rate'];
+        });
         return sendResponse($response, 'Fetch all reviews by provider ID');
     }
 
@@ -92,23 +88,32 @@ class ServicesApiController extends Controller
     public function addReviewToService(Request $request) : JsonResponse {
         $data = $request->all();
         $validator = Validator::make($request->all(), [
-            'service_id' => 'required',
+            'provider_id' => 'required',
             'user_id' =>  'required',
             'rate' => 'required|integer',
         ]);
         if ($validator->fails())  {
             return sendError('Something went wrong',$validator->errors()->all(),422);
         }
-        $service= OccasionEvent::where('id', $data['service_id'])->first();
-        if(!$service) {
-            return sendError('Something went wrong','Service is not found on system',422);
+        if($data['service_id']) {
+            $service= OccasionEvent::where('id', $data['service_id'])->first();
+            if(!$service) {
+                return sendError('Something went wrong','Service is not found on system',422);
+            }
+        }
+        if($data['provider_id']) {
+            $service= Company::where('id', $data['provider_id'])->first();
+            if(!$service) {
+                return sendError('Something went wrong','Provider is not found on system',422);
+            }
         }
         $user = User::where('id', $data['user_id'])->first();
         if(!$user) {
             return sendError('Something went wrong','User is not found on system',422);
         }
         $review = new OccasionEventReviews();
-        $review->occasion_event_id = $data['service_id'];
+        $review->occasion_event_id = $data['service_id'] ?? null;
+        $review->provider_id = $data['provider_id'];
         $review->user_id = $data['user_id'];
         $review->title = $data['title'] ?? '';
         $review->description = $data['description'] ?? '';
