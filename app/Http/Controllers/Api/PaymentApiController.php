@@ -9,6 +9,8 @@ use App\Models\OrderItems;
 use App\Models\OrderSplit;
 use App\Models\PaymentDetails;
 use App\Models\PaymentEvents;
+use App\Models\Promotions;
+use App\Models\UserPromotions;
 use App\Utility\SkipCashUtility;
 use Illuminate\Http\Request;
 
@@ -23,9 +25,20 @@ class PaymentApiController extends Controller
         // $order = Order::with('user')->where('reference_no', $data['order_id'])->first();
         $orderSplit = OrderSplit::with('order')->where('reference_order', $data['order_id'])->where('status', 'pending')->first();
         if ($orderSplit == null) {
-            return sendResponse('There is no transaction under the reference no. provided.', 'Unable to process payment');
+            return sendError('There is no transaction under the reference no. provided.', 'Unable to process payment');
         }
         $result = SkipCashUtility::postPayment($orderSplit);
+
+        $promotion = Promotions::where('promotions.code', '=',$data['promo_code'])->first();
+        if($promotion) {
+            return sendError('Invalid promo code', 'Unable to process payment');
+        }
+        if($promotion->single_use) {
+            $hasUsePromotion = UserPromotions::where('promotion_id', '=',$promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->first();
+            if($hasUsePromotion) {
+                return sendError('Promo code is already use', 'Unable to process payment');
+            }
+        }
         if ($result['returnCode'] == 200) {
             $paymentDetails = new PaymentDetails();
             $paymentDetails->payment_method_id = $data['payment_method'];
@@ -39,6 +52,10 @@ class PaymentApiController extends Controller
             $paymentDetails->payment_url = $result['resultObj']['payUrl'];
             $paymentDetails->currency = $result['resultObj']['currency'];
             $paymentDetails->save();
+            $userPromo = new UserPromotions();
+            $userPromo->user_id =  $orderSplit->order->user_id;
+            $userPromo->promotion_id =   $promotion->id;
+            $userPromo->save();
         }
         return sendResponse($result, $result['returnCode'] == 200 ? "Success" : "Failed");
     }

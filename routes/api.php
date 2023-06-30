@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\OccasionsApiController;
 use App\Http\Controllers\Api\OrderApiController;
 use App\Http\Controllers\Api\PaymentApiController;
 use App\Http\Controllers\Api\PaymentMethodApiController;
+use App\Http\Controllers\Api\PromotionsApiController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ServicesApiController;
 use App\Http\Controllers\Api\ServiceTypesApiController;
@@ -159,6 +160,21 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
         Api::get('/', [OccasionEventsApiController::class, 'getOccasionEvents'])
             ->addTag('Occasions Events')
             ->setDescription('getOccasionEvents')
+            ->setProduces(['application/json']);
+    });
+
+    Route::group(['prefix' => 'promotions', 'middleware' => ['cors']], function() {
+        Api::get('/', [PromotionsApiController::class, 'getPromotionsList'])
+            ->addTag('Promotions')
+            ->setDescription('getPromotionsList')
+            ->setProduces(['application/json']);
+        Api::get('/{promotion_code}', [PromotionsApiController::class, 'getPromotionByCode'])
+            ->addTag('Promotions')
+            ->setDescription('getPromotionByCode')
+            ->setProduces(['application/json']);
+        Api::get('/{user_id}/{promotion_code}', [PromotionsApiController::class, 'getPromotionByUserAndCode'])
+            ->addTag('Promotions')
+            ->setDescription('this is to check if user already used the promotion code')
             ->setProduces(['application/json']);
     });
 
@@ -369,7 +385,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'payments', 'middleware' => ['cors']], function() {
         Api::post('/', [PaymentApiController::class, 'processPayment'])
             ->addTag('Payments')
-            ->addFormDataParameter('user_id', '', true )
+            ->addFormDataParameter('payment[order_id]', '', true )
+            ->addFormDataParameter('payment[promo_code]', '', false )
+            ->addFormDataParameter('payment[payment_method]', '', true )
             ->setDescription('processPayment')
             ->setProduces(['application/json']);
         Api::get('/{payment_id}', [PaymentApiController::class, 'getProcessPayment'])
@@ -379,10 +397,21 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
         Api::post('/processing',[PaymentApiController::class, 'paymentProcessing'])
             ->addTag('Payments')
+            ->addFormDataParameter('PaymentId', '', true )
+            ->addFormDataParameter('Amount', '', true )
+            ->addFormDataParameter('StatusId', '', true )
+            ->addFormDataParameter('TransactionId', '', true )
+            ->addFormDataParameter('Custom1', '', true )
+            ->addFormDataParameter('VisaId', '', true )
             ->setDescription('paymentProcessing')
             ->setProduces(['application/json']);
         Api::post('/success', [PaymentApiController::class, 'paymentSuccess'])
             ->addTag('Payments')
+            ->addFormDataParameter('id', '', false )
+            ->addFormDataParameter('statusId', '', false )
+            ->addFormDataParameter('status', '', false )
+            ->addFormDataParameter('transId', '', false )
+            ->addFormDataParameter('custom1', '', false )
             ->setDescription('paymentSuccess')
             ->setProduces(['application/json']);
         Api::get('/receipt/{reference_no}', [PaymentApiController::class, 'paymentReceipt'])
