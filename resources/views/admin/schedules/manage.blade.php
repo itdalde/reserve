@@ -10,27 +10,29 @@
                         <p class="fs-6">Click the dates multiple to set your availability on different days</p>
                     </div>
                     {{-- Buttons --}}
-                    <div class="d-flex gap-3">
-                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
-                            data-type="1" id="block-weekends">Block
-                            Weekends</button>
-                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
-                            data-type="2" id="block-all-days">Set all days as
-                            available</button>
-                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
-                            data-type="3" id="unblock-all-days">Set all days an
-                            unavailable</button>
-                        <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
-                            data-type="4" id="clear-block">Clear all</button>
+                    <div class="d-flex gap-3 justify-content-between">
+                        <div class="d-flex gap-3">
+                            <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                                data-type="1" id="block-weekends">Block
+                                Weekends</button>
+                            <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                                data-type="2" id="block-all-days">Set all days as
+                                available</button>
+                            <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                                data-type="3" id="unblock-all-days">Set all days an
+                                unavailable</button>
+                            <button type="button" class="btn btn-light border border-1 text-secondary block-calendar"
+                                data-type="4" id="clear-block">Clear all</button>
+                        </div>
                     </div>
                     <div class="mt-4 mb-6 d-flex">
-                        <label class="d-flex"><i class="bg-success rounded-circle me-1 m-auto"
+                        <label class="d-flex" style="margin: auto 0;"><i class="bg-success rounded-circle me-1 m-auto"
                                 style="display: inline-block; width: 16px; height: 16px;"
                                 aria-hidden="true"></i>Available</label>
-                        <label class="d-flex ms-3"><i class="bg-danger rounded-circle me-1 m-auto"
+                        <label class="d-flex ms-3" style="margin: auto 0;"><i class="bg-danger rounded-circle me-1 m-auto"
                                 style="display: inline-block; width: 16px; height: 16px;"
                                 aria-hidden="true"></i>Unavailable</label>
-                         <i class="bi bi-info-circle icon-info"
+                         <i class="bi bi-info-circle icon-info" style="margin-left: 14px; margin-top: -9px;"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="Dates without availability set are considered as available days"></i>
                     </div>
@@ -76,6 +78,7 @@
                         url: SITEURL + '/update-schedule',
                         data: {
                             date: selectedDate,
+                            service_id: $('#service').attr('data-selected-service')
                         },
                         success: function(response) {
                             console.log('response', response);
@@ -108,6 +111,7 @@
                                     url: SITEURL + '/update-schedule',
                                     data: {
                                         type: type,
+                                        service_id: $('#service').attr('data-selected-service'),
                                     },
                                     success: function(response) {
                                         console.log('afterRendered Called')
@@ -121,15 +125,45 @@
                                 });
                             })
                     }
+                    let selectHTML = document.createElement('select');
+                        selectHTML.id = 'set-schedule';
+                        selectHTML.className = "form-select";
+                    let optionHTML = document.createElement('option');
+                        optionHTML = '<option value="" selected readonly disabled>Select a Service</option>'
+                        $.ajax({
+                            type: 'GET',
+                            url: SITEURL + '/api/v1/services',
+                            success: function(response) {
+                                for (let i = 0; i < response.data.length; i++) {
+                                    optionHTML += `<option value=${response.data[i].id}>${response.data[i].name}</option>`
+                                }
+                               $(selectHTML).append(optionHTML);
+                            }
+                        });
 
-                    //     let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
-                    //         "<option selected>Setup Availability</option>" +
-                    //         "<option value='1'>Mark all days as available</option>" +
-                    //         "<option value='2'>Mark all days as available except weekends</option>" +
-                    //         "</select>";
+                        // let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
+                        //     "<option selected>Setup Availability</option>" +
+                        //     "<option value='1'>Mark all days as available</option>" +
+                        //     "<option value='2'>Mark all days as available except weekends</option>" +
+                        //     "</select>";
 
-                    //     $(selectHTML).appendTo('.fc-right');
-
+                        $(selectHTML).appendTo('.fc-right');
+                      
+                        $('#set-schedule').on('change', function() {
+                            var service_id = this.value;
+                            // $.ajax({
+                            //     type: 'GET',
+                            //     url: SITEURL + '/calendar',
+                            //     data: {
+                            //         service_id: service_id,
+                            //     },
+                            //     success: function(response) {
+                            //         $('#calendar').fullCalendar('removeEvents');
+                            //         $('#calendar').fullCalendar('refetchEvents');
+                            //         displayMessage("Event Updated Successfully");
+                            //     }
+                            // })
+                        })
 
 
 

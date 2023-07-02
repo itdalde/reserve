@@ -39,9 +39,12 @@ class SchedulesController extends Controller
     {
         if ($request->ajax()) {
             $response = [];
+            $service_id = $request->service_id;
             $data = AvailableDates::whereDate('date_obj', '>=', $request->start)
-                ->whereDate('date_obj',   '<=', $request->end)->where('company_id', auth()->user()->company->id)
+                ->whereDate('date_obj',   '<=', $request->end)
+                ->where('company_id', auth()->user()->company->id)
                 ->get();
+                
             foreach ($data as $event) {
                 if ($event->status != 0) {
                     $response[] = [
@@ -57,7 +60,8 @@ class SchedulesController extends Controller
             }
             return response()->json($response);
         }
-        return view('admin.schedules.manage');
+        $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
+        return view('admin.schedules.manage', compact('services'));
     }
     public function updateSchedule(Request $request)
     {
@@ -92,17 +96,17 @@ class SchedulesController extends Controller
                 $date->addDays(1);
             }
         } else if ($request->date) {
-            $existingDate = AvailableDates::where('company_id', auth()->user()->company->id)->where('date', $request->date)->first();
+            $existingDate = AvailableDates::where('company_id', auth()->user()->company->id)->where('date', $request->date)->where('service_id', $request->service_id)->first();
             if ($existingDate) {
                 $existingDate->status = $existingDate->status == 1 ? 2 : ($existingDate->status == 2 ? 0 : 1);
                 $existingDate->save();
             } else {
-                $service = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->first();
+                // $service = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->first();
                 $avail = new AvailableDates();
                 $selectedDate = Carbon::createFromFormat('d/m/Y',  $request->date);
                 $avail->date = $request->date;
                 $avail->date_obj =  $selectedDate->format('Y-m-d');
-                $avail->service_id = $service->id;
+                $avail->service_id = $request->service_id;
                 $avail->company_id = auth()->user()->company->id;
                 $avail->status = 1;
                 $avail->save();
