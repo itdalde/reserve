@@ -8,6 +8,7 @@
                     <div class="">
                         <h3 class="text-secondary fs-3 mb-0">Schedule</h3>
                         <p class="fs-6">Click the dates multiple to set your availability on different days</p>
+                        <div id="company-id" data-company-id="{{ auth()->user()->company->id }}"></div>
                     </div>
                     {{-- Buttons --}}
                     <div class="d-flex gap-3 justify-content-between">
@@ -124,47 +125,45 @@
                                     }
                                 });
                             })
-                    }
+
+                    // Dropdown Service
                     let selectHTML = document.createElement('select');
                         selectHTML.id = 'set-schedule';
                         selectHTML.className = "form-select";
                     let optionHTML = document.createElement('option');
                         optionHTML = '<option value="" selected readonly disabled>Select a Service</option>'
+
+                        var company_id = $('#company-id').attr('data-company-id');
                         $.ajax({
                             type: 'GET',
-                            url: SITEURL + '/api/v1/services',
+                            url: SITEURL + `/api/v1/occasion-events/company/${company_id}/occasions`,
                             success: function(response) {
+                                console.log('service-response', response);
                                 for (let i = 0; i < response.data.length; i++) {
                                     optionHTML += `<option value=${response.data[i].id}>${response.data[i].name}</option>`
                                 }
                                $(selectHTML).append(optionHTML);
                             }
                         });
-
-                        // let selectHTML = "<select id=\"set-schedule\" class=\"form-select\">" +
-                        //     "<option selected>Setup Availability</option>" +
-                        //     "<option value='1'>Mark all days as available</option>" +
-                        //     "<option value='2'>Mark all days as available except weekends</option>" +
-                        //     "</select>";
-
                         $(selectHTML).appendTo('.fc-right');
                       
                         $('#set-schedule').on('change', function() {
                             var service_id = this.value;
-                            // $.ajax({
-                            //     type: 'GET',
-                            //     url: SITEURL + '/calendar',
-                            //     data: {
-                            //         service_id: service_id,
-                            //     },
-                            //     success: function(response) {
-                            //         $('#calendar').fullCalendar('removeEvents');
-                            //         $('#calendar').fullCalendar('refetchEvents');
-                            //         displayMessage("Event Updated Successfully");
-                            //     }
-                            // })
+                            $.ajax({
+                                type: 'GET',
+                                url: SITEURL + '/calendar',
+                                data: {
+                                    service_id: service_id,
+                                },
+                                success: function(response) {
+                                    $('#calendar').fullCalendar('removeEvents');
+                                    $('#calendar').fullCalendar('refetchEvents');
+                                    displayMessage("Event Updated Successfully");
+                                }
+                            })
                         })
 
+                    }
 
 
                     //     $("#set-schedule").on('change', function() {

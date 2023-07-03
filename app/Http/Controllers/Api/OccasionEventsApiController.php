@@ -100,4 +100,13 @@ class OccasionEventsApiController extends Controller
         }
     }
 
+    public function getOccasionEventsByCompany(Request $request) {
+        try {
+            $services = OccasionEvent::where('company_id', $request->company_id)->orderby('id', 'DESC')->get();
+            return sendResponse($services, 'Occasion Events');
+        } catch (Exception $ex) {
+            return sendError($ex,'Exception Error', 400);
+        }
+    }
+
 }

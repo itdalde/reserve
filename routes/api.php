@@ -161,6 +161,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
             ->addTag('Occasions Events')
             ->setDescription('getOccasionEvents')
             ->setProduces(['application/json']);
+        Api::get('/company/{company_id}/occasions', [OccasionEventsApiController::class, 'getOccasionEventsByCompany'])
+            ->addTag('Occasion Events')
+            ->setDescription('getOccasionEventsByCompany')
+            ->setProduces(['application/json']);
     });
 
     Route::group(['prefix' => 'promotions', 'middleware' => ['cors']], function() {
