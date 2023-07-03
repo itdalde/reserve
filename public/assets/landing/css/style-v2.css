@@ -348,6 +348,10 @@ section {
   visibility: visible;
 }
 
+#navbar-footer a:hover {
+  color: #888888;
+}
+
 @media (max-width: 1366px) {
   .navbar .dropdown .dropdown ul {
     left: -90%;
@@ -1056,7 +1060,7 @@ section {
 
 @media (144px <=width <=2750px) {
   .services {
-    margin-top: -27.5rem;
+    margin-top: -16.5rem;
   }
 }
 
