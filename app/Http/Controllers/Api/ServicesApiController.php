@@ -24,7 +24,6 @@ class ServicesApiController extends Controller
         $search = $request->search;
         $serviceId = $request->service_type_id;
         $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'occasionEventsReviewsAverage', 'gallery')
-            ->leftJoin('services_pivots as oep', 'services.id', '=', 'oep.occasion_event_id')
             ->where('services.name', 'like', '%' . $search . '%')
             ->where('services.service_type', '=', $serviceId)
             ->get();

@@ -68,7 +68,8 @@ class ServiceTypesApiController extends Controller
      */
     public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
     {
-        $services = OccasionEvent::where('occasion_type', $occasion_type_id)->get()->toArray();
+        $serviceTypes = OccasionServiceTypePivot::where('occasion_id',$occasion_type_id)->pluck('service_type_id')->toArray();
+        $services = OccasionEvent::whereIn('service_type', $serviceTypes)->get()->toArray();
         $companyIds = [];
         $serviceIds = [];
         foreach ($services as $service) {
@@ -104,7 +105,6 @@ class ServiceTypesApiController extends Controller
 
         if ($request->has('from') && $request->has('to')) {
             $serviceTypes = $serviceTypes->leftJoin('available_dates as ad', 'ad.service_id', '=', 'o.id')
-                ->where('ad.service_id', $occasion_id)
                 ->where('ad.status', 1)
                 ->whereBetween('ad.date', [$request->input('from'), $request->input('to')]);
         } else {

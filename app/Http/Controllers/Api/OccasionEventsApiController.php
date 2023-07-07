@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EventsByEventTypeRequest;
 use App\Http\Requests\EventsByOccasionRequest;
+use App\Models\Auth\User\User;
 use App\Models\AvailableDates;
 use App\Models\Company;
 use App\Models\EventImages;
 use App\Models\OccasionEvent;
 use App\Models\OccasionEventPrice;
 use App\Models\OccasionEventReviews;
+use App\Models\OccasionServiceTypePivot;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -82,16 +84,18 @@ class OccasionEventsApiController extends Controller
             $events = OccasionEvent::all();
 
             foreach ($events as $event) {
-
-                $event['company'] = Company::where('id', $event->company_id)->first();
-                $event['payment_plan'] = OccasionEventPrice::where('occasion_event_id', $event->id)->first();
-                $event['services_reviews'] = OccasionEventReviews::where('occasion_event_id', $event->id)->get();
-                $event['services_reviews_average'] = OccasionEventReviews::where('occasion_event_id', $event->id)->selectRaw('avg(rate) as aggregate, occasion_event_id')->groupBy('occasion_even_id');
-                $event['gallery'] = EventImages::where('occasion_event_id', $event->id)->get();
-                $event['availability'] = AvailableDates::where('service_id', $event->id)
-                ->whereBetween('date', [$data->from, $data->to])
-                ->where('status', 1)
-                ->get();
+                $company = Company::where('id', $event->company_id)->first();
+                if($company) {
+                    $event['company'] = $company;
+                    $event['payment_plan'] = OccasionEventPrice::where('occasion_event_id', $event->id)->first();
+                    $event['services_reviews'] = OccasionEventReviews::where('occasion_event_id', $event->id)->get();
+                    $event['services_reviews_average'] = OccasionEventReviews::where('occasion_event_id', $event->id)->selectRaw('avg(rate) as aggregate, occasion_event_id')->groupBy('occasion_even_id');
+                    $event['gallery'] = EventImages::where('occasion_event_id', $event->id)->get();
+                    $event['availability'] = AvailableDates::where('service_id', $event->id)
+                        ->whereBetween('date', [$data->from, $data->to])
+                        ->where('status', 1)
+                        ->get();
+                }
             }
 
             return sendResponse($events, 'Availability dates');
