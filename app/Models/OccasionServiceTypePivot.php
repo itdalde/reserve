@@ -15,11 +15,16 @@ class OccasionServiceTypePivot extends Model
             ->select('id', 'name', 'logo', 'active');
     }
 
-    public function serviceTypes()
+    public function serviceType()
     {
-        return $this->hasMany(ServiceType::class, 'id', 'service_type_id')
+        return $this->hasOne(ServiceType::class, 'id', 'service_type_id')
             ->select('id', 'name', 'active');
     }
 
+    public function vendors()
+    {
+        return $this->hasMany(OccasionEvent::class, 'service_type', 'service_type_id')
+            ->select('id', 'name', 'active');
+    }
 
 }

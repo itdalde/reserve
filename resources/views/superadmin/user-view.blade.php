@@ -100,8 +100,9 @@
                                                 <li class="nav-item" role="presentation">
                                                     <a class="nav-link" id="pills-vendor-tab" data-bs-toggle="pill"
                                                         data-bs-target="#pills-vendor" type="button" role="tab"
-                                                        aria-controls="pills-vendor" aria-selected="false">Vendor
-                                                        Category</a>
+                                                        aria-controls="pills-vendor" aria-selected="false">
+                                                        Vendor Category
+                                                    </a>
                                                 </li>
                                             @endif
                                             <li class="nav-item" role="presentation">
@@ -675,24 +676,34 @@
                                         </div>
                                         <div class="tab-pane fade" id="pills-vendor" role="tabpanel"
                                             aria-labelledby="pills-profile-tab">
-                                            <div class="">
-                                                <div
-                                                    class="alert alert-light border border-info d-flex ps-4 pe-4 pt-2 pb-2">
-                                                    <div class="col-8 fs-5 m-auto">Catering</div>
-                                                    <div class="col-2 fs-5 m-auto">
-                                                        <h3 class="badge bg-secondary">Active</h3>
-                                                    </div>
-                                                    <div class="col-2 d-flex">
-                                                        <button type="button" data-type="edit"
-                                                            class="btn btn-info action-service" data-bs-toggle="modal"
-                                                            data-bs-target="#edit-service-modal">Edit</button>
-                                                        <button type="button" data-type="delete"
-                                                            class="btn btn-danger ms-2 action-service"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#delete-service-modal">Delete</button>
+                                            @if($serviceType)
+                                                <div class="">
+                                                    <div
+                                                        class="alert alert-light border border-info d-flex ps-4 pe-4 pt-2 pb-2">
+                                                        <div class="col-8 fs-5 m-auto">{{$serviceType->name}}</div>
+                                                        <div class="col-2 fs-5 m-auto">
+                                                            <h3 class="badge bg-secondary">{{$serviceType->active  == 1 ? 'Active' : 'Inactive'}}</h3>
+                                                        </div>
+                                                        <div class="col-2 d-flex">
+                                                            <button type="button" data-type="delete"
+                                                                class="btn btn-danger ms-2 service-type-action"
+                                                                data-service_type_id="{{$serviceType->id}}"
+                                                                data-company_id="{{$user->company ? $user->company->id : null}}"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#delete-assign-modal">Delete</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @else
+                                                <div class="row mt-3">
+                                                    <div class="col">
+                                                        <button data-bs-toggle="modal" data-bs-target="#assign-service-modal"
+                                                                class="btn btn-warning text-white text-center w-100" type="button">
+                                                            Add Vendor Service
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="tab-pane fade" id="pills-contact" role="tabpanel"
                                             aria-labelledby="pills-contact-tab">
@@ -755,6 +766,43 @@
         </div>
     </div>
 
+    <div class="modal fade" id="assign-service-modal" tabindex="-1" aria-labelledby="assign-service-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="assign-service-modalLabel">Assign to Service</h5>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close
+                    </button>
+                </div>
+                <form method="post" action="{{ route('occasions-services.assign') }}">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <div class="modal-body">
+                        <div class="row g-3 align-items-center mb-3">
+                            <div class="col-auto w-100"  >
+                                <select class="form-control selectpicker" name="service_type"  >
+                                    @foreach($serviceTypes as $serviceType)
+                                        <option value="{{$serviceType->id}}">{{$serviceType->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="p-2 bd-highlight">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+
+                            <div class="  p-2 bd-highlight">
+                                <button type="submit" class="btn btn-warning">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="new-notes-modal" tabindex="-1" aria-labelledby="new-notes-modalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -807,7 +855,7 @@
     </div>
 
     <div class="modal fade" id="delete-service-modal" tabindex="-1" aria-labelledby="delete-service-modalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog">
             <form action="" method="post">
                 @csrf
@@ -829,6 +877,30 @@
             </form>
         </div>
     </div>
+    <div class="modal fade" id="delete-assign-modal" tabindex="-1" aria-labelledby="delete-assign-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="{{route('occasions-services-type.un-assign')}}">
+                @csrf
+                <input type="hidden" name="user_id" value="{{ $user->id }}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delete-assign-modalLabel">Service</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+                            <i class="fa-sharp fa-light fa-triangle-exclamation"></i> Are you sure to delete this from its category?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal fade" id="edit-service-modal" tabindex="-1" aria-labelledby="edit-service-modalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -857,6 +929,7 @@
 @section('content_javascript')
     <script type="text/javascript">
         $(document).ready(function() {
+            $('.selectpicker').selectpicker();
             $('body').on('click', '.view-full-order-btn', function(e) {
                 let orderId = $(this).attr('data-order-id');
                 $('.info-orders-div').removeClass('d-none');

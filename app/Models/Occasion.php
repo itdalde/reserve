@@ -20,7 +20,7 @@ class Occasion extends Model
     }
 
     public function serviceTypes() {
-        return $this->hasMany(ServiceType::class);
+        return $this->hasMany(OccasionServiceTypePivot::class,'occasion_id');
     }
 
 }

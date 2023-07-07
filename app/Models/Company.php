@@ -22,6 +22,7 @@ class Company extends Model
         return $this->hasMany(OccasionEvent::class)->with(
             'serviceReviews',
             'paymentPlan',
+            'serviceType',
             'ratings',
             'gallery',
             'company'

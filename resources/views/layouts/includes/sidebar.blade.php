@@ -110,14 +110,23 @@
                 </li>
                 <li class="nav-item py-2">
                     <a class="nav-link {{ Request::is('service-providers*') ? ' active' : '' }}"
-                        href="{{ route('service-providers.list') }}">
+                       href="{{ route('service-providers.list') }}">
                         <img class="ml-15px "
-                            src="{{ Request::is('service-providers*') ? asset('assets/images/icons/service-providers-active.png') : asset('assets/images/icons/service-providers.png') }}"
-                            alt="....">
+                             src="{{ Request::is('service-providers*') ? asset('assets/images/icons/service-providers-active.png') : asset('assets/images/icons/service-providers.png') }}"
+                             alt="....">
                         Service Providers
                     </a>
                 </li>
                 <li class="nav-item py-2">
+                    <a class="nav-link {{ Request::is('occasions-services*') ? ' active' : '' }}"
+                       href="{{ route('occasions-services.list') }}">
+                        <img class="ml-15px "
+                             src="{{ Request::is('occasions-services*') ? asset('assets/images/icons/event-active.png') : asset('assets/images/icons/event-inactive.png') }}"
+                             alt="....">
+                        Occassions/services
+                    </a>
+                </li>
+                <li class="nav-item py-2 d-none">
                     <a class="nav-link {{ Request::is('admin/orders*') ? ' active' : '' }}"
                         href="{{ route('orders.admin') }}">
                         <img class="ml-15px "
@@ -128,7 +137,7 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item d-none">
                     <a class="nav-link px-4 d-flex align-items-center custom-tooltip customers-side-tab {{ Request::is('settings*') ? ' show active' : '' }}"
                         data-bs-toggle="collapse" href="#settings" role="button"
                         aria-expanded="{{ Request::is('settings*') ? 'true' : 'false' }}" aria-controls="settings">

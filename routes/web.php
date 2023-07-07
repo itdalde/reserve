@@ -47,6 +47,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/occasions/delete', [OccasionController::class, 'activateDeactivate'])->name('occasions.delete-occasion');
     Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order');
 
+    Route::post('/occasions-services/assign', [OccasionController::class, 'occasionsServicesAssign'])->name('occasions-services.assign');
+    Route::post('/occasions-services/un-assign', [OccasionController::class, 'occasionsServicesUnAssign'])->name('occasions-services-type.un-assign');
+    Route::get('/occasions-services', [OccasionController::class, 'occasionsServicesList'])->name('occasions-services.list');
+    Route::get('/occasions-services/edit', [OccasionController::class, 'occasionsServicesEdit'])->name('occasions-services.edit');
+    Route::post('/occasions-services/store', [OccasionController::class, 'occasionsServicesStore'])->name('occasions-services.store');
+    Route::get('/occasions-services/remove', [OccasionController::class, 'occasionsServicesRemove'])->name('occasions-services.remove');
+    Route::post('/occasions-services/type/store', [OccasionController::class, 'occasionsServicesTypeStore'])->name('occasions-services-type.store');
+    Route::get('/occasions-services/type/remove', [OccasionController::class, 'occasionsServicesTypeRemove'])->name('occasions-services-type.remove');
 
     Route::post('/settings/statuses/update', [SettingsController::class, 'statusUpdate'])->name('status-update');
     Route::post('/settings/statuses/store', [SettingsController::class, 'statusStore'])->name('status-store');

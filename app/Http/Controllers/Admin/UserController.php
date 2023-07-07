@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\Occasion;
+use App\Models\OccasionServiceTypePivot;
 use App\Models\OrderSplit;
+use App\Models\ServiceType;
 use App\Utility\NotificationUtility;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -185,15 +187,22 @@ class UserController extends Controller
         $user = User::where('id', $request->id)->first();
         $total = 0;
         $totalOrders = 0;
+        $serviceType = null;
+        $serviceTypes = ServiceType::where('active',1)->get();
        if($user->company  ) {
            if( $user->company->services) {
                $total = 0;
                foreach ($user->company->services as $service) {
+                   $serviceType = $service->serviceType;
                    $totalOrders += count($user->customer_orders);
                    foreach ($service->orders as  $order) {
                        $total += OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
                    }
                }
+           }
+           if(!$serviceType) {
+               $serviceTypePivot = OccasionServiceTypePivot::where('company_id', $user->company->id)->first();
+               $serviceType = $serviceTypePivot ?  ServiceType::where('id', $serviceTypePivot->service_type_id)->first() : null;
            }
        } else {
            $totalOrders = count($user->customer_orders);
@@ -201,7 +210,8 @@ class UserController extends Controller
                $total += $order->total_amount;
            }
        }
-        return view('superadmin.user-view', compact('user', 'total','totalOrders'));
+
+        return view('superadmin.user-view', compact('serviceTypes','serviceType','user', 'total','totalOrders'));
     }
 
     public function approve(Request $request)
