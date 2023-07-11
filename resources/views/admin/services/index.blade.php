@@ -9,12 +9,12 @@
         <div class="col-sm-12 col-md-6">
             <div class="card mb-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
+                    <div class="">
 
-                        <div class="p-1 w-25">
+                        <div class="p-1 w-100">
                             <h5 class="card-title align-middle m-auto">Services</h5>
                         </div>
-                        <div class="p-1 d-flex">
+                        <div class="p-1 d-none">
                             <div class="d-flex justify-content-between">
                                 <div class="separator " style="border-left: 2px solid #ccc;
                                                         width: 1px;
@@ -27,6 +27,30 @@
                                 </div>
                             </div>
 
+                        </div>
+                        <div class="d-flex justify-content-between pb-3 pt-3">
+                            <div class="w-100">
+                                <div class="">
+                                    <!-- Form -->
+                                    @if(!Auth::user()->hasRole('superadmin'))
+                                    <form class="d-flex align-items-center">
+                                        <input id="head-general-search" type="search" class="form-control" placeholder="Search"/>
+                                    </form>
+                                    @else
+                                        <span><h3>Admin account</h3></span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="w-100">
+                                @if(!Auth::user()->hasRole('superadmin') )
+                                <div class="mx-2 d-flex justify-content-center custom-service-header">
+                                    <a href="{{ route('services.create') }}" class="btn btn-outline-warning">
+                                        <img src="{{asset('assets/images/icons/add.png')}}" alt="...">&nbsp;<span class="btn-add-service" style="margin-left: 12px">Add new service</span>
+                                    </a>
+                                </div>
+                            @endif
+                            </div>
                         </div>
                         <div class="p-1 d-none">
                             <div class="dropdown">
@@ -59,6 +83,7 @@
                                                     href="#">{{ $serviceType['name'] }}</a></li>
                                         @endforeach
                                     @endif
+                                    
                                 </ul>
                             </div>
                         </div>

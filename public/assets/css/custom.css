@@ -334,3 +334,62 @@ svg text {
     border-left: unset !important;
     border-right: unset !important;
 }
+.label-color {
+    color: #48484A;
+}
+.page-title {
+    font-weight: 600;
+    line-height: 20px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+}
+
+.field-label {
+    font-family: 'Montserrat', sans-serif, 'open-sans';
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.create-new-service-page input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.create-new-service-page .input-group-text {
+    color: #3E4B5D;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.create-new-service-page .form-check-label {
+    color: #A7A7A7;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.create-new-service-page hr {
+    color: #A7A7A7;
+}
+
+.action-button {
+    font-family: 'Montserrat', sans-serif, 'open-sans';
+    font-weight: 600;
+    size: 12px;
+    line-height: 16px;
+    color: #DBA57D;
+}
+
+.badge-hour {
+    border: 1px solid #e7e7e7;
+    padding: 0 4px;
+    border-radius: 5px;
+    position: relative;
+    top: -18px;
+    font-weight: 500;
+    color: #dc3545;
+    font-size: .75rem;
+}

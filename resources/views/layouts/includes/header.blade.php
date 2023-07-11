@@ -7,23 +7,6 @@
                 data-feather="menu"
 
                 class="nav-icon me-2 icon-xs"></i></a>
-        <div class="ms-lg-3 d-none d-md-none d-lg-block w-25">
-            <!-- Form -->
-            @if(!Auth::user()->hasRole('superadmin'))
-            <form class="d-flex align-items-center">
-                <input id="head-general-search" type="search" class="form-control" placeholder="Search"/>
-            </form>
-            @else
-                <span><h3>Admin account</h3></span>
-            @endif
-        </div>
-        @if(!Auth::user()->hasRole('superadmin') )
-        <div class="mx-2 d-flex justify-content-center custom-service-header">
-            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#new-service-modal">
-                <img src="{{asset('assets/images/icons/add.png')}}" alt="..."> <span class="btn-add-service" style="margin-left: 12px">Add new service</span>
-            </button>
-        </div>
-    @endif
         <!--Navbar nav -->
         <ul class="navbar-nav navbar-right-wrap ms-auto d-flex nav-top-wrap">
             <li class="dropdown stopevent">
