@@ -193,32 +193,32 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $data = $request->all();
         $company = $request->user()->company;
         $service = new OccasionEvent();
         $service->company_id = $company->id;
         $service->name = $data['service_name'];
-        $service->name_arabic = $data['service_name_arabic'];
+        $service->name_arabic = $data['service_name_arabic'] ?? '-';
         $service->occasion_type = 0;
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
-        $service->description_arabic = $data['service_description_arabic'];
+        $service->description_arabic = $data['service_description_arabic'] ?? '-';
         $service->address_1 = $data['location'];
         $service->max_capacity = $data['max_capacity'];
         $service->min_capacity = $data['min_capacity'];
-        $service->availability_slot = $data['available_slot'];
-        $service->availability_time_in = $data['start_available_time'];
-        $service->availability_time_out = $data['end_available_time'];
+        $service->availability_slot = $data['available_slot'] ?? 0;
+        $service->availability_time_in = $data['start_available_time'] ?? date('Y-m-d H:i:s');
+        $service->availability_time_out = $data['end_available_time'] ?? date('Y-m-d H:i:s');
 
-        $availableDates = explode(',',$data['start_available_date']);
-        $unavailableDates = explode(',',$data['end_available_time']);
+        $availableDates = date('Y-m-d H:i:s');// explode(',',$data['start_available_date']);
+        $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
         $service->availability_start_date = $availableDates && isset($availableDates[0]) ? date('Y-m-d H:i:s', strtotime($availableDates[0]))  : date('Y-m-d H:i:s');;
-        $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s', strtotime(end($availableDates))) : date('Y-m-d H:i:s');;
+        $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s') : date('Y-m-d H:i:s');;
         $service->active = 3;
         $service->service_type = $data['service_type'];
         $service->save();
-        foreach ($availableDates as $availableDate) {
+        foreach ([$availableDates] as $availableDate) {
             $avail = new AvailableDates();
             $avail->date = $availableDate;
             $avail->service_id = $service->id;
@@ -226,7 +226,7 @@ class ServiceController extends Controller
             $avail->status = 1;
             $avail->save();
         }
-        foreach ($unavailableDates as $availableDate) {
+        foreach ([$unavailableDates] as $availableDate) {
             $avail = new AvailableDates();
             $avail->date = $availableDate;
             $avail->service_id = $service->id;
@@ -248,12 +248,12 @@ class ServiceController extends Controller
         }
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;
-        $price->plan_id = $data['plan_id'];
+        $price->plan_id = $data['plan_id'] ?? 10;
         $price->service_price = $data['service_price'];
-        $price->package = $data['package_name'];
-        $price->min_capacity = $data['package_min_capacity'];
-        $price->max_capacity = $data['package_max_capacity'];
-        $price->package_details = $data['package_details'];
+        $price->package = $data['package_name'] ?? 'Per person';
+        $price->min_capacity = $data['package_min_capacity'] ?? 1;
+        $price->max_capacity = $data['package_max_capacity'] ?? 5;
+        $price->package_details = $data['package_details'] ?? '-';
         $price->package_price = $data['service_price'];
         $price->active = 1;
         $price->save();
@@ -269,7 +269,7 @@ class ServiceController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Service Saved Successfully');
+        return redirect()->route('services.index')->with(['message' => 'Service Saved Successfully']);
     }
 
     public function uploadImage($file, $service, $isFeatured = 0)

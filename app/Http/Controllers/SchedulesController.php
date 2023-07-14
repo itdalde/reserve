@@ -37,12 +37,19 @@ class SchedulesController extends Controller
     }
     public function list(Request $request)
     {
+         $service_id = $request->service_id;
+         if (!$request->service_id) {
+           $service = OccasionEvent::where('company_id', auth()->user()->company->id)->first();
+           $service_id = $service->id;
+         }
+
         if ($request->ajax()) {
             $response = [];
-            $service_id = $request->service_id;
+            
             $data = AvailableDates::whereDate('date_obj', '>=', $request->start)
                 ->whereDate('date_obj',   '<=', $request->end)
                 ->where('company_id', auth()->user()->company->id)
+                ->where('service_id', $service_id)
                 ->get();
                 
             foreach ($data as $event) {
@@ -60,7 +67,7 @@ class SchedulesController extends Controller
             }
             return response()->json($response);
         }
-        $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
+        $services = OccasionEvent::where('company_id', auth()->user()->company->id,)->where('id', $service_id)->orderBy('id', 'DESC')->get();
         return view('admin.schedules.manage', compact('services'));
     }
     public function updateSchedule(Request $request)
@@ -135,14 +142,14 @@ class SchedulesController extends Controller
         //     }
         // }
 
-        AvailableDates::where('company_id', auth()->user()->company->id)->delete();
-        $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
+        AvailableDates::where('company_id', auth()->user()->company->id)->where('service_id', $request->service_id)->delete();
+        $services = OccasionEvent::where('company_id', auth()->user()->company->id)->where('id', $request->service_id)->orderBy('id', 'DESC')->get();
         foreach ($services as $service) {
             foreach ($dates as $date) {
                 $avail = new AvailableDates();
                 $avail->date = $date['old_format'];
                 $avail->date_obj =  $date['new_format'];
-                $avail->service_id = $service->id;
+                $avail->service_id = $request->service_id;
                 $avail->company_id = auth()->user()->company->id;
                 $avail->status = $request->type == 2 ? 1 : 2;
                 $avail->save();
