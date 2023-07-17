@@ -27,7 +27,7 @@ class Company extends Model
             'gallery',
             'availabilities',
             'company'
-        );
+        )->where('active', '=', 1);
     }
 
     public function tags() {
