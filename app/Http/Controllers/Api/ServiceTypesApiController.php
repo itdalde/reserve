@@ -96,21 +96,25 @@ class ServiceTypesApiController extends Controller
         foreach ($providers as $k => $provider) {
             foreach ($provider['services'] as $key => $service) {
                 $providers[$k]['base_price'] = $service['price'];
-                $availableDateObj = AvailableDates::where('service_id', $service['id']);
-                if (isset($data['from']) && isset($data['to'])) {
-                    $availableDateObj->where('status', 1)
-                        ->where('date_obj', '<>', null)
-                        ->whereBetween('date_obj', [$data['from'], $data['to']]);
-                }
-                $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')->get()->toArray();
-                if ($availableDates) {
-                    $providers[$k]['services'][$key]['availabilities'] = array_map(function ($item) {
-                        return $item['date'];
-                    }, $availableDates);
-                } else {
+                if( $service['active'] == 1) {
+                    $availableDateObj = AvailableDates::where('service_id', $service['id']);
                     if (isset($data['from']) && isset($data['to'])) {
-                        unset($providers[$k]['services'][$key]);
+                        $availableDateObj->where('status', 1)
+                            ->where('date_obj', '<>', null)
+                            ->whereBetween('date_obj', [$data['from'], $data['to']]);
                     }
+                    $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')->get()->toArray();
+                    if ($availableDates) {
+                        $providers[$k]['services'][$key]['availabilities'] = array_map(function ($item) {
+                            return $item['date'];
+                        }, $availableDates);
+                    } else {
+                        if (isset($data['from']) && isset($data['to'])) {
+                            unset($providers[$k]['services'][$key]);
+                        }
+                    }
+                } else {
+                    unset($providers[$k]['services'][$key]);
                 }
             }
         }
