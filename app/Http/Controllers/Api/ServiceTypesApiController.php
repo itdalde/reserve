@@ -100,19 +100,31 @@ class ServiceTypesApiController extends Controller
     public function getServiceTypesByOccasionId(Request $request, $occasion_id): JsonResponse
     {
 
-        $serviceTypes = OccasionServiceTypePivot::leftJoin('occasions as o', 'o.id', '=', 'occasion_service_type_pivots.occasion_id')
-            ->leftJoin('service_types as st', 'st.id', '=', 'occasion_service_type_pivots.service_type_id');
-
-        if ($request->has('from') && $request->has('to')) {
-            $serviceTypes = $serviceTypes->leftJoin('available_dates as ad', 'ad.service_id', '=', 'o.id')
-                ->where('ad.status', 1)
-                ->whereBetween('ad.date', [$request->input('from'), $request->input('to')]);
-        } else {
-            $serviceTypes = $serviceTypes->where('occasion_service_type_pivots.occasion_id', $occasion_id);
+        $serviceTypes = OccasionServiceTypePivot::join('occasions', 'occasions.id', '=', 'occasion_service_type_pivots.occasion_id')
+            ->join('service_types','service_types.id','=','occasion_service_type_pivots.service_type_id')
+            ->join('services','services.service_type','=','service_types.id')
+            ->leftJoin('available_dates as ad', 'ad.service_id', '=', 'services.id')
+            ->where('occasion_service_type_pivots.occasion_id', $occasion_id);
+        if (isset($data['from']) && isset($data['to'])) {
+            $serviceTypes->where('ad.status', 1)
+                ->where('ad.date_obj','<>', null)
+                ->whereBetween('ad.date_obj', [$request->input('from'), $request->input('to')]);
         }
 
-        $serviceTypes = $serviceTypes->get(['occasion_service_type_pivots.occasion_id', 'o.name as occasion', 'occasion_service_type_pivots.service_type_id', 'st.name as service_type']);
+        $serviceTypes = $serviceTypes->get(['ad.date_obj AS available_date', 'occasion_service_type_pivots.occasion_id', 'occasions.name as occasion', 'occasion_service_type_pivots.service_type_id', 'service_types.name as service_type'])->toArray();
 
-        return sendResponse($serviceTypes, 'Get services under occasion');
+        $response = [];
+        foreach ($serviceTypes as $item) {
+            $serviceTypeId = $item['service_type_id'];
+            if (isset($response[$serviceTypeId])) {
+                $item['available_date'] ? $response[$serviceTypeId]['available_date'][] = $item['available_date'] : '';
+            } else {
+                $response[$serviceTypeId] = $item;
+                $item['available_date'] ? $response[$serviceTypeId]['available_date'] = [$item['available_date']] : '';
+            }
+        }
+
+
+        return sendResponse(array_values($response), 'Get services under occasion');
     }
 }
