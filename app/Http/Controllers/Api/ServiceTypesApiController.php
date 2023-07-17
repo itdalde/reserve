@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
+use App\Models\AvailableDates;
 use App\Models\Company;
 use App\Models\OccasionEvent;
 use App\Models\OccasionEventsPivot;
@@ -23,6 +24,7 @@ class ServiceTypesApiController extends Controller
         $serviceTypes = ServiceType::where('active', 1)->get(['id', 'name', 'active']);
         return sendResponse($serviceTypes, "Service types");
     }
+
     /**
      * @return JsonResponse
      */
@@ -68,8 +70,20 @@ class ServiceTypesApiController extends Controller
      */
     public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
     {
-        $serviceTypes = OccasionServiceTypePivot::where('occasion_id',$occasion_type_id)->pluck('service_type_id')->toArray();
-        $services = OccasionEvent::whereIn('service_type', $serviceTypes)->get()->toArray();
+        $serviceTypes = OccasionServiceTypePivot::where('occasion_id', $occasion_type_id)->pluck('service_type_id')->toArray();
+        $servicesQuery = OccasionEvent::whereIn('service_type', $serviceTypes);
+        $data = $request->all();
+        if (isset($data['from']) && isset($data['to'])) {
+            $dateTime = \DateTime::createFromFormat('m/d/Y', $data['from']);
+            $data['from'] = $dateTime->format('Y-m-d');
+            $dateTime = \DateTime::createFromFormat('m/d/Y', $data['to']);
+            $data['to'] = $dateTime->format('Y-m-d');
+            $servicesQuery
+                ->join('available_dates as ad', 'ad.service_id', '=', 'services.id')->where('ad.status', 1)
+                ->where('ad.date_obj', '<>', null)
+                ->whereBetween('ad.date_obj', [$data['from'], $data['to']]);
+        }
+        $services = $servicesQuery->get()->toArray();
         $companyIds = [];
         $serviceIds = [];
         foreach ($services as $service) {
@@ -77,22 +91,32 @@ class ServiceTypesApiController extends Controller
             $serviceIds[] = $service['id'];
         }
         $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
-            ->whereIn('id',  $companyIds)
+            ->whereIn('id', $companyIds)
             ->get()->toArray();
-        foreach($providers as $k => $provider) {
+        foreach ($providers as $k => $provider) {
             foreach ($provider['services'] as $key => $service) {
-                if(!in_array($service['id'],$serviceIds)) {
-//                    unset($provider->services[$key]);
+                $providers[$k]['base_price'] = $service['price'];
+                $availableDateObj = AvailableDates::where('service_id', $service['id']);
+                if (isset($data['from']) && isset($data['to'])) {
+                    $availableDateObj->where('status', 1)
+                        ->where('date_obj', '<>', null)
+                        ->whereBetween('date_obj', [$data['from'], $data['to']]);
+                }
+                $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')->get()->toArray();
+                if ($availableDates) {
+                    $providers[$k]['services'][$key]['availabilities'] = array_map(function ($item) {
+                        return $item['date'];
+                    }, $availableDates);
                 } else {
-                    $providers[$k]['services'] = [];
-                    $providers[$k]['base_price'] = $service['price'];
-                    $providers[$k]['services'][] = $service;
-                    break;
+                    if (isset($data['from']) && isset($data['to'])) {
+                        unset($providers[$k]['services'][$key]);
+                    }
                 }
             }
         }
         return sendResponse($providers, 'Get services by occasion type');
     }
+
     /**
      * @param Request $request
      * @return JsonResponse
@@ -101,13 +125,13 @@ class ServiceTypesApiController extends Controller
     {
 
         $serviceTypes = OccasionServiceTypePivot::join('occasions', 'occasions.id', '=', 'occasion_service_type_pivots.occasion_id')
-            ->join('service_types','service_types.id','=','occasion_service_type_pivots.service_type_id')
-            ->join('services','services.service_type','=','service_types.id')
+            ->join('service_types', 'service_types.id', '=', 'occasion_service_type_pivots.service_type_id')
+            ->join('services', 'services.service_type', '=', 'service_types.id')
             ->leftJoin('available_dates as ad', 'ad.service_id', '=', 'services.id')
             ->where('occasion_service_type_pivots.occasion_id', $occasion_id);
         if (isset($data['from']) && isset($data['to'])) {
             $serviceTypes->where('ad.status', 1)
-                ->where('ad.date_obj','<>', null)
+                ->where('ad.date_obj', '<>', null)
                 ->whereBetween('ad.date_obj', [$request->input('from'), $request->input('to')]);
         }
 

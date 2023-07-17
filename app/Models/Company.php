@@ -25,6 +25,7 @@ class Company extends Model
             'serviceType',
             'ratings',
             'gallery',
+            'availabilities',
             'company'
         );
     }

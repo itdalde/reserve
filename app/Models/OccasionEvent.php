@@ -73,6 +73,10 @@ class OccasionEvent extends Model
             ->selectRaw('avg(rate) as aggregate, occasion_event_id')
             ->groupBy('occasion_event_id');
     }
+    public function availabilities() {
+        return $this->hasMany(AvailableDates::class, 'service_id', 'id')
+            ->selectRaw('DATE(date_obj) as date');
+    }
 
     public function paymentPlan()
     {
