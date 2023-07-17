@@ -58,6 +58,7 @@ $(document).ready(function () {
 
     $('body').on('click', '.service-image-holder', function () {
         $(this).closest('.modal').find('#service-image-file').click();
+        $(this).closest('.create-new-service-page').find('#service-image-file').click();
     });
     $('body').on('change', '#service-image-file', function () {
         $('.service-image-error').addClass('d-none');
