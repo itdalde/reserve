@@ -49,6 +49,7 @@
                             </div>
                         </div>
                     </div>
+                    @if(Auth::user()->hasRole('superadmin') )
                     <hr>
                     <div class="row">
                         <div class="mb-3 col-3">
@@ -66,22 +67,7 @@
                     value="{{ Auth::user() && Auth::user()->company && Auth::user()->company->serviceType ? Auth::user()->company->serviceType->name : 'Service' }}"> -->
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="location-name"
-                                class="form-label field-label label-color">Location&nbsp;&nbsp;<span
-                                    class="text-danger">*</span></label>
-                            <div class="input-group flex-nowrap">
-                                <span class="input-group-text" id="addon-wrapping">
-                                    <img class="float-end" src="{{ asset('assets/images/icons/location.png') }}"
-                                        alt="location">
-                                </span>
-                                <input dir="auto" name="location" type="text" class="form-control"
-                                    placeholder="Enter Location" aria-label="" aria-describedby="addon-wrapping">
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                     <hr>
                     <div class="row">
                         <div class="mb-3">
@@ -201,7 +187,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3 mt-2">
+                        <div class="row mb-3 mt-2 d-none">
                             <div class="col-md-12">
                                 <div class="">
                                     <label for="minimum-guest" class="form-label field-label label-color">Do you want
