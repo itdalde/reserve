@@ -46,13 +46,19 @@ class OccasionController extends Controller
     public function occasionsServicesList(Request $request) {
 
         $occasions = Occasion::where('active',1)->with(  'serviceTypes')->get()->toArray();
+        $occasionNames = [];
+        foreach ($occasions as $occasion) {
+            $occasionNames[] = $occasion['name'];
+        }
+        $occasionNames = json_encode($occasionNames);
         $serviceTypes = ServiceType::where('active',1)->get();
-        return view('admin.occasion.index',compact('occasions','serviceTypes'));
+        return view('admin.occasion.index',compact('occasionNames','occasions','serviceTypes'));
 
     }
     public function occasionsServicesEdit(Request $request) {
         $id = $request->id;
         $typesAssigned =[];
+        $serviceNames = [];
         $occasion = Occasion::where('id',$id)->with( 'serviceTypes','serviceTypes.serviceType','serviceTypes.vendors')->first()->toArray();
         foreach ($occasion['service_types'] as $k => $serviceType) {
             $occasion['service_types'][$k]['vendors'] = OccasionEvent::where('service_type',$serviceType['service_type_id'])->get()->toArray();
@@ -61,7 +67,12 @@ class OccasionController extends Controller
         }
         $serviceTypes = ServiceType::get();
 
-        return view('admin.occasion.edit',compact('typesAssigned','occasion','serviceTypes'));
+        foreach ($serviceTypes as $serviceType) {
+            $serviceNames[] = $serviceType->name;
+        }
+        $serviceNames = json_encode($serviceNames);
+
+        return view('admin.occasion.edit',compact('serviceNames','typesAssigned','occasion','serviceTypes'));
     }
 
     public function occasionsServicesUnAssign(Request $request) {

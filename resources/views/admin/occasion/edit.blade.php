@@ -77,7 +77,7 @@
             </div>
         </div>
     </div>
-
+    <input type="hidden" id="service-names" value="{{$serviceNames}}">
     <div class="modal fade" id="assign-service-modal" tabindex="-1" aria-labelledby="assign-service-modalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -154,7 +154,7 @@
                             </div>
 
                             <div class="ms-auto p-2 bd-highlight">
-                                <button type="submit" class="btn btn-warning">Save</button>
+                                <button type="submit" id="service-modal-btn-save" class="btn btn-warning">Save</button>
                             </div>
                         </div>
                     </div>
@@ -166,6 +166,16 @@
 @section('content_javascript')
     <script>
         $(document).ready(function () {
+            $('body').on('keyup','#service-modal-name-field',function (e) {
+                let names = $('#service-names').val();
+                names = JSON.parse(names);
+                if(names.includes($(this).val().trim())) {
+                    toastr.error('Duplicate name found ' + $(this).val() )
+                    $('#service-modal-btn-save').attr('disabled',true);
+                } else {
+                    $('#service-modal-btn-save').removeAttr('disabled');
+                }
+            });
             $.fn.dataTable.ext.errMode = 'none';
             let datatable = $('#occassions-table').DataTable({
                 "pageLength": 10000,
