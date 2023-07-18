@@ -268,6 +268,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
             ->addTag('Services')
             ->setDescription('findOccasionServiceByProvider')
             ->setProduces(['application/json']);
+
+        Api::get('/{service_type_id}/providers/{search}', [ServicesApiController::class, 'findOccasionByProvider'])
+            ->addTag('Services')
+            ->setDescription('Search providers by wildcard {name} under service type')
+            ->setProduces(['application/json']);
+
     });
 
     Route::group(['prefix' => 'providers', 'middleware' => ['cors']], function() {

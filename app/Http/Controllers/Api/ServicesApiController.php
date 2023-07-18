@@ -19,6 +19,24 @@ class ServicesApiController extends Controller
      * @param OccasionServiceByProviderRequest $request
      * @return JsonResponse
      */
+    public function findOccasionByProvider(OccasionServiceByProviderRequest $request): JsonResponse
+    {
+        $search = $request->search;
+        $serviceId = $request->service_type_id;
+        $servicesQuery = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'occasionEventsReviewsAverage', 'gallery')
+            ->leftJoin('companies', 'companies.id', '=', 'services.company_id');
+        if($search && $search != '') {
+            $servicesQuery->where('companies.name', 'like', '%' . $search . '%');
+        }
+        $services = $servicesQuery->where('services.service_type', '=', $serviceId)
+            ->get();
+        return sendResponse($services, 'Search providers by wildcard {name} under service type');
+    }
+
+    /**
+     * @param OccasionServiceByProviderRequest $request
+     * @return JsonResponse
+     */
     public function findOccasionServiceByProvider(OccasionServiceByProviderRequest $request): JsonResponse
     {
         $search = $request->search;
