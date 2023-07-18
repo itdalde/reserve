@@ -59,7 +59,7 @@
                             <div class="d-flex justify-content-center mt-3">
                                 <div class="w-50">
                                     <button
-                                        class="btn btn-outline rounded-1 fw-bold text-uppercase w-50 create-account-btn"
+                                        class="btn btn-outline rounded-1 fw-bold text-uppercase w-100 create-account-btn"
                                         id="sign-up-btn" role="button">create an account</button>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                                     <span class="input-group-text rounded-0 bg-white">
                                         <i class="bi bi-person-circle"></i>
                                     </span>
-                                    <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                    <input type="email" class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                         placeholder="Email Address" name="email" value="{{ old('email')}}" required
                                         autofocus autocomplete="false">
                                 </div>
@@ -140,7 +140,7 @@
                                     </span>
 
                                     <input type="password"
-                                        class="form-control shadow-none rounded-0 border-start-0 border-end-0"
+                                        class="form-control shadow-none rounded-0 border-start-0 border-end-0 fs-6"
                                         placeholder="{{ __('login.Password')}}" name="password" required>
 
                                     <span class="input-group-text rounded-0 bg-white" role="button"
@@ -175,7 +175,7 @@
                                 <h3 class="text-center">Create an Account</h3>
                             </div>
                         </div>
-                        <div class="container w-50 mt-5">
+                        <div class="container mt-5" style="width: 65%;">
                             <div class="row">
                                 <form method="POST" action="{{ route('register') }}" class="">
                                     @csrf
@@ -184,7 +184,8 @@
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-people"></i>
                                         </span>
-                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                        <input type="text"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                             placeholder="Name of the Company" id="company_name" name="company_name"
                                             value="{{ old('company_name') }}" required autofocus>
                                     </div>
@@ -194,7 +195,8 @@
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-person-circle"></i>
                                         </span>
-                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                        <input type="text"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                             placeholder="Name of the person to contact" id="first_name"
                                             value="{{ old('full_name') }}" name="full_name" required>
                                     </div>
@@ -204,7 +206,8 @@
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-award"></i>
                                         </span>
-                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
+                                        <input type="text"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                             placeholder="Position of the contact person" id="position"
                                             value="{{ old('position') }}" name="position" required>
                                     </div>
@@ -214,9 +217,45 @@
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-telephone"></i>
                                         </span>
-                                        <input type="phone" class="form-control shadow-none rounded-0 border-start-0"
+                                        <input type="phone"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                             placeholder="Phone Number" id="phone_number"
                                             value="{{ old('phone_number') }}" name="phone_number" required>
+                                    </div>
+
+                                    
+                                    <!-- Registration No. -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-journal-text"></i>
+                                        </span>
+                                        <input type="text"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
+                                            placeholder="{{ __('login.registration_number') }}" id="registration_number"
+                                            value="{{ old('registration_number') }}" name="registration_number"
+                                            required>
+                                    </div>
+
+                                    <!-- Services Offered -->
+                                    <div class="input-group input-group-lg first pt-3">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-card-checklist"></i>
+                                        </span>
+                                        <input type="text"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
+                                            placeholder="Which services would you like to sign up for?"
+                                            id="service_type" value="{{ old('service_type') }}" name="service_type">
+                                    </div>
+
+                                     <!-- Location -->
+                                     <div class="input-group input-group-lg first pt-3 d-none">
+                                        <span class="input-group-text rounded-0 bg-white">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </span>
+                                        <input type="text"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
+                                            placeholder="Company location in Qatar" id="location"
+                                            value="{{ old('location') }}" name="location" required>
                                     </div>
 
                                     <!-- Email -->
@@ -224,39 +263,19 @@
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-envelope"></i>
                                         </span>
-                                        <input type="email" class="form-control shadow-none rounded-0 border-start-0"
-                                            placeholder="Email" id="email" name="email" value="{{ old('email')}}"
+                                        <input type="email"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
+                                            placeholder="Enter your email address" id="email" name="email" value="{{ old('email')}}"
                                             required>
                                     </div>
-
-                                    <!-- Location -->
-                                    <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white">
-                                            <i class="bi bi-geo-alt"></i>
-                                        </span>
-                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                            placeholder="Company location in Qatar" id="location"
-                                            value="{{ old('location') }}" name="location" required>
-                                    </div>
-
-                                    <!-- Registration No. -->
-                                    <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white">
-                                            <i class="bi bi-journal-text"></i>
-                                        </span>
-                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                            placeholder="{{ __('login.registration_number') }}" id="registration_number"
-                                            value="{{ old('registration_number') }}" name="registration_number"
-                                            required>
-                                    </div>
-
+                                   
                                     <!-- Password -->
                                     <div class="input-group input-group-lg first pt-3">
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-shield-lock"></i>
                                         </span>
                                         <input type="password"
-                                            class="form-control shadow-none rounded-0 border-start-0 hide-if-valid"
+                                            class="form-control shadow-none rounded-0 border-start-0 hide-if-valid fs-6"
                                             placeholder="Password" id="password" name="password"
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
                                             title="{{ __('login.password_role') }}" required>
@@ -282,15 +301,7 @@
                                             <i class="ps-2 bi bi-x-circle"></i> </span>
                                     </div>
 
-                                    <!-- Services Offered -->
-                                    <div class="input-group input-group-lg first pt-3">
-                                        <span class="input-group-text rounded-0 bg-white">
-                                            <i class="bi bi-card-checklist"></i>
-                                        </span>
-                                        <input type="text" class="form-control shadow-none rounded-0 border-start-0"
-                                            placeholder="Which services would you like to sign up for?"
-                                            id="service_type" value="{{ old('service_type') }}" name="service_type">
-                                    </div>
+                                    
 
                                     <!-- Description  -->
                                     <input type="hidden" name="company_description">
@@ -305,7 +316,7 @@
                                     @endif
 
                                     <button type="submit" id="btn-submit-change-pass"
-                                        class="btn btn-solid rounded-0 mt-4 w-100  fs-4 btn-create-account">Create
+                                        class="btn btn-solid rounded-0 mt-4 w-100  fs-6 btn-create-account mb-5">Create
                                         Account</button>
                                 </form>
                             </div>
@@ -345,7 +356,8 @@
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-person-circle"></i>
                                         </span>
-                                        <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                        <input type="email"
+                                            class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                             placeholder="Email Address" name="email" value="{{ old('email')}}" required
                                             autofocus autocomplete="false">
                                     </div>
@@ -356,7 +368,7 @@
                                         </span>
 
                                         <input type="password"
-                                            class="form-control shadow-none rounded-0 border-start-0 border-end-0"
+                                            class="form-control shadow-none rounded-0 border-start-0 border-end-0 fs-6"
                                             placeholder="{{ __('login.Password')}}" name="password" required>
 
                                         <span class="input-group-text rounded-0 bg-white" role="button"
@@ -604,16 +616,16 @@
             $(document).on('shown.bs.modal', '.modal', function () {
                 $('.modal-backdrop').before($(this));
             });
-            @if (Session::has('signup'))
-            $('#signupSuccessModal').modal('show');
-            @endif
-            @if (app('request')->input('register'))
-                onCLickSignUp()
-            @endif
-            let data = "{{ old('first_name') }}";
-            if (data) {
-                onCLickSignUp()
-            }
+            @if (Session:: has('signup'))
+        $('#signupSuccessModal').modal('show');
+        @endif
+        @if (app('request') -> input('register'))
+            onCLickSignUp()
+        @endif
+        let data = "{{ old('first_name') }}";
+        if (data) {
+            onCLickSignUp()
+        }
 
         var pageWidth = document.documentElement.scrollWidth;
         console.log('pageWidth', pageWidth)

@@ -116,7 +116,7 @@ class ServiceController extends Controller
 //                }
 //            }
 
-            return redirect()->back()->with('success', 'Service Saved Successfully');
+            return redirect()->back()->with(['message' => 'Service Updated Successfully']);
         }catch (Exception $exception) {
 
         }
@@ -204,9 +204,9 @@ class ServiceController extends Controller
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
         $service->description_arabic = $data['service_description_arabic'] ?? '-';
-        $service->address_1 = $data['location'];
-        $service->max_capacity = $data['max_capacity'];
-        $service->min_capacity = $data['min_capacity'];
+        $service->address_1 = $data['location'] ?? '';
+        $service->max_capacity = $data['max_capacity'] ?? 0;
+        $service->min_capacity = $data['min_capacity'] ?? 0;
         $service->availability_slot = $data['available_slot'] ?? 0;
         $service->availability_time_in = $data['start_available_time'] ?? date('Y-m-d H:i:s');
         $service->availability_time_out = $data['end_available_time'] ?? date('Y-m-d H:i:s');
@@ -216,7 +216,7 @@ class ServiceController extends Controller
         $service->availability_start_date = $availableDates && isset($availableDates[0]) ? date('Y-m-d H:i:s', strtotime($availableDates[0]))  : date('Y-m-d H:i:s');;
         $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s') : date('Y-m-d H:i:s');;
         $service->active = 3;
-        $service->service_type = $data['service_type'];
+        $service->service_type = $data['service_type'] ?? '';
         $service->save();
         foreach ([$availableDates] as $availableDate) {
             $avail = new AvailableDates();
