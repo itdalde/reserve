@@ -52,13 +52,16 @@ class OccasionController extends Controller
     }
     public function occasionsServicesEdit(Request $request) {
         $id = $request->id;
+        $typesAssigned =[];
         $occasion = Occasion::where('id',$id)->with( 'serviceTypes','serviceTypes.serviceType','serviceTypes.vendors')->first()->toArray();
         foreach ($occasion['service_types'] as $k => $serviceType) {
             $occasion['service_types'][$k]['vendors'] = OccasionEvent::where('service_type',$serviceType['service_type_id'])->get()->toArray();
             $occasion['service_types'][$k]['company_count'] = OccasionServiceTypePivot::where('service_type_id',$serviceType['service_type_id'])->count();
+            $typesAssigned[] = $serviceType['service_type_id'];
         }
         $serviceTypes = ServiceType::get();
-        return view('admin.occasion.edit',compact('occasion','serviceTypes'));
+
+        return view('admin.occasion.edit',compact('typesAssigned','occasion','serviceTypes'));
     }
 
     public function occasionsServicesUnAssign(Request $request) {
@@ -70,6 +73,19 @@ class OccasionController extends Controller
         return redirect()->back()->with('success', 'Occassion Added Successful');
     }
 
+    public function occasionsServicesTypeAssign(Request $request) {
+
+        $data = $request->all();
+        if($data['services']) {
+            foreach ($data['services'] as $service) {
+                $serviceTypePivot = new OccasionServiceTypePivot();
+                $serviceTypePivot->occasion_id = $data['occasion_id'];
+                $serviceTypePivot->service_type_id = $service;
+                $serviceTypePivot->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Occassion Updated Successful');
+    }
     public function occasionsServicesAssign(Request $request) {
         $data = $request->all();
         $user = User::where('id', $data['user_id'])->first();
