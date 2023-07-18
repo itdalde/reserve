@@ -37,7 +37,7 @@
                                     <td>
                                         <div class="d-flex justify-content-center">
                                             <span class="badge py-3  rounded-1 bg-secondary">
-                                               &nbsp;&nbsp;&nbsp; {{count($serviceType['vendors'])}} Vendor(s) &nbsp;&nbsp;&nbsp;
+                                               &nbsp;&nbsp;&nbsp; {{$serviceType['company_count']}} Vendor(s) &nbsp;&nbsp;&nbsp;
                                             </span>
                                         </div>
                                     </td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\OccasionInterface;
 use App\Models\Auth\User\User;
+use App\Models\Company;
 use App\Models\InquiryReplyImage;
 use App\Models\Occasion;
 use App\Models\OccasionEvent;
@@ -62,7 +63,7 @@ class OccasionController extends Controller
         $occasion = Occasion::where('id',$id)->with( 'serviceTypes','serviceTypes.serviceType','serviceTypes.vendors')->first()->toArray();
         foreach ($occasion['service_types'] as $k => $serviceType) {
             $occasion['service_types'][$k]['vendors'] = OccasionEvent::where('service_type',$serviceType['service_type_id'])->get()->toArray();
-            $occasion['service_types'][$k]['company_count'] = OccasionServiceTypePivot::where('service_type_id',$serviceType['service_type_id'])->count();
+            $occasion['service_types'][$k]['company_count'] = Company::where('service_type_id',$serviceType['service_type_id'])->count();
             $typesAssigned[] = $serviceType['service_type_id'];
         }
         $serviceTypes = ServiceType::get();
@@ -79,6 +80,9 @@ class OccasionController extends Controller
         $data = $request->all();
         $user = User::where('id', $data['user_id'])->first();
         if($user && $user->company  ) {
+            $company = $user->company;
+            $company->service_type_id = 0;
+            $company->save();
             OccasionServiceTypePivot::where('company_id',$user->company->id)->delete();
         }
         return redirect()->back()->with('success', 'Occassion Added Successful');
@@ -105,15 +109,20 @@ class OccasionController extends Controller
         $serviceTypePivot->service_type_id = $data['service_type'];
         $serviceTypePivot->company_id = $user->company ? $user->company->id : 0;
         $serviceTypePivot->save();
-        if($user && $user->company && $user->company->services ) {
+        $company = $user ? $user->company : null;
+        if($company) {
+            $company->service_type_id = $data['service_type'];
+            $company->save();
+        }
+        if($user && $user->company && $user->company->services  ) {
             foreach ($user->company->services as $service) {
-                $service->service_type = $data['user_id'];
+                $service->service_type = $data['service_type'];
                 $service->save();
             }
         }
         return redirect()->back()->with('success', 'Occassion Added Successful');
     }
-    public function  occasionsServicesStore(Request $request) {
+    public function occasionsServicesStore(Request $request) {
         $data = $request->all();
         $occasion = new Occasion();
         $occasion->name = $data['name'];

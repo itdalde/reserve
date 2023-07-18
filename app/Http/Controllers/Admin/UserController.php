@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
+use App\Models\Company;
 use App\Models\Occasion;
 use App\Models\OccasionServiceTypePivot;
 use App\Models\OrderSplit;
@@ -201,8 +202,8 @@ class UserController extends Controller
                }
            }
            if(!$serviceType) {
-               $serviceTypePivot = OccasionServiceTypePivot::where('company_id', $user->company->id)->first();
-               $serviceType = $serviceTypePivot ?  ServiceType::where('id', $serviceTypePivot->service_type_id)->first() : null;
+               $company = $user->company;
+               $serviceType = $company ?  ServiceType::where('id', $company->service_type_id)->first() : null;
            }
        } else {
            $totalOrders = count($user->customer_orders);

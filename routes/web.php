@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::post('/occasions-services/assign', [OccasionController::class, 'occasionsServicesAssign'])->name('occasions-services.assign');
     Route::post('/occasions-services/un-assign', [OccasionController::class, 'occasionsServicesUnAssign'])->name('occasions-services-type.un-assign');
-    Route::post('/occasions-services/un-assign', [OccasionController::class, 'occasionsServicesTypeAssign'])->name('occasions-services-type.assign');
+    Route::post('/occasions-services-types/assign', [OccasionController::class, 'occasionsServicesTypeAssign'])->name('occasions-services-type.assign');
     Route::get('/occasions-services', [OccasionController::class, 'occasionsServicesList'])->name('occasions-services.list');
     Route::get('/occasions-services/edit', [OccasionController::class, 'occasionsServicesEdit'])->name('occasions-services.edit');
     Route::post('/occasions-services/store', [OccasionController::class, 'occasionsServicesStore'])->name('occasions-services.store');
