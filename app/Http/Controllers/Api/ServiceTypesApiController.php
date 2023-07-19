@@ -19,9 +19,86 @@ class ServiceTypesApiController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getServices(): JsonResponse
+    public function getServices(Request $request): JsonResponse
     {
-        $serviceTypes = ServiceType::where('active', 1)->get(['id', 'name', 'active']);
+        $data = $request->all();
+        $serviceTypes = [];
+
+        if (isset($data['from']) && isset($data['to'])) {
+            $dateTime = \DateTime::createFromFormat('m/d/Y', $data['from']);
+            $data['from'] = $dateTime ? $dateTime->format('Y-m-d') : $data['from'];
+            $dateTime = \DateTime::createFromFormat('m/d/Y', $data['to']);
+            $data['to'] = $dateTime ?  $dateTime->format('Y-m-d') : $data['to'];
+
+            $services = OccasionEvent::join('available_dates as ad', 'ad.service_id', '=', 'services.id')
+                ->where('services.active', 1)
+                ->where('ad.status', 1)
+                ->where('ad.date_obj', '!=', null)
+                ->whereBetween('ad.date_obj', [$data['from'], $data['to']])
+                ->get(['services.*'])
+                ->toArray();
+
+            $serviceTypeIds = array_unique(array_column($services, 'service_type'));
+
+            if ($serviceTypeIds) {
+                $serviceTypes = ServiceType::where('active', 1)
+                    ->whereIn('id', $serviceTypeIds)
+                    ->get()
+                    ->toArray();
+            }
+        } else {
+            $serviceTypes = ServiceType::where('active', 1)
+                ->get()
+                ->toArray();
+
+            $serviceTypeIds = array_unique(array_column($serviceTypes, 'id'));
+
+            $services = OccasionEvent::whereIn('service_type', $serviceTypeIds)
+                ->where('active', 1)
+                ->get()
+                ->toArray();
+        }
+
+        $companyIds = array_unique(array_column($services, 'company_id'));
+
+        $providers = Company::with('tags', 'serviceType', 'reviews')
+            ->whereIn('id', $companyIds)
+            ->get()
+            ->toArray();
+
+        foreach ($serviceTypes as $k => $serviceType) {
+            $companies = [];
+
+            foreach ($services as $i => $service) {
+                if ($serviceType['id'] == $service['service_type']) {
+                    foreach ($providers as $key => $provider) {
+                        if ($provider['id'] == $service['company_id']) {
+                            $availableDateObj = AvailableDates::where('service_id', $service['id']);
+
+                            if (isset($data['from']) && isset($data['to'])) {
+                                $availableDateObj->whereBetween('date_obj', [$data['from'], $data['to']]);
+                            }
+
+                            $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')
+                                ->get()
+                                ->toArray();
+                            $availabilities = [];
+                            if ($availableDates) {
+                                $availabilities = array_map(function ($item) {
+                                    return $item['date'];
+                                }, $availableDates);
+                            }
+                            $services[$i]['availabilities'] = $availabilities;
+                            $providers[$key]['services'][$i] = $services[$i] ;
+                            $companies[] = $providers[$key];
+                        }
+                    }
+                }
+            }
+
+            $serviceTypes[$k]['providers'] = $companies;
+        }
+
         return sendResponse($serviceTypes, "Service types");
     }
 
@@ -83,7 +160,7 @@ class ServiceTypesApiController extends Controller
                 ->where('ad.date_obj', '<>', null)
                 ->whereBetween('ad.date_obj', [$data['from'], $data['to']]);
         }
-        $services = $servicesQuery->get()->toArray();
+        $services = $servicesQuery->get(['services.*'])->toArray();
         $companyIds = [];
         $serviceIds = [];
         foreach ($services as $service) {
@@ -96,7 +173,7 @@ class ServiceTypesApiController extends Controller
         foreach ($providers as $k => $provider) {
             foreach ($provider['services'] as $key => $service) {
                 $providers[$k]['base_price'] = $service['price'];
-                if( $service['active'] == 1) {
+                if ($service['active'] == 1) {
                     $availableDateObj = AvailableDates::where('service_id', $service['id']);
                     if (isset($data['from']) && isset($data['to'])) {
                         $availableDateObj->where('status', 1)

@@ -233,6 +233,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'services', 'middleware' => ['cors']], function() {
         Api::get('/', [ServiceTypesApiController::class, 'getServices'])
             ->addTag('Services')
+            ->addQueryParameter('from', '', false  )
+            ->addQueryParameter('to', '', false  )
             ->setDescription('getServices')
             ->setProduces(['application/json']);
         Api::get('/check_status/{id}', [ServiceTypesApiController::class, 'checkStatusById'])
