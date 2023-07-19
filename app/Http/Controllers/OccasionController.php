@@ -207,7 +207,7 @@ class OccasionController extends Controller
     {
         $data = $request->all();
         $occasion = new Occasion();
-        $occasion->name = $data['name'];
+        $occasion->name = $data['title'];
         $occasion->active = isset($data['active']) ? 1 : 0;
         if ($request->file('image')) {
             $imageName = time() . '.' . $request->file('image')->extension();
