@@ -91,7 +91,7 @@ class ServiceTypesApiController extends Controller
                             }
                             $services[$i]['availabilities'] = $availabilities;
                             $services[$i]['service_type'] = $serviceType;
-                            $providers[$key]['services'][$i] = $services[$i] ;
+                            $providers[$key]['services'][] = $services[$i] ;
                             $companies[] = $providers[$key];
                         }
                     }
