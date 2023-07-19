@@ -73,7 +73,7 @@ class ServiceTypesApiController extends Controller
                 if ($serviceType['id'] == $service['service_type']) {
                     foreach ($providers as $key => $provider) {
                         if ($provider['id'] == $service['company_id']) {
-                            $providers[$key]['base_price'] = (int) $provider['base_price'];
+                            $providers[$key]['base_price'] = (double) $provider['base_price'];
                             $availableDateObj = AvailableDates::where('service_id', $service['id'])
                                 ->where('status', 1)
                                 ->where('date_obj', '<>', null);
