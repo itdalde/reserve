@@ -158,10 +158,8 @@
                                 service_id: service_id,
                             },
                             success: function (response) {
-                                selected_service_id = service_id;
                                 console.log('response', response);
-                                $('#calendar').fullCalendar('removeEvents');
-                                $('#calendar').fullCalendar('refetchEvents');
+                                $('#calendar').fullCalendar('addEventSource', response);
                             }
                         })
                     })
