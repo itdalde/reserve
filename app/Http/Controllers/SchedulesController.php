@@ -42,16 +42,16 @@ class SchedulesController extends Controller
            $service = OccasionEvent::where('company_id', auth()->user()->company->id)->first();
            $service_id = $service->id;
          }
-
+         
         if ($request->ajax()) {
             $response = [];
-            
+
             $data = AvailableDates::whereDate('date_obj', '>=', $request->start)
                 ->whereDate('date_obj',   '<=', $request->end)
                 ->where('company_id', auth()->user()->company->id)
                 ->where('service_id', $service_id)
                 ->get();
-                
+
             foreach ($data as $event) {
                 if ($event->status != 0) {
                     $response[] = [
@@ -61,7 +61,7 @@ class SchedulesController extends Controller
                         'end' => date('Y-m-d', strtotime($event->date_obj)),
                         'overlap' => false,
                         'rendering' => 'background',
-                        'color' => $event->status == 1 ? '#198754 !important' : ($event->status == 2 ? '#dc3545 !important' : ''), #FF0000' // #25b900 // green
+                        'color' => $event->status == 1 ? '#198754 !important' : ($event->status == 2 ? '#dc3545 !important' : ''), #FF0000' // #25b900 // green,
                     ];
                 }
             }

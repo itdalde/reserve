@@ -181,7 +181,11 @@
                                                     <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
                                                     <p dir="auto" class="fw-bolder fw-4">{{ $service->address_1 }}</p>
                                                     <div>
-                                                        <label class="fw-bold">4.0</label>
+                                                        <label class="fw-bold">
+                                                            {{ $service->occasionEventsReviewsAverage &&
+                                                            isset($service->occasionEventsReviewsAverage[0]) ?
+                                                            $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}
+                                                        </label>
                                                         @if ($service->occasionEventsReviewsAverage &&
                                                         isset($service->occasionEventsReviewsAverage[0]))
                                                         <span
@@ -289,7 +293,11 @@
                                             <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
                                             <p dir="auto">{{ $service->address_1 }}</p>
                                             <div>
-                                                <label class="fw-bold">4.0</label>
+                                                <label class="fw-bold">
+                                                    {{ $service->occasionEventsReviewsAverage &&
+                                                    isset($service->occasionEventsReviewsAverage[0]) ?
+                                                    $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}
+                                                </label>
                                                 @if ($service->occasionEventsReviewsAverage &&
                                                 isset($service->occasionEventsReviewsAverage[0]))
                                                 <span
@@ -390,7 +398,11 @@
                                             <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
                                             <p dir="auto">{{ $service->address_1 }}</p>
                                             <div>
-                                                <label class="fw-bold">4.0</label>
+                                                <label class="fw-bold">
+                                                    {{ $service->occasionEventsReviewsAverage &&
+                                                    isset($service->occasionEventsReviewsAverage[0]) ?
+                                                    $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}
+                                                </label>
                                                 @if ($service->occasionEventsReviewsAverage &&
                                                 isset($service->occasionEventsReviewsAverage[0]))
                                                 <span
@@ -489,7 +501,11 @@
                                             <h3 class="fs-3 fw-bold">{{ $service->name }}</h3>
                                             <p dir="auto">{{ $service->address_1 }}</p>
                                             <div>
-                                                <label class="fw-bold">4.0</label>
+                                                <label class="fw-bold">
+                                                    {{ $service->occasionEventsReviewsAverage &&
+                                                    isset($service->occasionEventsReviewsAverage[0]) ?
+                                                    $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}
+                                                </label>
                                                 @if ($service->occasionEventsReviewsAverage &&
                                                 isset($service->occasionEventsReviewsAverage[0]))
                                                 <span
@@ -574,7 +590,7 @@
                                     <span id="service-no-of-orders">0</span> Orders
                                 </div>
                                 <div class="p-2 bd-highlight">
-                                    <label class="fw-bolder fs-4">4.0</label>
+                                    <label class="fw-bolder fs-4 rating-total">0</label>
                                     <span class="bi bi-star" id="service-ratings-1"></span>
                                     <span class="bi bi-star" id="service-ratings-2"></span>
                                     <span class="bi bi-star" id="service-ratings-3"></span>
@@ -634,8 +650,7 @@
                                     class="form-control-plaintext service-type badge bg-secondary w-25"></span>
                             </div>
                         </div>
-                        <hr>
-                        <div class="d-flex flex-column bd-highlight mb-3">
+                        <div class="d-flex flex-column bd-highlight mb-3 d-none">
                             <div class="p-2 bd-highlight">Location</div>
                             <div class="d-inline-flex">
                                 <img class="img-fluid mt-2 me-2" style="width: 15px;
@@ -649,8 +664,7 @@
                                     type="text">
                             </div>
                         </div>
-                        <hr>
-                        <div class="d-flex flex-column bd-highlight mb-3">
+                        <div class="d-flex flex-column bd-highlight mb-3 d-none">
                             <div class="p-2 bd-highlight">Occasion Type</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3">
@@ -706,7 +720,7 @@
                                                 class="service-hall-features-capacity badge bg-secondary  px-2 mt-1"></span>
                                         </div>
                                     </div>
-                                    <div class="p-2 bd-highlight">
+                                    <div class="p-2 bd-highlight d-none">
                                         <p>Available time</p>
                                         <div class="badge bg-secondary d-inline-flex">
                                             <img src="{{ asset('assets/images/icons/clock.png') }}" alt="..">
@@ -716,7 +730,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex flex-column bd-highlight mb-3">
+                            <div class="d-flex flex-column bd-highlight mb-3 d-none">
                                 <div class="p-2 bd-highlight">Availability</div>
                                 <div class="p-2 bd-highlight edit-trigger-display">
                                     <div class="p-2 w-100">
@@ -760,7 +774,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row bd-highlight mb-3">
+                                    <div class="d-flex flex-row bd-highlight mb-3 d-none">
                                         <div class="col-sm-12 pe-2 ">
                                             <div class="row">
                                                 <div class="col-sm-6 ">
@@ -791,7 +805,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex flex-row bd-highlight mb-3">
+                                    <div class="d-flex flex-row bd-highlight mb-3 d-none">
                                         <div class="col-sm-12 ">
                                             <label class="form-label">Available Slot</label>
                                             <div class="bd-highlight">
@@ -804,7 +818,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="d-flex flex-column bd-highlight mb-3">
+                        <div class="d-flex flex-column bd-highlight mb-3 d-none">
                             <div class="p-2 bd-highlight">Available payment plans</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-available-payment-plans">
@@ -995,14 +1009,14 @@
     setTimeout(function () {
         $('#db-wrapper').removeClass('blur-bg');
         $('#loader').hide();
-        if ($('#paused-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
-            $('#paused-tab').click();
-            $('#paused-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
-            return;
-        }
         if ($('#published-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
             $('#published-tab').click();
             $('#published-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
+            return;
+        }
+        if ($('#paused-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
+            $('#paused-tab').click();
+            $('#paused-table > tbody > tr:nth-child(1) > td:nth-child(2)').click();
             return;
         }
         if ($('#saved-table > tbody > tr:nth-child(1) > td:nth-child(2)').length) {
@@ -1053,6 +1067,7 @@
             window.HIDE_LOADING();
 
             let data = JSON.parse(response);
+
             let availablehtml = "";
             let unavailablehtml = "";
             let availableDates = [];
@@ -1112,7 +1127,7 @@
         $('.service-hall-features-capacity').text(hallCapacity)
         $('.service-hall-features-available-time').text(availableTime)
         $('.service-hall-features-available-date').text(availableDate)
-
+        $('.rating-total').text(rating + '.0')
         $('#service-ratings-1, #service-ratings-2, #service-ratings-3, #service-ratings-4, #service-ratings-5')
             .removeClass('checked');
         if (rating >= 1) {

@@ -55,7 +55,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         var selectedRange = null;
         var buttonClicked = false;
         var calendar = $('#calendar').fullCalendar({
@@ -98,7 +97,7 @@
                 right: 'add_event'
             },
             eventAfterAllRender: function (events) {
-
+                console.log('called', events);
                 if (buttonClicked == false) {
                     buttonClicked = true
                     $('.block-calendar').on(
@@ -149,7 +148,7 @@
                         var service_id = this.value;
                         var start = $.fullCalendar.formatDate(events.start, "Y-MM-DD");
                         var end = $.fullCalendar.formatDate(events.end, "Y-MM-DD");
-
+                        $('#calendar').fullCalendar('removeEvents');
                         $.ajax({
                             type: 'GET',
                             url: SITEURL + '/calendar',
@@ -159,9 +158,10 @@
                                 service_id: service_id,
                             },
                             success: function (response) {
+                                selected_service_id = service_id;
                                 console.log('response', response);
                                 $('#calendar').fullCalendar('removeEvents');
-                                $('#calendar').fullCalendar('refetchEvents', response);
+                                $('#calendar').fullCalendar('refetchEvents');
                             }
                         })
                     })
