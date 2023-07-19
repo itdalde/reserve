@@ -223,7 +223,7 @@
                                             value="{{ old('phone_number') }}" name="phone_number" required>
                                     </div>
 
-                                    
+
                                     <!-- Registration No. -->
                                     <div class="input-group input-group-lg first pt-3">
                                         <span class="input-group-text rounded-0 bg-white">
@@ -247,15 +247,15 @@
                                             id="service_type" value="{{ old('service_type') }}" name="service_type">
                                     </div>
 
-                                     <!-- Location -->
-                                     <div class="input-group input-group-lg first pt-3 d-none">
+                                    <!-- Location -->
+                                    <div class="input-group input-group-lg first pt-3 d-none">
                                         <span class="input-group-text rounded-0 bg-white">
                                             <i class="bi bi-geo-alt"></i>
                                         </span>
                                         <input type="text"
                                             class="form-control shadow-none rounded-0 border-start-0 fs-6"
                                             placeholder="Company location in Qatar" id="location"
-                                            value="{{ old('location') }}" name="location" required>
+                                            value="{{ old('location') }}" name="location">
                                     </div>
 
                                     <!-- Email -->
@@ -265,10 +265,10 @@
                                         </span>
                                         <input type="email"
                                             class="form-control shadow-none rounded-0 border-start-0 fs-6"
-                                            placeholder="Enter your email address" id="email" name="email" value="{{ old('email')}}"
-                                            required>
+                                            placeholder="Enter your email address" id="email" name="email"
+                                            value="{{ old('email')}}" required>
                                     </div>
-                                   
+
                                     <!-- Password -->
                                     <div class="input-group input-group-lg first pt-3">
                                         <span class="input-group-text rounded-0 bg-white">
@@ -276,7 +276,7 @@
                                         </span>
                                         <input type="password"
                                             class="form-control shadow-none rounded-0 border-start-0 hide-if-valid fs-6"
-                                            placeholder="Password" id="password" name="password"
+                                            placeholder="Enter your password" id="password" name="password"
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
                                             title="{{ __('login.password_role') }}" required>
                                     </div>
@@ -301,7 +301,6 @@
                                             <i class="ps-2 bi bi-x-circle"></i> </span>
                                     </div>
 
-                                    
 
                                     <!-- Description  -->
                                     <input type="hidden" name="company_description">
@@ -316,7 +315,7 @@
                                     @endif
 
                                     <button type="submit" id="btn-submit-change-pass"
-                                        class="btn btn-solid rounded-0 mt-4 w-100  fs-6 btn-create-account mb-5">Create
+                                        class="btn btn-solid rounded-0 mt-4 w-100  fs-6 create-account-btn mb-5">Create
                                         Account</button>
                                 </form>
                             </div>
@@ -461,23 +460,15 @@
                                         name="phone_number" required>
                                 </div>
 
-                                <!-- Email -->
-                                <div class="input-group input-group-lg first pt-3">
-                                    <span class="input-group-text rounded-0 bg-white">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-                                    <input type="email" class="form-control shadow-none rounded-0 border-start-0"
-                                        placeholder="Email" id="email" name="email" value="{{ old('email')}}" required>
-                                </div>
 
                                 <!-- Location -->
-                                <div class="input-group input-group-lg first pt-3">
+                                <div class="input-group input-group-lg first pt-3 d-none">
                                     <span class="input-group-text rounded-0 bg-white">
                                         <i class="bi bi-geo-alt"></i>
                                     </span>
                                     <input type="text" class="form-control shadow-none rounded-0 border-start-0"
                                         placeholder="Company location in Qatar" id="location"
-                                        value="{{ old('location') }}" name="location" required>
+                                        value="{{ old('location') }}" name="location">
                                 </div>
 
                                 <!-- Registration No. -->
@@ -490,6 +481,16 @@
                                         value="{{ old('registration_number') }}" name="registration_number" required>
                                 </div>
 
+                                <!-- Email -->
+                                <div class="input-group input-group-lg first pt-3">
+                                    <span class="input-group-text rounded-0 bg-white">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input type="email" class="form-control shadow-none rounded-0 border-start-0"
+                                        placeholder="Enter your email address" id="email" name="email" value="{{ old('email')}}" required>
+                                </div>
+
+
                                 <!-- Password -->
                                 <div class="input-group input-group-lg first pt-3">
                                     <span class="input-group-text rounded-0 bg-white">
@@ -497,7 +498,7 @@
                                     </span>
                                     <input type="password"
                                         class="form-control shadow-none rounded-0 border-start-0 hide-if-valid"
-                                        placeholder="Password" id="password" name="password"
+                                        placeholder="Enter your password" id="password" name="password"
                                         pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
                                         title="{{ __('login.password_role') }}" required>
                                 </div>
@@ -545,7 +546,7 @@
                                 @endif
 
                                 <button type="submit" id="btn-submit-change-pass"
-                                    class="btn btn-solid rounded-0 mt-4 w-100  fs-4 btn-create-account">Create
+                                    class="btn btn-solid rounded-0 mt-4 w-100  fs-4 create-account-btn">Create
                                     Account</button>
                             </form>
                         </div>
