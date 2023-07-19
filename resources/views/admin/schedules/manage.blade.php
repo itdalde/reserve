@@ -96,7 +96,6 @@
                 right: 'add_event'
             },
             eventAfterAllRender: function (events) {
-                console.log('called', events);
                 if (buttonClicked == false) {
                     buttonClicked = true
                     $('.block-calendar').on(
@@ -156,7 +155,6 @@
                                 service_id: service_id,
                             },
                             success: function (response) {
-                                console.log('response', response);
                                 $('#calendar').fullCalendar('addEventSource', response);
                             }
                         })

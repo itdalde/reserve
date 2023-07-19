@@ -279,24 +279,29 @@
                                             placeholder="Enter your password" id="password" name="password"
                                             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" autocomplete="new-password"
                                             title="{{ __('login.password_role') }}" required>
+
+                                        <span class="input-group-text rounded-0 bg-white border-start-0" role="button"
+                                            style="margin-left: -1px;">
+                                            <i class="bi bi-eye-slash toggle-password"></i>
+                                        </span>
                                     </div>
 
                                     <!-- Password Rules -->
                                     <div class="d-flex flex-column validations px-3 d-none">
-                                        <span class="hide lcase invalid d-flex align-items-center pb-2 text-danger">{{
+                                        <span class="d-none lcase invalid d-flex align-items-center pb-2 text-danger">{{
                                             __('login.password_role1') }}
                                             <i class="ps-2 bi bi-x-circle"></i>
                                         </span>
-                                        <span class="hide ucase invalid d-flex align-items-center pb-2 text-danger">{{
+                                        <span class="d-none ucase invalid d-flex align-items-center pb-2 text-danger">{{
                                             __('login.password_role2') }}
                                             <i class="ps-2 bi bi-x-circle"></i> </span>
-                                        <span class="hide onum invalid d-flex align-items-center pb-2 text-danger">{{
+                                        <span class="d-none onum invalid d-flex align-items-center pb-2 text-danger">{{
                                             __('login.password_role3') }}
                                             <i class="ps-2 bi bi-x-circle"></i> </span>
-                                        <span class="hide schar invalid d-flex align-items-center pb-2 text-danger">{{
+                                        <span class="d-none schar invalid d-flex align-items-center pb-2 text-danger">{{
                                             __('login.password_role4') }}
                                             <i class="ps-2 bi bi-x-circle"></i> </span>
-                                        <span class="hide mchar invalid d-flex align-items-center pb-2 text-danger">{{
+                                        <span class="d-none mchar invalid d-flex align-items-center pb-2 text-danger">{{
                                             __('login.password_role5') }}
                                             <i class="ps-2 bi bi-x-circle"></i> </span>
                                     </div>
@@ -487,7 +492,8 @@
                                         <i class="bi bi-envelope"></i>
                                     </span>
                                     <input type="email" class="form-control shadow-none rounded-0 border-start-0"
-                                        placeholder="Enter your email address" id="email" name="email" value="{{ old('email')}}" required>
+                                        placeholder="Enter your email address" id="email" name="email"
+                                        value="{{ old('email')}}" required>
                                 </div>
 
 
@@ -707,6 +713,12 @@
         });
 
         $('body').on('keyup change blur', '#password', function (e) {
+            if (this.value.length) {
+                $('.validations').removeClass('d-none');
+            } else {
+                $('.validations').addClass('d-none');
+            }
+
             let lowerCaseLetters = /[a-z]/g;
             let upperCaseLetters = /[A-Z]/g;
             let numbers = /[0-9]/g;
@@ -720,14 +732,14 @@
             if ($(this).val() != '') {
                 if (pass.match(lowerCaseLetters)) {
                     if (hideIfValid) {
-                        $('.lcase').addClass('hide');
+                        $('.lcase').addClass('d-none');
                     }
                     $('.lcase').addClass('valid').removeClass('invalid')
                     $('.lcase span').text('check_circle_outline');
 
                 } else {
                     if (hideIfValid) {
-                        $('.lcase').removeClass('hide');
+                        $('.lcase').removeClass('d-none');
                     }
                     $('.lcase').addClass('invalid').removeClass('valid')
                     $('.lcase span').text('highlight_off');
@@ -735,13 +747,13 @@
 
                 if (pass.match(upperCaseLetters)) {
                     if (hideIfValid) {
-                        $('.ucase').addClass('hide');
+                        $('.ucase').addClass('d-none');
                     }
                     $('.ucase').addClass('valid').removeClass('invalid')
                     $('.ucase span').text('check_circle_outline');
                 } else {
                     if (hideIfValid) {
-                        $('.ucase').removeClass('hide');
+                        $('.ucase').removeClass('d-none');
                     }
                     $('.ucase').addClass('invalid').removeClass('valid')
                     $('.ucase span').text('highlight_off');
@@ -749,13 +761,13 @@
 
                 if (pass.match(numbers)) {
                     if (hideIfValid) {
-                        $('.onum').addClass('hide');
+                        $('.onum').addClass('d-none');
                     }
                     $('.onum').addClass('valid').removeClass('invalid')
                     $('.onum span').text('check_circle_outline');
                 } else {
                     if (hideIfValid) {
-                        $('.onum').removeClass('hide');
+                        $('.onum').removeClass('d-none');
                     }
                     $('.onum').addClass('invalid').removeClass('valid')
                     $('.onum span').text('highlight_off');
@@ -764,13 +776,13 @@
 
                 if (pass.match(char)) {
                     if (hideIfValid) {
-                        $('.schar').addClass('hide');
+                        $('.schar').addClass('d-none');
                     }
                     $('.schar').addClass('valid').removeClass('invalid')
                     $('.schar span').text('check_circle_outline');
                 } else {
                     if (hideIfValid) {
-                        $('.schar').removeClass('hide');
+                        $('.schar').removeClass('d-none');
                     }
                     $('.schar').addClass('invalid').removeClass('valid')
                     $('.schar span').text('highlight_off');
@@ -778,13 +790,13 @@
 
                 if (pass.length >= 8) {
                     if (hideIfValid) {
-                        $('.mchar').addClass('hide');
+                        $('.mchar').addClass('d-none');
                     }
                     $('.mchar').addClass('valid').removeClass('invalid')
                     $('.mchar span').text('check_circle_outline');
                 } else {
                     if (hideIfValid) {
-                        $('.mchar').removeClass('hide');
+                        $('.mchar').removeClass('d-none');
                     }
                     $('.mchar').addClass('invalid').removeClass('valid')
                     $('.mchar span').text('highlight_off');
@@ -798,7 +810,7 @@
                 }
             } else {
                 btn.attr('disabled', false)
-                //$('.validations').find('span').addClass('hide');
+                // $('.validations').find('span').addClass('hide');
             }
         });
         });
