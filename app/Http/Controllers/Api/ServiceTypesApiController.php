@@ -74,7 +74,9 @@ class ServiceTypesApiController extends Controller
                     foreach ($providers as $key => $provider) {
                         if ($provider['id'] == $service['company_id']) {
                             $providers[$key]['base_price'] = (int) $provider['base_price'];
-                            $availableDateObj = AvailableDates::where('service_id', $service['id']);
+                            $availableDateObj = AvailableDates::where('service_id', $service['id'])
+                                ->where('ad.status', 1)
+                                ->where('ad.date_obj', '<>', null);
 
                             if (isset($data['from']) && isset($data['to'])) {
                                 $availableDateObj->whereBetween('date_obj', [$data['from'], $data['to']]);
@@ -176,10 +178,11 @@ class ServiceTypesApiController extends Controller
             foreach ($provider['services'] as $key => $service) {
                 $providers[$k]['base_price'] = $service['price'];
                 if ($service['active'] == 1) {
-                    $availableDateObj = AvailableDates::where('service_id', $service['id']);
+                    $availableDateObj = AvailableDates::where('service_id', $service['id'])
+                        ->where('status', 1)
+                        ->where('date_obj', '<>', null);
                     if (isset($data['from']) && isset($data['to'])) {
-                        $availableDateObj->where('status', 1)
-                            ->where('date_obj', '<>', null)
+                        $availableDateObj
                             ->whereBetween('date_obj', [$data['from'], $data['to']]);
                     }
                     $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')->get()->toArray();
