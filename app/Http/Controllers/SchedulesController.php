@@ -42,29 +42,9 @@ class SchedulesController extends Controller
            $service = OccasionEvent::where('company_id', auth()->user()->company->id)->first();
            $service_id = $service->id;
          }
-         
+
         if ($request->ajax()) {
-            $response = [];
-
-            $data = AvailableDates::whereDate('date_obj', '>=', $request->start)
-                ->whereDate('date_obj',   '<=', $request->end)
-                ->where('company_id', auth()->user()->company->id)
-                ->where('service_id', $service_id)
-                ->get();
-
-            foreach ($data as $event) {
-                if ($event->status != 0) {
-                    $response[] = [
-                        'id' => $event->id,
-                        'title' => $event->service->name,
-                        'start' => date('Y-m-d', strtotime($event->date_obj)),
-                        'end' => date('Y-m-d', strtotime($event->date_obj)),
-                        'overlap' => false,
-                        'rendering' => 'background',
-                        'color' => $event->status == 1 ? '#198754 !important' : ($event->status == 2 ? '#dc3545 !important' : ''), #FF0000' // #25b900 // green,
-                    ];
-                }
-            }
+            $response = $this->fetchData($request->service_id,$request->start,$request->end);
             return response()->json($response);
         }
         $services = OccasionEvent::where('company_id', auth()->user()->company->id,)->where('id', $service_id)->orderBy('id', 'DESC')->get();
@@ -118,6 +98,7 @@ class SchedulesController extends Controller
                 $avail->status = 1;
                 $avail->save();
             }
+            $response = $this->fetchData($request->service_id,$start,$end);
             return response()->json($response);
         } else {
         }
@@ -155,7 +136,32 @@ class SchedulesController extends Controller
                 $avail->save();
             }
         }
+        $response = $this->fetchData($request->service_id,$start,$end);
         return response()->json($response);
+    }
+
+    public function fetchData($service_id,$start,$end) {
+        $response = [];
+        $data = AvailableDates::whereDate('date_obj', '>=', $start)
+            ->whereDate('date_obj',   '<=', $end)
+            ->where('company_id', auth()->user()->company->id)
+            ->where('service_id', $service_id)
+            ->get();
+
+        foreach ($data as $event) {
+            if ($event->status != 0) {
+                $response[] = [
+                    'id' => $event->id,
+                    'title' => $event->service->name,
+                    'start' => date('Y-m-d', strtotime($event->date_obj)),
+                    'end' => date('Y-m-d', strtotime($event->date_obj)),
+                    'overlap' => false,
+                    'rendering' => 'background',
+                    'color' => $event->status == 1 ? '#198754 !important' : ($event->status == 2 ? '#dc3545 !important' : ''), #FF0000' // #25b900 // green,
+                ];
+            }
+        }
+        return $response;
     }
 
     /**

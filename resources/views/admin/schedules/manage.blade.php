@@ -83,8 +83,7 @@
                     success: function (response) {
                         $('#calendar').fullCalendar(
                             'removeEvents');
-                        $('#calendar').fullCalendar(
-                            'refetchEvents');
+                        $('#calendar').fullCalendar('addEventSource', response);
                         displayMessage(
                             "Event Updated Successfully");
                     }
@@ -117,8 +116,7 @@
                                     console.log('response', response);
                                     $('#calendar').fullCalendar(
                                         'removeEvents');
-                                    $('#calendar').fullCalendar(
-                                        'refetchEvents');
+                                    $('#calendar').fullCalendar('addEventSource', response);
                                     displayMessage(
                                         "Event Updated Successfully");
                                 }
