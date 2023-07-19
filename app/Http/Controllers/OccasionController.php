@@ -209,9 +209,9 @@ class OccasionController extends Controller
         $occasion = new Occasion();
         $occasion->name = $data['title'];
         $occasion->active = isset($data['active']) ? 1 : 0;
-        if ($request->file('image')) {
-            $imageName = time() . '.' . $request->file('image')->extension();
-            $request->file('image')->move(public_path("assets/images/occasions"), $imageName);
+        if ($request->file('featured_image')) {
+            $imageName = time() . '.' . $request->file('featured_image')->extension();
+            $request->file('featured_image')->move(public_path("assets/images/occasions"), $imageName);
             $filename = "assets/images/occasions/{$imageName}";
             $occasion->logo = $filename;
         }
