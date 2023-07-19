@@ -126,14 +126,14 @@
                         Occassions/services
                     </a>
                 </li>
-                <li class="nav-item py-2 d-none">
-                    <a class="nav-link {{ Request::is('admin/orders*') ? ' active' : '' }}"
-                        href="{{ route('orders.admin') }}">
+                <li class="nav-item py-2">
+                    <a class="nav-link {{ Request::is('order-assignment*') ? ' active' : '' }}"
+                        href="{{ route('order-assignment') }}">
                         <img class="ml-15px "
-                            src="{{ Request::is('admin/orders*') ? asset('assets/images/icons/Orders Outline active.svg') : asset('assets/images/icons/Orders Outline.svg') }}"
+                            src="{{ Request::is('order-assignment*') ? asset('assets/images/icons/Assign order solid.png') : asset('assets/images/icons/Assign order outline.png') }}"
                             alt="....">
 
-                        Orders
+                        Order Assignment
                     </a>
                 </li>
 

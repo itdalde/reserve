@@ -22,6 +22,7 @@ use App\Http\Controllers\HelpController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\OccasionController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -30,16 +31,19 @@ Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang
 Route::get('/schedules/delete-schedule', [\App\Http\Controllers\SchedulesController::class, 'deleteSchedule'])->name('schedules.delete-schedule');
 
 Route::get('/fetch-available-dates-per-service', [\App\Http\Controllers\AvailableDatesController::class, 'availableDates'])->name('fetch-available-dates-per-service');
-Route::get('/admin/orders', [\App\Http\Controllers\OrderController::class, 'superList'])->name('orders.admin');
-Route::get('/admin/orders/view', [\App\Http\Controllers\OrderController::class, 'superListView'])->name('orders.admin.view');
+Route::get('/admin/orders', [OrderController::class, 'superList'])->name('orders.admin');
+Route::get('/admin/orders/view', [OrderController::class, 'superListView'])->name('orders.admin.view');
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/get-average-order', [\App\Http\Controllers\OrderController::class, 'getAverageOrder'])->name('orders.getAverageOrder');
+    Route::get('/get-average-order', [OrderController::class, 'getAverageOrder'])->name('orders.getAverageOrder');
     Route::get('/calendar', [\App\Http\Controllers\SchedulesController::class, 'list'])->name('schedules.calendar');
     Route::post('/update-schedule', [SchedulesController::class, 'updateSchedule'])->name('schedules-update');
 
     Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
     Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
+
+    Route::get('/order-assignment', [OrderController::class, 'orderAssignment'])->name('order-assignment');
+
 
     Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign');
     Route::post('/occasions/store', [OccasionController::class, 'store'])->name('occasion-store');

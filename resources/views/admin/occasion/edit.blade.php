@@ -36,9 +36,10 @@
                                     <td>{{$serviceType['service_type']['name']}}</td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            <span class="badge py-3  rounded-1 bg-secondary">
+
+                                            <button data-names="{{$serviceType['providers_name']}}" data-bs-toggle="modal" data-bs-target="#list-providers-modal"  class="btn rounded-1 btn-secondary list-providers-btn" >
                                                &nbsp;&nbsp;&nbsp; {{$serviceType['company_count']}} Vendor(s) &nbsp;&nbsp;&nbsp;
-                                            </span>
+                                            </button>
                                         </div>
                                     </td>
                                     <td>
@@ -162,10 +163,54 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="list-providers-modal" tabindex="-1" aria-labelledby="list-providers-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="list-providers-modalLabel">List of Vendors</h5>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">close
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 align-items-center mb-3">
+                        <ul class="list-group providers-list">
+                            <li class="list-group-item">An item</li>
+                            <li class="list-group-item">A second item</li>
+                            <li class="list-group-item">A third item</li>
+                            <li class="list-group-item">A fourth item</li>
+                            <li class="list-group-item">And a fifth one</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex bd-highlight mb-3">
+                        <div class="ms-auto p-2 bd-highlight">
+                            <button type="button" data-bs-dismiss="modal" class="btn btn-warning">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('content_javascript')
     <script>
         $(document).ready(function () {
+
+            $('body').on('click','.list-providers-btn',function (e) {
+                let names = $(this).attr('data-names');
+                $(".providers-list").html('');
+                names = JSON.parse(names);
+                if(names.length) {
+                    for (let i = 0; i < names.length; i++) {
+                        let splitName = names[i].split('+:+');
+                        $(".providers-list").append('<li class="list-group-item">'+splitName[0]+'</li>');
+                    }
+                } else {
+                    $(".providers-list").append('<li class="list-group-item">No Vendor Assigned</li>');
+                }
+            });
             $('body').on('keyup','#service-modal-name-field',function (e) {
                 let names = $('#service-names').val();
                 names = JSON.parse(names);

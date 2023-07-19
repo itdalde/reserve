@@ -62,8 +62,15 @@ class OccasionController extends Controller
         $serviceNames = [];
         $occasion = Occasion::where('id',$id)->with( 'serviceTypes','serviceTypes.serviceType','serviceTypes.vendors')->first()->toArray();
         foreach ($occasion['service_types'] as $k => $serviceType) {
+            $companies = Company::where('service_type_id',$serviceType['service_type_id'])->get()->toArray();
+            $companyNames = [];
+            foreach ($companies as $company) {
+                $companyNames[] = $company['name'].'+:+'.$company['user_id'];
+            }
             $occasion['service_types'][$k]['vendors'] = OccasionEvent::where('service_type',$serviceType['service_type_id'])->get()->toArray();
-            $occasion['service_types'][$k]['company_count'] = Company::where('service_type_id',$serviceType['service_type_id'])->count();
+            $occasion['service_types'][$k]['company_count'] = count($companies);
+            $occasion['service_types'][$k]['providers'] = $companies;
+            $occasion['service_types'][$k]['providers_name'] =  json_encode($companyNames);
             $typesAssigned[] = $serviceType['service_type_id'];
         }
         $serviceTypes = ServiceType::get();

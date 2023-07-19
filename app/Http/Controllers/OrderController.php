@@ -40,6 +40,15 @@ class OrderController extends Controller
         }
         return view('admin.orders.index',compact('occasionTypes','serviceTypes' ,'plan','orders' ));
     }
+
+    public function orderAssignment() {
+
+        $serviceTypes = ServiceType::all()->toArray();
+        $occasionTypes =  Occasion::all()->toArray();
+        return view('admin.order-assignment.index',
+        compact('occasionTypes','serviceTypes'));
+    }
+
     public function getAverageOrder() {
         $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
         $data = OrderItems::select(DB::raw('count(service_id) as `data`'),DB::raw("DATE_FORMAT(schedule_start_datetime, '%m') month") )

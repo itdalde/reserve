@@ -185,12 +185,12 @@ class UserController extends Controller
 
     public function view(Request $request)
     {
-        $user = User::where('id', $request->id)->first();
+        $user = User::where('id', (int)$request->id)->first();
         $total = 0;
         $totalOrders = 0;
         $serviceType = null;
         $serviceTypes = ServiceType::where('active',1)->get();
-       if($user->company  ) {
+       if($user && $user->company  ) {
            if( $user->company->services) {
                $total = 0;
                foreach ($user->company->services as $service) {
