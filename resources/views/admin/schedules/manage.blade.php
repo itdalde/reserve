@@ -1,5 +1,12 @@
 @extends('layouts.admin')
 @section('content')
+    <style>
+        .past-day,.past-day:hover {
+            background-color: #ddd!important;
+            cursor: not-allowed!important;
+        }
+
+    </style>
 <div class="container">
     <div class="row">
         <div class="card w-100">
@@ -67,28 +74,40 @@
                 event.allDay = event.allDay === 'true';
             },
             dayRender: function (date, cell) {
-                // console.log('date', date);
-                // console.log('cell', cell);
-                // cell.css("background-color", "red");
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (date < today) {
+                    cell.addClass('past-day'); // Add a CSS class to color past days gray
+                }
             },
             dayClick: function (date) {
                 var selectedDate = $.fullCalendar.formatDate(date, "DD/MM/YYYY");
-                $.ajax({
-                    type: "POST",
-                    url: SITEURL + '/update-schedule',
-                    data: {
-                        date: selectedDate,
-                        service_id: $('#set-schedule :selected').val()
-                    },
-                    success: function (response) {
-                        $('#calendar').fullCalendar(
-                            'removeEvents');
-                        $('#calendar').fullCalendar('addEventSource', response);
-                        displayMessage(
-                            "Event Updated Successfully");
-                    }
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
 
-                })
+                if (date < today) {
+                    toastr.warning('Unable to edit past schedules', 'Event')
+                    return;
+                } else {
+
+                    $.ajax({
+                        type: "POST",
+                        url: SITEURL + '/update-schedule',
+                        data: {
+                            date: selectedDate,
+                            service_id: $('#set-schedule :selected').val()
+                        },
+                        success: function (response) {
+                            $('#calendar').fullCalendar(
+                                'removeEvents');
+                            $('#calendar').fullCalendar('addEventSource', response);
+                            displayMessage(
+                                "Event Updated Successfully");
+                        }
+
+                    })
+                }
             },
             header: {
                 left: 'prev,next today',

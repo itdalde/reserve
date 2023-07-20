@@ -44,7 +44,7 @@ class SchedulesController extends Controller
          }
 
         if ($request->ajax()) {
-            $response = $this->fetchData($request->service_id,$request->start,$request->end);
+            $response = $this->fetchData($service_id,$request->start,$request->end);
             return response()->json($response);
         }
         $services = OccasionEvent::where('company_id', auth()->user()->company->id,)->where('id', $service_id)->orderBy('id', 'DESC')->get();
