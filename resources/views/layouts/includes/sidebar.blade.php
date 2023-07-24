@@ -91,6 +91,12 @@
                                 <span class="pl-1 ml-2">Order History</span>
                             </a>
                         </li>
+                        <li class="nav-item {{ Request::is('audit*') || Request::is('settings*') ? 'show' : '' }}">
+                            <a class="nav-link pl-5 d-flex align-items-center custom-tooltip"
+                                href="{{ route('audit.index') }}">
+                                <span class="pl-1 ml-2">Audit Trails</span>
+                            </a>
+                        </li>
                         <li class="nav-item d-none {{ Request::is('schedules*') || Request::is('settings*') ? 'show' : '' }}">
                             <a class="nav-link pl-5 d-flex align-items-center custom-tooltip"
                                 href="{{ route('schedules.index') }}">

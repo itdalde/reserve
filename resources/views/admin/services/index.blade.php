@@ -1060,7 +1060,7 @@
         let totalOrders = $(this).closest('tr').attr('data-orders-count');
         let serviceStatus = $(this).closest('tr').attr('data-active')
         let servicePrice = +$(this).closest('tr').attr('data-price');
-        $('#service-no-of-orders').text(totalOrders)
+        $('#service-no-of-orders').text(totalOrders);
         let id = $(this).closest('tr').attr('data-id');
         $.ajax({
             url: "{{ route('fetch-available-dates-per-service') }}",
