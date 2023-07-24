@@ -6,6 +6,11 @@
             <h3>Settings</h3>
         </div>
         <div class="card w-100">
+            @if(session('success'))
+            <div class="alert alert-success" style="margin-top: 20px;">
+                {{ session('success') }}
+            </div>
+            @endif
             <div class="card-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -20,8 +25,8 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="userProfile" role="tabpanel" aria-labelledby="userProfile-tab"
-                        style="min-height: 140px;">
+                    <div class="tab-pane fade show active" id="userProfile" role="tabpanel"
+                        aria-labelledby="userProfile-tab" style="min-height: 140px;">
 
                         <div class="d-flex flex-column bd-highlight">
                             <form action="{{route('settings.store')}}" method="post" enctype="multipart/form-data">
@@ -207,17 +212,15 @@
                                                 <div class="col-6">
                                                     <input
                                                         value="{{Auth::user()->company ? Auth::user()->company->open_at : ''}}"
-                                                        type="text" id="open_at" autocomplete="open_at"
-                                                        name="open_at" class="form-control"
-                                                        placeholder="Opens At"
+                                                        type="text" id="open_at" autocomplete="open_at" name="open_at"
+                                                        class="form-control" placeholder="Opens At"
                                                         aria-label="Opens At">
                                                 </div>
                                                 <div class="col-6">
                                                     <input
                                                         value="{{Auth::user()->company ? Auth::user()->company->close_at : ''}}"
                                                         type="text" id="close_at" autocomplete="close_at"
-                                                        name="close_at" class="form-control"
-                                                        placeholder="Close At"
+                                                        name="close_at" class="form-control" placeholder="Close At"
                                                         aria-label="Close At">
                                                 </div>
                                             </div>
