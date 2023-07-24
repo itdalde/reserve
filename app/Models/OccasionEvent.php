@@ -86,4 +86,8 @@ class OccasionEvent extends Model
     public function gallery() {
         return $this->hasMany(EventImages::class);
     }
+
+    public function adOns() {
+        return $this->hasMany(OccasionEventAddon::class, 'occasion_event_id', 'id');
+    }
 }
