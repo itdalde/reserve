@@ -239,10 +239,13 @@ class SettingsController extends Controller
                 $company->logo = $filename;
             }
             $company->description = $data['description'];
-            $company->location = $data['location'];
-            $company->tags = $data['tags'];
+            $company->location = $data['location'] ?? '';
+            $company->tags = $data['tags'] ?? '';
             $company->phone_number = $data['phone_number'];
             $company->name = $data['name'];
+            $company->business_days = $data['availability'];
+            $company->open_at = $data['open_at'];
+            $company->close_at = $data['close_at'];
             $company->is_custom = isset($data['is_custom']) ? 1 : 0;
             $company->save();
             $message = GeneralHelper::getConcatTranslation($user->app_language ?? 'en', 'company', 'action.updated', 'success');
@@ -358,7 +361,7 @@ class SettingsController extends Controller
                 $user->profile_picture = $filename;
             }
             $user->last_name = $data['last_name'];
-            $user->location = $data['location'];
+            $user->location = $data['location'] ?? '';
             $user->phone_number = $data['phone_number'];
             if ($data['password'] != '') {
                 $user->password = bcrypt($data['password']);
