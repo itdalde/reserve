@@ -8,22 +8,28 @@
       <div class="card mb-2">
         <div class="card-body">
           <div class="table-responsive">
-            <table id="table-manage-trails" class="table table-striped table-bordered no-wrap">
+            <table id="table-manage-trails" class="table table-striped table-bordered table-hover no-wrap">
               <thead>
                 <tr>
-                  <th>User</th>
-                  <th>Module</th>
-                  <th>Notes</th>
-                  <th>Date</th>
+                  <th class="fs-6">User ID</th>
+                  <th class="fs-6">Name</th>
+                  <th class="fs-6">Notes</th>
+                  <th class="fs-6">Params</th>
+                  <th class="fs-6">Model</th>
+                  <th class="fs-6">Company ID</th>
+                  <th class="fs-6">Date</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach($audits as $audit)
                 <tr>
-                  <td>{{$audit->user}}</td>
-                  <td>{{$audit->module}}</td>
-                  <td>{{$audit->notes}}</td>
-                  <td>{{$audit->created_at}}</td>
+                  <td class="fs-5">{{$audit->user_id}}</td>
+                  <td class="fs-5" style="width: 15%;">{{$audit->user}}</td>
+                  <td class="fs-5">{{$audit->notes}}</td>
+                  <td class="fs-5">{{$audit->data}}</td>
+                  <td class="fs-5" style="width: 10%">{{$audit->company_id}}</td>
+                  <td class="fs-5">{{$audit->model}}</td>
+                  <td class="fs-5">{{$audit->created_at}}</td>
                 </tr>
                 @endforeach
               </tbody>

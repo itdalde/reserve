@@ -16,10 +16,12 @@ class CreateAuditTrailTable extends Migration
         Schema::create('audit_trail', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('user');
-            $table->string('module')->nullable();
-            $table->string('notes');
-            $table->string('company_id');
+            $table->string('user')->default('');
+            $table->string('model')->default('');
+            $table->string('action')->default('');
+            $table->string('notes')->default('');
+            $table->text('data')->nullable();
+            $table->integer('company_id')->default('0');
             $table->timestamps();
         });
     }
