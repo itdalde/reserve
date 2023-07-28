@@ -37,7 +37,7 @@ Route::get('/admin/orders/view', [OrderController::class, 'superListView'])->nam
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/get-average-order', [OrderController::class, 'getAverageOrder'])->name('orders.getAverageOrder');
     Route::get('/calendar', [\App\Http\Controllers\SchedulesController::class, 'list'])->name('schedules.calendar');
-    Route::post('/update-schedule', [SchedulesController::class, 'updateSchedule'])->name('schedules-update');
+    Route::post('/update-schedule', [SchedulesController::class, 'updateSchedule'])->name('schedules-update')->middleware('audit:post');
 
     Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');
     Route::get('/services/reviews', [ServiceController::class, 'reviews'])->name('services-reviews');
@@ -45,35 +45,35 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/order-assignment', [OrderController::class, 'orderAssignment'])->name('order-assignment');
 
 
-    Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign');
-    Route::post('/occasions/store', [OccasionController::class, 'store'])->name('occasion-store');
-    Route::post('/occasions/update', [OccasionController::class, 'edit'])->name('occasion-update');
+    Route::post('/occasions/assign', [OccasionController::class, 'assignServices'])->name('occasion-assign')->middleware('audit:post');
+    Route::post('/occasions/store', [OccasionController::class, 'store'])->name('occasion-store')->middleware('audit:post');
+    Route::post('/occasions/update', [OccasionController::class, 'edit'])->name('occasion-update')->middleware('audit:post');
     Route::get('/occasions/delete', [OccasionController::class, 'activateDeactivate'])->name('occasions.delete-occasion');
-    Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order');
+    Route::post('/settings/update-status-order', [SettingsController::class, 'updateStatusOrder'])->name('settings.update-status-order')->middleware('audit:post');
 
-    Route::post('/occasions-services/assign', [OccasionController::class, 'occasionsServicesAssign'])->name('occasions-services.assign');
-    Route::post('/occasions-services/un-assign', [OccasionController::class, 'occasionsServicesUnAssign'])->name('occasions-services-type.un-assign');
-    Route::post('/occasions-services-types/assign', [OccasionController::class, 'occasionsServicesTypeAssign'])->name('occasions-services-type.assign');
+    Route::post('/occasions-services/assign', [OccasionController::class, 'occasionsServicesAssign'])->name('occasions-services.assign')->middleware('audit:post');
+    Route::post('/occasions-services/un-assign', [OccasionController::class, 'occasionsServicesUnAssign'])->name('occasions-services-type.un-assign')->middleware('audit:post');
+    Route::post('/occasions-services-types/assign', [OccasionController::class, 'occasionsServicesTypeAssign'])->name('occasions-services-type.assign')->middleware('audit:post');
     Route::get('/occasions-services', [OccasionController::class, 'occasionsServicesList'])->name('occasions-services.list');
     Route::get('/occasions-services/edit', [OccasionController::class, 'occasionsServicesEdit'])->name('occasions-services.edit');
-    Route::post('/occasions-services/store', [OccasionController::class, 'occasionsServicesStore'])->name('occasions-services.store');
+    Route::post('/occasions-services/store', [OccasionController::class, 'occasionsServicesStore'])->name('occasions-services.store')->middleware('audit:post');
     Route::get('/occasions-services/remove', [OccasionController::class, 'occasionsServicesRemove'])->name('occasions-services.remove');
-    Route::post('/occasions-services/type/store', [OccasionController::class, 'occasionsServicesTypeStore'])->name('occasions-services-type.store');
+    Route::post('/occasions-services/type/store', [OccasionController::class, 'occasionsServicesTypeStore'])->name('occasions-services-type.store')->middleware('audit:post');
     Route::get('/occasions-services/type/remove', [OccasionController::class, 'occasionsServicesTypeRemove'])->name('occasions-services-type.remove');
 
-    Route::post('/settings/statuses/update', [SettingsController::class, 'statusUpdate'])->name('status-update');
-    Route::post('/settings/statuses/store', [SettingsController::class, 'statusStore'])->name('status-store');
+    Route::post('/settings/statuses/update', [SettingsController::class, 'statusUpdate'])->name('status-update')->middleware('audit:post');
+    Route::post('/settings/statuses/store', [SettingsController::class, 'statusStore'])->name('status-store')->middleware('audit:post');
     Route::get('/settings/statuses/delete', [SettingsController::class, 'statusDelete'])->name('statuses.delete');
 
-    Route::post('/settings/roles/update', [SettingsController::class, 'roleUpdate'])->name('role-update');
-    Route::post('/settings/roles/store', [SettingsController::class, 'roleStore'])->name('role-store');
+    Route::post('/settings/roles/update', [SettingsController::class, 'roleUpdate'])->name('role-update')->middleware('audit:post');
+    Route::post('/settings/roles/store', [SettingsController::class, 'roleStore'])->name('role-store')->middleware('audit:post');
     Route::get('/settings/roles/delete', [SettingsController::class, 'roleDelete'])->name('roles.delete');
 
-    Route::post('/settings/services/update', [SettingsController::class, 'serviceUpdate'])->name('service-update');
-    Route::post('/settings/services/store', [SettingsController::class, 'serviceStore'])->name('service-store');
+    Route::post('/settings/services/update', [SettingsController::class, 'serviceUpdate'])->name('service-update')->middleware('audit:post');
+    Route::post('/settings/services/store', [SettingsController::class, 'serviceStore'])->name('service-store')->middleware('audit:post');
     Route::get('/settings/services/delete', [SettingsController::class, 'serviceDelete'])->name('services.delete');
 
-    Route::post('/settings/company-update', [SettingsController::class, 'companyUpdate'])->name('settings.company_update');
+    Route::post('/settings/company-update', [SettingsController::class, 'companyUpdate'])->name('settings.company_update')->middleware('audit:post');
     Route::get('/settings/services', [SettingsController::class, 'services'])->name('settings.services');
     Route::get('/settings/occasions', [SettingsController::class, 'occasions'])->name('settings.occasions');
     Route::get('/settings/statuses', [SettingsController::class, 'statuses'])->name('settings.statuses');
@@ -81,27 +81,27 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/users/remove', [UserController::class, 'removeUser'])->name('users.delete-user');
     Route::get('/users/view', [UserController::class, 'view'])->name('users.view-user');
     Route::get('/users/approve', [UserController::class, 'approve'])->name('users.approve-user');
-    Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image');
-    Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service');
-    Route::post('/services/delete-service', [ServiceController::class, 'deleteService'])->name('services-delete');
-    Route::post('/services/paused-service', [ServiceController::class, 'pausedService'])->name('services.paused_service');
-    Route::post('/services/publish-service', [ServiceController::class, 'publishService'])->name('services.publish_service');
-    Route::post('/services/resume-service', [ServiceController::class, 'resumeService'])->name('services.resume_service');
-    Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply');
+    Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image')->middleware('audit:post');
+    Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service')->middleware('audit:post');
+    Route::post('/services/delete-service', [ServiceController::class, 'deleteService'])->name('services-delete')->middleware('audit:post');
+    Route::post('/services/paused-service', [ServiceController::class, 'pausedService'])->name('services.paused_service')->middleware('audit:post');
+    Route::post('/services/publish-service', [ServiceController::class, 'publishService'])->name('services.publish_service')->middleware('audit:post');
+    Route::post('/services/resume-service', [ServiceController::class, 'resumeService'])->name('services.resume_service')->middleware('audit:post');
+    Route::post('/issues/reply', [HelpController::class, 'reply'])->name('issues-reply')->middleware('audit:post');
     Route::get('/issues/replies', [HelpController::class, 'replies'])->name('issues-replies');
     Route::get('/service-providers/lists', [UserController::class, 'serviceProviders'])->name('service-providers.list');
 
     Route::get('/notes/remove', [NotesController::class, 'removeNote'])->name('notes.destroy-note');
-    Route::resource('settings', 'SettingsController');
-    Route::resource('schedules', 'SchedulesController');
-    Route::resource('notes', 'NotesController');
+    Route::middleware('audit:resource')->resource('settings', 'SettingsController');
+    Route::middleware('audit:resource')->resource('schedules', 'SchedulesController');
+    Route::middleware('audit:resource')->resource('notes', 'NotesController');
 
 
     Route::resource('notifications', 'NotificationController');
-    Route::resource('services', 'ServiceController');
-    Route::resource('orders', 'OrderController');
-    Route::resource('helps', 'HelpController');
-    Route::resource('audit', 'AuditTrailController');
+    Route::middleware('audit:resource')->resource('services', 'ServiceController');
+    Route::middleware('audit:resource')->resource('orders', 'OrderController');
+    Route::middleware('audit:resource')->resource('helps', 'HelpController');
+    Route::middleware('audit:resource')->resource('audit', 'AuditTrailController');
 });
 
 Route::get('confirm/{user_by_code}',  [ConfirmController::class, 'confirm'])->name('confirm');

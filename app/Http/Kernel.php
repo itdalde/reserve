@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cors' => \App\Http\Middleware\Cors::class,
 //        'force.json' => \App\Http\Middleware\ForceJsonResponse::class,
+        'audit' => \App\Http\Middleware\AuditTrailMiddleware::class
     ];
 }
