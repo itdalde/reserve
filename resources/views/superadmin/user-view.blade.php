@@ -214,14 +214,14 @@
                                         </div>
                                         <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                                             aria-labelledby="pills-profile-tab">
-                                            <div class="row table-orders-div">
-                                                <div class="col-sm-5">
+                                            <div class="table-orders-div">
+                                                <div class="">
                                                     <div class="d-flex justify-content-start">
                                                         <h4>Orders ( {{ $totalOrders }} )</h4>
                                                     </div>
                                                     <div class="d-flex justify-content-start">
 
-                                                        <div class="input-group mx-auto" style="    width: 96%;">
+                                                        <div class="input-group" style="width: 50%; margin-bottom: 20px;">
                                                             <input id="search-t" class="form-control border-end-0 border"
                                                                 type="search">
                                                             <span class="input-group-append">
@@ -233,107 +233,99 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <table class="table" id="user-table">
-                                                        <thead style="display: none">
-                                                            <tr>
-                                                                <th scope="col">Customer name</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($user->customer_orders as $order)
-                                                                @foreach ($order->items as $item)
-                                                                    <tr>
-                                                                        <td>
-                                                                            <div class="card border-info border">
-                                                                                <div class="card-body">
-                                                                                    <div class="row">
-                                                                                        <span class="p-0">Service
-                                                                                            Name</span>
-                                                                                        <label for=""
-                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ $item->service->name }}</label>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <span
-                                                                                            class="p-0">Location</span>
-                                                                                        <label for=""
-                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ $item->service->address_1 }}</label>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <span class="p-0">Scheduled
-                                                                                            date</span>
-                                                                                        <label for=""
-                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('F, d Y') }}</label>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <span class="p-0">Scheduled
-                                                                                            time</span>
-                                                                                        <label for=""
-                                                                                            class="fs-5 fw-bold text-secondary p-0">{{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('H:s a') }}</label>
-                                                                                    </div>
+                                                    <div class="row">
 
-                                                                                    <div
-                                                                                        class="row border-bottom border-1 border-secondary p-1 opacity-50">
-                                                                                    </div>
+                                                    @foreach($user->customer_orders as $order)
+                                                        @foreach($order->items as $item)
+                                                            <div class="col-sm-12 col-md-6">
+                                                                <div class="card border-info border">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <span class="p-0">Service
+                                                                                Name</span>
+                                                                            <label for=""
+                                                                                class="fs-5 fw-bold text-secondary p-0">{{ $item->service->name }}</label>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <span
+                                                                                class="p-0">Location</span>
+                                                                            <label for=""
+                                                                                class="fs-5 fw-bold text-secondary p-0">{{ $item->service->address_1  ?? '-'}}</label>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <span class="p-0">Scheduled
+                                                                                date</span>
+                                                                            <label for=""
+                                                                                class="fs-5 fw-bold text-secondary p-0">{{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('F, d Y') }}</label>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <span class="p-0">Scheduled
+                                                                                time</span>
+                                                                            <label for=""
+                                                                                class="fs-5 fw-bold text-secondary p-0">{{ Carbon\Carbon::parse($item->schedule_start_datetime)->format('H:s a') }}</label>
+                                                                        </div>
 
-                                                                                    <div class="row pt-2">
-                                                                                        <div class="col p-0">
-                                                                                            <span class="fs-6">Total
-                                                                                                cost</span>
-                                                                                            <label for=""
-                                                                                                class="fs-5 fw-bold text-secondary p-0">
-                                                                                                QAR
-                                                                                                {{ number_format($item->service->price, 2) }}
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <div class="col p-0">
-                                                                                            <span class="fs-6">Paid
-                                                                                                cost</span>
-                                                                                            <label for=""
-                                                                                                class="text-success fs-5 fw-bold text-secondary">
-                                                                                                QAR
-                                                                                                {{ number_format($item->total_paid, 2) }}
-                                                                                            </label>
-                                                                                        </div>
-                                                                                        <div class="col p-0">
-                                                                                            <span
-                                                                                                class="fs-6">Outstanding
-                                                                                                cost</span>
-                                                                                            <label for=""
-                                                                                                class="text-danger fs-5 fw-bold text-secondary">
-                                                                                                QAR
-                                                                                                {{ number_format($item->balance, 2) }}
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        class="row border-bottom border-1 border-secondary p-1 opacity-50">
-                                                                                    </div>
-                                                                                    <div class="row pt-2">
-                                                                                        <span>Order status
-                                                                                            <span
-                                                                                                class="p-2 me-4 badge bg-secondary text-dark  ms-4 text-capitalize">
-                                                                                                {{ $item->status }}
-                                                                                            </span>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </div>
+                                                                        <div
+                                                                            class="row border-bottom border-1 border-secondary p-1 opacity-50">
+                                                                        </div>
+
+                                                                        <div class="row pt-2">
+                                                                            <div class="col p-0">
+                                                                                <span class="fs-6">Total
+                                                                                    cost</span>
+                                                                                <label for=""
+                                                                                    class="fs-5 fw-bold text-secondary p-0">
+                                                                                    QAR
+                                                                                    {{ number_format($item->service->price, 2) }}
+                                                                                </label>
                                                                             </div>
-                                                                            <div class="row mt-3 mb-3">
-                                                                                <button
-                                                                                    data-order-id="{{ $order->reference_no }}"
-                                                                                    class="btn mx-auto btn-warning text-white text-center view-full-order-btn"
-                                                                                    type="button" style="width:92%">
-                                                                                    View full order
-                                                                                </button>
+                                                                            <div class="col p-0">
+                                                                                <span class="fs-6">Paid
+                                                                                    cost</span>
+                                                                                <label for=""
+                                                                                    class="text-success fs-5 fw-bold text-secondary">
+                                                                                    QAR
+                                                                                    {{ number_format($item->total_paid, 2) }}
+                                                                                </label>
                                                                             </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <?php continue; ?>
-                                                                @endforeach
-                                                            @endforeach
+                                                                            <div class="col p-0">
+                                                                                <span
+                                                                                    class="fs-6">Outstanding
+                                                                                    cost</span>
+                                                                                <label for=""
+                                                                                    class="text-danger fs-5 fw-bold text-secondary">
+                                                                                    QAR
+                                                                                    {{ number_format($item->balance, 2) }}
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div
+                                                                            class="row border-bottom border-1 border-secondary p-1 opacity-50">
+                                                                        </div>
+                                                                        <div class="row pt-2">
+                                                                            <span>Order status
+                                                                                <span
+                                                                                    class="p-2 me-4 badge bg-secondary text-dark  ms-4 text-capitalize">
+                                                                                    {{ $item->status }}
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-3 mb-3">
+                                                                    <button
+                                                                        data-order-id="{{ $order->reference_no }}"
+                                                                        class="btn mx-auto btn-warning text-white text-center view-full-order-btn"
+                                                                        type="button" style="width:92%">
+                                                                        View full order
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        <?php continue; ?>
+                                                        @endforeach
+                                                    @endforeach
+                                                </div>
 
-                                                        </tbody>
-                                                    </table>
                                                 </div>
                                             </div>
                                             <div class="row info-orders-div d-none">
