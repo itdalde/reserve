@@ -68,7 +68,7 @@
                                                     src="https://ui-avatars.com/api/?name={{ $user->first_name ? $user->first_name : $user->email }}"
                                                     alt="...">
                                             @endif
-                                            {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email }}
+                                            <span class="fs-4 fw-bolder">{{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email }}</span>
                                         </div>
                                         <div class="p-0">
                                             <span class="status-field p-2 me-4 badge bg-secondary text-dark">
@@ -119,12 +119,12 @@
 
                                             <div class="p-2 bd-highlight">
                                                 <div class="d-flex justify-content-start">
-                                                    <div class="p-0">
+                                                    <div class="p-0 my-auto">
                                                         <img src="{{ asset('assets/images/icons/cart-profile.png') }}"
                                                             alt="cart-profile.png">
                                                         <span>{{ $totalOrders }} Orders</span>
                                                     </div>
-                                                    <div class="ms-9">
+                                                    <div class="ms-9 my-auto">
                                                         <img src="{{ asset('assets/images/icons/dollar-profile.png') }}"
                                                             alt="dollar-profile.png">
                                                         <span>QAD {{ number_format($total, 2) }}
@@ -135,29 +135,29 @@
                                                             @endif
                                                         </span>
                                                     </div>
-                                                </div>
-                                                <hr>
-                                            </div>
-                                            <div class="p-2 bd-highlight">
-                                                <h5 class="fw-bold text-secondary">Last
-                                                    {{ $user->company ? 'sales' : 'purchase' }}</h5>
-                                                <span>{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</span>
-                                                <hr>
-                                            </div>
-                                            <div class="p-2 bd-highlight">
-                                                <h5 class="fw-bold text-secondary">Contact info</h5>
-                                                <div class="d-flex flex-column">
-                                                    <div class="p-2">
-                                                        <img src="{{ asset('assets/images/icons/email-profile.png') }}"
-                                                            alt="email-profile"> {{ $user->email }}
-                                                    </div>
-                                                    <div class="p-2">
-                                                        <img src="{{ asset('assets/images/icons/phone-profile.png') }}"
-                                                            alt="phone-profile"> {{ $user->phone_number }}
+                                                    <div class="p-0 w-25 d-flex my-auto">
+                                                        <h5 class="fw-bolder fs-5 text-secondary ms-9 my-auto">Last {{ $user->company ? 'Sales' : 'Purchase' }}</h5>
+                                                        <em class="ms-3 fs-5 my-auto">{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y') }}</em>        
                                                     </div>
                                                 </div>
                                                 <hr>
                                             </div>
+                                            <div class="p-2 bd-highlight border borde-2 rounded">
+                                                <h4 class="fw-bolder text-secondary mb-5">Customer Profile</h4>
+                                                <div class="">
+                                                    <p class="fs-5 fw-bolder mb-2">First Name: <em class="fs-5 fw-normal">{{ $user->first_name ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Last Name: <em class="fs-5 fw-normal">{{ $user->last_name ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Gender: <em class="fs-5 fw-normal">{{ $user->gender ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Birth Date: <em class="fs-5 fw-normal">{{ $user->birth_date ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Email: <em class="fs-5 fw-normal ms-3"><img src="{{ asset('assets/images/icons/email-profile.png') }}"
+                                                        alt="email-profile" style="width: 15px;"> {{ $user->email ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Contact #: <em class="fs-5 fw-normal ms-3"><img src="{{ asset('assets/images/icons/phone-profile.png') }}"
+                                                        alt="phone-profile" style="width: 15px;">{{ $user->phone_number ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Position: <em class="fs-5 fw-normal ms-3">{{ $user->positino ?? 'not specified' }}</em></p>
+                                                </div>
+                                            </div>
+
+                                            <hr />
                                             <div class="p-2 bd-highlight">
                                                 <h5 class="fw-bold text-secondary">Default Address</h5>
                                                 <p class="text-dark fs-5">
@@ -176,7 +176,7 @@
                                                 <p class="m-0">{{ $user->location }}</p>
                                                 <hr />
                                             </div>
-                                            <div class="p-2 bd-highlight">
+                                            <div class="p-2 bd-highlight d-none">
                                                 <h5 class="fw-bold text-secondary pb-2">Card Details</h5>
                                                 <div class="pb-3">
                                                     <div>Card 1 <img
