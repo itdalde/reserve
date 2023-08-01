@@ -27,8 +27,8 @@
                   <td class="fs-5" style="width: 15%;">{{$audit->user}}</td>
                   <td class="fs-5">{{$audit->notes}}</td>
                   <td class="fs-5">{{$audit->data}}</td>
-                  <td class="fs-5" style="width: 10%">{{$audit->company_id}}</td>
                   <td class="fs-5">{{$audit->model}}</td>
+                  <td class="fs-5" style="width: 10%">{{$audit->company_id}}</td>
                   <td class="fs-5">{{$audit->created_at}}</td>
                 </tr>
                 @endforeach

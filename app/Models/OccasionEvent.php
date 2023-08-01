@@ -90,4 +90,13 @@ class OccasionEvent extends Model
     public function adOns() {
         return $this->hasMany(OccasionEventAddon::class, 'occasion_event_id', 'id');
     }
+
+
+    public function features() {
+        return $this->hasMany(Feature::class, 'services_id', 'id');
+    }
+
+    public function conditions() {
+        return $this->hasMany(Condition::class, 'service_id', 'id');
+    }
 }
