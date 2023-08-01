@@ -37,7 +37,7 @@ class AuditTrailMiddleware
             'model' => $model,
             'action' => $userAction,
             'notes' => 'User ' . $loggedUser . ' performs ' . $userAction . ' request with the following endpoint ' . $request->getRequestUri(),
-            'data' => implode(',', $data),
+            'data' => "-",
             'company_id' => Auth::user()->company->id,
         ]);
         return $next($request);
