@@ -24,13 +24,13 @@ class AuditTrailMiddleware
         $userAction = $action == 'resource' ? ucfirst($request->method()) : $this->action($action);
 
         $routeName = $request->route()->getName();
-        $module = ucfirst(str_singular($routeName)); 
+        $module = ucfirst(str_singular($routeName));
         $model  = ucfirst(explode('.', $module)[0]);
 
         if ($userAction == 'GET' || $userAction == 'Get') {
             return $next($request);
         }
-        
+
         AuditTrail::create([
             'user_id' => $user->id,
             'user' => $loggedUser,
@@ -38,7 +38,7 @@ class AuditTrailMiddleware
             'action' => $userAction,
             'notes' => 'User ' . $loggedUser . ' performs ' . $userAction . ' request with the following endpoint ' . $request->getRequestUri(),
             'data' => "-",
-            'company_id' => Auth::user()->company->id,
+            'company_id' => Auth::user() && Auth::user()->company ? Auth::user()->company->id : 0,
         ]);
         return $next($request);
     }
@@ -46,7 +46,7 @@ class AuditTrailMiddleware
     public function action($action) {
         $actionPerformed;
         switch ($action){
-            case 'get': 
+            case 'get':
                 $actionPerformed = 'Get';
                 break;
             case 'post':
