@@ -187,6 +187,32 @@
                             </div>
                         </div>
 
+                        <!-- Features -->
+                        <div class="row mt-2">
+                            <label for="feature" class="form-label label-color field-label">Features</label>
+                            <div class="col-5 mb-3" id="feature-fields">
+                                <div class="d-flex mb-2 form-field">
+                                    <input class="form-control" type="text" id="feature" name="feature[]" placeholder="Enter service features" value="">
+                                    <button type="button" id="add-feature-data-btn" class="btn btn-orange action-button" style="width: 30%;">
+                                        <img src="{{ asset('assets/images/icons/add.png') }}" alt="add-feature" />&nbsp;Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                          <!-- Conditions -->
+                          <div class="row mt-2">
+                            <label for="condition" class="form-label label-color field-label">Conditions</label>
+                            <div class="col-5 mb-3" id="condition-fields">
+                                <div class="d-flex mb-2 form-field">
+                                    <input class="form-control form-control-sm" type="text" name="condition[]" id="condition"  placeholder="Enter service conditions" value="">
+                                    <button type="button" id="add-condition-data-btn" class="btn btn-orange action-button" style="width: 30%;">
+                                        <img src="{{ asset('assets/images/icons/add.png') }}" alt="add-condition" />&nbsp;Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row mb-3 mt-2 d-none">
                             <div class="col-md-12">
                                 <div class="">
@@ -300,6 +326,34 @@
             var field = $('.guests_field');
             field.prop('disabled', !field.prop('disabled'));
         })
+
+        $('#add-feature-data-btn').on('click', function() {
+            var newField = `
+                <div class="d-flex mb-2 form-field">
+                    <input class="form-control" type="text" id="feature" name="feature[]" placeholder="Enter service conditions" value="">
+                    <button type="button" class="btn remove-btn">
+                        <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-feature" />
+                    </button>
+                </div>
+            `
+            $('#feature-fields').append(newField);
+        })
+
+        $('#add-condition-data-btn').on('click', function() {
+            var newField = `
+                <div class="d-flex mb-2 form-field">
+                    <input class="form-control" type="text" id="condition" name="condition[]" placeholder="Condition" value="">
+                    <button type="button" class="btn remove-btn">
+                        <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-condition" />
+                    </button>
+                </div>
+            `
+            $('#condition-fields').append(newField);
+        })
+
+        $(document).on('click', '.remove-btn', function () {
+      $(this).closest('.form-field').remove();
+    });
 
     });
 </script>
