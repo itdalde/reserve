@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use App\Models\AvailableDates;
 use App\Models\Company;
+use App\Models\Condition;
+use App\Models\Feature;
 use App\Models\OccasionEvent;
 use App\Models\OccasionEventsPivot;
 use App\Models\OccasionServiceTypePivot;
@@ -91,6 +93,12 @@ class ServiceTypesApiController extends Controller
                                     return $item['date'];
                                 }, $availableDates);
                             }
+                            $services[$i]['features'] = Feature::where('service_id', $service['id'])
+                                ->get()
+                                ->toArray();
+                            $services[$i]['conditions'] = Condition::where('service_id', $service['id'])
+                                ->get()
+                                ->toArray();
                             $services[$i]['availabilities'] = $availabilities;
                             $services[$i]['service_type'] = $serviceType;
                             $providers[$key]['services'][] = $services[$i] ;
@@ -178,6 +186,12 @@ class ServiceTypesApiController extends Controller
             foreach ($provider['services'] as $key => $service) {
                 $providers[$k]['base_price'] = $service['price'];
                 if ($service['active'] == 1) {
+                    $providers[$k]['services'][$key]['features'] = Feature::where('service_id', $service['id'])
+                        ->get()
+                        ->toArray();
+                    $providers[$k]['services'][$key]['conditions'] = Condition::where('service_id', $service['id'])
+                        ->get()
+                        ->toArray();
                     $availableDateObj = AvailableDates::where('service_id', $service['id'])
                         ->where('status', 1)
                         ->where('date_obj', '<>', null);
