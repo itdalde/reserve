@@ -48,6 +48,7 @@ class SchedulesController extends Controller
             return response()->json($response);
         }
         $services = OccasionEvent::where('company_id', auth()->user()->company->id,)->where('id', $service_id)->orderBy('id', 'DESC')->get();
+
         return view('admin.schedules.manage', compact('services'));
     }
     public function updateSchedule(Request $request)
