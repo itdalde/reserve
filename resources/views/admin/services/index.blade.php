@@ -170,6 +170,7 @@
                                         $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
                                         data-active="{{ $service->active }}"
                                         data-price="{{ $service->price }}"
+                                        data-duration="{{ $service->duration }}"
                                         >
                                         <td width="20%">
                                             <img width="100" height="100" src="{{ asset($service->image) }}"
@@ -286,7 +287,10 @@
                                         data-rating="{{ $service->occasionEventsReviewsAverage &&
                                         isset($service->occasionEventsReviewsAverage[0]) ?
                                         $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
-                                        data-active="{{ $service->active }}">
+                                        data-active="{{ $service->active }}"
+                                        data-price="{{ $service->price }}"
+                                        data-duration="{{ $service->duration }}"
+                                        >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                 alt="..." style="border-radius: 5px; object-fit: cover;"></td>
@@ -391,7 +395,10 @@
                                         data-rating="{{ $service->occasionEventsReviewsAverage &&
                                         isset($service->occasionEventsReviewsAverage[0]) ?
                                         $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
-                                        data-active="{{ $service->active }}">
+                                        data-active="{{ $service->active }}"
+                                        data-price="{{ $service->price }}"
+                                        data-duration="{{ $service->duration }}"
+                                        >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                 alt="..." style="border-radius: 5px; object-fit: cover;"></td>
@@ -494,7 +501,10 @@
                                         data-rating="{{ $service->occasionEventsReviewsAverage &&
                                         isset($service->occasionEventsReviewsAverage[0]) ?
                                         $service->occasionEventsReviewsAverage[0]->aggregate : 0 }}"
-                                        data-active="{{ $service->active }}">
+                                        data-active="{{ $service->active }}"
+                                        data-price="{{ $service->price }}"
+                                        data-duration="{{ $service->duration ?? 0 }}"
+                                        >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                 alt="..." style="border-radius: 5px; object-fit: cover;"></td>
@@ -827,7 +837,6 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
                             <div class="p-2 bd-highlight">Pricing Type</div>
                             <div class="p-2 bd-highlight ">
@@ -835,7 +844,27 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
+                        <div class="d-flex flex-column bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">Service Timed</div>
+                            <div class="p-2 bd-highlight ">
+                                <div class="d-flex flex-row bd-highlight mb-3 service-timed">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">Features</div>
+                            <div class="p-2 bd-highlight ">
+                                <div class="d-flex flex-row bd-highlight mb-3 service-features">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">Conditions</div>
+                            <div class="p-2 bd-highlight ">
+                                <div class="d-flex flex-row bd-highlight mb-3 service-conditions">
+                                </div>
+                            </div>
+                        </div>
                         <div class="d-flex">
                             <div class="mr-auto p-2 w-100">
                                 <button class="btn btn-warning edit-trigger-display" id="edit-service-btn"
@@ -1060,6 +1089,7 @@
         let totalOrders = $(this).closest('tr').attr('data-orders-count');
         let serviceStatus = $(this).closest('tr').attr('data-active')
         let servicePrice = +$(this).closest('tr').attr('data-price');
+        let serviceTimed = +$(this).closest('tr').attr('data-duration');
         $('#service-no-of-orders').text(totalOrders);
         let id = $(this).closest('tr').attr('data-id');
         $.ajax({
@@ -1140,6 +1170,7 @@
         $('.service-hall-features-available-date').text(availableDate)
         $('.rating-total').text(rating.toFixed(1))
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
+        $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
         $('#service-ratings-1, #service-ratings-2, #service-ratings-3, #service-ratings-4, #service-ratings-5')
             .removeClass('checked');
         if (rating >= 1) {

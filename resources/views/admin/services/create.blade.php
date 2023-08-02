@@ -24,7 +24,7 @@
                         <div class="mb-3">
                             <label for="service_name" class="form-label field-label label-color">Service Name</label>
                             <input type="text" class="form-control" name="service_name" id="service-name"
-                                placeholder="Service name">
+                                placeholder="Service name" required>
                         </div>
                     </div>
                     <hr>
@@ -42,7 +42,7 @@
                             <input
                                 onchange="document.getElementById('service-image-view').src = window.URL.createObjectURL(this.files[0])"
                                 id="service-image-file" accept="image/png, image/gif, image/jpeg" type="file"
-                                class="d-none" name="featured_image">
+                                class="d-none" name="featured_image" required>
 
                             <div class="service-image-error alert alert-danger d-none mt-2" role="alert">
                                 Please add image first
@@ -75,7 +75,7 @@
                                 class="form-label field-label label-color">Description&nbsp;&nbsp;<span
                                     class="text-danger">*</span></label>
                             <textarea dir="auto" name="service_description" class="form-control"
-                                placeholder="Description" id="floatingTextarea2" style="height: 100px"></textarea>
+                                placeholder="Description" id="floatingTextarea2" style="height: 100px" required></textarea>
                         </div>
                     </div>
                     <hr>
@@ -155,7 +155,7 @@
                                     &nbsp;&nbsp;
                                     <div class="form-check form-check-inline w-100 pl-5 mt-2">
                                         <div class="">
-                                            <input class="form-check-input" type="checkbox" id="price-not-applicable"
+                                            <input class="form-check-input" type="checkbox" id="price-not-applicable" name="price_not_applicable"
                                                 value="not-applicable">
                                             <label class="form-check-label" for="price-not-applicable">Not
                                                 Applicable</label>
@@ -169,19 +169,19 @@
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="minimum-guest" class="form-label">Minimum guests</label>
-                                    <input type="number" min="0" value="0" class="form-control guests_field float-end"
+                                    <input type="number" min="0" value="" class="form-control guests_field float-end"
                                         id="minimum-guest" name="min_capacity" placeholder="0.00">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="maximum-guests" class="form-label">Maximum guests</label>
-                                    <input type="number" min="0" value="0" class="form-control guests_field float-start"
+                                    <input type="number" min="0" value="" class="form-control guests_field float-start"
                                         id="maximum-guests" name="max_capacity" placeholder="0.00">
                                 </div>
                             </div>
                             <div class="form-check form-check-inline" style="margin-left: 16px;">
-                                <input class="form-check-input" type="checkbox" id="allowed_guests"
+                                <input class="form-check-input" type="checkbox" id="allowed_guests" name="not_allowed_guests"
                                     value="not-applicable">
                                 <label class="form-check-label" for="allowed_guests">Not Applicable</label>
                             </div>
