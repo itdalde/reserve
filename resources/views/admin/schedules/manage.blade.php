@@ -168,6 +168,7 @@
                                     url: SITEURL + '/update-schedule',
                                     data: {
                                         type: type,
+                                        month:events.title.split(' '),
                                         service_id: service_id
                                     },
                                     success: function (response) {

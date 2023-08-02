@@ -53,8 +53,17 @@ class SchedulesController extends Controller
     }
     public function updateSchedule(Request $request)
     {
+        $data = $request->all();
         $start = Carbon::today()->startOfMonth();
         $end = Carbon::today()->endOfMonth();
+        if(isset($data['month'])) {
+            $inputMonth = $data['month'][0];
+            $inputYear = $data['month'][1];
+            $start = Carbon::parse("1 $inputMonth $inputYear")->startOfMonth();
+            $end = Carbon::parse("1 $inputMonth $inputYear")->endOfMonth();
+        }
+        $startFormatted = $start->format('Y-m-d');
+        $endFormatted = $end->format('Y-m-d');
         $date = $start;
         $dates = [];
         /**
@@ -99,31 +108,9 @@ class SchedulesController extends Controller
                 $avail->status = 1;
                 $avail->save();
             }
-            $response = $this->fetchData($request->service_id,$start,$end);
+            $response = $this->fetchData($request->service_id,$startFormatted,$endFormatted);
             return response()->json($response);
-        } else {
         }
-
-        // if($request->type == 2) {
-        //     while ($date <= $end) {
-        //         if (! $date->isWeekend() ) {
-        //             $dates[] = [
-        //                 'old_format' => $date->format('d/m/Y'),
-        //                 'new_format' => $date->format('Y-m-d')
-        //             ];
-        //         }
-        //         $date->addDays(1);
-        //     }
-        // } else {
-        //     while ($date <= $end) {
-        //         $dates[] = [
-        //             'old_format' => $date->format('d/m/Y'),
-        //             'new_format' => $date->format('Y-m-d')
-        //         ];
-        //         $date->addDays(1);
-        //     }
-        // }
-
         AvailableDates::where('company_id', auth()->user()->company->id)->where('service_id', $request->service_id)->delete();
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->where('id', $request->service_id)->orderBy('id', 'DESC')->get();
         foreach ($services as $service) {
@@ -137,7 +124,7 @@ class SchedulesController extends Controller
                 $avail->save();
             }
         }
-        $response = $this->fetchData($request->service_id,$start,$end);
+        $response = $this->fetchData($request->service_id,$startFormatted,$endFormatted);
         return response()->json($response);
     }
 
