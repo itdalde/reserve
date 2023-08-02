@@ -14,6 +14,8 @@ use App\Models\OccasionEventsPivot;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
+use App\Models\Feature;
+use App\Models\Condition;
 use Carbon\Carbon;
 use Google\Exception;
 use Illuminate\Http\JsonResponse;
@@ -257,6 +259,24 @@ class ServiceController extends Controller
         $price->package_price = $data['service_price'];
         $price->active = 1;
         $price->save();
+
+        foreach ($data['feature'] as $k => $name) {
+            if ($name) {
+                $feat = new Feature();
+                $feat->name = $name;
+                $feat->service_id = $service->id;
+                $feat->save();
+            }
+        }
+
+        foreach ($data['condition'] as $k => $name) {
+            if ($name) {
+                $condt = new Condition();
+                $condt->name = $name;
+                $condt->service_id = $service->id;
+                $condt->save();
+            }
+        }
 
         foreach ($data['add_on_name'] as $k => $name) {
             if ($name) {
