@@ -40,14 +40,18 @@ class SchedulesController extends Controller
          $service_id = $request->service_id;
          if (!$request->service_id) {
            $service = OccasionEvent::where('company_id', auth()->user()->company->id)->first();
-           $service_id = $service->id;
+           $service_id = $service ? $service->id : null;
          }
 
         if ($request->ajax()) {
             $response = $this->fetchData($service_id,$request->start,$request->end);
             return response()->json($response);
         }
-        $services = OccasionEvent::where('company_id', auth()->user()->company->id,)->where('id', $service_id)->orderBy('id', 'DESC')->get();
+        $servicesObj = OccasionEvent::where('company_id', auth()->user()->company->id);
+        if($service_id) {
+            $servicesObj->where('id', $service_id);
+        }
+       $services = $servicesObj->orderBy('id', 'DESC')->get();
 
         return view('admin.schedules.manage', compact('services'));
     }
