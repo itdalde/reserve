@@ -220,7 +220,7 @@ class ServiceController extends Controller
 
         $availableDates = date('Y-m-d H:i:s');// explode(',',$data['start_available_date']);
         $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
-        $service->availability_start_date = $availableDates && isset($availableDates[0]) ? date('Y-m-d H:i:s', strtotime($availableDates[0]))  : date('Y-m-d H:i:s');;
+        $service->availability_start_date =  date('Y-m-d H:i:s');
         $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s') : date('Y-m-d H:i:s');;
         $service->active = 3;
         $service->service_type = $company->service_type_id;
