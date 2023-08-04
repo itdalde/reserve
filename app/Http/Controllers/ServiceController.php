@@ -14,6 +14,8 @@ use App\Models\OccasionEventsPivot;
 use App\Models\OccasionType;
 use App\Models\PlanType;
 use App\Models\ServiceType;
+use App\Models\Feature;
+use App\Models\Condition;
 use Carbon\Carbon;
 use Google\Exception;
 use Illuminate\Http\JsonResponse;
@@ -195,6 +197,7 @@ class ServiceController extends Controller
     public function store(Request $request)
     {   
         $data = $request->all();
+       
         $company = $request->user()->company;
         $service = new OccasionEvent();
         $service->company_id = $company->id;
@@ -210,6 +213,8 @@ class ServiceController extends Controller
         $service->availability_slot = $data['available_slot'] ?? 0;
         $service->availability_time_in = $data['start_available_time'] ?? date('Y-m-d H:i:s');
         $service->availability_time_out = $data['end_available_time'] ?? date('Y-m-d H:i:s');
+
+        $service->duration = $data['price_not_applicable'] ?? 0;
 
         $availableDates = date('Y-m-d H:i:s');// explode(',',$data['start_available_date']);
         $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
@@ -251,12 +256,30 @@ class ServiceController extends Controller
         $price->plan_id = $data['plan_id'] ?? 10;
         $price->service_price = $data['service_price'];
         $price->package = $data['package_name'] ?? 'Per person';
-        $price->min_capacity = $data['package_min_capacity'] ?? 1;
-        $price->max_capacity = $data['package_max_capacity'] ?? 5;
+        $price->min_capacity = $data['package_min_capacity'] ?? 0;
+        $price->max_capacity = $data['package_max_capacity'] ?? 0;
         $price->package_details = $data['package_details'] ?? '-';
         $price->package_price = $data['service_price'];
         $price->active = 1;
         $price->save();
+
+        foreach ($data['feature'] as $k => $name) {
+            if ($name) {
+                $feat = new Feature();
+                $feat->name = $name;
+                $feat->service_id = $service->id;
+                $feat->save();
+            }
+        }
+
+        foreach ($data['condition'] as $k => $name) {
+            if ($name) {
+                $condt = new Condition();
+                $condt->name = $name;
+                $condt->service_id = $service->id;
+                $condt->save();
+            }
+        }
 
         foreach ($data['add_on_name'] as $k => $name) {
             if ($name) {
