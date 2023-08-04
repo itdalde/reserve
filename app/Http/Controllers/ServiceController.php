@@ -211,8 +211,10 @@ class ServiceController extends Controller
         $service->max_capacity = $data['max_capacity'] ?? 0;
         $service->min_capacity = $data['min_capacity'] ?? 0;
         $service->availability_slot = $data['available_slot'] ?? 0;
-        $service->availability_time_in = $data['start_available_time'] ?? date('H:i');
-        $service->availability_time_out = $data['end_available_time'] ?? date('H:i');
+        $availabilityTimeIn = date('H:i',strtotime($data['start_available_time']));
+        $availabilityTimeOut = date('H:i',strtotime($data['end_available_time']));
+        $service->availability_time_in = $availabilityTimeIn ?? date('H:i');
+        $service->availability_time_out = $availabilityTimeOut ?? date('H:i');
 
         $service->duration = $data['price_not_applicable'] ?? 0;
 
