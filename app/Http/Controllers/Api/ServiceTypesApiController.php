@@ -36,7 +36,16 @@ class ServiceTypesApiController extends Controller
                 ->where('services.active', 1)
                 ->where('ad.status', 1)
                 ->where('ad.date_obj', '!=', null)
-                ->whereBetween('ad.date_obj', [$data['from'], $data['to']])
+                ->whereBetween('ad.date_obj', [$data['from'], $data['to']])->
+                with(
+                    'serviceReviews',
+                    'paymentPlan',
+                    'serviceType',
+                    'ratings',
+                    'gallery',
+                    'availabilities',
+                    'company'
+                )
                 ->get(['services.*'])
                 ->toArray();
 
@@ -57,6 +66,15 @@ class ServiceTypesApiController extends Controller
 
             $services = OccasionEvent::whereIn('service_type', $serviceTypeIds)
                 ->where('active', 1)
+                ->with(
+                    'serviceReviews',
+                    'paymentPlan',
+                    'serviceType',
+                    'ratings',
+                    'gallery',
+                    'availabilities',
+                    'company'
+                )
                 ->get()
                 ->toArray();
         }
@@ -72,7 +90,7 @@ class ServiceTypesApiController extends Controller
             $companies = [];
 
             foreach ($services as $i => $service) {
-                if ($serviceType['id'] == $service['service_type']) {
+                if ($serviceType['id'] == $service['service_type']['id']) {
                     foreach ($providers as $key => $provider) {
                         if ($provider['id'] == $service['company_id']) {
                             $providers[$key]['base_price'] = (double) $provider['base_price'];
@@ -160,7 +178,16 @@ class ServiceTypesApiController extends Controller
     public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
     {
         $serviceTypes = OccasionServiceTypePivot::where('occasion_id', $occasion_type_id)->pluck('service_type_id')->toArray();
-        $servicesQuery = OccasionEvent::whereIn('service_type', $serviceTypes);
+        $servicesQuery = OccasionEvent::whereIn('service_type', $serviceTypes)
+            ->with(
+                'serviceReviews',
+                'paymentPlan',
+                'serviceType',
+                'ratings',
+                'gallery',
+                'availabilities',
+                'company'
+            );
         $data = $request->all();
         if (isset($data['from']) && isset($data['to'])) {
             $dateTime = \DateTime::createFromFormat('m/d/Y', $data['from']);

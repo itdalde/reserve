@@ -6,9 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OccasionServiceByProviderRequest;
 use App\Http\Requests\ProviderByServiceTypeRequest;
 use App\Models\Auth\User\User;
+use App\Models\AvailableDates;
 use App\Models\Company;
+use App\Models\Condition;
+use App\Models\Feature;
 use App\Models\OccasionEvent;
 use App\Models\OccasionEventReviews;
+use App\Models\ServiceType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -163,12 +167,51 @@ class ServicesApiController extends Controller
                     $usersIds[] = $user->company->id;
                 }
             }
-            $providers = Company::with('tags', 'serviceType', 'services', 'reviews')
+            $providers = Company::with('tags', 'serviceType', 'reviews')
                 ->whereIn('id',$usersIds)
                 ->where('service_type_id',(int) $service_type_id)
-                ->get();
+                ->get()
+                ->toArray();
             foreach($providers as $k => $provider) {
-                $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+                $services = OccasionEvent::where('company_id', $provider['id'])
+                    ->with(
+                        'serviceReviews',
+                        'paymentPlan',
+                        'serviceType',
+                        'ratings',
+                        'gallery',
+                        'availabilities',
+                        'company'
+                    )
+                    ->where('active', 1)
+                    ->get()
+                    ->toArray();
+                $serviceType = $provider['service_type'];
+                foreach ($services as $i => $service) {
+                    $availableDates = AvailableDates::where('service_id', $service['id'])
+                        ->where('status', 1)
+                        ->where('date_obj', '<>', null)
+                        ->selectRaw('DATE(date_obj) as date')
+                        ->get()
+                        ->toArray();
+                    $availabilities = [];
+                    if ($availableDates) {
+                        $availabilities = array_map(function ($item) {
+                            return $item['date'];
+                        }, $availableDates);
+                    }
+                    $services[$i]['features'] = Feature::where('service_id', $service['id'])
+                        ->get()
+                        ->toArray();
+                    $services[$i]['conditions'] = Condition::where('service_id', $service['id'])
+                        ->get()
+                        ->toArray();
+                    $services[$i]['availabilities'] = $availabilities;
+                    $services[$i]['service_type'] =  $serviceType;
+
+                }
+                $providers[$k]['services'] = $services;
+                $providers[$k]['base_price'] = (double) $provider['base_price'];
             }
         }
         return sendResponse($providers, 'Get providers by service type');
