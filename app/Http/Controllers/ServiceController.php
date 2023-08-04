@@ -195,9 +195,9 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $data = $request->all();
-       
+
         $company = $request->user()->company;
         $service = new OccasionEvent();
         $service->company_id = $company->id;
@@ -211,8 +211,8 @@ class ServiceController extends Controller
         $service->max_capacity = $data['max_capacity'] ?? 0;
         $service->min_capacity = $data['min_capacity'] ?? 0;
         $service->availability_slot = $data['available_slot'] ?? 0;
-        $service->availability_time_in = $data['start_available_time'] ?? date('Y-m-d H:i:s');
-        $service->availability_time_out = $data['end_available_time'] ?? date('Y-m-d H:i:s');
+        $service->availability_time_in = $data['start_available_time'] ?? date('H:i');
+        $service->availability_time_out = $data['end_available_time'] ?? date('H:i');
 
         $service->duration = $data['price_not_applicable'] ?? 0;
 
@@ -221,7 +221,7 @@ class ServiceController extends Controller
         $service->availability_start_date = $availableDates && isset($availableDates[0]) ? date('Y-m-d H:i:s', strtotime($availableDates[0]))  : date('Y-m-d H:i:s');;
         $service->availability_end_date = $availableDates ?  date('Y-m-d H:i:s') : date('Y-m-d H:i:s');;
         $service->active = 3;
-        $service->service_type = $data['service_type'] ?? '';
+        $service->service_type = $company->service_type_id;
         $service->save();
         foreach ([$availableDates] as $availableDate) {
             $avail = new AvailableDates();
