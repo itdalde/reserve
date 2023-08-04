@@ -145,7 +145,7 @@
                                         data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
                                         data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
                                         data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
-                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ; @endphp
+                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ; $adOns =''; $features=''; $conditions=''; @endphp
                                         @if ($service->images) @foreach ($service->images as $image)
                                         @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
                                         @endforeach @endif
@@ -171,13 +171,30 @@
                                         data-active="{{ $service->active }}"
                                         data-price="{{ $service->price }}"
                                         data-duration="{{ $service->duration }}"
+                                        @if ($service->adOns)
+                                        @foreach ($service->adOns as $adOn)
+                                        @php $adOns .= $adOn->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-adOns="{{$adOns}}"
+                                        @if ($service->features)
+                                        @foreach ($service->features as $feature)
+                                        @php $features .= $feature->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-features="{{$features}}"
+                                        @if ($service->conditions)
+                                        @foreach ($service->conditions as $condition)
+                                        @php $conditions .= $condition->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-conditions="{{$conditions}}"
                                         >
                                         <td width="20%">
                                             <img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                 alt="..." class="rounded-3" style="object-fit: cover;">
                                         </td>
-
                                         <td dir="auto" width="60%">
                                             <div class="d-flex justify-content-between">
                                                 <div>
@@ -264,7 +281,7 @@
                                         data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
                                         data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
                                         data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
-                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ; @endphp
+                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ;$adOns =''; $features=''; $conditions=''; @endphp
                                         @if ($service->images) @foreach ($service->images as $image)
                                         @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
                                         @endforeach @endif
@@ -290,6 +307,24 @@
                                         data-active="{{ $service->active }}"
                                         data-price="{{ $service->price }}"
                                         data-duration="{{ $service->duration }}"
+                                        @if ($service->adOns)
+                                        @foreach ($service->adOns as $adOn)
+                                        @php $adOns .= $adOn->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-adOns="{{$adOns}}"
+                                        @if ($service->features)
+                                        @foreach ($service->features as $feature)
+                                        @php $features .= $feature->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-features="{{$features}}"
+                                        @if ($service->conditions)
+                                        @foreach ($service->conditions as $condition)
+                                        @php $conditions .= $condition->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-conditions="{{$conditions}}"
                                         >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -372,7 +407,7 @@
                                         data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
                                         data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
                                         data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
-                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ; @endphp
+                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ;$adOns =''; $features=''; $conditions=''; @endphp
                                         @if ($service->images) @foreach ($service->images as $image)
                                         @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
                                         @endforeach @endif
@@ -398,6 +433,24 @@
                                         data-active="{{ $service->active }}"
                                         data-price="{{ $service->price }}"
                                         data-duration="{{ $service->duration }}"
+                                        @if ($service->adOns)
+                                        @foreach ($service->adOns as $adOn)
+                                        @php $adOns .= $adOn->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-adOns="{{$adOns}}"
+                                        @if ($service->features)
+                                        @foreach ($service->features as $feature)
+                                        @php $features .= $feature->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-features="{{$features}}"
+                                        @if ($service->conditions)
+                                        @foreach ($service->conditions as $condition)
+                                        @php $conditions .= $condition->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-conditions="{{$conditions}}"
                                         >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -478,7 +531,7 @@
                                         data-hall-capacity="{{ $service->min_capacity . ' - ' . $service->max_capacity }}"
                                         data-available-date="{{ Carbon\Carbon::parse($service->availability_start_date)->format('M d') . ' - ' . Carbon\Carbon::parse($service->availability_end_date)->format('M d') }}"
                                         data-available-time="{{ Carbon\Carbon::parse($service->availability_time_in)->format('h:i a') . ' - ' . Carbon\Carbon::parse($service->availability_time_out)->format('h:i a') }}"
-                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ; @endphp
+                                        @php $occasionHolder='' ; $paymentPlansHolder='' ; $imagesHolder='' ;$adOns =''; $features=''; $conditions=''; @endphp
                                         @if ($service->images) @foreach ($service->images as $image)
                                         @php $imagesHolder .= $image->image ? asset($image->image).',' : ''; @endphp
                                         @endforeach @endif
@@ -504,6 +557,24 @@
                                         data-active="{{ $service->active }}"
                                         data-price="{{ $service->price }}"
                                         data-duration="{{ $service->duration ?? 0 }}"
+                                        @if ($service->adOns)
+                                        @foreach ($service->adOns as $adOn)
+                                        @php $adOns .= $adOn->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-adOns="{{$adOns}}"
+                                        @if ($service->features)
+                                        @foreach ($service->features as $feature)
+                                        @php $features .= $feature->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-features="{{$features}}"
+                                        @if ($service->conditions)
+                                        @foreach ($service->conditions as $condition)
+                                        @php $conditions .= $condition->name . ', '; @endphp
+                                        @endforeach
+                                        @endif
+                                        data-conditions="{{$conditions}}"
                                         >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -865,6 +936,15 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="d-flex flex-column bd-highlight mb-3">
+                            <div class="p-2 bd-highlight">Service AdOns</div>
+                            <div class="p-2 bd-highlight ">
+                                <div class="d-flex flex-row bd-highlight mb-3 service-adOns">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="d-flex">
                             <div class="mr-auto p-2 w-100">
                                 <button class="btn btn-warning edit-trigger-display" id="edit-service-btn"
@@ -1090,6 +1170,9 @@
         let serviceStatus = $(this).closest('tr').attr('data-active')
         let servicePrice = +$(this).closest('tr').attr('data-price');
         let serviceTimed = +$(this).closest('tr').attr('data-duration');
+        let serviceAdOns = $(this).closest('tr').attr('data-adOns');
+        let serviceFeatures = $(this).closest('tr').attr('data-features');
+        let serviceConditions = $(this).closest('tr').attr('data-conditions');
         $('#service-no-of-orders').text(totalOrders);
         let id = $(this).closest('tr').attr('data-id');
         $.ajax({
@@ -1171,6 +1254,9 @@
         $('.rating-total').text(rating.toFixed(1))
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
         $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
+        $('.service-adOns').text(serviceAdOns);
+        $('.service-features').text(serviceFeatures);
+        $('.service-conditions').text(serviceConditions);
         $('#service-ratings-1, #service-ratings-2, #service-ratings-3, #service-ratings-4, #service-ratings-5')
             .removeClass('checked');
         if (rating >= 1) {
