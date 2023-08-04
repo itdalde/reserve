@@ -92,6 +92,11 @@ class SchedulesController extends Controller
                 ];
                 $date->addDays(1);
             }
+        } else if ($request->type == 4) {
+            AvailableDates::where('company_id', auth()->user()->company->id)
+            ->where('service_id', $request->service_id)
+            ->whereBetween('date', [$start->format('d/m/Y'), $end->format('d/m/Y')])
+            ->delete();
         } else if ($request->date) {
             $existingDate = AvailableDates::where('company_id', auth()->user()->company->id)->where('date', $request->date)->where('service_id', $request->service_id)->first();
             if ($existingDate) {
@@ -111,7 +116,8 @@ class SchedulesController extends Controller
             $response = $this->fetchData($request->service_id,$startFormatted,$endFormatted);
             return response()->json($response);
         }
-        AvailableDates::where('company_id', auth()->user()->company->id)->where('service_id', $request->service_id)->delete();
+
+        // AvailableDates::whereBetween('date', [$start->format('d/m/Y'), $end->format('d/m/Y')])->where('company_id', auth()->user()->company->id)->where('service_id', $request->service_id)->get();
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->where('id', $request->service_id)->orderBy('id', 'DESC')->get();
         foreach ($services as $service) {
             foreach ($dates as $date) {

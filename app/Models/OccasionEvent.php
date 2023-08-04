@@ -93,7 +93,7 @@ class OccasionEvent extends Model
 
 
     public function features() {
-        return $this->hasMany(Feature::class, 'services_id', 'id');
+        return $this->hasMany(Feature::class, 'service_id', 'id');
     }
 
     public function conditions() {
