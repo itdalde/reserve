@@ -1254,9 +1254,40 @@
         $('.rating-total').text(rating.toFixed(1))
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
         $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
-        $('.service-adOns').text(serviceAdOns);
-        $('.service-features').text(serviceFeatures);
-        $('.service-conditions').text(serviceConditions);
+        // $('.service-adOns').text(serviceAdOns);
+
+        var feat = serviceFeatures.split(', ');
+        let featureUl = $('<ul>');
+            $.each(feat, function (index, value) {
+                if (value) {
+                    $('<li>').text(value).appendTo(featureUl)
+                }
+            });
+            featureUl.appendTo('.service-features');
+
+        var cond = serviceConditions.split(', ');
+
+        let conditionUl = $('<ul>');
+            $.each(cond, function (index, value) {
+                if (value) {
+                    $('<li>').text(value).appendTo(conditionUl)
+                }
+            });
+            conditionUl.appendTo('.service-conditions');
+
+        var adO = serviceAdOns.split(', ');
+        let servAdOn = $('<ul>');
+        $.each(adO, function (index, value) {
+            if (value) {
+                $('<li>').text(value).appendTo(servAdOn)
+            }
+        });
+        servAdOn.appendTo('.service-adOns');
+
+
+
+        // $('.service-features').text(serviceFeatures);
+        // $('.service-conditions').text(serviceConditions);
         $('#service-ratings-1, #service-ratings-2, #service-ratings-3, #service-ratings-4, #service-ratings-5')
             .removeClass('checked');
         if (rating >= 1) {
