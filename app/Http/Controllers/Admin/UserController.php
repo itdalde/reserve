@@ -6,6 +6,7 @@ use App\Models\Auth\Role\Role;
 use App\Models\Auth\User\User;
 use App\Models\Company;
 use App\Models\Occasion;
+use App\Models\OccasionEvent;
 use App\Models\OccasionServiceTypePivot;
 use App\Models\OrderSplit;
 use App\Models\ServiceType;
@@ -226,6 +227,11 @@ class UserController extends Controller
     public function removeUser(Request $request)
     {
         User::where('id', $request->id)->delete();
+        $company = Company::where('user_id', $request->id)->first();
+        if($company) {
+            OccasionEvent::where('company_id', $company->id)->delete();
+            $company->delete();
+        }
         return redirect()->back()->with('success', 'Removed Successfully');
     }
 

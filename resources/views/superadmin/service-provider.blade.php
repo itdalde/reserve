@@ -10,6 +10,7 @@
                     <th scope="col">Company</th>
                     <th scope="col">Sale</th>
                     <th scope="col">Location</th>
+                    <th scope="col">Service Type</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -17,30 +18,31 @@
 
                 @foreach($users as $user)
                     @if((!$user->hasRole('superadmin')))
-                        <tr>
+                        <tr style="background-color: {{$user->company->serviceType ? '' : '#f9e7ea;'}}">
                             <td>{{$user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email}}</td>
                             <td>{{$user->company->name }}</td>
                             <td>QAD {{number_format($user->total,2)}}</td>
                             <td>{{$user->location }}</td>
+                            <td>{{$user->company->serviceType ? $user->company->serviceType->name : ''}}</td>
                             <td>
                                 <div class="d-flex justify-content-between">
                                     <div style="    padding-top: 6px!important;">
 
                                         @if($user->confirmed != 1)
-                                            <a href="{{route('users.approve-user',['id' => $user->id])}}" onclick="return confirm('Are you sure want to confirm this user?')">
+                                            <a title="Confirm" href="{{route('users.approve-user',['id' => $user->id])}}" onclick="return confirm('Are you sure want to confirm this user?')">
                                                 <i class="bi bi-check-circle"></i>
                                             </a>
                                         @endif
                                     </div>
                                     <div class="p-1">
 
-                                        <a href="{{route('users.view-user',['id' => $user->id])}}">
+                                        <a title="View" href="{{route('users.view-user',['id' => $user->id])}}">
                                             <img src="{{asset('assets/images/icons/preview.png')}}" alt="..">
                                         </a>
                                     </div>
                                     <div class="p-1">
 
-                                        <a href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
+                                        <a  title="Delete" href="{{route('users.delete-user',['id' => $user->id])}}"  onclick="return confirm('Are you sure want to delete this user?')">
                                             <img src="{{asset('assets/images/icons/remove.png')}}" alt="..">
                                         </a>
                                     </div>

@@ -132,7 +132,7 @@
                         Occassions/services
                     </a>
                 </li>
-                <li class="nav-item py-2">
+                <li class="nav-item py-2 d-none">
                     <a class="nav-link {{ Request::is('order-assignment*') ? ' active' : '' }}"
                         href="{{ route('order-assignment') }}">
                         <img class="ml-15px "
