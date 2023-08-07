@@ -185,7 +185,8 @@ class ServiceController extends Controller
     public function create()
     {
         //
-        return view('admin.services.create');
+        $hasServiceType  = auth()->user()->company && auth()->user()->company->service_type_id ? true : false;
+        return view('admin.services.create',compact('hasServiceType'));
     }
 
     /**

@@ -16,6 +16,7 @@
                 <h5 class="card-title page-title label-color">Create a new service </h5>
             </div>
 
+            @if($hasServiceType)
             <form action="{{ route('services.store') }}" method="post" enctype="multipart/form-data" id="create-service"
                 style="margin-top: -20px;">
                 @csrf
@@ -297,7 +298,35 @@
                     <!--./End Available packages and payment plan -->
                 </div>
             </form>
+            @else
+            <div class="modal fade" id="help-go-to-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="help-go-to-modalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="help-go-to-modalLabel"><i
+                                    class="bi bi-info-circle icon-info text-warning"></i>&nbsp;&nbsp; Not Assigned</h5>
 
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-3 align-items-center mb-3">
+                                <h5>Please contact Administrator!.</h5>
+                                <p>Your company is not yet assigned to a service.</p>
+                                <p>WhatsApp us:</p>
+
+                                <p>   +974-74477814</p>
+
+                                <p>  Do not share number with customers this is only for vendors.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/services" class="btn btn-warning">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
@@ -306,7 +335,9 @@
 @section('content_javascript')
 <script type="text/javascript">
     $(document).ready(function () {
-
+        @if(!$hasServiceType)
+            $('#help-go-to-modal').modal('show')
+        @endif
         $('.pricing_type').on('click', function () {
             var checkboxes = $('.pricing_type');
             checkboxes.not(this).prop('checked', false);
