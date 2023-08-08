@@ -15,7 +15,6 @@
                 @endif
                 <h5 class="card-title page-title label-color">Create a new service </h5>
             </div>
-
             @if($hasServiceType)
             <form action="{{ route('services.store') }}" method="post" enctype="multipart/form-data" id="create-service"
                 style="margin-top: -20px;">
@@ -329,6 +328,31 @@
             @endif
         </div>
     </div>
+
+
+    <div class="modal fade" id="create-service-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="create-service-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel"><i
+                            class="bi bi-info-circle icon-info text-warning"></i>&nbsp;&nbsp; No service assigned</h5>
+
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 align-items-center mb-3">
+                        <h5>No service assigned. Please contact the administrator.</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="/services" class="btn btn-warning text-white">Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 @endsection
 
@@ -338,6 +362,7 @@
         @if(!$hasServiceType)
             $('#help-go-to-modal').modal('show')
         @endif
+
         $('.pricing_type').on('click', function () {
             var checkboxes = $('.pricing_type');
             checkboxes.not(this).prop('checked', false);
