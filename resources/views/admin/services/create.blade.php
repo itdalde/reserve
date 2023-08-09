@@ -310,17 +310,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="row g-3 align-items-center mb-3">
-                                <h5>Please contact Administrator!.</h5>
-                                <p>Your company is not yet assigned to a service.</p>
-                                <p>WhatsApp us:</p>
-
-                                <p>   +974-74477814</p>
-
-                                <p>  Do not share number with customers this is only for vendors.</p>
+                                <h5 class="fs-3">Please contact administrator!</h5>
+                                <p class="field-label label-color mb-0">Your company is not yet assigned to a service.</p>
+                                <p class="field-label label-color mb-0">WhatsApp us: <span class="fs-5 fw-semibold">+974-74477814</span></p>
+                                <p class="field-label label-color fs-5"><i
+                                    class="bi bi-info-lg icon-info"></i>&nbsp;Do not share number with customers this is only for vendors.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="/services" class="btn btn-warning">Back</a>
+                            <a href="/services" class="btn btn-warning text-white">Back</a>
                         </div>
                     </div>
                 </div>
@@ -328,31 +326,6 @@
             @endif
         </div>
     </div>
-
-
-    <div class="modal fade" id="create-service-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="create-service-modalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel"><i
-                            class="bi bi-info-circle icon-info text-warning"></i>&nbsp;&nbsp; No service assigned</h5>
-
-                </div>
-                <div class="modal-body">
-                    <div class="row g-3 align-items-center mb-3">
-                        <h5>No service assigned. Please contact the administrator.</h5>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="/services" class="btn btn-warning text-white">Back</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 </div>
 @endsection
 
