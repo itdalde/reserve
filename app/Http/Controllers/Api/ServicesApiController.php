@@ -181,7 +181,8 @@ class ServicesApiController extends Controller
                         'ratings',
                         'gallery',
                         'availabilities',
-                        'company'
+                        'company',
+                        'adOns'
                     )
                     ->where('active', 1)
                     ->get()

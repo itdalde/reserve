@@ -44,7 +44,8 @@ class ServiceTypesApiController extends Controller
                     'ratings',
                     'gallery',
                     'availabilities',
-                    'company'
+                    'company',
+                    'adOns'
                 )
                 ->get(['services.*'])
                 ->toArray();
@@ -73,7 +74,8 @@ class ServiceTypesApiController extends Controller
                     'ratings',
                     'gallery',
                     'availabilities',
-                    'company'
+                    'company',
+                    'adOns'
                 )
                 ->get()
                 ->toArray();
@@ -186,7 +188,8 @@ class ServiceTypesApiController extends Controller
                 'ratings',
                 'gallery',
                 'availabilities',
-                'company'
+                'company',
+                'adOns'
             );
         $data = $request->all();
         if (isset($data['from']) && isset($data['to'])) {
