@@ -15,7 +15,6 @@
                 @endif
                 <h5 class="card-title page-title label-color">Create a new service </h5>
             </div>
-
             @if($hasServiceType)
             <form action="{{ route('services.store') }}" method="post" enctype="multipart/form-data" id="create-service"
                 style="margin-top: -20px;">
@@ -311,17 +310,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="row g-3 align-items-center mb-3">
-                                <h5>Please contact Administrator!.</h5>
-                                <p>Your company is not yet assigned to a service.</p>
-                                <p>WhatsApp us:</p>
-
-                                <p>   +974-74477814</p>
-
-                                <p>  Do not share number with customers this is only for vendors.</p>
+                                <h5 class="fs-3">Please contact administrator!</h5>
+                                <p class="field-label label-color mb-0">Your company is not yet assigned to a service.</p>
+                                <p class="field-label label-color mb-0">WhatsApp us: <span class="fs-5 fw-semibold">+974-74477814</span></p>
+                                <p class="field-label label-color fs-5"><i
+                                    class="bi bi-info-lg icon-info"></i>&nbsp;Do not share number with customers this is only for vendors.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="/services" class="btn btn-warning">Back</a>
+                            <a href="/services" class="btn btn-warning text-white">Back</a>
                         </div>
                     </div>
                 </div>
@@ -338,6 +335,7 @@
         @if(!$hasServiceType)
             $('#help-go-to-modal').modal('show')
         @endif
+
         $('.pricing_type').on('click', function () {
             var checkboxes = $('.pricing_type');
             checkboxes.not(this).prop('checked', false);
