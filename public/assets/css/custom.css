@@ -119,6 +119,12 @@
     width: 200px;
 }
 
+.service-image-gallery {
+    width: 180px;
+    height: 150px;
+    object-fit: cover;
+}
+
 #overlay {
     position: fixed;
     display: none;

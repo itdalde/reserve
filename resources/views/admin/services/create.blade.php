@@ -13,9 +13,17 @@
                     {{ session('message') }}
                 </div>
                 @endif
-                <h5 class="card-title page-title label-color">Create a new service </h5>
+                <div class="d-flex justify-content-between flex-wrap w-100">
+                    <h5 class="card-title page-title label-color">Create a new service </h5>
+                    <div class="d-flex flex-wrap">
+                        <p>En&nbsp;&nbsp;</p>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="toggleSwitch">
+                        </div>
+                        <p>Ar</p>
+                    </div>
+                </div>
             </div>
-
             @if($hasServiceType)
             <form action="{{ route('services.store') }}" method="post" enctype="multipart/form-data" id="create-service"
                 style="margin-top: -20px;">
@@ -62,10 +70,6 @@
                                 <option value="2">Service 2</option>
                                 <option value="3">Service 3</option>
                             </select>
-                            <!-- <input type="hidden" name="service_type"
-                    value="{{ Auth::user() && Auth::user()->company && Auth::user()->company->service_type_id ? Auth::user()->company->service_type_id : 1 }}">
-                  <input type="text" class="form-control" readonly
-                    value="{{ Auth::user() && Auth::user()->company && Auth::user()->company->serviceType ? Auth::user()->company->serviceType->name : 'Service' }}"> -->
                         </div>
                     </div>
                     @endif
@@ -85,21 +89,12 @@
                             <label for="service-images" class="form-label field-label label-color">Service
                                 Images&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="d-flex">
-                                <div class="d-flex justify-content-between flex-wrap">
-                                    <a href="#" class="service-image-holder">
-                                        <img width="80" id="service-image-view"
-                                            src="{{ asset('assets/images/icons/image-select.png') }}"
-                                            alt="image-select">
-                                    </a>
-                                </div>
-
-                                <!-- <div class="d-flex justify-content-between service-image-gallery-holder  flex-wrap"></div>
-                    <input id="service-image-gallery-file" accept="image/png, image/gif, image/jpeg" type="file" class=""
-                      name="images[]" multiple> -->
-
-                                <button type="button" id="" class="btn btn-orange action-button"><img
-                                        src="{{ asset('assets/images/icons/add.png') }}" alt="add.png"> Add
+                                <div id="service-image-gallery-holder1" class="d-flex justify-content-between service-image-gallery-holder1  flex-wrap"></div>
+                                <button type="button" id="add-gallery-data-btn" class="btn btn-orange action-button"><img
+                                    src="{{ asset('assets/images/icons/add.png') }}" alt="add.png"> Add
                                 </button>
+                                <input name="images[]" id="add-gallery-data-file" accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
+                                class="d-none">
                             </div>
                         </div>
 
@@ -311,17 +306,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="row g-3 align-items-center mb-3">
-                                <h5>Please contact Administrator!.</h5>
-                                <p>Your company is not yet assigned to a service.</p>
-                                <p>WhatsApp us:</p>
-
-                                <p>   +974-74477814</p>
-
-                                <p>  Do not share number with customers this is only for vendors.</p>
+                                <h5 class="fs-3">Please contact administrator!</h5>
+                                <p class="field-label label-color mb-0">Your company is not yet assigned to a service.</p>
+                                <p class="field-label label-color mb-0">WhatsApp us: <span class="fs-5 fw-semibold">+974-74477814</span></p>
+                                <p class="field-label label-color fs-5"><i
+                                    class="bi bi-info-lg icon-info"></i>&nbsp;Do not share number with customers this is only for vendors.</p>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="/services" class="btn btn-warning">Back</a>
+                            <a href="/services" class="btn btn-warning text-white">Back</a>
                         </div>
                     </div>
                 </div>
@@ -338,6 +331,7 @@
         @if(!$hasServiceType)
             $('#help-go-to-modal').modal('show')
         @endif
+
         $('.pricing_type').on('click', function () {
             var checkboxes = $('.pricing_type');
             checkboxes.not(this).prop('checked', false);
@@ -357,6 +351,45 @@
             var field = $('.guests_field');
             field.prop('disabled', !field.prop('disabled'));
         })
+
+        $('#add-gallery-data-btn').on('click', function() {
+            $('#add-gallery-data-file').click()
+        })
+
+        const imageContainer = document.getElementById("service-image-gallery-holder1");
+        $('body').on('change', '#add-gallery-data-file', function() {
+            $('.new-added-mg-temp').remove();
+            var files = this.files;
+            for (let i = 0; i < files.length; i++) {
+                renderImage(files[i]);
+            }
+        })
+        function renderImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+
+                // In-progress
+                // const imgContainer = document.createElement("div");
+                // imgContainer.classList.add("image-container");
+
+                const img = document.createElement("img");
+                img.src = event.target.result;
+                img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
+                imageContainer.appendChild(img);
+
+
+                // // remove button
+                // const removeButton = document.createElement("button");
+                // removeButton.textContent = "Remove";
+                // removeButton.classList.add("remove-button");
+                // removeButton.addEventListener("click", function() {
+                //     imgContainer.remove();
+                // });
+                // imgContainer.appendChild(removeButton);
+                // imageContainer.appendChild(imgContainer);
+            };
+            reader.readAsDataURL(file);
+        }
 
         $('#add-feature-data-btn').on('click', function() {
             var newField = `

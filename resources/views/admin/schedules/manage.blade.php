@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="/services/create" class="btn btn-warning">Create Service</a>
+                                        <a href="/services/create" class="btn btn-warning text-white">Create Service</a>
                                     </div>
                                 </div>
                             </div>

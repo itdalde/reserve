@@ -99,7 +99,7 @@ class SchedulesController extends Controller
         } else if ($request->type == 4) {
             AvailableDates::where('company_id', auth()->user()->company->id)
             ->where('service_id', $request->service_id)
-            ->whereBetween('date', [$start->format('d/m/Y'), $end->format('d/m/Y')])
+            ->whereBetween('date_obj', [$start->format('Y-m-d'), $end->format('Y-m-d')])
             ->delete();
         } else if ($request->date) {
             $existingDate = AvailableDates::where('company_id', auth()->user()->company->id)->where('date', $request->date)->where('service_id', $request->service_id)->first();

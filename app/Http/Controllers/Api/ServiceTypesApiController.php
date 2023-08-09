@@ -13,6 +13,7 @@ use App\Models\OccasionEvent;
 use App\Models\OccasionEventsPivot;
 use App\Models\OccasionServiceTypePivot;
 use App\Models\ServiceType;
+use App\Models\OccasionEventAddon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -119,6 +120,7 @@ class ServiceTypesApiController extends Controller
                             $services[$i]['conditions'] = Condition::where('service_id', $service['id'])
                                 ->get()
                                 ->toArray();
+                            $services[$i]['adOns'] = OccasionEventAddon::where('occasion_event_id', $service['id'])->get()->toArray();
                             $services[$i]['availabilities'] = $availabilities;
                             $services[$i]['service_type'] = $serviceType;
                             $providers[$key]['services'][] = $services[$i] ;
@@ -220,6 +222,9 @@ class ServiceTypesApiController extends Controller
                         ->get()
                         ->toArray();
                     $providers[$k]['services'][$key]['conditions'] = Condition::where('service_id', $service['id'])
+                        ->get()
+                        ->toArray();
+                    $providers[$k]['services'][$key]['adOns'] = Condition::where('occasion_event_id', $service['id'])
                         ->get()
                         ->toArray();
                     $availableDateObj = AvailableDates::where('service_id', $service['id'])
