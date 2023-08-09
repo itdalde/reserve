@@ -727,7 +727,7 @@
                     </div>
                     <div class="preview-holder">
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Service Type</div>
+                            <div class="p-2 bd-highlight fw-bold">Service Type</div>
                             <div class="p-2 bd-highlight ">
                                 <span type="text" readonly
                                     class="form-control-plaintext service-type badge bg-secondary w-25"></span>
@@ -758,7 +758,7 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Description</div>
+                            <div class="p-2 bd-highlight fw-bold">Description</div>
                             <span dir="auto" class="p-2 bd-highlight service-description edit-trigger-display"></span>
 
                             <div class="mb-3 row edit-trigger-show d-none">
@@ -775,7 +775,7 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Images</div>
+                            <div class="p-2 bd-highlight fw-bold">Images</div>
                             <div class="p-2 bd-highlight">
                                 <div class="container">
                                     <div class="row service-images">
@@ -792,7 +792,7 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Details</div>
+                            <div class="p-2 bd-highlight fw-bold">Details</div>
                             <div class="p-2 bd-highlight edit-trigger-display">
                                 <div class="d-flex flex-row bd-highlight mb-3">
                                     <div class="p-2 bd-highlight">
@@ -902,43 +902,47 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Price</div>
+                            <div class="p-2 bd-highlight fw-bold">Price</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-price">
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Pricing Type</div>
+                            <div class="p-2 bd-highlight fw-bold">Pricing Type</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-available-payment-plans">
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Service Timed</div>
+                            <div class="p-2 bd-highlight fw-bold">Service Timed</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-timed">
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Features</div>
+                            <div class="p-2 bd-highlight fw-bold">Features</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-features">
                                 </div>
                             </div>
                         </div>
+                        <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Conditions</div>
+                            <div class="p-2 bd-highlight fw-bold">Conditions</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-conditions">
                                 </div>
                             </div>
                         </div>
-
+                        <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight">Service AdOns</div>
+                            <div class="p-2 bd-highlight fw-bold">Service AdOns</div>
                             <div class="p-2 bd-highlight ">
                                 <div class="d-flex flex-row bd-highlight mb-3 service-adOns">
                                 </div>
@@ -947,15 +951,15 @@
 
                         <div class="d-flex">
                             <div class="mr-auto p-2 w-100">
-                                <button class="btn btn-warning edit-trigger-display" id="edit-service-btn"
+                                <button class="btn btn-warning edit-trigger-display text-white" id="edit-service-btn"
                                     type="button">Edit
                                 </button>
-                                <button class="btn  d-none edit-trigger-show" id="edit-service-cancel-btn"
+                                <button class="btn  d-none edit-trigger-show text-white" id="edit-service-cancel-btn"
                                     type="button">Cancel
                                 </button>
                             </div>
                             <div class="p-2">
-                                <button class="btn btn-warning d-none edit-trigger-show" type="submit">Save
+                                <button class="btn btn-warning d-none edit-trigger-show text-white" type="submit">Save
                                 </button>
                             </div>
                         </div>
@@ -1255,34 +1259,41 @@
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
         $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
         // $('.service-adOns').text(serviceAdOns);
-
-        var feat = serviceFeatures.split(', ');
-        let featureUl = $('<ul>');
+        $('.fcs-listing').remove();
+        if (serviceFeatures) {
+            var feat = serviceFeatures.split(', ');
+            let featureUl = $('<ul class="fcs-listing">');
             $.each(feat, function (index, value) {
                 if (value) {
-                    $('<li>').text(value).appendTo(featureUl)
+                    $('<li>').html('<span class="bi bi-arrow-right-circle"></span> ' + value).appendTo(featureUl)
                 }
             });
             featureUl.appendTo('.service-features');
+        }
 
-        var cond = serviceConditions.split(', ');
 
-        let conditionUl = $('<ul>');
+        if (serviceConditions) {
+            var cond = serviceConditions.split(', ');
+            let conditionUl = $('<ul class="fcs-listing">');
             $.each(cond, function (index, value) {
                 if (value) {
-                    $('<li>').text(value).appendTo(conditionUl)
+                    $('<li>').html('<span class="bi bi-arrow-right-circle"></span> ' + value).appendTo(conditionUl)
                 }
             });
             conditionUl.appendTo('.service-conditions');
+        }
+        
+        if (serviceAdOns) {
+            var adO = serviceAdOns.split(', ');
+            let servAdOn = $('<ul class="fcs-listing">');
+            $.each(adO, function (index, value) {
+                if (value) {
+                    $('<li>').html('<span class="bi bi-arrow-right-circle"></span> ' + value).appendTo(servAdOn)
+                } 
+            });
+            servAdOn.appendTo('.service-adOns');
+        }
 
-        var adO = serviceAdOns.split(', ');
-        let servAdOn = $('<ul>');
-        $.each(adO, function (index, value) {
-            if (value) {
-                $('<li>').text(value).appendTo(servAdOn)
-            }
-        });
-        servAdOn.appendTo('.service-adOns');
 
 
 
