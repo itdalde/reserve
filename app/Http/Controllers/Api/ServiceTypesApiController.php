@@ -13,6 +13,7 @@ use App\Models\OccasionEvent;
 use App\Models\OccasionEventsPivot;
 use App\Models\OccasionServiceTypePivot;
 use App\Models\ServiceType;
+use App\Models\OccasionEventAddon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
