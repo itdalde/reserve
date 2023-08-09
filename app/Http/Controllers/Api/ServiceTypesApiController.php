@@ -51,8 +51,13 @@ class ServiceTypesApiController extends Controller
                 ->get(['services.*'])
                 ->toArray();
 
-            $serviceTypeIds = array_unique(array_column($services, 'service_type'));
+            $serviceTypeIds = [];
+            foreach ($services as $service) {
+                if(!in_array($service['service_type']['id'], $serviceTypeIds)) {
+                    $serviceTypeIds[] = $service['service_type']['id'];
+                }
 
+            }
             if ($serviceTypeIds) {
                 $serviceTypes = ServiceType::where('active', 1)
                     ->whereIn('id', $serviceTypeIds)
