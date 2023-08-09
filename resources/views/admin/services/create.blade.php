@@ -16,11 +16,11 @@
                 <div class="d-flex justify-content-between flex-wrap w-100">
                     <h5 class="card-title page-title label-color">Create a new service </h5>
                     <div class="d-flex flex-wrap">
-                        <p>English&nbsp;&nbsp;</p>
+                        <p>En&nbsp;&nbsp;</p>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="toggleSwitch">
                         </div>
-                        <p>Arabic</p>
+                        <p>Ar</p>
                     </div>
                 </div>
             </div>
