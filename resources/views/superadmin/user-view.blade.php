@@ -60,15 +60,22 @@
                                 <div class="p-2 bd-highlight">
                                     <div class="d-flex justify-content-between">
                                         <div class="p-0">
-                                            @if ($user->profile_picture)
-                                                <img width="35" class="rounded-circle"
-                                                    src="{{ asset($user->profile_picture) }}" alt="...." />
-                                            @else
-                                                <img width="35" class="rounded-circle"
-                                                    src="https://ui-avatars.com/api/?name={{ $user->first_name ? $user->first_name : $user->email }}"
-                                                    alt="...">
-                                            @endif
-                                            <span class="fs-4 fw-bolder">{{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->email }}</span>
+                                            <div class="d-flex">
+                                                <div class="">
+                                                    @if ($user->profile_picture)
+                                                    <img width="50" class="rounded-circle"
+                                                        src="{{ asset($user->profile_picture) }}" alt="...." />
+                                                    @else
+                                                        <img width="50" class="rounded-circle"
+                                                            src="https://ui-avatars.com/api/?name={{ $user->first_name ? $user->first_name : $user->email }}"
+                                                            alt="...">
+                                                    @endif
+                                                </div>
+                                                <div class="ms-3" style="margin-top: -3px;">
+                                                    <p class="fs-4 fw-bolder mb-0">{{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->full_name }}</p>
+                                                    <p class="fs-4 fw-bolder mt-0">{{ $user->email }}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="p-0">
                                             <span class="status-field p-2 me-4 badge bg-secondary text-dark">
@@ -145,36 +152,25 @@
                                             <div class="p-2 bd-highlight border borde-2 rounded">
                                                 <h4 class="fw-bolder text-secondary mb-5">Customer Profile</h4>
                                                 <div class="">
+                                                    @if ($user->first_name == '' || $user->last_name == '') 
+                                                    <p class="fs-5 fw-bolder mb-2">Full Name: <em class="fs-5 fw-normal">{{ $user->full_name ?? 'not specified' }}</em></p>
+                                                    @else
                                                     <p class="fs-5 fw-bolder mb-2">First Name: <em class="fs-5 fw-normal">{{ $user->first_name ?? 'not specified' }}</em></p>
                                                     <p class="fs-5 fw-bolder mb-2">Last Name: <em class="fs-5 fw-normal">{{ $user->last_name ?? 'not specified' }}</em></p>
+                                                    @endif
+                                                    
                                                     <p class="fs-5 fw-bolder mb-2">Gender: <em class="fs-5 fw-normal">{{ $user->gender ?? 'not specified' }}</em></p>
                                                     <p class="fs-5 fw-bolder mb-2">Birth Date: <em class="fs-5 fw-normal">{{ $user->birth_date ?? 'not specified' }}</em></p>
                                                     <p class="fs-5 fw-bolder mb-2">Email: <em class="fs-5 fw-normal ms-3"><img src="{{ asset('assets/images/icons/email-profile.png') }}"
                                                         alt="email-profile" style="width: 15px;"> {{ $user->email ?? 'not specified' }}</em></p>
                                                     <p class="fs-5 fw-bolder mb-2">Contact #: <em class="fs-5 fw-normal ms-3"><img src="{{ asset('assets/images/icons/phone-profile.png') }}"
                                                         alt="phone-profile" style="width: 15px;">{{ $user->phone_number ?? 'not specified' }}</em></p>
-                                                    <p class="fs-5 fw-bolder mb-2">Position: <em class="fs-5 fw-normal ms-3">{{ $user->positino ?? 'not specified' }}</em></p>
-                                                </div>
-                                            </div>
+                                                    <p class="fs-5 fw-bolder mb-2">Position: <em class="fs-5 fw-normal ms-3">{{ $user->position ?? 'not specified' }}</em></p>
+                                                    <hr />
+                                                    <p class="fs-5 fw-bolder mb-2">Default Address: <em class="fs-5 fw-normal ms-2">{{ $user->location ?? 'not specified' }}</em></p>
+                                                    <p class="fs-5 fw-bolder mb-2">Billing Address: <em class="fs-5 fw-normal ms-2">{{ $user->location ?? 'not specified' }}</em></p>
 
-                                            <hr />
-                                            <div class="p-2 bd-highlight">
-                                                <h5 class="fw-bold text-secondary">Default Address</h5>
-                                                <p class="text-dark fs-5">
-                                                    {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->full_name }}
-                                                </p>
-                                                <p class="m-0">{{ $user->phone_number }}</p>
-                                                <p class="m-0">{{ $user->location }}</p>
-                                                <hr />
-                                            </div>
-                                            <div class="p-2 bd-highlight">
-                                                <h5 class="fw-bold text-secondary">Billing Address</h5>
-                                                <p class="text-dark fs-5">
-                                                    {{ $user->first_name ? $user->first_name . ' ' . $user->last_name : $user->full_name }}
-                                                </p>
-                                                <p class="m-0">{{ $user->phone_number }}</p>
-                                                <p class="m-0">{{ $user->location }}</p>
-                                                <hr />
+                                                </div>
                                             </div>
                                             <div class="p-2 bd-highlight d-none">
                                                 <h5 class="fw-bold text-secondary pb-2">Card Details</h5>

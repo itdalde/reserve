@@ -390,7 +390,7 @@
         $('#add-feature-data-btn').on('click', function() {
             var newField = `
                 <div class="d-flex mb-2 form-field">
-                    <input class="form-control" type="text" id="feature" name="feature[]" placeholder="Enter service features" value="">
+                    <input class="form-control form-control-sm" type="text" id="feature" name="feature[]" placeholder="Enter service features" value="">
                     <button type="button" class="btn remove-btn">
                         <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-feature" />
                     </button>
@@ -402,7 +402,7 @@
         $('#add-condition-data-btn').on('click', function() {
             var newField = `
                 <div class="d-flex mb-2 form-field">
-                    <input class="form-control" type="text" id="condition" name="condition[]" placeholder="Enter service conditions" value="">
+                    <input class="form-control form-control-sm" type="text" id="condition" name="condition[]" placeholder="Enter service conditions" value="">
                     <button type="button" class="btn remove-btn">
                         <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-condition" />
                     </button>
