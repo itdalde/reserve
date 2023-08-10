@@ -233,17 +233,13 @@
                         <div class="add-on-name add-on-div cloneable d-none">
                             <div class="row">
                                 <div class="mb-3">
-                                    <label for="location-name" class="form-label field-label label-color">What is the
-                                        title of the
-                                        addon?</label>
+                                    <label for="location-name" class="form-label field-label label-color">What is the title of the addon?</label>
                                     <input dir="auto" type="text" class="form-control add_on_name border border-danger"
                                         name="add_on_name[]" placeholder="Add-on name">
                                 </div>
                             </div>
                             <div class="row">
-                                <label for="description" class="form-label field-label label-color">What is the price
-                                    of the
-                                    add-on?</label>
+                                <label for="description" class="form-label field-label label-color">What is the price of the add-on?</label>
                                 <div class="col-3">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="price">QAR</span>
@@ -394,7 +390,7 @@
         $('#add-feature-data-btn').on('click', function() {
             var newField = `
                 <div class="d-flex mb-2 form-field">
-                    <input class="form-control" type="text" id="feature" name="feature[]" placeholder="Enter service conditions" value="">
+                    <input class="form-control" type="text" id="feature" name="feature[]" placeholder="Enter service features" value="">
                     <button type="button" class="btn remove-btn">
                         <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-feature" />
                     </button>
@@ -406,7 +402,7 @@
         $('#add-condition-data-btn').on('click', function() {
             var newField = `
                 <div class="d-flex mb-2 form-field">
-                    <input class="form-control" type="text" id="condition" name="condition[]" placeholder="Condition" value="">
+                    <input class="form-control" type="text" id="condition" name="condition[]" placeholder="Enter service conditions" value="">
                     <button type="button" class="btn remove-btn">
                         <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-condition" />
                     </button>
