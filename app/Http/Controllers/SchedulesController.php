@@ -80,21 +80,25 @@ class SchedulesController extends Controller
         $response = [];
         if ($request->type == 1) {
             while ($date <= $end) {
-                if ($date->isFriday() || $date->isSaturday()) {
+                if ($date > Carbon::today()) {
+                    if ($date->isFriday() || $date->isSaturday()) {
+                        $dates[] = [
+                            'old_format' => $date->format('d/m/Y'),
+                            'new_format' => $date->format('Y-m-d')
+                        ];
+                    }
+                }
+                    $date->addDays(1);
+            }
+        } else if ($request->type == 2 || $request->type == 3) {
+            while ($date <= $end) {
+                if ($date > Carbon::today()) {
                     $dates[] = [
                         'old_format' => $date->format('d/m/Y'),
                         'new_format' => $date->format('Y-m-d')
                     ];
                 }
-                $date->addDays(1);
-            }
-        } else if ($request->type == 2 || $request->type == 3) {
-            while ($date <= $end) {
-                $dates[] = [
-                    'old_format' => $date->format('d/m/Y'),
-                    'new_format' => $date->format('Y-m-d')
-                ];
-                $date->addDays(1);
+                    $date->addDays(1);
             }
         } else if ($request->type == 4) {
             AvailableDates::where('company_id', auth()->user()->company->id)
