@@ -37,6 +37,9 @@ class ServiceTypesApiController extends Controller
                 ->where('services.active', 1)
                 ->where('ad.status', 1)
                 ->where('ad.date_obj', '!=', null)
+                ->where(function ($query) {
+                    $query->has('availabilities')->orWhereHas('unavailabilities');
+                })
                 ->whereBetween('ad.date_obj', [$data['from'], $data['to']])->
                 with(
                     'serviceReviews',
@@ -74,14 +77,15 @@ class ServiceTypesApiController extends Controller
 
             $services = OccasionEvent::whereIn('service_type', $serviceTypeIds)
                 ->where('active', 1)
+                ->where(function ($query) {
+                    $query->has('availabilities')->orWhereHas('unavailabilities');
+                })
                 ->with(
                     'serviceReviews',
                     'paymentPlan',
                     'serviceType',
                     'ratings',
                     'gallery',
-                    'availabilities',
-                    'unavailabilities',
                     'company',
                     'adOns'
                 )
@@ -143,8 +147,12 @@ class ServiceTypesApiController extends Controller
                             $services[$i]['availabilities'] = $availabilities;
                             $services[$i]['unavailabilities'] = $unavailabilities;
                             $services[$i]['service_type'] = $serviceType;
-                            $providers[$key]['services'][] = $services[$i] ;
-                            $companies[] = $providers[$key];
+                            if(empty($availabilities) && empty($unavailabilities)) {
+                                unset($services[$i]);
+                            } else {
+                                $providers[$key]['services'][] = $services[$i] ;
+                                $companies[] = $providers[$key];
+                            }
                         }
                     }
                 }
@@ -203,6 +211,9 @@ class ServiceTypesApiController extends Controller
     {
         $serviceTypes = OccasionServiceTypePivot::where('occasion_id', $occasion_type_id)->pluck('service_type_id')->toArray();
         $servicesQuery = OccasionEvent::whereIn('service_type', $serviceTypes)
+            ->where(function ($query) {
+                $query->has('availabilities')->orWhereHas('unavailabilities');
+            })
             ->with(
                 'serviceReviews',
                 'paymentPlan',
@@ -260,17 +271,15 @@ class ServiceTypesApiController extends Controller
                         ->where('status', 2)
                         ->where('date_obj', '<>', null)
                         ->selectRaw('DATE(date_obj) as date')->get()->toArray();
-                    if ($availableDates) {
+                    if (empty($availableDates) && empty($unavailableDates)) {
+                        unset($providers[$k]['services'][$key]);
+                    } else {
                         $providers[$k]['services'][$key]['availabilities'] = array_map(function ($item) {
                             return $item['date'];
                         }, $availableDates);
                         $providers[$k]['services'][$key]['unavailabilities'] = $unavailableDates ? array_map(function ($item) {
                             return $item['date'];
                         }, $unavailableDates) : [];
-                    } else {
-                        if (isset($data['from']) && isset($data['to'])) {
-                            unset($providers[$k]['services'][$key]);
-                        }
                     }
                 } else {
                     unset($providers[$k]['services'][$key]);

@@ -174,6 +174,9 @@ class ServicesApiController extends Controller
                 ->toArray();
             foreach($providers as $k => $provider) {
                 $services = OccasionEvent::where('company_id', $provider['id'])
+                    ->where(function ($query) {
+                        $query->has('availabilities')->orWhereHas('unavailabilities');
+                    })
                     ->with(
                         'serviceReviews',
                         'paymentPlan',
@@ -220,13 +223,21 @@ class ServicesApiController extends Controller
                     $services[$i]['conditions'] = Condition::where('service_id', $service['id'])
                         ->get()
                         ->toArray();
+                    if(empty($availabilities) && empty($unavailabilities)) {
+                        unset($services[$i]);
+                    }
                     $services[$i]['availabilities'] = $availabilities;
                     $services[$i]['unavailabilities'] = $unavailabilities;
                     $services[$i]['service_type'] =  $serviceType;
 
                 }
-                $providers[$k]['services'] = $services;
-                $providers[$k]['base_price'] = (double) $provider['base_price'];
+
+                if($services) {
+                    $providers[$k]['services'] = $services;
+                    $providers[$k]['base_price'] = (double) $provider['base_price'];
+                } else {
+                    unset( $providers[$k] );
+                }
             }
         }
         return sendResponse($providers, 'Get providers by service type');

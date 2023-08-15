@@ -28,7 +28,9 @@ class Company extends Model
             'availabilities',
             'unavailabilities',
             'company'
-        )->where('active', '=', 1);
+        )->where(function ($query) {
+                $query->has('availabilities')->orWhereHas('unavailabilities');
+            })->where('active', '=', 1);
     }
 
     public function tags() {
