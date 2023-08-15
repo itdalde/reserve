@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\AvailabilityApiController;
 use App\Http\Controllers\Api\CartApiController;
 use App\Http\Controllers\Api\CompanyApiController;
 use App\Http\Controllers\Api\LocationApiController;
@@ -263,6 +264,15 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
 
     });
 
+    Route::group(['prefix' => 'availabilities', 'middleware' => ['cors']], function() {
+        Api::post('/check-available-service', [AvailabilityApiController::class, 'checkAvailableServices'])
+            ->addTag('Availabilities')
+            ->addFormDataParameter('from', 'Y-m-d format', true  )
+            ->addFormDataParameter('to', 'Y-m-d format', true  )
+            ->addFormDataParameter('service_id', '', false  )
+            ->setDescription('Get all available service from or to')
+            ->setProduces(['application/json']);
+    });
     Route::group(['prefix' => 'providers', 'middleware' => ['cors']], function() {
         Api::get('/', [CompanyApiController::class, 'getProviders'])
             ->addTag('Providers')
