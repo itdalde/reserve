@@ -18,4 +18,7 @@ class CartItem extends Model
         return $this->hasOne(OccasionEvent::class, 'id', 'service_id')->with('company', 'serviceRate', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery', 'adOns', 'features', 'conditions');
     }
 
+    public function adOns() {
+        return $this->hasMany(CartAdOns::class, 'cart_item_id', 'id');
+    }
 }

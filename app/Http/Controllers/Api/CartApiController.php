@@ -6,9 +6,11 @@ use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
 use App\Models\Cart;
+use App\Models\CartAdOns;
 use App\Models\CartItem;
 use App\Models\OccasionEvent;
 use App\Models\Order;
+use App\Models\OrderAdOns;
 use App\Models\OrderItems;
 use App\Models\OrderSplit;
 use App\Models\PaymentDetails;
@@ -42,7 +44,18 @@ class CartApiController extends Controller
             $cartItem->guests = $item['guests'];
             $cartItem->is_custom = isset($item['is_custom']) ?? 0;
             $cartItem->save();
+            if($item['ad_on_ids']) {
+                foreach($item['ad_on_ids'] as $adOn) {
+                    $cartAdOn = new CartAdOns();
+                    $cartAdOn->service_id = $item['service_id'];
+                    $cartAdOn->cart_id = $cart->id;
+                    $cartAdOn->cart_item_id = $cartItem->id;
+                    $cartAdOn->add_on_id = $adOn;
+                    $cartAdOn->save();
+                }
+            }
         }
+
 
         $cart->total_items = CartItem::where('cart_id', $cart->id)->count();
         $cart->save();
@@ -79,7 +92,7 @@ class CartApiController extends Controller
     public function getUserOrders(Request $request)
     {
 
-        $orders = Order::with('items', 'paymentMethod', 'paymentDetails')
+        $orders = Order::with('items','items.adOns', 'adOns', 'paymentMethod', 'paymentDetails')
             ->where('user_id', $request->user_id)->get();
         return sendResponse($orders, 'User orders');
     }
@@ -199,6 +212,16 @@ class CartApiController extends Controller
 
                 $cartItem->status = 'ordered';
                 $cartItem->save();
+
+                $cartItemAdOn = CartAdOns::where('cart_id', $cartItem->id)->first();
+                if($cartItemAdOn) {
+                    $orderAdOn = new OrderAdOns();
+                    $orderAdOn->service_id = $item['service_id'];
+                    $orderAdOn->order_id = $order->id;
+                    $orderAdOn->order_item_id = $cartItem->id;
+                    $orderAdOn->add_on_id = $cartItemAdOn->add_on_id;
+                    $orderAdOn->save();
+                }
             }
         }
 

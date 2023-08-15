@@ -17,4 +17,8 @@ class OrderItems extends Model
     {
         return $this->hasOne(Order::class, 'id', 'order_id');
     }
+
+    public function adOns() {
+        return $this->hasMany(OrderAdOns::class, 'order_item_id', 'id');
+    }
 }

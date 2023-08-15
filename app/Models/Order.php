@@ -12,7 +12,7 @@ class Order extends Model
     protected $table = 'orders';
 
     public function items() {
-        return $this->hasMany(OrderItems::class)->with('service');
+        return $this->hasMany(OrderItems::class)->with('service','adOns');
     }
 
     public function paymentMethod() {
@@ -36,5 +36,7 @@ class Order extends Model
     public function total_paid() {
         return $this->hasMany(OrderSplit::class, 'order_id', 'id')->where('status', 'paid')->sum('amount');
     }
-
+    public function adOns() {
+        return $this->hasMany(OrderAdOns::class, 'order_id', 'id');
+    }
 }
