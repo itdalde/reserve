@@ -45,6 +45,7 @@ class ServiceTypesApiController extends Controller
                     'ratings',
                     'gallery',
                     'availabilities',
+                    'unavailabilities',
                     'company',
                     'adOns'
                 )
@@ -80,6 +81,7 @@ class ServiceTypesApiController extends Controller
                     'ratings',
                     'gallery',
                     'availabilities',
+                    'unavailabilities',
                     'company',
                     'adOns'
                 )
@@ -110,6 +112,12 @@ class ServiceTypesApiController extends Controller
                                 $availableDateObj->whereBetween('date_obj', [$data['from'], $data['to']]);
                             }
 
+                            $unavailableDates = AvailableDates::where('service_id', $service['id'])
+                                ->where('status', 2)
+                                ->where('date_obj', '<>', null)
+                                ->selectRaw('DATE(date_obj) as date')
+                                ->get()
+                                ->toArray();
                             $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')
                                 ->get()
                                 ->toArray();
@@ -119,6 +127,12 @@ class ServiceTypesApiController extends Controller
                                     return $item['date'];
                                 }, $availableDates);
                             }
+                            $unavailabilities = [];
+                            if ($unavailableDates) {
+                                $unavailabilities = array_map(function ($item) {
+                                    return $item['date'];
+                                }, $unavailableDates);
+                            }
                             $services[$i]['features'] = Feature::where('service_id', $service['id'])
                                 ->get()
                                 ->toArray();
@@ -127,6 +141,7 @@ class ServiceTypesApiController extends Controller
                                 ->toArray();
                             $services[$i]['ad_ons'] = OccasionEventAddon::where('occasion_event_id', $service['id'])->get()->toArray();
                             $services[$i]['availabilities'] = $availabilities;
+                            $services[$i]['unavailabilities'] = $unavailabilities;
                             $services[$i]['service_type'] = $serviceType;
                             $providers[$key]['services'][] = $services[$i] ;
                             $companies[] = $providers[$key];
@@ -195,6 +210,7 @@ class ServiceTypesApiController extends Controller
                 'ratings',
                 'gallery',
                 'availabilities',
+                'unavailabilities',
                 'company',
                 'adOns'
             );
@@ -240,10 +256,17 @@ class ServiceTypesApiController extends Controller
                             ->whereBetween('date_obj', [$data['from'], $data['to']]);
                     }
                     $availableDates = $availableDateObj->selectRaw('DATE(date_obj) as date')->get()->toArray();
+                    $unavailableDates = AvailableDates::where('service_id', $service['id'])
+                        ->where('status', 2)
+                        ->where('date_obj', '<>', null)
+                        ->selectRaw('DATE(date_obj) as date')->get()->toArray();
                     if ($availableDates) {
                         $providers[$k]['services'][$key]['availabilities'] = array_map(function ($item) {
                             return $item['date'];
                         }, $availableDates);
+                        $providers[$k]['services'][$key]['unavailabilities'] = $unavailableDates ? array_map(function ($item) {
+                            return $item['date'];
+                        }, $unavailableDates) : [];
                     } else {
                         if (isset($data['from']) && isset($data['to'])) {
                             unset($providers[$k]['services'][$key]);

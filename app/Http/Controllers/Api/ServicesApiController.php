@@ -181,6 +181,7 @@ class ServicesApiController extends Controller
                         'ratings',
                         'gallery',
                         'availabilities',
+                        'unavailabilities',
                         'company',
                         'adOns'
                     )
@@ -195,11 +196,23 @@ class ServicesApiController extends Controller
                         ->selectRaw('DATE(date_obj) as date')
                         ->get()
                         ->toArray();
+                    $unavailableDates = AvailableDates::where('service_id', $service['id'])
+                        ->where('status', 2)
+                        ->where('date_obj', '<>', null)
+                        ->selectRaw('DATE(date_obj) as date')
+                        ->get()
+                        ->toArray();
                     $availabilities = [];
                     if ($availableDates) {
                         $availabilities = array_map(function ($item) {
                             return $item['date'];
                         }, $availableDates);
+                    }
+                    $unavailabilities = [];
+                    if ($unavailableDates) {
+                        $unavailabilities = array_map(function ($item) {
+                            return $item['date'];
+                        }, $unavailableDates);
                     }
                     $services[$i]['features'] = Feature::where('service_id', $service['id'])
                         ->get()
@@ -208,6 +221,7 @@ class ServicesApiController extends Controller
                         ->get()
                         ->toArray();
                     $services[$i]['availabilities'] = $availabilities;
+                    $services[$i]['unavailabilities'] = $unavailabilities;
                     $services[$i]['service_type'] =  $serviceType;
 
                 }

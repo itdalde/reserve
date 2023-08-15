@@ -26,6 +26,7 @@ class Company extends Model
             'ratings',
             'gallery',
             'availabilities',
+            'unavailabilities',
             'company'
         )->where('active', '=', 1);
     }

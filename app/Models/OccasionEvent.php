@@ -75,9 +75,14 @@ class OccasionEvent extends Model
     }
     public function availabilities() {
         return $this->hasMany(AvailableDates::class, 'service_id', 'id')
+            ->where('status',1)
             ->selectRaw('DATE(date_obj) as date');
     }
-
+    public function unavailabilities() {
+        return $this->hasMany(AvailableDates::class, 'service_id', 'id')
+            ->where('status',2)
+            ->selectRaw('DATE(date_obj) as date');
+    }
     public function paymentPlan()
     {
         return $this->hasOne(OccasionEventPrice::class, 'occasion_event_id', 'id');
