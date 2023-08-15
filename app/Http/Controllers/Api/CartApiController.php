@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Common\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Auth\User\User;
+use App\Models\AvailableDates;
 use App\Models\Cart;
 use App\Models\CartAdOns;
 use App\Models\CartItem;
@@ -34,6 +35,19 @@ class CartApiController extends Controller
         $cart->total_amount = (int)$cart->total_amount + $data['total_amount'];
         $cart->user_id = $request->user_id;
         $cart->save();
+
+        foreach ($data['items'] as $item) {
+            $isStartAvailable = AvailableDates::where('service_id', $item['service_id'])
+                ->whereDate('date_obj', '=', date('Y-m-d', strtotime($item['schedule_start_datetime'])))->first();
+            $isEndAvailable = AvailableDates::where('service_id', $item['service_id'])
+                ->whereDate('date_obj', '=', date('Y-m-d', strtotime($item['schedule_end_datetime'])))->first();
+            if ($isStartAvailable) {
+                return sendError('The schedule_start_datetime is not available', 'Unable on adding to card');
+            }
+            if ($isEndAvailable) {
+                return sendError('The schedule_end_datetime is not available', 'Unable on adding to card');
+            }
+        }
 
         foreach ($data['items'] as $item) {
             $cartItem = new CartItem();
@@ -169,6 +183,19 @@ class CartApiController extends Controller
             }
             if ($event->active == 3) {
                 unset($data['items'][$k]);
+            }
+
+            $cartItem = CartItem::where('cart_id', $request->cart_id)
+                ->where('service_id', $item['service_id'])->where('status', 'active')->first();
+            $isStartAvailable = AvailableDates::where('service_id', $item['service_id'])
+                ->whereDate('date_obj', '=', date('Y-m-d', strtotime($cartItem->schedule_start_datetime)))->first();
+            $isEndAvailable = AvailableDates::where('service_id', $item['service_id'])
+                ->whereDate('date_obj', '=', date('Y-m-d', strtotime($cartItem->schedule_end_datetime)))->first();
+            if ($isStartAvailable) {
+                return sendError('The schedule_start_datetime is not available', 'Unable to place an order');
+            }
+            if ($isEndAvailable) {
+                return sendError('The schedule_end_datetime is not available', 'Unable to place an order');
             }
         }
         if (count($data['items']) == 0) {
