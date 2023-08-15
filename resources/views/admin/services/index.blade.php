@@ -238,6 +238,19 @@
                                         <td width="20%">
                                             <div dir="auto" class="fw-light">Occasion Type</div>
                                             <div class="fs-5 fw-light">
+                                                <p class="mb-0">
+                                                    <span class="badge"
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                            \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
+                                                             }}</span>
+                                                    </p>
+                                                <p class="mb-0">
+                                                <span class="badge"
+                                                    style="background-color: #d9e9ff; color: #48484A;">{{
+                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
+                                                }}</span>
+                                            </p>
+                                             
                                                 @if ($service->occasion)
                                                 @foreach ($service->occasion as $srv)
                                                 <span class="badge"
@@ -364,6 +377,18 @@
                                         <td width="20%">
                                             <div dir="auto" class="fw-light">Occasion Type</div>
                                             <div class="fs-5 fw-light">
+                                                <p class="mb-0">
+                                                    <span class="badge"
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                            \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
+                                                             }}</span>
+                                                    </p>
+                                                <p class="mb-0">
+                                                <span class="badge"
+                                                    style="background-color: #d9e9ff; color: #48484A;">{{
+                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
+                                                }}</span>
+                                            </p>
                                                 @if ($service->occasion)
                                                 @foreach ($service->occasion as $srv)
                                                 <span class="badge"
@@ -490,6 +515,18 @@
                                         <td width="20%">
                                             <div dir="auto" class="fw-light">Occasion Type</div>
                                             <div class="fs-5 fw-light">
+                                                <p class="mb-0">
+                                                    <span class="badge"
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                            \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
+                                                             }}</span>
+                                                    </p>
+                                                <p class="mb-0">
+                                                <span class="badge"
+                                                    style="background-color: #d9e9ff; color: #48484A;">{{
+                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
+                                                }}</span>
+                                            </p>
                                                 @if ($service->occasion)
                                                 @foreach ($service->occasion as $srv)
                                                 <span class="badge"
@@ -614,6 +651,18 @@
                                         <td width="20%">
                                             <div dir="auto" class="fw-light">Occasion Type</div>
                                             <div class="fs-5 fw-light">
+                                                <p class="mb-0">
+                                                    <span class="badge"
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                            \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
+                                                             }}</span>
+                                                    </p>
+                                                <p class="mb-0">
+                                                <span class="badge"
+                                                    style="background-color: #d9e9ff; color: #48484A;">{{
+                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
+                                                }}</span>
+                                            </p>
                                                 @if ($service->occasion)
                                                 @foreach ($service->occasion as $srv)
                                                 <span class="badge"
