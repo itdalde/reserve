@@ -182,21 +182,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
             ->setProduces(['application/json']);
     });
 
-    Route::group(['prefix' => 'promotions', 'middleware' => ['cors']], function() {
-        Api::get('/', [PromotionsApiController::class, 'getPromotionsList'])
-            ->addTag('Promotions')
-            ->setDescription('getPromotionsList')
-            ->setProduces(['application/json']);
-        Api::get('/{promotion_code}', [PromotionsApiController::class, 'getPromotionByCode'])
-            ->addTag('Promotions')
-            ->setDescription('getPromotionByCode')
-            ->setProduces(['application/json']);
-        Api::get('/{user_id}/{promotion_code}', [PromotionsApiController::class, 'getPromotionByUserAndCode'])
-            ->addTag('Promotions')
-            ->setDescription('this is to check if user already used the promotion code')
-            ->setProduces(['application/json']);
-    });
-
     Route::group(['prefix' => 'reviews', 'middleware' => ['cors']], function() {
         Api::get('service/{service_id}', [ServicesApiController::class, 'getReviewsByServiceId'])
             ->addTag('Reviews')
