@@ -104,4 +104,12 @@ class OccasionEvent extends Model
     public function conditions() {
         return $this->hasMany(Condition::class, 'service_id', 'id');
     }
+    public function totalCompletedOrders()
+    {
+        return $this->hasMany(OrderItems::class, 'service_id', 'id')
+            ->selectRaw('service_id, COUNT(id) as total')
+            ->where('status', 'completed')
+            ->groupBy('service_id');
+    }
+
 }

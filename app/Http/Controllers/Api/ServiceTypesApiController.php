@@ -49,6 +49,7 @@ class ServiceTypesApiController extends Controller
                     'gallery',
                     'availabilities',
                     'unavailabilities',
+                    'totalCompletedOrders',
                     'company',
                     'adOns'
                 )
@@ -87,6 +88,7 @@ class ServiceTypesApiController extends Controller
                     'ratings',
                     'gallery',
                     'company',
+                    'totalCompletedOrders',
                     'adOns'
                 )
                 ->get()
@@ -222,6 +224,7 @@ class ServiceTypesApiController extends Controller
                 'gallery',
                 'availabilities',
                 'unavailabilities',
+                'totalCompletedOrders',
                 'company',
                 'adOns'
             );

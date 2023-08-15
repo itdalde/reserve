@@ -27,6 +27,7 @@ class Company extends Model
             'gallery',
             'availabilities',
             'unavailabilities',
+            'totalCompletedOrders',
             'company'
         )->where(function ($query) {
                 $query->has('availabilities')->orWhereHas('unavailabilities');

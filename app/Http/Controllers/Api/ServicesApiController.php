@@ -185,6 +185,7 @@ class ServicesApiController extends Controller
                         'gallery',
                         'availabilities',
                         'unavailabilities',
+                        'totalCompletedOrders',
                         'company',
                         'adOns'
                     )
