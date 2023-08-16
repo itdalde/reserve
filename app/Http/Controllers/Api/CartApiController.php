@@ -38,10 +38,10 @@ class CartApiController extends Controller
 
         foreach ($data['items'] as $item) {
             $isStartAvailable = AvailableDates::where('service_id', $item['service_id'])
-                ->where('active', 1)
+                ->where('status', 2)
                 ->whereDate('date_obj', '=', date('Y-m-d', strtotime($item['schedule_start_datetime'])))->first();
             $isEndAvailable = AvailableDates::where('service_id', $item['service_id'])
-                ->where('active', 1)
+                ->where('status', 2)
                 ->whereDate('date_obj', '=', date('Y-m-d', strtotime($item['schedule_end_datetime'])))->first();
             if ($isStartAvailable) {
                 return sendError('The schedule_start_datetime is not available', 'Unable on adding to card');
@@ -190,10 +190,10 @@ class CartApiController extends Controller
             $cartItem = CartItem::where('cart_id', $request->cart_id)
                 ->where('service_id', $item['service_id'])->where('status', 'active')->first();
             $isStartAvailable = AvailableDates::where('service_id', $item['service_id'])
-                ->where('active', 1)
+                ->where('status', 2)
                 ->whereDate('date_obj', '=', date('Y-m-d', strtotime($cartItem->schedule_start_datetime)))->first();
             $isEndAvailable = AvailableDates::where('service_id', $item['service_id'])
-                ->where('active', 1)
+                ->where('status', 2)
                 ->whereDate('date_obj', '=', date('Y-m-d', strtotime($cartItem->schedule_end_datetime)))->first();
             if ($isStartAvailable) {
                 return sendError('The schedule_start_datetime is not available', 'Unable to place an order');
