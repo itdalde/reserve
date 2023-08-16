@@ -22,6 +22,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;    
 
 class ServiceController extends Controller
 {
@@ -185,6 +186,14 @@ class ServiceController extends Controller
     public function create()
     {
         //
+        if (
+            Auth::user()->company->logo == null || 
+            Auth::user()->company->phone_number == null ||
+            Auth::user()->company->open_at == null || 
+            Auth::user()->company->close_at == null
+        ) {
+            return view('admin.settings.index');
+        }
         $hasServiceType  = auth()->user()->company && auth()->user()->company->service_type_id ? true : false;
         return view('admin.services.create',compact('hasServiceType'));
     }

@@ -95,7 +95,6 @@ class LoginController extends Controller
         if (config('auth.users.confirm_email') && !$user->confirmed) {
             $errors = [$this->username() => __('auth.notconfirmed', ['url' => route('confirm.send', [$user->email])])];
         }
-
         if (!$user->active) {
             $errors = [$this->username() => __('auth.active')];
         }
@@ -115,8 +114,19 @@ class LoginController extends Controller
         }
         $user->last_login = now();
         $user->save();
+        $redirectPath = $this->redirectPath();
 
-        return redirect()->intended($this->redirectPath());
+        if(!Auth::user()->hasRole('superadmin')) {
+            if (
+            Auth::user()->company->logo == null ||
+            Auth::user()->company->phone_number == null ||
+            Auth::user()->company->open_at == null ||
+            Auth::user()->company->close_at == null
+            ) {
+                $redirectPath = '/settings';
+            }
+        }
+        return redirect()->intended($redirectPath);
     }
     /**
      * Show the application's login form.
