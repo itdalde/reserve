@@ -12,7 +12,7 @@
             </div>
             @endif
             <div class="card-body">
-                @if(Auth::user()->company->logo == null && Auth::user()->company->phone_number == null && Auth::user()->company->open_at == null && Auth::user()->company->close_at == null)
+                @if(Auth::user()->company && (Auth::user()->company->logo == null || Auth::user()->company->phone_number == null || Auth::user()->company->open_at == null || Auth::user()->company->close_at == null))
                 <div class="alert alert-info fw-bold">
                 <i class="bi bi-info-circle icon-info"
                 data-bs-toggle="tooltip" data-bs-placement="bottom"
