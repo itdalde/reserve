@@ -115,7 +115,7 @@ class LoginController extends Controller
         $user->last_login = now();
         $user->save();
         $redirectPath = $this->redirectPath();
-        if(!$user->hasRole('superadmin') && Auth::user()->company->logo == null && Auth::user()->company->phone_number == null && Auth::user()->company->open_at == null && Auth::user()->company->close_at == null) {
+        if(!Auth::user()->hasRole('superadmin') || Auth::user()->company->logo == null || Auth::user()->company->phone_number == null || Auth::user()->company->open_at == null || Auth::user()->company->close_at == null) {
             $redirectPath = '/settings';
         }
         return redirect()->intended($redirectPath);

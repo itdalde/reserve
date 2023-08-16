@@ -188,9 +188,9 @@ class ServiceController extends Controller
         //
         $hasServiceType  = auth()->user()->company && auth()->user()->company->service_type_id ? true : false;
         if (
-            Auth::user()->company->logo == null && 
-            Auth::user()->company->phone_number == null && 
-            Auth::user()->company->open_at == null && 
+            Auth::user()->company->logo == null || 
+            Auth::user()->company->phone_number == null ||
+            Auth::user()->company->open_at == null || 
             Auth::user()->company->close_at == null
         ) {
             return view('admin.settings.index');
