@@ -12,6 +12,15 @@
             </div>
             @endif
             <div class="card-body">
+                @if(Auth::user()->company->logo == null && Auth::user()->company->phone_number == null && Auth::user()->company->open_at == null && Auth::user()->company->close_at == null)
+                <div class="alert alert-info fw-bold">
+                <i class="bi bi-info-circle icon-info"
+                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="Please pause this service to access the edit option"
+                >
+                </i>&nbsp;Please complete the setup your company details
+                </div>
+                @endif
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="userProfile-tab" data-bs-toggle="tab"
