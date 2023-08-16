@@ -193,7 +193,7 @@ class ServiceController extends Controller
             Auth::user()->company->open_at == null || 
             Auth::user()->company->close_at == null
         ) {
-            return view('admin.settings.index');
+            return redirect()->route('settings');
         }
         return view('admin.services.create',compact('hasServiceType'));
     }
