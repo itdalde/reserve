@@ -29,10 +29,19 @@ class Company extends Model
             'unavailabilities',
             'totalCompletedOrders',
             'company'
-        )->where(function ($query) {
-                $query->has('availabilities')->orWhereHas('unavailabilities');
-            })->where('active', '=', 1);
+        )->where('active', '=', 1)
+        ->where(function ($query) {
+            $query->where(function ($subquery) {
+                $subquery->whereHas('availabilities')
+                    ->orWhereHas('unavailabilities');
+            })->orWhere(function ($subquery) {
+                $subquery->whereDoesntHave('availabilities')
+                    ->whereDoesntHave('unavailabilities');
+            });
+        });
     }
+
+
 
     public function tags() {
         return $this->hasMany(Tags::class);
