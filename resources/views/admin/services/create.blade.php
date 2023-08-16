@@ -65,7 +65,7 @@
                             <label for="description"
                                 class="form-label field-label label-color">Description&nbsp;&nbsp;<span
                                     class="text-danger">*</span></label>
-                            <textarea dir="auto" name="service_description" class="form-control"
+                            <textarea name="service_description" class="form-control"
                                 placeholder="Description" id="service-description" style="height: 100px"
                                 required></textarea>
                         </div>

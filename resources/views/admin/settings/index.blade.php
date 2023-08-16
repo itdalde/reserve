@@ -188,49 +188,55 @@
                                 <div class="p-2 bd-highlight">
                                     <div class="row mt-5">
                                         <div class="col-xs-12 col-md-6 mt-5">
-                                            <label class="form-label" for="company-name-name"> Company Name</label>
+                                            <label class="form-label" for="company-name-name"> Company Name <span class="text-danger">*</span></label>
                                             <input value="{{Auth::user()->company ? Auth::user()->company->name : ''}}"
                                                 type="text" id="company-name-name" autocomplete="new-password"
-                                                name="name" class="form-control" placeholder="Company name"
+                                                name="name" class="form-control" placeholder="Company name" required
                                                 aria-label="Company name">
                                         </div>
                                         <div class="col-xs-12 col-md-6 mt-5">
-                                            <label class="form-label" for="phone-number">Company Phone Number</label>
+                                            <label class="form-label" for="phone-number">Company Phone Number <span class="text-danger">*</span></label>
                                             <input
                                                 value="{{Auth::user()->company ? Auth::user()->company->phone_number : ''}}"
                                                 type="text" id="phone-number" autocomplete="new-password"
                                                 name="phone_number" class="form-control" placeholder="Phone number"
-                                                aria-label="Phone number">
+                                                aria-label="Phone number"
+                                                required
+                                                >
                                         </div>
                                     </div>
 
                                     <div class="row mt-5">
                                         <div class="col-xs-12 col-md-6">
-                                            <label class="form-label" for="phone-number">Availability Days</label>
+                                            <label class="form-label" for="phone-number">Availability Days <span class="text-danger">*</span></label>
                                             <input
                                                 value="{{Auth::user()->company ? Auth::user()->company->business_days : ''}}"
                                                 type="text" id="availability" autocomplete="availability"
                                                 name="availability" class="form-control"
                                                 placeholder="Enter Availability Days"
-                                                aria-label="Enter Availability Days">
+                                                aria-label="Enter Availability Days"
+                                                required
+                                                >
                                         </div>
 
                                         <div class="col-xs-12 col-md-6">
-                                            <label class="form-label" for="phone-number">Business Hours</label>
+                                            <label class="form-label" for="phone-number">Business Hours <span class="text-danger">*</span></label>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <input
                                                         value="{{Auth::user()->company ? Auth::user()->company->open_at : ''}}"
                                                         type="text" id="open_at" autocomplete="open_at" name="open_at"
                                                         class="form-control" placeholder="Opens At"
-                                                        aria-label="Opens At">
+                                                        aria-label="Opens At"
+                                                        required
+                                                        >
                                                 </div>
                                                 <div class="col-6">
                                                     <input
                                                         value="{{Auth::user()->company ? Auth::user()->company->close_at : ''}}"
                                                         type="text" id="close_at" autocomplete="close_at"
                                                         name="close_at" class="form-control" placeholder="Close At"
-                                                        aria-label="Close At">
+                                                        aria-label="Close At" required>
                                                 </div>
                                             </div>
                                         </div>
