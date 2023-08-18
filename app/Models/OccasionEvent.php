@@ -66,7 +66,9 @@ class OccasionEvent extends Model
     }
     public function serviceReviews()
     {
-        return $this->hasMany(OccasionEventReviews::class);
+        return $this->hasMany(OccasionEventReviews::class)->with(
+                'user',
+            );
     }
     public function ratings() {
         return $this->hasMany(OccasionEventReviews::class)
