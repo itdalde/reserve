@@ -30,7 +30,7 @@ class SchedulesController extends Controller
      */
     public function index()
     {
-
+        
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         $schedules = Schedule::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         return view('admin.schedules.index', compact('services', 'schedules'));
@@ -79,7 +79,12 @@ class SchedulesController extends Controller
          */
         $response = [];
         if ($request->type == 1) {
+            AvailableDates::where('company_id', auth()->user()->company->id)
+            ->where('service_id', $request->service_id)
+            ->whereBetween('date_obj', [$start->format('Y-m-d'), $end->format('Y-m-d')])
+            ->delete();
             while ($date <= $end) {
+              
                 if ($date > Carbon::today()) {
                     if ($date->isFriday() || $date->isSaturday()) {
                         $dates[] = [
@@ -88,9 +93,13 @@ class SchedulesController extends Controller
                         ];
                     }
                 }
-                    $date->addDays(1);
+                $date->addDays(1);
             }
         } else if ($request->type == 2 || $request->type == 3) {
+            AvailableDates::where('company_id', auth()->user()->company->id)
+            ->where('service_id', $request->service_id)
+            ->whereBetween('date_obj', [$start->format('Y-m-d'), $end->format('Y-m-d')])
+            ->delete();
             while ($date <= $end) {
                 if ($date > Carbon::today()) {
                     $dates[] = [
@@ -98,7 +107,7 @@ class SchedulesController extends Controller
                         'new_format' => $date->format('Y-m-d')
                     ];
                 }
-                    $date->addDays(1);
+                $date->addDays(1);
             }
         } else if ($request->type == 4) {
             AvailableDates::where('company_id', auth()->user()->company->id)
