@@ -259,7 +259,7 @@ class ServiceTypesApiController extends Controller
                     $providers[$k]['services'][$key]['conditions'] = Condition::where('service_id', $service['id'])
                         ->get()
                         ->toArray();
-                    $providers[$k]['services'][$key]['adOns'] = Condition::where('occasion_event_id', $service['id'])
+                    $providers[$k]['services'][$key]['adOns'] = OccasionEventAddon::where('occasion_event_id', $service['id'])
                         ->get()
                         ->toArray();
                     $availableDateObj = AvailableDates::where('service_id', $service['id'])
