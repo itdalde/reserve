@@ -298,16 +298,20 @@ class ServiceTypesApiController extends Controller
      */
     public function getServiceTypesByOccasionId(Request $request, $occasion_id): JsonResponse
     {
-
+        $data = $request->all();
         $serviceTypes = OccasionServiceTypePivot::join('occasions', 'occasions.id', '=', 'occasion_service_type_pivots.occasion_id')
             ->join('service_types', 'service_types.id', '=', 'occasion_service_type_pivots.service_type_id')
             ->join('services', 'services.service_type', '=', 'service_types.id')
-            ->leftJoin('available_dates as ad', 'ad.service_id', '=', 'services.id')
+            ->join('available_dates as ad', 'ad.service_id', '=', 'services.id')
             ->where('occasion_service_type_pivots.occasion_id', $occasion_id);
         if (isset($data['from']) && isset($data['to'])) {
+            $dateTime = \DateTime::createFromFormat('m/d/Y', $data['from']);
+            $data['from'] = $dateTime->format('Y-m-d');
+            $dateTime = \DateTime::createFromFormat('m/d/Y', $data['to']);
+            $data['to'] = $dateTime->format('Y-m-d');
             $serviceTypes->where('ad.status', 1)
                 ->where('ad.date_obj', '<>', null)
-                ->whereBetween('ad.date_obj', [$request->input('from'), $request->input('to')]);
+                ->whereBetween('ad.date_obj', [$data['from'], $data['to']]);
         }
 
         $serviceTypes = $serviceTypes->get(['ad.date_obj AS available_date', 'occasion_service_type_pivots.occasion_id', 'occasions.name as occasion', 'occasion_service_type_pivots.service_type_id', 'service_types.name as service_type'])->toArray();
