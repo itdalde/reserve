@@ -384,7 +384,6 @@ class ServiceController extends Controller
         $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
         $service->availability_start_date =  date('Y-m-d H:i:s');
         $service->availability_end_date = date('Y-m-d H:i:s');;
-        $service->active = 3;
         $service->locale = $data['locale'] ?? 'en';
         $service->save();
         Feature::where('service_id', $service->id)->delete();
