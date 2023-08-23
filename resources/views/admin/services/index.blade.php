@@ -1000,7 +1000,8 @@
 
                         <div class="d-flex">
                             <div class="mr-auto p-2 w-100">
-                                <button class="btn btn-warning edit-trigger-display text-white" id="edit-service-btn"
+                                <a class="btn btn-warning edit-trigger-display text-white" href="/services/edit/{{$service->id}}">Edit Service</a>
+                                <button class="btn btn-warning edit-trigger-display text-white d-none" id="edit-service-btn"
                                     type="button">Edit
                                 </button>
                                 <button class="btn  d-none edit-trigger-show text-white" id="edit-service-cancel-btn"
