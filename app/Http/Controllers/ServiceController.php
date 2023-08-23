@@ -212,11 +212,11 @@ class ServiceController extends Controller
         $service = new OccasionEvent();
         $service->company_id = $company->id;
         $service->name = $data['service_name'];
-        $service->name_arabic = $data['service_name_arabic'] ?? '-';
+        $service->name_arabic = $data['locale'] == 'ar' ? $data['service_name_arabic'] : '-';
         $service->occasion_type = 0;
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
-        $service->description_arabic = $data['service_description_arabic'] ?? '-';
+        $service->description_arabic = $data['locale'] == 'ar' ? $data['service_description_arabic'] : '-';
         $service->address_1 = $data['location'] ?? '';
         $service->max_capacity = $data['max_capacity'] ?? 0;
         $service->min_capacity = $data['min_capacity'] ?? 0;
@@ -237,6 +237,7 @@ class ServiceController extends Controller
         $service->availability_end_date = date('Y-m-d H:i:s');;
         $service->active = 3;
         $service->service_type = $company->service_type_id;
+        $service->locale = $data['locale'] ?? 'en';
         $service->save();
         foreach ([$availableDates] as $availableDate) {
             $avail = new AvailableDates();

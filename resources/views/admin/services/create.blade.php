@@ -19,6 +19,7 @@
                         <p>en&nbsp;&nbsp;</p>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="translation-toggle">
+                            <input type="hidden" id="service-locale" name="locale" value="en" />
                         </div>
                         <p>ar</p>
                     </div>
@@ -408,6 +409,7 @@
         $('#translation-toggle').click(function () {
             currentLocale = currentLocale === 'en' ? 'ar' : 'en';
             $('.create-service-form').attr('dir', currentLocale === 'ar' ? 'rtl' : 'ltr');
+            $('#service-locale').val(currentLocale);
             updateFieldTranslation(currentLocale);
         });
 
