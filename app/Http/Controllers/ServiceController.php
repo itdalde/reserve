@@ -216,7 +216,8 @@ class ServiceController extends Controller
         $service->occasion_type = 0;
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
-        $service->description_arabic = $data['locale'] == 'ar' ? $data['service_description_arabic'] : '-';
+        $service->description_arabic = $data['locale'] == 'ar
+        ' ? $data['service_description_arabic'] : '-';
         $service->address_1 = $data['location'] ?? '';
         $service->max_capacity = $data['max_capacity'] ?? 0;
         $service->min_capacity = $data['min_capacity'] ?? 0;
@@ -345,6 +346,9 @@ class ServiceController extends Controller
     public function edit($id)
     {
         //
+        $service = OccasionEvent::where('id', $id)->first();
+        $locale = $service->locale;
+        return view('admin.services.edit', compact('service', 'locale'));
     }
 
     /**
@@ -357,6 +361,63 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $service = OccasionEvent::where('id',$id)->first();
+        $data = $request->all();
+        $service->name = $data['service_name'];
+        $service->name_arabic = $data['locale'] == 'ar' ? $data['service_name_arabic'] : '-';
+        $service->occasion_type = 0;
+        $service->price = $data['service_price'];
+        $service->description = $data['service_description'];
+        $service->description_arabic = $data['locale'] == 'ar
+        ' ? $data['service_description_arabic'] : '-';
+        $service->address_1 = $data['location'] ?? '';
+        $service->max_capacity = $data['max_capacity'] ?? 0;
+        $service->min_capacity = $data['min_capacity'] ?? 0;
+        $service->availability_slot = $data['available_slot'] ?? 0;
+      
+        $service->availability_time_in = $availabilityTimeIn ?? date('H:i');
+        $service->availability_time_out = $availabilityTimeOut ?? date('H:i');
+
+        $service->duration = 0; // $data['price_not_applicable'] != 'not-applicable' ? $data['price_not_applicable'] : 0;
+
+        $availableDates = date('Y-m-d H:i:s');// explode(',',$data['start_available_date']);
+        $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
+        $service->availability_start_date =  date('Y-m-d H:i:s');
+        $service->availability_end_date = date('Y-m-d H:i:s');;
+        $service->active = 3;
+        $service->locale = $data['locale'] ?? 'en';
+        $service->save();
+        Feature::where('service_id', $service->id)->delete();
+        foreach($data['feature'] as $key => $name) {
+            if ($name) {
+                $feat = new Feature();
+                $feat->name = $name;
+                $feat->service_id = $service->id;
+                $feat->save();
+            }
+        }
+        Condition::where('service_id', $service->id)->delete();
+        foreach ($data['condition'] as $k => $name) {
+            if ($name) {
+                $condt = new Condition();
+                $condt->name = $name;
+                $condt->service_id = $service->id;
+                $condt->save();
+            }
+        }
+        OccasionEventAddon::where('occasion_event_id', $service->id)->delete();
+        foreach ($data['add_on_name'] as $k => $name) {
+            if ($name) {
+                $occasionEventAddon = new OccasionEventAddon();
+                $occasionEventAddon->occasion_event_id = $service->id;
+                $occasionEventAddon->name = $name;
+                $occasionEventAddon->price = $data['add_on_price'][$k] ?? 0;
+                $occasionEventAddon->description = $data['add_on_description'][$k] ?? '';
+                $occasionEventAddon->save();
+            }
+        }
+        
+        return redirect()->route('services.index')->with(['message' => 'Service Updated Successfully']);
     }
 
     /**
