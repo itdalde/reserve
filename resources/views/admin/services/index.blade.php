@@ -1000,7 +1000,7 @@
 
                         <div class="d-flex">
                             <div class="mr-auto p-2 w-100">
-                                <a class="btn btn-warning edit-trigger-display text-white" href="/services/edit/{{$service->id}}">Edit Service</a>
+                                <a class="btn btn-warning edit-trigger-display text-white edit-service-action" href="/services/edit/{{$service->id}}">Edit Service</a>
                                 <button class="btn btn-warning edit-trigger-display text-white d-none" id="edit-service-btn"
                                     type="button">Edit
                                 </button>
@@ -1204,6 +1204,7 @@
             $('#edit-service-btn').addClass('d-none')
             $('#edit-service-cancel-btn').addClass('d-none')
         }
+        let serviceId = $(this).closest('tr').attr('data-id');
         let name = $(this).closest('tr').attr('data-name');
         let image = $(this).closest('tr').attr('data-image');
         let location = $(this).closest('tr').attr('data-location');
@@ -1309,6 +1310,8 @@
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
         $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
         // $('.service-adOns').text(serviceAdOns);
+
+        $('.edit-service-action').attr('href', '/services/edit/' + serviceId);
         $('.fcs-listing').remove();
         if (serviceFeatures) {
             var feat = serviceFeatures.split(', ');

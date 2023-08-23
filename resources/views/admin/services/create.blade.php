@@ -19,7 +19,7 @@
                         <p>en&nbsp;&nbsp;</p>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="translation-toggle">
-                            <input type="hidden" id="service-locale" name="locale" value="en" />
+                            
                         </div>
                         <p>ar</p>
                     </div>
@@ -36,6 +36,7 @@
                                 Name</label>
                             <input type="text" class="form-control" name="service_name" id="service-name"
                                 placeholder="Service name" required>
+                                <input type="hidden" id="service-locale" name="locale" value="en" />
                         </div>
                     </div>
                     <hr>
