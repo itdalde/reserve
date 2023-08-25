@@ -98,6 +98,7 @@ class CartApiController extends Controller
             ->where('cart.user_id', $request->user_id)
             ->where('cart.active', 1)
             ->where('cart.total_items', '>', 0) // Add this line
+            ->groupBy('cart.id')
             ->get([
                 'cart.id',
                 'cart.total_items',
