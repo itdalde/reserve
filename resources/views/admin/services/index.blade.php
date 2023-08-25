@@ -1287,10 +1287,10 @@
                 $('.service-available-payment-plans').append(
                     '<div class="appended-payment-plans p-2 bd-highlight"><p>' +
                     planType[1] + '</p>' +
-                    '<span class=" badge bg-secondary "><span class="edit-trigger-display">' +
-                    symbol[1] +
-                    '</span><span class="edit-trigger-show d-none"><input type="number" class=" form-control" name="price[][' +
-                    planType[0] + ']" value="' + symbol[1] + '"/></span></span>' +
+                    // '<span class=" badge bg-secondary "><span class="edit-trigger-display">' +
+                    // symbol[1] +
+                    // '</span><span class="edit-trigger-show d-none"><input type="number" class=" form-control" name="price[][' +
+                    // planType[0] + ']" value="' + symbol[1] + '"/></span></span>' +
                     '</div>');
             }
         });

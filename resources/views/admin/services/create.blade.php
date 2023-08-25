@@ -87,7 +87,7 @@
                                 </button>
                                 <input name="images[]" id="add-gallery-data-file"
                                     accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
-                                    class="d-none">
+                                    class="d-none" required>
                             </div>
                         </div>
 
@@ -101,13 +101,13 @@
                                 Type&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input pricing_type" name="pricing_type" type="checkbox"
-                                        id="per_guest" value="per_guest">
+                                    <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
+                                        id="per_guest" value="1" required>
                                     <label class="form-check-label" for="per_guest">Per Guest</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input pricing_type" name="pricing_type" type="checkbox"
-                                        id="per_package" value="per_package">
+                                    <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
+                                        id="per_package" value="2" required>
                                     <label class="form-check-label" for="per_package">Per Package</label>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text currency_curr" id="price">QAR</span>
                                         <input type="number" name="service_price" class="form-control mr-4"
-                                            placeholder="Price" aria-label="price" aria-describedby="price">
+                                            placeholder="Price" aria-label="price" aria-describedby="price" required>
                                     </div>
                                 </div>
                             </div>
@@ -137,17 +137,24 @@
                                         <div class="input-group mb-3 mr-3">
                                             <span class="input-group-text hours_label" id="hours">Hours</span>
                                             <input type="number" class="form-control price_per_hour"
-                                                name="price_per_hour" placeholder="Hours" aria-label="hours"
-                                                aria-describedby="hours" value="24">
+                                                name="price_per_hour" placeholder="24" aria-label="hours"
+                                                aria-describedby="hours" required>
                                         </div>
-                                        <span class="badge_hour">Maximum of 24</span>
+                                        <span class="badge_hour" style="border: 1px solid #e7e7e7;
+                                        padding: 0 4px;
+                                        border-radius: 5px;
+                                        position: relative;
+                                        top: -18px;
+                                        font-weight: 500;
+                                        color: #dc3545;
+                                        font-size: .75rem;">Maximum of 24</span>
                                     </div>
                                     &nbsp;&nbsp;
                                     <div class="form-check form-check-inline w-100 pl-5 mt-2">
                                         <div class="">
                                             <input class="form-check-input" type="checkbox" id="price-not-applicable"
-                                                name="price_not_applicable" value="not-applicable">
-                                            <label class="form-check-label" for="price_not_applicable">Not
+                                                name="not_applicable" value="not-applicable">
+                                            <label class="form-check-label" for="not_applicable">Not
                                                 Applicable</label>
                                         </div>
                                     </div>
@@ -160,14 +167,14 @@
                                 <div class="mb-3">
                                     <label for="minimum_guests" class="form-label">Minimum guests</label>
                                     <input type="number" min="0" value="" class="form-control guests_field float-end"
-                                        id="minimum-guest" name="min_capacity" placeholder="0.00">
+                                        id="minimum-guest" name="min_capacity" placeholder="0.00" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="maximum_guests" class="form-label">Maximum guests</label>
                                     <input type="number" min="0" value="" class="form-control guests_field float-start"
-                                        id="maximum-guests" name="max_capacity" placeholder="0.00">
+                                        id="maximum-guests" name="max_capacity" placeholder="0.00" required>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline" style="margin-left: 16px;">
@@ -344,7 +351,7 @@
                 service_price: 'How Much?',
                 price: 'Price',
                 timed_service: 'Is the servie timed? if yes, how long?',
-                price_not_applicable: 'Not Applicable',
+                not_applicable: 'Not Applicable',
                 minimum_guest: 'Minimum Guest',
                 maximum_guest: 'Maximum Guest',
                 feature: 'Features',
@@ -368,7 +375,7 @@
                 service_price: 'التكلفة؟',
                 price: 'السعر ',
                 timed_service: 'هل الخدمة مرتبطة بوقت معين؟ كم المدة؟',
-                price_not_applicable: 'لا ينطبق',
+                not_applicable: 'لا ينطبق',
                 minimum_guest: 'اقل عدد ضيوف',
                 maximum_guest: 'اكبر عدد ضيوف',
                 feature: 'المميزات',
@@ -385,6 +392,7 @@
         $('.pricing_type').on('click', function () {
             var checkboxes = $('.pricing_type');
             checkboxes.not(this).prop('checked', false);
+            checkboxes.prop('required', false);
         });
 
         $('.special_request').on('click', function () {
@@ -395,11 +403,13 @@
         $('#price-not-applicable').on('click', function () {
             var field = $('.price_per_hour');
             field.prop('disabled', !field.prop('disabled'));
+            field.prop('required', false);
         })
 
         $('#allowed_guests').on('click', function () {
             var field = $('.guests_field');
             field.prop('disabled', !field.prop('disabled'));
+            field.prop('required', false);
         })
 
         $('#add-gallery-data-btn').on('click', function () {
@@ -426,7 +436,7 @@
             var perPackageLabel = document.querySelector('label[for="per_package"]');
             var servicePriceLabel = document.querySelector('label[for="service_price"]');
             var timedServiceLabel = document.querySelector('label[for="timed_service"]');
-            var priceNotApplicableLabel = document.querySelector('label[for="price_not_applicable"]');
+            var priceNotApplicableLabel = document.querySelector('label[for="not_applicable"]');
             var minimumGuestLabel = document.querySelector('label[for="minimum_guests"]');
             var maximumGuestLabel = document.querySelector('label[for="maximum_guests"]');
             var allowedGuestLabel = document.querySelector('label[for="allowed_guests"]');
@@ -449,10 +459,10 @@
             perPackageLabel.textContent = translation[lang].per_package ?? perPackageLabel
             servicePriceLabel.textContent = translation[lang].service_price ?? servicePriceLabel
             timedServiceLabel.textContent = translation[lang].timed_service ?? timedServiceLabel
-            priceNotApplicableLabel.textContent = translation[lang].price_not_applicable ?? priceNotApplicableLabel
+            priceNotApplicableLabel.textContent = translation[lang].not_applicable ?? priceNotApplicableLabel
             minimumGuestLabel.textContent = translation[lang].minimum_guest ?? minimumGuestLabel
             maximumGuestLabel.textContent = translation[lang].maximum_guest ?? maximumGuestLabel
-            allowedGuestLabel.textContent = translation[lang].price_not_applicable ?? allowedGuestLabel
+            allowedGuestLabel.textContent = translation[lang].not_applicable ?? allowedGuestLabel
             featureLabel.textContent = translation[lang].feature ?? featureLabel
             conditionLabel.textContent = translation[lang].condition ?? conditionLabel
             featureBtnLabel.textContent = translation[lang].add ?? featureBtnLabel

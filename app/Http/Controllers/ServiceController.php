@@ -207,7 +207,6 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
         $company = $request->user()->company;
         $service = new OccasionEvent();
         $service->company_id = $company->id;
@@ -230,7 +229,7 @@ class ServiceController extends Controller
         $service->availability_time_in = $availabilityTimeIn ?? date('H:i');
         $service->availability_time_out = $availabilityTimeOut ?? date('H:i');
 
-        $service->duration = $data['price_not_applicable'] != 'not-applicable' ? $data['price_not_applicable'] : 0;
+        $service->duration = $data['not_applicable'] != 'not-applicable' ? $data['not_applicable'] : 0;
 
         $availableDates = date('Y-m-d H:i:s');// explode(',',$data['start_available_date']);
         $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
@@ -270,7 +269,7 @@ class ServiceController extends Controller
         }
         $price = new OccasionEventPrice();
         $price->occasion_event_id = $service->id;
-        $price->plan_id = $data['plan_id'] ?? 10;
+        $price->plan_id = $data['plan_id'] ?? 1;
         $price->service_price = $data['service_price'];
         $price->package = $data['package_name'] ?? 'Per person';
         $price->min_capacity = $data['package_min_capacity'] ?? 0;
@@ -378,7 +377,7 @@ class ServiceController extends Controller
         $service->availability_time_in = $availabilityTimeIn ?? date('H:i');
         $service->availability_time_out = $availabilityTimeOut ?? date('H:i');
 
-        $service->duration = 0; // $data['price_not_applicable'] != 'not-applicable' ? $data['price_not_applicable'] : 0;
+        $service->duration = $data['not_applicable'] != 'not-applicable' ? $data['not_applicable'] : 0;
 
         $availableDates = date('Y-m-d H:i:s');// explode(',',$data['start_available_date']);
         $unavailableDates = date('Y-m-d H:i:s');// explode(',',$data['end_available_time']);
@@ -386,6 +385,19 @@ class ServiceController extends Controller
         $service->availability_end_date = date('Y-m-d H:i:s');;
         $service->locale = $data['locale'] ?? 'en';
         $service->save();
+
+        $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
+        $price->occasion_event_id = $service->id;
+        $price->plan_id = $data['plan_id'] ?? 1;
+        $price->service_price = $data['service_price'];
+        $price->package = $data['package_name'] ?? 'Per person';
+        $price->min_capacity = $data['package_min_capacity'] ?? 0;
+        $price->max_capacity = $data['package_max_capacity'] ?? 0;
+        $price->package_details = $data['package_details'] ?? '-';
+        $price->package_price = $data['service_price'];
+        $price->active = 1;
+        $price->save();
+
         Feature::where('service_id', $service->id)->delete();
         foreach($data['feature'] as $key => $name) {
             if ($name) {

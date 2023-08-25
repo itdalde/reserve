@@ -18,7 +18,7 @@
                     <div class="d-flex flex-wrap">
                         <p>en&nbsp;&nbsp;</p>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="translation-toggle">
+                            <input class="form-check-input" type="checkbox" id="translation-toggle" {{ $service->locale == 'ar' ? 'checked' : '' }}>
                         </div>
                         <p>ar</p>
                     </div>
@@ -29,7 +29,7 @@
                 @csrf
                 @method('put')
                 <input name="_method" type="hidden" value="PUT">
-                <input type="hidden" id="service-locale" name="locale" value="en" />
+                <input type="hidden" id="service-locale" name="locale" value="{{$service->locale}}" />
 
                 <div class="container">
                     <div class="row">
@@ -98,18 +98,19 @@
                     <div class="pt-4">
                         <h5 class="page-title label-color available_available_plans">Available packages and payment
                             plans</h5>
+                        {{$service->paymentPlan->plan_id}}
                         <div class="row pt-4">
                             <label for="pricing_type" class="form-label field-label label-color">Pricing
                                 Type&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input pricing_type" name="pricing_type" type="checkbox"
-                                        id="per_guest" value="per_guest">
+                                    <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
+                                        id="per_guest" value="" {{ $service->paymentPlan->plan_id == 1 ? 'checked' : '' }} required>
                                     <label class="form-check-label" for="per_guest">Per Guest</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input pricing_type" name="pricing_type" type="checkbox"
-                                        id="per_package" value="per_package">
+                                    <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
+                                        id="per_package" value="" {{ $service->paymentPlan->plan_id == 2 ? 'checked' : '' }} required>
                                     <label class="form-check-label" for="per_package">Per Package</label>
                                 </div>
                             </div>
@@ -140,15 +141,22 @@
                                             <span class="input-group-text hours_label" id="hours">Hours</span>
                                             <input type="number" class="form-control price_per_hour"
                                                 name="price_per_hour" placeholder="Hours" aria-label="hours"
-                                                aria-describedby="hours" value="{{ $service->duration != 0 ? $service->duration : 24 }}">
+                                                aria-describedby="hours" value="{{ $service->duration != 0 ? $service->duration : 24 }}" disabled="{{ $service->duration == 0}}" required>
                                         </div>
-                                        <span class="badge_hour">Maximum of 24</span>
+                                        <span class="badge_hour" style="border: 1px solid #e7e7e7;
+                                        padding: 0 4px;
+                                        border-radius: 5px;
+                                        position: relative;
+                                        top: -18px;
+                                        font-weight: 500;
+                                        color: #dc3545;
+                                        font-size: .75rem;">Maximum of 24</span>
                                     </div>
                                     &nbsp;&nbsp;
                                     <div class="form-check form-check-inline w-100 pl-5 mt-2">
                                         <div class="">
                                             <input class="form-check-input" type="checkbox" id="price-not-applicable"
-                                                name="price_not_applicable" value="not-applicable">
+                                                name="price_not_applicable" value="not-applicable" checked="{{ $service->duration == 0}}">
                                             <label class="form-check-label" for="price_not_applicable">Not
                                                 Applicable</label>
                                         </div>
@@ -162,19 +170,19 @@
                                 <div class="mb-3">
                                     <label for="minimum_guests" class="form-label">Minimum guests</label>
                                     <input type="number" min="0" value="{{ $service->min_capacity }}" class="form-control guests_field float-end"
-                                        id="minimum-guest" name="min_capacity" placeholder="0.00">
+                                        id="minimum-guest" name="min_capacity" placeholder="0.00" disabled="{{ $service->max_capacity == 0 || $service->min_capacity == 0}}" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="maximum_guests" class="form-label">Maximum guests</label>
                                     <input type="number" min="0" value="{{ $service->max_capacity }}" class="form-control guests_field float-start"
-                                        id="maximum-guests" name="max_capacity" placeholder="0.00">
+                                        id="maximum-guests" name="max_capacity" placeholder="0.00" disabled="{{ $service->max_capacity == 0 || $service->min_capacity == 0}}" required>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline" style="margin-left: 16px;">
                                 <input class="form-check-input" type="checkbox" id="allowed_guests"
-                                    name="not_allowed_guests" value="not-applicable">
+                                    name="not_allowed_guests" value="not-applicable" checked="{{ $service->max_capacity == 0 || $service->min_capacity == 0}}">
                                 <label class="form-check-label" for="allowed_guests">Not Applicable</label>
                             </div>
                         </div>
@@ -183,6 +191,7 @@
                         <div class="row mt-2">
                             <label for="feature" class="form-label label-color field-label">Features</label>
                             <div class="col-5 mb-3" id="feature-fields">
+                            @if (count($service->features) > 0)
                             @foreach($service->features as $key => $feature)
                                 <div class="d-flex mb-2 form-field">
                                     <input class="form-control" type="text" id="feature" name="feature[]"
@@ -201,6 +210,17 @@
                                     
                                 </div>
                             @endforeach
+                            @else
+                            <div class="d-flex mb-2 form-field">
+                                <input class="form-control" type="text" id="feature" name="feature[]"
+                                    placeholder="Enter service features" value="">
+                                <button type="button" id="add-feature-data-btn" class="btn btn-orange action-button"
+                                    style="width: 30%;">
+                                    <img src="{{ asset('assets/images/icons/add.png') }}"
+                                        alt="add-feature" />&nbsp;Add
+                                </button>
+                            </div>
+                            @endif
                          
                             </div>
 
@@ -210,6 +230,7 @@
                         <div class="row mt-2">
                             <label for="condition" class="form-label label-color field-label">Conditions</label>
                             <div class="col-5 mb-3" id="condition-fields">
+                                @if(count($service->conditions) > 0)
                                 @foreach($service->conditions as $key => $condition)
                                 <div class="d-flex mb-2 form-field">
                                     <input class="form-control form-control-sm" type="text" name="condition[]"
@@ -227,6 +248,17 @@
                                     @endif
                                 </div>
                                 @endforeach
+                                @else
+                                <div class="d-flex mb-2 form-field">
+                                    <input class="form-control form-control-sm" type="text" name="condition[]"
+                                        id="condition" placeholder="Enter service conditions" value="">
+                                    <button type="button" id="add-condition-data-btn"
+                                        class="btn btn-orange action-button" style="width: 30%;">
+                                        <img src="{{ asset('assets/images/icons/add.png') }}"
+                                            alt="add-condition" />&nbsp;Add
+                                    </button>
+                                </div>
+                                @endif
                             </div>
                         </div>
 
@@ -396,6 +428,7 @@
         $('.pricing_type').on('click', function () {
             var checkboxes = $('.pricing_type');
             checkboxes.not(this).prop('checked', false);
+            checkboxes.prop('required', false);
         });
 
         $('.special_request').on('click', function () {
@@ -406,11 +439,13 @@
         $('#price-not-applicable').on('click', function () {
             var field = $('.price_per_hour');
             field.prop('disabled', !field.prop('disabled'));
+            field.prop('required', false);
         })
 
         $('#allowed_guests').on('click', function () {
             var field = $('.guests_field');
             field.prop('disabled', !field.prop('disabled'));
+            field.prop('required', false);
         })
 
         $('#add-gallery-data-btn').on('click', function () {
@@ -418,13 +453,21 @@
         })
 
       
-        let currentLocale = 'en';
+        let currentLocale = $('#service-locale').val();
         $('#translation-toggle').click(function () {
             currentLocale = currentLocale === 'en' ? 'ar' : 'en';
             $('.edit-service-form').attr('dir', currentLocale === 'ar' ? 'rtl' : 'ltr');
             $('#service-locale').val(currentLocale);
             updateFieldTranslation(currentLocale);
         });
+
+        @if ($locale)
+            var locale = $('#service-locale').val();
+            if (locale == 'ar') {
+                $('.edit-service-form').attr('dir', 'rtl');    
+                updateFieldTranslation(locale);
+            }
+        @endif
 
         function updateFieldTranslation(lang) {
             var serviceNameLabel = document.querySelector('label[for="service_name"]');
@@ -447,7 +490,6 @@
             var featureBtnLabel = document.querySelector('#add-feature-data-btn');
             var conditionBtnLabel = document.querySelector('#add-condition-data-btn');
             var addOnBtnLabel = document.querySelector('#add-addon-data-btn');
-            var saveForLaterLabel = document.querySelector('.save-for-later');
             var publishButnLabel = document.querySelector('.publish-service');
 
             serviceNameLabel.textContent = translation[lang].service_name ?? serviceNameLabel
@@ -470,7 +512,6 @@
             featureBtnLabel.textContent = translation[lang].add ?? featureBtnLabel
             conditionBtnLabel.textContent = translation[lang].add ?? conditionBtnLabel
             addOnBtnLabel.textContent = translation[lang].add_addon ?? addOnBtnLabel
-            saveForLaterLabel.textContent = translation[lang].save_for_later ?? saveForLaterLabel
             publishButnLabel.textContent = translation[lang].publish ?? publishButnLabel
 
             $('#service-name').attr('placeholder', translation[lang].service_name);
