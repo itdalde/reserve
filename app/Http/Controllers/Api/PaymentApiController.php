@@ -31,7 +31,7 @@ class PaymentApiController extends Controller
         if(!$result) {
             return sendError('Skip Cash Error', 'Unable to process payment');
         }
-        if(isset($data['promo_code'])) {
+        if(isset($data['promo_code']) && $data['promo_code']) {
             $promotion = Promotions::where('promotions.code', '=',$data['promo_code'])->first();
             if(!$promotion) {
                 return sendError('Invalid promo code', 'Unable to process payment');
