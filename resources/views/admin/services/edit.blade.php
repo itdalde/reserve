@@ -359,7 +359,7 @@
                             <div class="d-flex">
                                 <button type="submit"
                                     class="btn btn-warning text-white publish-service" style="width: 175px;">Update Service</button>
-                                <button type="button" class="btn btn-outline-secondary ms-2" style="width: 175px;">Back</button>
+                                <a href="/services" class="btn btn-outline-secondary ms-2" style="width: 175px;">Back</a>
                             </div>
                         </div>
 
