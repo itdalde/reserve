@@ -386,6 +386,19 @@ class ServiceController extends Controller
         $service->locale = $data['locale'] ?? 'en';
         $service->save();
 
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $file) {
+                $this->uploadImage($file, $service);
+            }
+        }
+        if ($request->file('featured_image')) {
+            $file = $request->file('featured_image');
+            $filename = $this->uploadImage($file, $service);
+            $service = OccasionEvent::where('id',$service->id)->first();
+            $service->image = $filename;
+            $service->save();
+        }
+
         $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
         $price->occasion_event_id = $service->id;
         $price->plan_id = $data['plan_id'] ?? 1;
