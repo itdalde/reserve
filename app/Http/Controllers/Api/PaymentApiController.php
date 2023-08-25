@@ -40,7 +40,7 @@ class PaymentApiController extends Controller
                 }
             }
         }
-        if ($result['returnCode'] == 200) {
+        if (isset($result['returnCode']) && $result['returnCode'] == 200) {
             $paymentDetails = new PaymentDetails();
             $paymentDetails->payment_method_id = $data['payment_method'];
             $paymentDetails->reference_no = $result['resultObj']['transactionId'];
