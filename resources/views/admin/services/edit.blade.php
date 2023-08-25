@@ -49,7 +49,7 @@
                             <div class="d-flex justify-content-between flex-wrap">
                                 <a href="#" class="service-image-holder rounded-3">
                                     <img width="180" id="service-image-view"
-                                        src="{{ $service->image ? $service->image : asset('assets/images/icons/image-select.png') }}" alt="image-select"
+                                        src="{{ $service->image ? asset($service->image) : asset('assets/images/icons/image-select.png') }}" alt="image-select"
                                         style="border-radius: 10px;">
                                 </a>
                             </div>
@@ -80,6 +80,11 @@
                             <label for="service_images" class="form-label field-label label-color">Service
                                 Images&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="d-flex">
+                                <div class="d-flex">
+                                    @foreach($service->images as $key => $image)
+                                    <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" style="width: 250px; height: 180px; object-fit: contain;"/>
+                                    @endforeach
+                                </div>
                                 <div id="service-image-gallery-holder1"
                                     class="d-flex justify-content-between service-image-gallery-holder1  flex-wrap">
                                 </div>
@@ -98,19 +103,18 @@
                     <div class="pt-4">
                         <h5 class="page-title label-color available_available_plans">Available packages and payment
                             plans</h5>
-                        {{$service->paymentPlan->plan_id}}
                         <div class="row pt-4">
                             <label for="pricing_type" class="form-label field-label label-color">Pricing
                                 Type&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
-                                        id="per_guest" value="" {{ $service->paymentPlan->plan_id == 1 ? 'checked' : '' }} required>
+                                        id="per_guest" value="" {{ $service->paymentPlan->plan_id == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="per_guest">Per Guest</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
-                                        id="per_package" value="" {{ $service->paymentPlan->plan_id == 2 ? 'checked' : '' }} required>
+                                        id="per_package" value="" {{ $service->paymentPlan->plan_id == 2 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="per_package">Per Package</label>
                                 </div>
                             </div>
@@ -156,7 +160,7 @@
                                     <div class="form-check form-check-inline w-100 pl-5 mt-2">
                                         <div class="">
                                             <input class="form-check-input" type="checkbox" id="price-not-applicable"
-                                                name="price_not_applicable" value="not-applicable" checked="{{ $service->duration == 0}}">
+                                                name="not_applicable" value="not-applicable" checked="{{ $service->duration == 0}}">
                                             <label class="form-check-label" for="price_not_applicable">Not
                                                 Applicable</label>
                                         </div>
