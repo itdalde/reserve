@@ -94,7 +94,7 @@
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-6">Card Name</div>
-                                <div class="col-sm-6">{{$order['payment_method']['name'] }}</div>
+                                <div class="col-sm-6">{{$order['payment_method'] ? $order['payment_method']['name'] : ''}}</div>
                             </div>
                         </li>
                         <li class="list-group-item">
