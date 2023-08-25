@@ -48,7 +48,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="py-2">{{$order['service']['price']['plan_type']['name']}}</td>
+                                                <div class="py-2">{{$order['service'] && $order['service']['price'] && $order['service']['price']['plan_type'] ? $order['service']['price']['plan_type']['name'] : ''}}</td>
                                             <td>
                                                 <div class="py-2">1 Service
                                                 </div>
