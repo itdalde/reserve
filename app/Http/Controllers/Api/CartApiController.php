@@ -127,7 +127,11 @@ class CartApiController extends Controller
 
         $cart->total_items = $cart->total_items - 1;
         $cart->total_amount = $cart->total_amount - $occasionEvent->price;
-        $cart->save();
+        if($cart->total_items == 0) {
+            $cart->delete();
+        } else {
+            $cart->save();
+        }
 
         return sendResponse('Item successfully removed.', 'Item removed');
     }
