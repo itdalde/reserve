@@ -28,6 +28,9 @@ class PaymentApiController extends Controller
             return sendError('There is no transaction under the reference no. provided.', 'Unable to process payment');
         }
         $result = SkipCashUtility::postPayment($orderSplit);
+        if(!$result) {
+            return sendError('Skip Cash Error', 'Unable to process payment');
+        }
         if(isset($data['promo_code'])) {
             $promotion = Promotions::where('promotions.code', '=',$data['promo_code'])->first();
             if(!$promotion) {

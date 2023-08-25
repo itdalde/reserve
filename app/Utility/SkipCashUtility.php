@@ -23,7 +23,7 @@ class SkipCashUtility
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
-    public static function postPayment($sOrder) 
+    public static function postPayment($sOrder)
     {
 
         $skipCashUrl = config('skipcash.url') . '/api/v1/payments';
@@ -67,6 +67,10 @@ class SkipCashUtility
             ),
         ));
         $response = curl_exec($curl);
+
+        if (curl_errno($curl)) {
+            $error_msg = curl_error($curl);
+        }
         curl_close($curl);
         $response = json_decode($response, true);
         return $response;
@@ -77,7 +81,7 @@ class SkipCashUtility
         $skipCashUrl = config('skipcash.url') . '/api/v1/payments/';
         $skipCashClientId = config('skipcash.client_id');
 
-     
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $skipCashUrl . $paymentId,
@@ -100,7 +104,7 @@ class SkipCashUtility
     }
 
     public static function processPaymentHooks($request) {
-        
+
         $webhookUrl = 'https://reservegcc.com/api/v1/payments/processed';
         $skipCashSecretKey = config('skipcash.secret_key');
         $data = [];
@@ -110,7 +114,7 @@ class SkipCashUtility
         $data['TransactionId'] = $request['TransactionId'];
         $data['CustomId'] = $request['CustomId'];
         $data['VisaId'] = $request['VisaId'];
-        
+
         $data_string = json_encode($data);
 
         $resultheader = 'PaymentId='.$data['PaymentId'].',Amount='.$data['Amount'].',StatusId='.$data['StatusId'].',TransactionId='.$data['TransactionId'].',Custom1='.$data['Custom1'].',VisaId=' . $data['VisaId'];
@@ -137,5 +141,5 @@ class SkipCashUtility
         $response = json_decode($response, null);
         return $response;
     }
-    
+
 }
