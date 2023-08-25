@@ -30,7 +30,7 @@ class PaymentApiController extends Controller
         $result = SkipCashUtility::postPayment($orderSplit);
 
         $promotion = Promotions::where('promotions.code', '=',$data['promo_code'])->first();
-        if($promotion) {
+        if(!$promotion) {
             return sendError('Invalid promo code', 'Unable to process payment');
         }
         if($promotion->single_use) {
