@@ -22,6 +22,7 @@ class PaymentApiController extends Controller
     {
 
         $data = $request->payment;
+        $promotion = null;
         // $order = Order::with('user')->where('reference_no', $data['order_id'])->first();
         $orderSplit = OrderSplit::with('order')->where('reference_order', $data['order_id'])->where('status', 'pending')->first();
         if ($orderSplit == null) {
