@@ -60,7 +60,7 @@ class CartApiController extends Controller
             $cartItem->guests = $item['guests'];
             $cartItem->is_custom = isset($item['is_custom']) ?? 0;
             $cartItem->save();
-            if($item['ad_on_ids']) {
+            if(isset($item['ad_on_ids'])) {
                 foreach($item['ad_on_ids'] as $adOn) {
                     $cartAdOn = new CartAdOns();
                     $cartAdOn->service_id = $item['service_id'];

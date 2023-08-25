@@ -291,8 +291,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
     Route::group(['prefix' => 'cart', 'middleware' => ['cors']], function() {
         Api::post('/add-service-to-cart/{user_id}', [CartApiController::class, 'addServiceToCart'])
             ->addTag('Cart')
-            ->addFormDataParameter('user_id', '', true  )
-            ->addFormDataParameter('cart', '', true  )
             ->setDescription('addServiceToCart')
             ->setProduces(['application/json']);
         Api::get('/user/{user_id}', [CartApiController::class, 'getUserCart'])
