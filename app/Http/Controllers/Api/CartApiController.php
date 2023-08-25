@@ -91,17 +91,20 @@ class CartApiController extends Controller
                 'guests',
                 'status'
             );
-        }])->join('cart_items', 'cart.id', '=', 'cart_items.cart_id')
+        }])
+            ->join('cart_items', 'cart.id', '=', 'cart_items.cart_id')
             ->join('services', 'cart_items.service_id', '=', 'services.id')
             ->where('services.active', 1)
             ->where('cart.user_id', $request->user_id)
             ->where('cart.active', 1)
+            ->where('cart.total_items', '>', 0) // Add this line
             ->get([
                 'cart.id',
                 'cart.total_items',
                 'cart.total_amount',
                 'cart.user_id'
             ]);
+
         return sendResponse($userCart, 'Get users cart');
     }
 
