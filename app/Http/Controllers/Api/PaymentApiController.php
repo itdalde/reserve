@@ -56,10 +56,12 @@ class PaymentApiController extends Controller
             $paymentDetails->payment_url = $result['resultObj']['payUrl'];
             $paymentDetails->currency = $result['resultObj']['currency'];
             $paymentDetails->save();
-            $userPromo = new UserPromotions();
-            $userPromo->user_id =  $orderSplit->order->user_id;
-            $userPromo->promotion_id =   $promotion->id;
-            $userPromo->save();
+            if($promotion) {
+                $userPromo = new UserPromotions();
+                $userPromo->user_id =  $orderSplit->order->user_id;
+                $userPromo->promotion_id =   $promotion->id;
+                $userPromo->save();
+            }
         }
         return sendResponse($result, isset($result['returnCode']) && $result['returnCode'] == 200 ? "Success" : "Failed");
     }
