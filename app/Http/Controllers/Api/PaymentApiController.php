@@ -51,7 +51,7 @@ class PaymentApiController extends Controller
             $paymentDetails->total = $result['resultObj']['amount'];
             $paymentDetails->sub_total = $result['resultObj']['amount']; // without vat
             $paymentDetails->discount = 0; // deduction from promo_code
-            $paymentDetails->promo_code = $data['promo_code'];
+            $paymentDetails->promo_code = isset($data['promo_code']) ? $data['promo_code'] : '';
             $paymentDetails->payment_id = $result['resultObj']['id'];
             $paymentDetails->payment_url = $result['resultObj']['payUrl'];
             $paymentDetails->currency = $result['resultObj']['currency'];
