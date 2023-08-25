@@ -80,32 +80,47 @@ class SchedulesController extends Controller
         $response = [];
         if ($request->type == 1) {
             AvailableDates::where('company_id', auth()->user()->company->id)
-            ->where('service_id', $request->service_id)
-            ->whereBetween('date_obj', [$start->format('Y-m-d'), $end->format('Y-m-d')])
-            ->delete();
+                ->where('service_id', $request->service_id)
+                ->delete();
             while ($date <= $end) {
-              
-                if ($date > Carbon::today()) {
-                    if ($date->isFriday() || $date->isSaturday()) {
-                        $dates[] = [
-                            'old_format' => $date->format('d/m/Y'),
-                            'new_format' => $date->format('Y-m-d')
-                        ];
+                $isAvailable = AvailableDates::where('company_id', auth()->user()->company->id)
+                ->where('service_id', $request->service_id)
+                ->where('status', 2)
+                ->where('date_obj', $date->format('Y-m-d'))
+                ->first();
+                if ($isAvailable == null) {
+                    if ($date > Carbon::today()) {
+                        if ($date->isFriday() || $date->isSaturday()) {
+                            $dates[] = [
+                                'old_format' => $date->format('d/m/Y'),
+                                'new_format' => $date->format('Y-m-d')
+                            ];
+                        }
                     }
                 }
                 $date->addDays(1);
             }
         } else if ($request->type == 2 || $request->type == 3) {
-            AvailableDates::where('company_id', auth()->user()->company->id)
-            ->where('service_id', $request->service_id)
-            ->whereBetween('date_obj', [$start->format('Y-m-d'), $end->format('Y-m-d')])
-            ->delete();
+        
             while ($date <= $end) {
-                if ($date > Carbon::today()) {
-                    $dates[] = [
-                        'old_format' => $date->format('d/m/Y'),
-                        'new_format' => $date->format('Y-m-d')
-                    ];
+                AvailableDates::where('company_id', auth()->user()->company->id)
+                ->where('service_id', $request->service_id)
+                ->whereIn('status', [1,2])
+                ->where('date_obj', $date->format('Y-m-d'))
+                ->delete();
+                $isAvailable = AvailableDates::where('company_id', auth()->user()->company->id)
+                ->where('service_id', $request->service_id)
+                ->whereIn('status', [1, 3])
+                ->where('date_obj', $date->format('Y-m-d'))
+                ->first();
+                
+                if ($isAvailable == null) {
+                    if ($date > Carbon::today()) {
+                        $dates[] = [
+                            'old_format' => $date->format('d/m/Y'),
+                            'new_format' => $date->format('Y-m-d')
+                        ];
+                    }
                 }
                 $date->addDays(1);
             }
