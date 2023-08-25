@@ -28,15 +28,16 @@ class PaymentApiController extends Controller
             return sendError('There is no transaction under the reference no. provided.', 'Unable to process payment');
         }
         $result = SkipCashUtility::postPayment($orderSplit);
-
-        $promotion = Promotions::where('promotions.code', '=',$data['promo_code'])->first();
-        if(!$promotion) {
-            return sendError('Invalid promo code', 'Unable to process payment');
-        }
-        if($promotion->single_use) {
-            $hasUsePromotion = UserPromotions::where('promotion_id', '=',$promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->first();
-            if($hasUsePromotion) {
-                return sendError('Promo code is already use', 'Unable to process payment');
+        if(isset($data['promo_code'])) {
+            $promotion = Promotions::where('promotions.code', '=',$data['promo_code'])->first();
+            if(!$promotion) {
+                return sendError('Invalid promo code', 'Unable to process payment');
+            }
+            if($promotion->single_use) {
+                $hasUsePromotion = UserPromotions::where('promotion_id', '=',$promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->first();
+                if($hasUsePromotion) {
+                    return sendError('Promo code is already use', 'Unable to process payment');
+                }
             }
         }
         if ($result['returnCode'] == 200) {
