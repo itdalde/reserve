@@ -81,6 +81,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/users/remove', [UserController::class, 'removeUser'])->name('users.delete-user');
     Route::get('/users/view', [UserController::class, 'view'])->name('users.view-user');
     Route::get('/users/approve', [UserController::class, 'approve'])->name('users.approve-user');
+    Route::get('/services/edit/{id}', [ServiceController::class, 'edit'])->name('edit-service');
+    Route::put('/services/{service}', [ServiceController::class, 'update'])->name('update-service')->middleware('audit:put');
     Route::post('/services/remove-image', [ServiceController::class, 'servicesRemoveImage'])->name('services-remove-image')->middleware('audit:post');
     Route::post('/services/update-event', [ServiceController::class, 'updateService'])->name('services.update_service')->middleware('audit:post');
     Route::post('/services/delete-service', [ServiceController::class, 'deleteService'])->name('services-delete')->middleware('audit:post');

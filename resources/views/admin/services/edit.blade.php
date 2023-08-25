@@ -14,29 +14,31 @@
                 </div>
                 @endif
                 <div class="d-flex justify-content-between flex-wrap w-100">
-                    <h5 class="card-title page-title label-color">Create a new service </h5>
+                    <h5 class="card-title page-title label-color">Edit service </h5>
                     <div class="d-flex flex-wrap">
                         <p>en&nbsp;&nbsp;</p>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="translation-toggle">
-                            
                         </div>
                         <p>ar</p>
                     </div>
                 </div>
             </div>
-            @if($hasServiceType)
-            <form action="{{ route('services.store') }}" method="post" enctype="multipart/form-data" class="create-service-form" id="create-service"
+            <form action="{{ route('services.update', $service->id) }}" method="post" enctype="multipart/form-data" class="edit-service-form" 
                 style="margin-top: -20px;">
                 @csrf
+                @method('put')
+                <input name="_method" type="hidden" value="PUT">
+                <input type="hidden" id="service-locale" name="locale" value="en" />
+
                 <div class="container">
                     <div class="row">
                         <div class="mb-3">
                             <label for="service_name" class="form-label field-label label-color w-full">Service
                                 Name</label>
                             <input type="text" class="form-control" name="service_name" id="service-name"
-                                placeholder="Service name" required>
-                                <input type="hidden" id="service-locale" name="locale" value="en" />
+                                placeholder="Service name" value="{{$service->name}}" required>
+
                         </div>
                     </div>
                     <hr>
@@ -47,14 +49,14 @@
                             <div class="d-flex justify-content-between flex-wrap">
                                 <a href="#" class="service-image-holder rounded-3">
                                     <img width="180" id="service-image-view"
-                                        src="{{ asset('assets/images/icons/image-select.png') }}" alt="image-select"
+                                        src="{{ $service->image ? $service->image : asset('assets/images/icons/image-select.png') }}" alt="image-select"
                                         style="border-radius: 10px;">
                                 </a>
                             </div>
                             <input
                                 onchange="document.getElementById('service-image-view').src = window.URL.createObjectURL(this.files[0])"
                                 id="service-image-file" accept="image/png, image/gif, image/jpeg" type="file"
-                                class="d-none" name="featured_image" required>
+                                class="d-none" name="featured_image">
 
                             <div class="service-image-error alert alert-danger d-none mt-2" role="alert">
                                 Please add image first
@@ -69,7 +71,7 @@
                                     class="text-danger">*</span></label>
                             <textarea name="service_description" class="form-control"
                                 placeholder="Description" id="service-description" style="height: 100px"
-                                required></textarea>
+                                required>{{ $service->description }}</textarea>
                         </div>
                     </div>
                     <hr>
@@ -121,7 +123,7 @@
                                     <div class="input-group mb-3">
                                         <span class="input-group-text currency_curr" id="price">QAR</span>
                                         <input type="number" name="service_price" class="form-control mr-4"
-                                            placeholder="Price" aria-label="price" aria-describedby="price">
+                                            placeholder="Price" aria-label="price" aria-describedby="price" value="{{ $service->price }}">
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +140,7 @@
                                             <span class="input-group-text hours_label" id="hours">Hours</span>
                                             <input type="number" class="form-control price_per_hour"
                                                 name="price_per_hour" placeholder="Hours" aria-label="hours"
-                                                aria-describedby="hours" value="24">
+                                                aria-describedby="hours" value="{{ $service->duration != 0 ? $service->duration : 24 }}">
                                         </div>
                                         <span class="badge_hour">Maximum of 24</span>
                                     </div>
@@ -159,14 +161,14 @@
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="minimum_guests" class="form-label">Minimum guests</label>
-                                    <input type="number" min="0" value="" class="form-control guests_field float-end"
+                                    <input type="number" min="0" value="{{ $service->min_capacity }}" class="form-control guests_field float-end"
                                         id="minimum-guest" name="min_capacity" placeholder="0.00">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="maximum_guests" class="form-label">Maximum guests</label>
-                                    <input type="number" min="0" value="" class="form-control guests_field float-start"
+                                    <input type="number" min="0" value="{{ $service->max_capacity }}" class="form-control guests_field float-start"
                                         id="maximum-guests" name="max_capacity" placeholder="0.00">
                                 </div>
                             </div>
@@ -181,54 +183,92 @@
                         <div class="row mt-2">
                             <label for="feature" class="form-label label-color field-label">Features</label>
                             <div class="col-5 mb-3" id="feature-fields">
+                            @foreach($service->features as $key => $feature)
                                 <div class="d-flex mb-2 form-field">
                                     <input class="form-control" type="text" id="feature" name="feature[]"
-                                        placeholder="Enter service features" value="">
+                                        placeholder="Enter service features" value="{{ $feature->name }}">
+                                    @if ($key == 0)
                                     <button type="button" id="add-feature-data-btn" class="btn btn-orange action-button"
                                         style="width: 30%;">
                                         <img src="{{ asset('assets/images/icons/add.png') }}"
                                             alt="add-feature" />&nbsp;Add
                                     </button>
+                                    @else
+                                    <button type="button" class="btn remove-btn">
+                                        <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-feature" />
+                                    </button>
+                                    @endif
+                                    
                                 </div>
+                            @endforeach
+                         
                             </div>
+
                         </div>
 
                         <!-- Conditions -->
                         <div class="row mt-2">
                             <label for="condition" class="form-label label-color field-label">Conditions</label>
                             <div class="col-5 mb-3" id="condition-fields">
+                                @foreach($service->conditions as $key => $condition)
                                 <div class="d-flex mb-2 form-field">
                                     <input class="form-control form-control-sm" type="text" name="condition[]"
-                                        id="condition" placeholder="Enter service conditions" value="">
+                                        id="condition" placeholder="Enter service conditions" value="{{ $condition->name }}">
+                                    @if ($key == 0) 
                                     <button type="button" id="add-condition-data-btn"
                                         class="btn btn-orange action-button" style="width: 30%;">
                                         <img src="{{ asset('assets/images/icons/add.png') }}"
                                             alt="add-condition" />&nbsp;Add
                                     </button>
+                                    @else
+                                    <button type="button" class="btn remove-btn">
+                                        <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-condition" />
+                                    </button>
+                                    @endif
                                 </div>
+                                @endforeach
                             </div>
                         </div>
 
-                        <div class="row mb-3 mt-2 d-none">
-                            <div class="col-md-12">
-                                <div class="">
-                                    <label for="minimum-guest" class="form-label field-label label-color">Do you want
-                                        to accept special
-                                        requests?</label>
+                
+                        <hr>
+                        @foreach($service->adOns as $key => $adOn)
+                        <div class="add-on-name add-on-div">
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="location-name" class="form-label field-label label-color">What is the
+                                        title of the addon?</label>
+                                    <input dir="auto" type="text" id="add-ons" class="form-control add_on_name border border-danger"
+                                        name="add_on_name[]" placeholder="Add-on name" value="{{ $adOn->name }}">
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input special_request" type="checkbox"
-                                        name="special_request_yes" id="special_request_yes" value="yes">
-                                    <label class="form-check-label" for="special_request_yes">Yes</label>
+                            </div>
+                            <div class="row">
+                                <label for="description" class="form-label field-label label-color">What is the price of
+                                    the add-on?</label>
+                                <div class="col-3">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="price">QAR</span>
+                                        <input type="number" placeholder="0" class="form-control" required
+                                            name="add_on_price[]" min="0" value="{{ $adOn->price }}" step="0.01" title="Amount"
+                                            pattern="^\d+(?:\.\d{1,2})?$">
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input special_request" type="checkbox"
-                                        name="special_request_no" id="special_request_no" value="no">
-                                    <label class="form-check-label" for="special_request_no">No</label>
+                            </div>
+                            <div class="row">
+                                <div class="d-flex bd-highlight mb-3 remove-btn-div d-none">
+                                    <div class="p-2 bd-highlight w-75">
+                                        <hr>
+                                    </div>
+                                    <div class="ms-auto p-2 bd-highlight">
+                                        <button type="button" class="btn btn-orange remove-addon-data-btn"><img
+                                                src="{{ asset('assets/images/icons/remove-circle.png') }}"
+                                                alt="remove-circle.png" /></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <hr>
+                        @endforeach
+
                         <!-- Add On Fields -->
                         <div class="add-on-name add-on-div cloneable d-none">
                             <div class="row">
@@ -264,6 +304,7 @@
                                 </div>
                             </div>
                         </div>
+                      
 
                         <div class="row mb-3 mt-2">
                             <div class="d-flex flex-row">
@@ -279,11 +320,10 @@
 
 
                         <div class="row">
-                            <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-outline-secondary save-for-later" style="width: 175px;">Save for
-                                    Later</button>
+                            <div class="d-flex">
                                 <button type="submit"
-                                    class="btn btn-warning text-white publish-service" style="width: 175px;">Publish</button>
+                                    class="btn btn-warning text-white publish-service" style="width: 175px;">Update Service</button>
+                                <button type="button" class="btn btn-outline-secondary ms-2" style="width: 175px;">Back</button>
                             </div>
                         </div>
 
@@ -291,34 +331,6 @@
                     <!--./End Available packages and payment plan -->
                 </div>
             </form>
-            @else
-            <div class="modal fade" id="help-go-to-modal" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="help-go-to-modalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="help-go-to-modalLabel"><i
-                                    class="bi bi-info-circle icon-info text-warning"></i>&nbsp;&nbsp; Not Assigned</h5>
-
-                        </div>
-                        <div class="modal-body">
-                            <div class="row g-3 align-items-center mb-3">
-                                <h5 class="fs-3">Please contact administrator!</h5>
-                                <p class="field-label label-color mb-0">Your company is not yet assigned to a service.
-                                </p>
-                                <p class="field-label label-color mb-0">WhatsApp us: <span
-                                        class="fs-5 fw-semibold">+974-74477814</span></p>
-                                <p class="field-label label-color fs-5"><i class="bi bi-info-lg icon-info"></i>&nbsp;Do
-                                    not share number with customers this is only for vendors.</p>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="/services" class="btn btn-warning text-white">Back</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
         </div>
     </div>
 </div>
@@ -327,9 +339,8 @@
 @section('content_javascript')
 <script type="text/javascript">
     $(document).ready(function () {
-        @if (!$hasServiceType)
-            $('#help-go-to-modal').modal('show')
-        @endif
+
+  
 
         var translation = {
             en: {
@@ -406,10 +417,11 @@
             $('#add-gallery-data-file').click()
         })
 
-        var currentLocale = 'en';
+      
+        let currentLocale = 'en';
         $('#translation-toggle').click(function () {
             currentLocale = currentLocale === 'en' ? 'ar' : 'en';
-            $('.create-service-form').attr('dir', currentLocale === 'ar' ? 'rtl' : 'ltr');
+            $('.edit-service-form').attr('dir', currentLocale === 'ar' ? 'rtl' : 'ltr');
             $('#service-locale').val(currentLocale);
             updateFieldTranslation(currentLocale);
         });
