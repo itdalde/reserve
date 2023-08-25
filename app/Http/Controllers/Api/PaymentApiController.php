@@ -58,7 +58,7 @@ class PaymentApiController extends Controller
             $userPromo->promotion_id =   $promotion->id;
             $userPromo->save();
         }
-        return sendResponse($result, $result['returnCode'] == 200 ? "Success" : "Failed");
+        return sendResponse($result, isset($result['returnCode']) && $result['returnCode'] == 200 ? "Success" : "Failed");
     }
 
     public function getProcessPayment(Request $request)
