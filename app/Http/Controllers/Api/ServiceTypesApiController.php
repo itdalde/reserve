@@ -24,6 +24,7 @@ class ServiceTypesApiController extends Controller
      */
     public function getServices(Request $request): JsonResponse
     {
+        $total = 0;
         $data = $request->all();
         $serviceTypes = [];
 
@@ -101,10 +102,17 @@ class ServiceTypesApiController extends Controller
             ->whereIn('id', $companyIds)
             ->get()
             ->toArray();
+        $totalByCompany = [];
 
+        foreach ($services as $i => $service) {
+            if (isset($service['total_completed_orders']) && $service['total_completed_orders']) {
+                foreach ($service['total_completed_orders'] as $r) {
+                    $totalByCompany[$service['company_id']] = (float)$r['total'];
+                }
+            }
+        }
         foreach ($serviceTypes as $k => $serviceType) {
             $companies = [];
-
             foreach ($services as $i => $service) {
                 if ($serviceType['id'] == $service['service_type']['id']) {
                     foreach ($providers as $key => $provider) {
@@ -153,6 +161,7 @@ class ServiceTypesApiController extends Controller
                                 unset($services[$i]);
                             } else {
                                 $providers[$key]['services'][] = $services[$i] ;
+                                $providers[$key]['total_orders'] = $totalByCompany[$service['company_id']] ?? 0;
                                 $companies[] = $providers[$key];
                             }
                         }
@@ -211,6 +220,7 @@ class ServiceTypesApiController extends Controller
      */
     public function getServicesByOccasionId(Request $request, $occasion_type_id): JsonResponse
     {
+        $total = 0;
         $serviceTypes = OccasionServiceTypePivot::where('occasion_id', $occasion_type_id)->pluck('service_type_id')->toArray();
         $servicesQuery = OccasionEvent::whereIn('service_type', $serviceTypes)
             ->where(function ($query) {
@@ -253,6 +263,11 @@ class ServiceTypesApiController extends Controller
             foreach ($provider['services'] as $key => $service) {
                 $providers[$k]['base_price'] = $service['price'];
                 if ($service['active'] == 1) {
+                    if(isset($service['total_completed_orders']) && $service['total_completed_orders']) {
+                        foreach ($service['total_completed_orders'] as $r) {
+                            $total += (float) $r['total'];
+                        }
+                    }
                     $providers[$k]['services'][$key]['features'] = Feature::where('service_id', $service['id'])
                         ->get()
                         ->toArray();
@@ -284,6 +299,8 @@ class ServiceTypesApiController extends Controller
                             return $item['date'];
                         }, $unavailableDates) : [];
                     }
+
+                    $providers[$k]['total_orders'] = $total;
                 } else {
                     unset($providers[$k]['services'][$key]);
                 }

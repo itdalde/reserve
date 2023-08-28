@@ -159,6 +159,7 @@ class ServicesApiController extends Controller
     {
         $service_type_id = (int) $service_type_id;
         $providers = [];
+        $total = 0;
         if($service_type_id) {
             $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();
             $usersIds = [];
@@ -194,6 +195,11 @@ class ServicesApiController extends Controller
                     ->toArray();
                 $serviceType = $provider['service_type'];
                 foreach ($services as $i => $service) {
+                    if(isset($service['total_completed_orders']) && $service['total_completed_orders']) {
+                        foreach ($service['total_completed_orders'] as $x => $r) {
+                            $total += (float) $r['total'];
+                        }
+                    }
                     $availableDates = AvailableDates::where('service_id', $service['id'])
                         ->where('status', 1)
                         ->where('date_obj', '<>', null)
@@ -233,6 +239,7 @@ class ServicesApiController extends Controller
 
                 }
 
+                $providers[$k]['total_orders'] = $total;
                 if($services) {
                     $providers[$k]['services'] = $services;
                     $providers[$k]['base_price'] = (double) $provider['base_price'];
