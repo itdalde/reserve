@@ -70,9 +70,10 @@
                             <ul class="dropdown-menu" aria-labelledby="occasion-filter-dropdown">
                                 @if (isset($occasionTypes))
                                 @foreach ($occasionTypes as $occasionType)
-                                <li><a class="dropdown-item occasion-filter-dropdown-li"
-                                        data-id="{{ $occasionType['id'] }}" href="#">{{ $occasionType['name'] }}</a>
-                                </li>
+                                    <li><a class="dropdown-item occasion-filter-dropdown-li"
+                                            data-id="{{ $occasionType['id'] }}" href="#">{{ $occasionType['name'] }}</a>
+                                    </li>
+                                    @break
                                 @endforeach
                                 @endif
                             </ul>
@@ -86,10 +87,12 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="service-filter-dropdown">
                                 @if (isset($serviceTypes))
-                                @foreach ($serviceTypes as $serviceType)
-                                <li><a class="dropdown-item service-filter-dropdown-li"
+                                    @foreach ($serviceTypes as $serviceType)
+                                        <li><a class="dropdown-item service-filter-dropdown-li"
                                         data-id="{{ $serviceType['id'] }}" href="#">{{ $serviceType['name'] }}</a></li>
-                                @endforeach
+
+                                        @break
+                                    @endforeach
                                 @endif
 
                             </ul>
@@ -240,24 +243,12 @@
                                             <div class="fs-5 fw-light">
                                                 <p class="mb-0">
                                                     <span class="badge"
-                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{
                                                             \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
                                                              }}</span>
                                                     </p>
                                                 <p class="mb-0">
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{
-                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
-                                                }}</span>
                                             </p>
-                                             
-                                                @if ($service->occasion)
-                                                @foreach ($service->occasion as $srv)
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion
-                                                    ? $srv->occasion->name : '' }}</span>
-                                                @endforeach
-                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -379,23 +370,10 @@
                                             <div class="fs-5 fw-light">
                                                 <p class="mb-0">
                                                     <span class="badge"
-                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{
                                                             \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
                                                              }}</span>
                                                     </p>
-                                                <p class="mb-0">
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{
-                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
-                                                }}</span>
-                                            </p>
-                                                @if ($service->occasion)
-                                                @foreach ($service->occasion as $srv)
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion
-                                                    ? $srv->occasion->name : '' }}</span>
-                                                @endforeach
-                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -517,23 +495,10 @@
                                             <div class="fs-5 fw-light">
                                                 <p class="mb-0">
                                                     <span class="badge"
-                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{
                                                             \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
                                                              }}</span>
                                                     </p>
-                                                <p class="mb-0">
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{
-                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
-                                                }}</span>
-                                            </p>
-                                                @if ($service->occasion)
-                                                @foreach ($service->occasion as $srv)
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion
-                                                    ? $srv->occasion->name : '' }}</span>
-                                                @endforeach
-                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -653,23 +618,11 @@
                                             <div class="fs-5 fw-light">
                                                 <p class="mb-0">
                                                     <span class="badge"
-                                                        style="background-color: #d9e9ff; color: #48484A;">{{ 
+                                                        style="background-color: #d9e9ff; color: #48484A;">{{
                                                             \App\Models\ServiceType::where('id', Auth::user()->company->service_type_id)->get()[0]->name
-                                                             }}</span>
-                                                    </p>
-                                                <p class="mb-0">
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{
-                                                        \App\Models\ServiceType::where('id', $service->service_type)->get()[0]->name
-                                                }}</span>
-                                            </p>
-                                                @if ($service->occasion)
-                                                @foreach ($service->occasion as $srv)
-                                                <span class="badge"
-                                                    style="background-color: #d9e9ff; color: #48484A;">{{ $srv->occasion
-                                                    ? $srv->occasion->name : '' }}</span>
-                                                @endforeach
-                                                @endif
+                                                             }}
+                                                    </span>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -1335,14 +1288,14 @@
             });
             conditionUl.appendTo('.service-conditions');
         }
-        
+
         if (serviceAdOns) {
             var adO = serviceAdOns.split(', ');
             let servAdOn = $('<ul class="fcs-listing">');
             $.each(adO, function (index, value) {
                 if (value) {
                     $('<li>').html('<span class="bi bi-arrow-right-circle"></span> ' + value).appendTo(servAdOn)
-                } 
+                }
             });
             servAdOn.appendTo('.service-adOns');
         }

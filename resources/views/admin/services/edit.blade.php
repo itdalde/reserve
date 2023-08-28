@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('services.update', $service->id) }}" method="post" enctype="multipart/form-data" class="edit-service-form" 
+            <form action="{{ route('services.update', $service->id) }}" method="post" enctype="multipart/form-data" class="edit-service-form"
                 style="margin-top: -20px;">
                 @csrf
                 @method('put')
@@ -109,12 +109,12 @@
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
-                                        id="per_guest" value="" {{ $service->paymentPlan->plan_id == 1 ? 'checked' : '' }}>
+                                        id="per_guest" value="1" {{ $service->paymentPlan->plan_id == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="per_guest">Per Guest</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
-                                        id="per_package" value="" {{ $service->paymentPlan->plan_id == 2 ? 'checked' : '' }}>
+                                        id="per_package" value="2" {{ $service->paymentPlan->plan_id == 2 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="per_package">Per Package</label>
                                 </div>
                             </div>
@@ -211,7 +211,7 @@
                                         <img src="{{ asset('assets/images/icons/remove-circle.png') }}" alt="remove-feature" />
                                     </button>
                                     @endif
-                                    
+
                                 </div>
                             @endforeach
                             @else
@@ -225,7 +225,7 @@
                                 </button>
                             </div>
                             @endif
-                         
+
                             </div>
 
                         </div>
@@ -239,7 +239,7 @@
                                 <div class="d-flex mb-2 form-field">
                                     <input class="form-control form-control-sm" type="text" name="condition[]"
                                         id="condition" placeholder="Enter service conditions" value="{{ $condition->name }}">
-                                    @if ($key == 0) 
+                                    @if ($key == 0)
                                     <button type="button" id="add-condition-data-btn"
                                         class="btn btn-orange action-button" style="width: 30%;">
                                         <img src="{{ asset('assets/images/icons/add.png') }}"
@@ -266,7 +266,7 @@
                             </div>
                         </div>
 
-                
+
                         <hr>
                         @foreach($service->adOns as $key => $adOn)
                         <div class="add-on-name add-on-div">
@@ -340,7 +340,7 @@
                                 </div>
                             </div>
                         </div>
-                      
+
 
                         <div class="row mb-3 mt-2">
                             <div class="d-flex flex-row">
@@ -376,7 +376,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-  
+
 
         var translation = {
             en: {
@@ -456,7 +456,7 @@
             $('#add-gallery-data-file').click()
         })
 
-      
+
         let currentLocale = $('#service-locale').val();
         $('#translation-toggle').click(function () {
             currentLocale = currentLocale === 'en' ? 'ar' : 'en';
@@ -468,7 +468,7 @@
         @if ($locale)
             var locale = $('#service-locale').val();
             if (locale == 'ar') {
-                $('.edit-service-form').attr('dir', 'rtl');    
+                $('.edit-service-form').attr('dir', 'rtl');
                 updateFieldTranslation(locale);
             }
         @endif
