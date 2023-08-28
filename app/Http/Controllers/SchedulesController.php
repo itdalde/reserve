@@ -30,7 +30,7 @@ class SchedulesController extends Controller
      */
     public function index()
     {
-        
+
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         $schedules = Schedule::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->get();
         return view('admin.schedules.index', compact('services', 'schedules'));
@@ -101,7 +101,7 @@ class SchedulesController extends Controller
                 $date->addDays(1);
             }
         } else if ($request->type == 2 || $request->type == 3) {
-        
+
             while ($date <= $end) {
                 AvailableDates::where('company_id', auth()->user()->company->id)
                 ->where('service_id', $request->service_id)
@@ -113,7 +113,7 @@ class SchedulesController extends Controller
                 ->whereIn('status', [1, 3])
                 ->where('date_obj', $date->format('Y-m-d'))
                 ->first();
-                
+
                 if ($isAvailable == null) {
                     if ($date > Carbon::today()) {
                         $dates[] = [
@@ -136,10 +136,16 @@ class SchedulesController extends Controller
                 $existingDate->save();
             } else {
                 // $service = OccasionEvent::where('company_id', auth()->user()->company->id)->orderBy('id', 'DESC')->first();
-                $avail = new AvailableDates();
                 $selectedDate = Carbon::createFromFormat('d/m/Y',  $request->date);
+                $date = $selectedDate->format('Y-m-d');
+                $avail = AvailableDates::where('service_id', $request->service_id)
+                    ->whereDate('date_obj',  $date)
+                    ->first() ;
+                if(!$avail) {
+                    $avail = new AvailableDates();
+                }
                 $avail->date = $request->date;
-                $avail->date_obj =  $selectedDate->format('Y-m-d');
+                $avail->date_obj =  $date;
                 $avail->service_id = $request->service_id;
                 $avail->company_id = auth()->user()->company->id;
                 $avail->status = 1;
@@ -153,7 +159,12 @@ class SchedulesController extends Controller
         $services = OccasionEvent::where('company_id', auth()->user()->company->id)->where('id', $request->service_id)->orderBy('id', 'DESC')->get();
         foreach ($services as $service) {
             foreach ($dates as $date) {
-                $avail = new AvailableDates();
+                $avail = AvailableDates::where('service_id', $request->service_id)
+                    ->whereDate('date_obj',  $date['new_format'])
+                    ->first() ;
+                if(!$avail) {
+                    $avail = new AvailableDates();
+                }
                 $avail->date = $date['old_format'];
                 $avail->date_obj =  $date['new_format'];
                 $avail->service_id = $request->service_id;
