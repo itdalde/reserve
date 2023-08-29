@@ -483,7 +483,7 @@
 
         const imageContainer = document.getElementById("service-image-gallery-holder1");
         $('body').on('change', '#add-gallery-data-file', function () {
-            $('.new-added-mg-temp').remove();
+            // $('.new-added-mg-temp').remove();
             var files = this.files;
             for (let i = 0; i < files.length; i++) {
                 renderImage(files[i]);
