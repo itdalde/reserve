@@ -57,8 +57,8 @@ class ServiceController extends Controller
         try {
             $data = $request->all();
             $service = OccasionEvent::where('id',$data['id'])->first();
-            if ($request->file('featured_image')) {
-                $file = $request->file('featured_image');
+            if ($request->file('service_gallery')) {
+                $file = $request->file('service_gallery');
                 $filename = $this->uploadImage($file, $service);
                 $service->image = $filename;
             }
