@@ -157,6 +157,7 @@ class ServicesApiController extends Controller
 
     public function getProvidersByServiceType(ProviderByServiceTypeRequest $request, $service_type_id): JsonResponse
     {
+        $companies = [];
         $service_type_id = (int) $service_type_id;
         $providers = [];
         $total = 0;
@@ -239,16 +240,18 @@ class ServicesApiController extends Controller
 
                 }
 
-                $providers[$k]['total_orders'] = $total;
+                $provider['total_orders'] = $total;
                 if($services) {
-                    $providers[$k]['services'] = $services;
-                    $providers[$k]['base_price'] = (double) $provider['base_price'];
+                    $provider['services'] = $services;
+                    $provider['base_price'] = (double) $provider['base_price'];
+                    $companies[] = $provider;
                 } else {
                     unset( $providers[$k] );
                 }
             }
         }
-        return sendResponse($providers, 'Get providers by service type');
+        $response = $companies;
+        return sendResponse($response, 'Get providers by service type');
     }
 
     public function getServicesByProviders(Request $request, $provider_id)
