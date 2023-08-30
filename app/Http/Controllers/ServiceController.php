@@ -271,7 +271,7 @@ class ServiceController extends Controller
         $price->occasion_event_id = $service->id;
         $price->plan_id = $data['plan_id'] ?? 1;
         $price->service_price = $data['service_price'];
-        $price->package = $data['package_name'] ?? 'Per person';
+        $price->package = $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package'; // $data['package_name'] ?? 'Per person';
         $price->min_capacity = $data['package_min_capacity'] ?? 0;
         $price->max_capacity = $data['package_max_capacity'] ?? 0;
         $price->package_details = $data['package_details'] ?? '-';
@@ -507,5 +507,11 @@ class ServiceController extends Controller
                 'status' => 'Resumed'
             ]);
         return redirect()->back()->with('success', 'Service is resumed');
+    }
+
+    public function deleteEventImage(Request $request) {
+
+        EventImages::where('id', $request->id)->delete();
+        return json_encode('Service Image Deleted');
     }
 }

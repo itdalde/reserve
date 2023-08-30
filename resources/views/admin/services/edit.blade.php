@@ -13,6 +13,7 @@
                     {{ session('message') }}
                 </div>
                 @endif
+                <div class="image-event-deleted"></div>
                 <div class="d-flex justify-content-between flex-wrap w-100">
                     <h5 class="card-title page-title label-color">Edit service </h5>
                     <div class="d-flex flex-wrap">
@@ -80,13 +81,22 @@
                             <label for="service_images" class="form-label field-label label-color">Service
                                 Images&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="d-flex">
-                                <div class="d-flex">
-                                    @foreach($service->images as $key => $image)
-                                    <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" style="width: 250px; height: 180px; object-fit: contain;"/>
-                                    @endforeach
-                                </div>
+                                
                                 <div id="service-image-gallery-holder1"
-                                    class="d-flex justify-content-between service-image-gallery-holder1  flex-wrap">
+                                    class="d-flex justify-content-between service-image-gallery-holder1 flex-row">
+                                    @foreach($service->images as $key => $image)
+                                    <div class="image-container" style="position: relative;">
+                                        <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" style="width: 250px; height: 180px; object-fit: contain;"/>
+                                        <div style="position: absolute; top: 50px; left: 55px;">
+                                            <button type="button" class="view-img-button" style="border: 0px; background: transparent; filter: brightness(2); scale: 2; padding-right: 17px;">
+                                                <img src="http://localhost:8000/assets/images/icons/preview.png" alt="delete-img">
+                                            </button>
+                                            <button type="button" data-id="{{ $image->id }}" class="remove-img-button" style="border: 0px; background: transparent;">
+                                                <img src="http://localhost:8000/assets/images/icons/trash.png" alt="delete-img">
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </div>
                                 <button type="button" id="add-gallery-data-btn"
                                     class="btn btn-orange action-button"><img
@@ -528,9 +538,33 @@
             $('#add-ons').attr('placeholder', translation[lang].add_addon);
         }
 
+        $('.remove-img-button').click(function() {
+            $(this).closest('.image-container').remove();
+            let eventImageId = $(this).attr('data-id');
+            
+            $.ajax({
+                url: "{{ route('delete-event-image') }}",
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    id: eventImageId
+                },
+                beforeSend: function () {
+                    window.VIEW_LOADING();
+                }
+
+            }).done(function(response) {
+                window.HIDE_LOADING();
+                $('.image-event-deleted').addClass('alert alert-success').text(response.replace(/['"]+/g, ''));
+            })
+            
+        });
+
         const imageContainer = document.getElementById("service-image-gallery-holder1");
         $('body').on('change', '#add-gallery-data-file', function () {
-            $('.new-added-mg-temp').remove();
+            // $('.new-added-mg-temp').remove();
             var files = this.files;
             for (let i = 0; i < files.length; i++) {
                 renderImage(files[i]);
@@ -540,25 +574,51 @@
             const reader = new FileReader();
             reader.onload = function (event) {
 
-                // In-progress
-                // const imgContainer = document.createElement("div");
-                // imgContainer.classList.add("image-container");
+              // In-progress
+              const imgContainer = document.createElement("div");
+                imgContainer.classList.add("image-container");
+                imgContainer.style.position = "relative";
 
                 const img = document.createElement("img");
                 img.src = event.target.result;
                 img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
-                imageContainer.appendChild(img);
+                img.style.filter = "blur(1.5px)"
+                imgContainer.appendChild(img);
+
+                let btnContainer = document.createElement("div");
+                btnContainer.style.position = "absolute";
+                btnContainer.style.top = "50px";
+                btnContainer.style.left = "55px";
+                // remove button
+                const removeButton = document.createElement("button");
+                removeButton.type = "button";
+                removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' />";
+                removeButton.classList.add("remove-img-button");
+                removeButton.style.border = 0;
+                removeButton.style.background = "transparent";
+                removeButton.addEventListener("click", function() {
+                    imgContainer.remove();
+                    alert("REMOVED IMAGE");
+                });
+
+                const viewImage = document.createElement("button");
+                viewImage.innerHTML = "<img src='{{ asset('/assets/images/icons/preview.png') }}' alt='delete-img' />";
+                viewImage.classList.add("view-img-button");
+                viewImage.style.border = 0;
+                viewImage.style.background = "transparent";
+                viewImage.style.filter = "brightness(2)";
+                viewImage.style.scale = 2;
+                viewImage.style.paddingRight = "17px";
+                viewImage.addEventListener("click", function() {
+                    // imgContainer.remove();
+                    // review image
+                });
 
 
-                // // remove button
-                // const removeButton = document.createElement("button");
-                // removeButton.textContent = "Remove";
-                // removeButton.classList.add("remove-button");
-                // removeButton.addEventListener("click", function() {
-                //     imgContainer.remove();
-                // });
-                // imgContainer.appendChild(removeButton);
-                // imageContainer.appendChild(imgContainer);
+                btnContainer.appendChild(viewImage)
+                btnContainer.appendChild(removeButton)
+                imgContainer.appendChild(btnContainer);
+                imageContainer.appendChild(imgContainer);
             };
             reader.readAsDataURL(file);
         }
