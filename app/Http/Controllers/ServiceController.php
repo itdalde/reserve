@@ -255,8 +255,8 @@ class ServiceController extends Controller
             $avail->status = 0;
             $avail->save();
         }
-        if ($request->file('images')) {
-            foreach ($request->file('images') as $file) {
+        if ($request->file('service_gallery')) {
+            foreach ($request->file('service_gallery') as $file) {
                 $this->uploadImage($file, $service);
             }
         }
@@ -386,13 +386,13 @@ class ServiceController extends Controller
         $service->locale = $data['locale'] ?? 'en';
         $service->save();
 
-        if ($request->file('images')) {
-            foreach ($request->file('images') as $file) {
+        if ($request->file('service_gallery')) {
+            foreach ($request->file('service_gallery') as $file) {
                 $this->uploadImage($file, $service);
             }
         }
-        if ($request->file('service_gallery')) {
-            $file = $request->file('service_gallery');
+        if ($request->file('featured_image')) {
+            $file = $request->file('featured_image');
             $filename = $this->uploadImage($file, $service);
             $service = OccasionEvent::where('id',$service->id)->first();
             $service->image = $filename;

@@ -85,7 +85,7 @@
                                     class="btn btn-orange action-button"><img
                                         src="{{ asset('assets/images/icons/add.png') }}" alt="add.png"> Add
                                 </button>
-                                <input name="service_gallery" id="add-gallery-data-file"
+                                <input name="service_gallery[]" id="add-gallery-data-file"
                                     accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
                                     class="d-none" required>
                             </div>
