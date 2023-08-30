@@ -25,7 +25,7 @@ class OccasionEventPriceFactory extends Factory
             //
             'occasion_id' => $this->faker->randomNumber(2),
             'plan_id' => $this->faker->randomNumber(2),
-            'service_unit' => 'per_person',
+            'service_unit' => 'per_guest',
             'service_price' => $this->faker->numberBetween(10, 100),
             'package' => $this->faker->streetName,
             'max_capacity' => $this->faker->numberBetween(50, 100),

@@ -471,6 +471,10 @@ class ServiceController extends Controller
     }
 
     public function publishService(Request $request) {
+        $exist = AvailableDates::where('company_id', auth()->user()->company->id)->where('service_id', $request->service_id)->first();
+        if (!$exist) {
+            return redirect()->back()->with('success', 'Please set your availability dates first.');
+        }
         $event = OccasionEvent::where('id', $request->service_id)->first();
         $event->active = 1; // publish
         $event->save();
