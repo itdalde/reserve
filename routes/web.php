@@ -34,6 +34,8 @@ Route::get('/fetch-available-dates-per-service', [\App\Http\Controllers\Availabl
 Route::get('/admin/orders', [OrderController::class, 'superList'])->name('orders.admin');
 Route::get('/admin/orders/view', [OrderController::class, 'superListView'])->name('orders.admin.view');
 
+Route::delete('/delete-event-image', [ServiceController::class, 'deleteEventImage'])->name('delete-event-image');
+
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/get-average-order', [OrderController::class, 'getAverageOrder'])->name('orders.getAverageOrder');
     Route::get('/calendar', [\App\Http\Controllers\SchedulesController::class, 'list'])->name('schedules.calendar');
