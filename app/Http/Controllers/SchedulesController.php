@@ -79,9 +79,9 @@ class SchedulesController extends Controller
          */
         $response = [];
         if ($request->type == 1) {
-            // AvailableDates::where('company_id', auth()->user()->company->id)
-            //     ->where('service_id', $request->service_id)
-            //     ->delete();
+            AvailableDates::where('company_id', auth()->user()->company->id)
+                ->where('service_id', $request->service_id)
+                ->delete();
             while ($date <= $end) {
                 $isAvailable = AvailableDates::where('company_id', auth()->user()->company->id)
                 ->where('service_id', $request->service_id)
