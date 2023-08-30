@@ -260,8 +260,8 @@ class ServiceController extends Controller
                 $this->uploadImage($file, $service);
             }
         }
-        if ($request->file('featured_image')) {
-            $file = $request->file('featured_image');
+        if ($request->file('service_gallery')) {
+            $file = $request->file('service_gallery');
             $filename = $this->uploadImage($file, $service);
             $service = OccasionEvent::where('id',$service->id)->first();
             $service->image = $filename;
@@ -391,8 +391,8 @@ class ServiceController extends Controller
                 $this->uploadImage($file, $service);
             }
         }
-        if ($request->file('featured_image')) {
-            $file = $request->file('featured_image');
+        if ($request->file('service_gallery')) {
+            $file = $request->file('service_gallery');
             $filename = $this->uploadImage($file, $service);
             $service = OccasionEvent::where('id',$service->id)->first();
             $service->image = $filename;
