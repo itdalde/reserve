@@ -87,7 +87,7 @@
                                     @foreach($service->images as $key => $image)
                                     <div class="image-container" style="position: relative;">
                                         <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
-                                        <div style="position: absolute; top: 50px; left: 55px;">
+                                        <div style="position: absolute; top: 68px; left: 88px;">
                                             <button type="button" class="view-img-button" style="border: 0px; background: transparent; filter: brightness(2); scale: 2; padding-right: 17px;">
                                                 <img src="http://localhost:8000/assets/images/icons/preview.png" alt="delete-img">
                                             </button>

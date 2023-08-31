@@ -417,16 +417,22 @@ svg text {
 .image-preview {
     display: none;
     position: fixed;
+    width: 80%;
+    height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    background-color: #bfb9b9cc;
+    padding: 10px;
     border-radius: 5px;
+    
 }
 
 #preview-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
     max-width: 100%;
     max-height: 80vh;
 }
