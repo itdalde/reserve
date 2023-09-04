@@ -88,12 +88,9 @@
                                     @foreach($service->images as $key => $image)
                                     <div class="image-container" style="position: relative;">
                                         <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-bs-toggle="modal" data-bs-target="#service-gallery-modal" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
-                                        <div style="position: absolute; top: 68px; left: 88px;">
-                                            <button type="button" class="view-img-button" style="border: 0px; background: transparent; filter: brightness(2); scale: 2; padding-right: 17px;">
-                                                <img src="http://localhost:8000/assets/images/icons/preview.png" alt="delete-img">
-                                            </button>
+                                        <div style="position: absolute; top: 5px; left: 20px;">
                                             <button type="button" data-id="{{ $image->id }}" class="remove-img-button" style="border: 0px; background: transparent;">
-                                                <img src="http://localhost:8000/assets/images/icons/trash.png" alt="delete-img">
+                                                <img src="http://localhost:8000/assets/images/icons/trash.png" alt="delete-img" style="filter: brightness(0.5)">
                                             </button>
                                         </div>
                                     </div>
@@ -101,9 +98,6 @@
                                         <img src="{{ asset($image->image) }}" alt="service-image" role="img" class="w-100 h-auto"/>
                                     </div>
                                     @endforeach
-                                </div>
-                                <div class="image-preview">
-                                    <img src="" alt="Preview" id="preview-image">
                                 </div>
                                 <button type="button" id="add-gallery-data-btn"
                                     class="btn btn-orange action-button"><img
@@ -393,22 +387,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-
-        // const galleryImages = document.querySelectorAll('.gallery-image');
-        // const previewImage = document.getElementById('preview-image');
-        // const imagePreviewContainer = document.querySelector('.image-preview');
-
-        // galleryImages.forEach((image) => {
-        //     image.addEventListener('click', () => {
-        //         const imageUrl = image.getAttribute('data-preview');
-        //         previewImage.src = imageUrl;
-        //         imagePreviewContainer.style.display = 'block';
-        //     });
-        // });
-
-        // imagePreviewContainer.addEventListener('click', () => {
-        //     imagePreviewContainer.style.display = 'none';
-        // });
 
         var translation = {
             en: {
