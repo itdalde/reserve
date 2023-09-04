@@ -1235,8 +1235,8 @@
         paymentPlans.forEach(function (e) {
             if (e != '') {
                 let plan = e.split(':')
-                let planType = plan[0].split('id')
-                let symbol = plan[1].split(' ')
+                let planType = plan[0]?.split('id')
+                let symbol = plan[1]?.split(' ')
                 $('.service-available-payment-plans').append(
                     '<div class="appended-payment-plans p-2 bd-highlight"><p>' +
                     planType[1] + '</p>' +
@@ -1335,9 +1335,9 @@
         eventImages.forEach(function (e) {
             if (e != '') {
                 $('.service-images').append(
-                    '<div class="col-sm-3 appended-images-data"> <div class="thumbnail"><input type="hidden" value="' +
+                    '<div class="col-sm-3 appended-images-data"><div class="thumbnail gallery"><input type="hidden" value="' +
                     e +
-                    '"><button class="close-service-images edit-trigger-show d-none" type="button">×</button><img class="img-fluid" style=" width: 158px;" src="' +
+                    '"><button class="close-service-images edit-trigger-show d-none" type="button">×</button><img class="img-fluid gallery-image" data-preview="'+e+'" style=" width: 158px;" src="' +
                     e + '" alt="e"></div></div>');
             }
         });
