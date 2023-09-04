@@ -630,11 +630,11 @@
           
             <div id="service-gallery-carousel" class="carousel slide h-100" data-bs-touch="false" data-interval="false">
                 <div id="service-gallery-images" class="carousel-inner"></div>
-                <button class="carousel-control-prev bg-secondary bg-gradient" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="prev">
+                <button class="carousel-control-prev bg-secondary bg-gradient opacity-25" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next bg-secondary bg-gradient" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="next">
+                <button class="carousel-control-next bg-secondary bg-gradient opacity-25" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
