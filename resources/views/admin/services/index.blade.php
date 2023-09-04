@@ -1345,7 +1345,7 @@
                 `;
                 $('.service-images').append(imgHolder);
                 let galleryImages = `
-                    <div class="carousel-item">
+                    <div class="carousel-item d-block">
                         <img src="${image}" alt="service-image" role="img" class="w-100 h-auto"/>
                     </div>
                 `;
