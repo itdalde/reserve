@@ -94,7 +94,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="carousel-item {{ $key==0?'active':''}} d-none">
+                                    <div class="carousel-item {{ $key==0?'active':''}} d-none" data-bs-interval="false">
                                         <img src="{{ asset($image->image) }}" alt="service-image" role="img" class="w-100 h-auto"/>
                                     </div>
                                     @endforeach

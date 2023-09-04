@@ -628,7 +628,7 @@
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
           
-            <div id="service-gallery-carousel" class="carousel slide h-100" data-bs-touch="false" data-interval="false">
+            <div id="service-gallery-carousel" class="carousel slide" data-bs-touch="false" data-bs-interval="false">
                 <div id="service-gallery-images" class="carousel-inner"></div>
                 <button class="carousel-control-prev bg-secondary bg-gradient opacity-25" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
