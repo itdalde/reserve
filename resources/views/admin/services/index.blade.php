@@ -1237,7 +1237,7 @@
                 let plan = e.split(':')
                 let planType = plan[0]?.split('id')
                 if (planType[1] !== undefined) {
-                    $('.service-available-payment-plans').append(`
+                    $('.service-available-payment-plans').empty().append(`
                         <div class="appended-payment-plans p-2 bd-highlight">
                             <p>${planType[1]}</p>
                         </div>
