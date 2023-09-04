@@ -537,7 +537,7 @@
                 img.addEventListener('click', function() {
                     $('body #service-gallery-carousel #service-gallery-images').empty().append(`
                         <div class="carousel-item active">
-                            <img src="${event.target.result}" alt="service-image" role="img" class="w-100" style="height: 100vh!important; object-fit: contain;"/>
+                            <img src="${event.target.result}" alt="service-image" role="img" class="w-100 h-auto"/>
                         </div>
                     `);
                 });
