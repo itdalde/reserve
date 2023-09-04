@@ -1247,6 +1247,7 @@
                     '</div>');
             }
         });
+        
 
         $('#edit-service-available_slot-input').val(availableSlot);
         $('#edit-service-start_available_time-input').val(startAvailableTime);
@@ -1344,16 +1345,15 @@
                     </div>
                 `;
                 $('.service-images').append(imgHolder);
-                let galleryImages = `
-                    <div class="carousel-item d-block">
+
+                $('body #service-gallery-carousel #service-gallery-images').append(`
+                    <div class="carousel-item ${key==0?'active':''}">
                         <img src="${image}" alt="service-image" role="img" class="w-100 h-auto"/>
                     </div>
-                `;
-
-                $('body #service-gallery-carousel #service-gallery-images').append(galleryImages)
-
+                `);
             }
         });
+      
 
 
         $('.service-description').text(description)
