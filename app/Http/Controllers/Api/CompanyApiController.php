@@ -42,7 +42,7 @@ class CompanyApiController extends Controller
                 if(!$services) {
                     unset($providers[$k]);
                 } else {
-                    $response = $providers[$k];
+                    $response[] = $providers[$k];
                 }
             } else {
                unset($providers[$k]);
