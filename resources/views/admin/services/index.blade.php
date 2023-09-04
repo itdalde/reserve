@@ -1332,15 +1332,29 @@
             }
         });
         $('.appended-images-data').remove();
-        eventImages.forEach(function (e) {
-            if (e != '') {
-                $('.service-images').append(
-                    '<div class="col-sm-3 appended-images-data"><div class="thumbnail gallery"><input type="hidden" value="' +
-                    e +
-                    '"><button class="close-service-images edit-trigger-show d-none" type="button">×</button><img class="img-fluid gallery-image" data-preview="'+e+'" style=" width: 158px;" src="' +
-                    e + '" alt="e"></div></div>');
+        eventImages.forEach(function (image, key) {
+            if (image != '') {
+                let imgHolder = `
+                    <div class="col-sm-3 appended-images-data">
+                        <div class="thumbnail gallery">
+                            <input type="hidden" value="${image}" />
+                            <button class="close-service-images edit-trigger-show d-none" type="button">×</button>
+                            <img class="img-fluid gallery-image" style=" width: 158px;" src="${image}" alt="e" data-bs-toggle="modal" data-bs-target="#service-gallery-modal">
+                        </div>
+                    </div>
+                `;
+                $('.service-images').append(imgHolder);
+                let galleryImages = `
+                    <div class="carousel-item">
+                        <img src="${image}" alt="service-image" role="img" class="w-100 h-auto"/>
+                    </div>
+                `;
+
+                $('body #service-gallery-carousel #service-gallery-images').append(galleryImages)
+
             }
         });
+
 
         $('.service-description').text(description)
         $('.service-type').text(serviceType)

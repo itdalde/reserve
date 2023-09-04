@@ -598,6 +598,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="activate-service-modal" tabindex="-1" aria-labelledby="activate-service-modal"
     data-id="activate-modal" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog">
@@ -618,6 +619,27 @@
                     <button type="submit" class="btn btn-warning text-white">Confirm</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="service-gallery-modal" tabindex="-1" aria-labelledby="service-gallery-modal"
+    data-id="gallery-modal" >
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+          
+            <div id="service-gallery-carousel" class="carousel slide" data-bs-touch="false" data-interval="false">
+                <div id="service-gallery-images" class="carousel-inner"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#service-gallery-carousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
