@@ -21,6 +21,7 @@ class CompanyApiController extends Controller
         }
 
         $providers = Company::whereIn('id',$usersIds)->with('serviceType', 'services', 'reviews')->get();
+        $response = [];
         foreach($providers as $k => $provider) {
             $services = [];
             if(isset($provider->services[0])) {
@@ -40,11 +41,13 @@ class CompanyApiController extends Controller
                 }
                 if(!$services) {
                     unset($providers[$k]);
+                } else {
+                    $response = $providers[$k];
                 }
             } else {
                unset($providers[$k]);
             }
         }
-        return sendResponse($providers, 'Get providers');
+        return sendResponse($response, 'Get providers');
     }
 }
