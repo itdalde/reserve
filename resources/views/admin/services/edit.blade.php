@@ -654,7 +654,7 @@
         $('#service-image-gallery-holder1')
 
         let galleryImages = $('.carousel-item').removeClass('d-none');
-        $('body #service-gallery-carousel #service-gallery-images').empty().append(galleryImages);
+        $('body #service-gallery-carousel #service-gallery-images').append(galleryImages);
     });
 </script>
 @endsection
