@@ -84,9 +84,10 @@
                                 
                                 <div id="service-image-gallery-holder1"
                                     class="d-flex justify-content-between service-image-gallery-holder1 flex-row gallery">
+                                    
                                     @foreach($service->images as $key => $image)
                                     <div class="image-container" style="position: relative;">
-                                        <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
+                                        <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-bs-toggle="modal" data-bs-target="#service-gallery-modal" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
                                         <div style="position: absolute; top: 68px; left: 88px;">
                                             <button type="button" class="view-img-button" style="border: 0px; background: transparent; filter: brightness(2); scale: 2; padding-right: 17px;">
                                                 <img src="http://localhost:8000/assets/images/icons/preview.png" alt="delete-img">
@@ -95,6 +96,9 @@
                                                 <img src="http://localhost:8000/assets/images/icons/trash.png" alt="delete-img">
                                             </button>
                                         </div>
+                                    </div>
+                                    <div class="carousel-item {{ $key==0?'active':''}} d-none">
+                                        <img src="{{ asset($image->image) }}" alt="service-image" role="img" class="w-100 h-auto"/>
                                     </div>
                                     @endforeach
                                 </div>
@@ -390,21 +394,21 @@
     $(document).ready(function () {
 
 
-        const galleryImages = document.querySelectorAll('.gallery-image');
-        const previewImage = document.getElementById('preview-image');
-        const imagePreviewContainer = document.querySelector('.image-preview');
+        // const galleryImages = document.querySelectorAll('.gallery-image');
+        // const previewImage = document.getElementById('preview-image');
+        // const imagePreviewContainer = document.querySelector('.image-preview');
 
-        galleryImages.forEach((image) => {
-            image.addEventListener('click', () => {
-                const imageUrl = image.getAttribute('data-preview');
-                previewImage.src = imageUrl;
-                imagePreviewContainer.style.display = 'block';
-            });
-        });
+        // galleryImages.forEach((image) => {
+        //     image.addEventListener('click', () => {
+        //         const imageUrl = image.getAttribute('data-preview');
+        //         previewImage.src = imageUrl;
+        //         imagePreviewContainer.style.display = 'block';
+        //     });
+        // });
 
-        imagePreviewContainer.addEventListener('click', () => {
-            imagePreviewContainer.style.display = 'none';
-        });
+        // imagePreviewContainer.addEventListener('click', () => {
+        //     imagePreviewContainer.style.display = 'none';
+        // });
 
         var translation = {
             en: {
@@ -669,6 +673,10 @@
             $(this).closest('.form-field').remove();
         });
 
+        $('#service-image-gallery-holder1')
+
+        let galleryImages = $('.carousel-item').removeClass('d-none');
+        $('body #service-gallery-carousel #service-gallery-images').append(galleryImages);
     });
 </script>
 @endsection
