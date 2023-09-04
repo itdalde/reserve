@@ -83,11 +83,11 @@
                             <div class="d-flex">
                                 
                                 <div id="service-image-gallery-holder1"
-                                    class="d-flex justify-content-between service-image-gallery-holder1 flex-row">
+                                    class="d-flex justify-content-between service-image-gallery-holder1 flex-row gallery">
                                     @foreach($service->images as $key => $image)
                                     <div class="image-container" style="position: relative;">
-                                        <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" style="width: 250px; height: 180px; object-fit: contain;"/>
-                                        <div style="position: absolute; top: 50px; left: 55px;">
+                                        <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
+                                        <div style="position: absolute; top: 68px; left: 88px;">
                                             <button type="button" class="view-img-button" style="border: 0px; background: transparent; filter: brightness(2); scale: 2; padding-right: 17px;">
                                                 <img src="http://localhost:8000/assets/images/icons/preview.png" alt="delete-img">
                                             </button>
@@ -98,11 +98,14 @@
                                     </div>
                                     @endforeach
                                 </div>
+                                <div class="image-preview">
+                                    <img src="" alt="Preview" id="preview-image">
+                                </div>
                                 <button type="button" id="add-gallery-data-btn"
                                     class="btn btn-orange action-button"><img
                                         src="{{ asset('assets/images/icons/add.png') }}" alt="add.png"> Add
                                 </button>
-                                <input name="images[]" id="add-gallery-data-file"
+                                <input name="service_gallery[]" id="add-gallery-data-file"
                                     accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
                                     class="d-none">
                             </div>
@@ -387,6 +390,21 @@
     $(document).ready(function () {
 
 
+        const galleryImages = document.querySelectorAll('.gallery-image');
+        const previewImage = document.getElementById('preview-image');
+        const imagePreviewContainer = document.querySelector('.image-preview');
+
+        galleryImages.forEach((image) => {
+            image.addEventListener('click', () => {
+                const imageUrl = image.getAttribute('data-preview');
+                previewImage.src = imageUrl;
+                imagePreviewContainer.style.display = 'block';
+            });
+        });
+
+        imagePreviewContainer.addEventListener('click', () => {
+            imagePreviewContainer.style.display = 'none';
+        });
 
         var translation = {
             en: {

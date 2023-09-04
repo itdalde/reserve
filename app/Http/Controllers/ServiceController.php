@@ -255,8 +255,8 @@ class ServiceController extends Controller
             $avail->status = 0;
             $avail->save();
         }
-        if ($request->file('images')) {
-            foreach ($request->file('images') as $file) {
+        if ($request->file('service_gallery')) {
+            foreach ($request->file('service_gallery') as $file) {
                 $this->uploadImage($file, $service);
             }
         }
@@ -386,8 +386,8 @@ class ServiceController extends Controller
         $service->locale = $data['locale'] ?? 'en';
         $service->save();
 
-        if ($request->file('images')) {
-            foreach ($request->file('images') as $file) {
+        if ($request->file('service_gallery')) {
+            foreach ($request->file('service_gallery') as $file) {
                 $this->uploadImage($file, $service);
             }
         }
@@ -471,6 +471,10 @@ class ServiceController extends Controller
     }
 
     public function publishService(Request $request) {
+        $exist = AvailableDates::where('company_id', auth()->user()->company->id)->where('service_id', $request->service_id)->first();
+        if (!$exist) {
+            return redirect()->back()->with('success', 'Please set your availability dates first.');
+        }
         $event = OccasionEvent::where('id', $request->service_id)->first();
         $event->active = 1; // publish
         $event->save();

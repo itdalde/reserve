@@ -44,7 +44,7 @@ class SchedulesController extends Controller
          }
 
         if ($request->ajax()) {
-            $response = $this->fetchData($service_id,$request->start,$request->end);
+            $response = $this->fetchData($service_id,$request->start,$request->end, false);
             return response()->json($response);
         }
         $servicesObj = OccasionEvent::where('company_id', auth()->user()->company->id);
@@ -86,7 +86,7 @@ class SchedulesController extends Controller
                 $isAvailable = AvailableDates::where('company_id', auth()->user()->company->id)
                 ->where('service_id', $request->service_id)
                 ->where('status', 2)
-                ->where('date_obj', $date->format('Y-m-d'))
+                ->where('date_obj', $date->format('Y-m-d 00:00:00'))
                 ->first();
                 if ($isAvailable == null) {
                     if ($date > Carbon::today()) {
@@ -106,12 +106,12 @@ class SchedulesController extends Controller
                 AvailableDates::where('company_id', auth()->user()->company->id)
                 ->where('service_id', $request->service_id)
                 ->whereIn('status', [1,2])
-                ->where('date_obj', $date->format('Y-m-d'))
+                ->where('date_obj', $date->format('Y-m-d 00:00:00'))
                 ->delete();
                 $isAvailable = AvailableDates::where('company_id', auth()->user()->company->id)
                 ->where('service_id', $request->service_id)
                 ->whereIn('status', [1, 3])
-                ->where('date_obj', $date->format('Y-m-d'))
+                ->where('date_obj', $date->format('Y-m-d 00:00:00'))
                 ->first();
 
                 if ($isAvailable == null) {
@@ -127,7 +127,7 @@ class SchedulesController extends Controller
         } else if ($request->type == 4) {
             AvailableDates::where('company_id', auth()->user()->company->id)
             ->where('service_id', $request->service_id)
-            ->whereBetween('date_obj', [$start->format('Y-m-d'), $end->format('Y-m-d')])
+            ->whereBetween('date_obj', [$start->format('Y-m-d 00:00:00'), $end->format('Y-m-d 00:00:00')])
             ->delete();
         } else if ($request->date) {
             $existingDate = AvailableDates::where('company_id', auth()->user()->company->id)->where('date', $request->date)->where('service_id', $request->service_id)->first();
@@ -151,7 +151,9 @@ class SchedulesController extends Controller
                 $avail->status = 1;
                 $avail->save();
             }
-            $response = $this->fetchData($request->service_id,$startFormatted,$endFormatted);
+            $start = Carbon::today()->startOfMonth();
+            $end = Carbon::today()->endOfMonth();
+            $response = $this->fetchData($request->service_id, $start, $end, true);
             return response()->json($response);
         }
 
@@ -173,18 +175,23 @@ class SchedulesController extends Controller
                 $avail->save();
             }
         }
-        $response = $this->fetchData($request->service_id,$startFormatted,$endFormatted);
+        $response = $this->fetchData($request->service_id,$startFormatted,$endFormatted, false);
         return response()->json($response);
     }
 
-    public function fetchData($service_id,$start,$end) {
+    public function fetchData($service_id,$start,$end, $single) {
         $response = [];
         $data = AvailableDates::whereDate('date_obj', '>=', $start)
             ->whereDate('date_obj',   '<=', $end)
             ->where('company_id', auth()->user()->company->id)
             ->where('service_id', $service_id)
             ->get();
-
+        if ($single) {
+            $data = AvailableDates::where('company_id', auth()->user()->company->id)
+            ->where('service_id', $service_id)
+            ->get();
+        }
+        
         foreach ($data as $event) {
             if ($event->status != 0) {
                 $response[] = [
