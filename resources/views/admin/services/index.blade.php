@@ -1331,6 +1331,7 @@
             }
         });
         $('.appended-images-data').remove();
+        $('body #service-gallery-carousel #service-gallery-images').empty();
         eventImages.forEach(function (image, key) {
             if (image != '') {
                 let imgHolder = `
