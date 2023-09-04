@@ -492,7 +492,6 @@
         function renderImage(file) {
             const reader = new FileReader();
             reader.onload = function (event) {
-
                 // In-progress
                 const imgContainer = document.createElement("div");
                 imgContainer.classList.add("image-container");
@@ -501,16 +500,17 @@
                 const img = document.createElement("img");
                 img.src = event.target.result;
                 img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
-                img.style.filter = "blur(1.5px)"
+                img.setAttribute('data-bs-toggle', 'modal')
+                img.setAttribute('data-bs-target', '#service-gallery-modal')
                 imgContainer.appendChild(img);
 
                 let btnContainer = document.createElement("div");
                 btnContainer.style.position = "absolute";
-                btnContainer.style.top = "50px";
-                btnContainer.style.left = "55px";
+                btnContainer.style.top = "5px";
+                btnContainer.style.right = "20px";
                 // remove button
                 const removeButton = document.createElement("button");
-                removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' />";
+                removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' style='filter: brightness(0.5)'/>";
                 removeButton.classList.add("remove-img-button");
                 removeButton.style.border = 0;
                 removeButton.style.background = "transparent";
@@ -518,21 +518,29 @@
                     imgContainer.remove();
                 });
 
-                const viewImage = document.createElement("button");
-                viewImage.innerHTML = "<img src='{{ asset('/assets/images/icons/preview.png') }}' alt='delete-img' />";
-                viewImage.classList.add("view-img-button");
-                viewImage.style.border = 0;
-                viewImage.style.background = "transparent";
-                viewImage.style.filter = "brightness(2)";
-                viewImage.style.scale = 2;
-                viewImage.style.paddingRight = "17px";
-                viewImage.addEventListener("click", function() {
-                    // imgContainer.remove();
-                    // review image
+                // const viewImage = document.createElement("button");
+                // viewImage.innerHTML = "<img src='{{ asset('/assets/images/icons/preview.png') }}' alt='delete-img' />";
+                // viewImage.classList.add("view-img-button");
+                // viewImage.style.border = 0;
+                // viewImage.style.background = "transparent";
+                // viewImage.style.filter = "brightness(2)";
+                // viewImage.style.scale = 2;
+                // viewImage.style.paddingRight = "17px";
+                // viewImage.addEventListener("click", function() {
+                //     // imgContainer.remove();
+                //     // review image
+                // });
+
+
+                // btnContainer.appendChild(viewImage)
+
+                img.addEventListener('click', function() {
+                    $('body #service-gallery-carousel #service-gallery-images').empty().append(`
+                        <div class="carousel-item active">
+                            <img src="${event.target.result}" alt="service-image" role="img" class="w-100 h-auto"/>
+                        </div>
+                    `);
                 });
-
-
-                btnContainer.appendChild(viewImage)
                 btnContainer.appendChild(removeButton)
                 imgContainer.appendChild(btnContainer);
                 imageContainer.appendChild(imgContainer);
