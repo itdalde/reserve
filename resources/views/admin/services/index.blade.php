@@ -1344,7 +1344,7 @@
                 `;
                 $('.service-images').append(imgHolder);
 
-                $('body #service-gallery-carousel #service-gallery-images').append(`
+                $('body #service-gallery-carousel #service-gallery-images').empty().append(`
                     <div class="carousel-item ${key==0?'active':''}">
                         <img src="${image}" alt="service-image" role="img" class="w-100 h-auto"/>
                     </div>
