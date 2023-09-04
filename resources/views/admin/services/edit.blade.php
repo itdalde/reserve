@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                     <div class="carousel-item {{ $key==0?'active':''}} d-none">
-                                        <img src="{{ asset($image->image) }}" alt="service-image" role="img" class="w-100 h-auto"/>
+                                        <img src="{{ asset($image->image) }}" alt="service-image" role="img" class="w-100 h-auto" style="height: 100vh!important; object-fit: contain;"/>
                                     </div>
                                     @endforeach
                                 </div>
