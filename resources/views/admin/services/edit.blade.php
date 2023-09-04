@@ -88,7 +88,7 @@
                                     @foreach($service->images as $key => $image)
                                     <div class="image-container" style="position: relative;">
                                         <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-bs-toggle="modal" data-bs-target="#service-gallery-modal" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
-                                        <div style="position: absolute; top: 5px; left: 20px;">
+                                        <div style="position: absolute; top: 5px; right: 20px;">
                                             <button type="button" data-id="{{ $image->id }}" class="remove-img-button" style="border: 0px; background: transparent;">
                                                 <img src="http://localhost:8000/assets/images/icons/trash.png" alt="delete-img" style="filter: brightness(0.5)">
                                             </button>
