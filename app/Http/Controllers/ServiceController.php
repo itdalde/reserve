@@ -322,7 +322,7 @@ class ServiceController extends Controller
     {
         $company = auth()->user()->company;
         $image = new EventImages();
-        $imageName = substr(md5("reserve"), 0, 6).$k .microtime(true) . '.' . $file->extension();
+        $imageName = floor(microtime(true) * 1000).$k .microtime(true) . '.' . $file->extension();
         $file->move(public_path("images/company/{$company->id}/services"), $imageName);
         $filename = "images/company/{$company->id}/services/{$imageName}";
         $image->image = $filename;
