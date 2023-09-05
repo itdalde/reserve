@@ -362,6 +362,7 @@ class ServiceController extends Controller
         //
         $service = OccasionEvent::where('id',$id)->first();
         $data = $request->all();
+        dd($data);
         $service->name = $data['service_name'];
         $service->name_arabic = $data['locale'] == 'ar' ? $data['service_name_arabic'] : '-';
         $service->occasion_type = 0;
@@ -400,17 +401,20 @@ class ServiceController extends Controller
         }
         if($service->paymentPlan) {
             $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
-            $price->occasion_event_id = $service->id;
-            $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
-            $price->service_price = $data['service_price'];
-            $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
-            $price->min_capacity = $data['package_min_capacity'] ?? 0;
-            $price->max_capacity = $data['package_max_capacity'] ?? 0;
-            $price->package_details = $data['package_details'] ?? '-';
-            $price->package_price = $data['service_price'];
-            $price->active = 1;
-            $price->save();
         }
+        if(!$price) {
+            $price = new OccasionEventPrice();
+        }
+        $price->occasion_event_id = $service->id;
+        $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
+        $price->service_price = $data['service_price'];
+        $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
+        $price->min_capacity = $data['package_min_capacity'] ?? 0;
+        $price->max_capacity = $data['package_max_capacity'] ?? 0;
+        $price->package_details = $data['package_details'] ?? '-';
+        $price->package_price = $data['service_price'];
+        $price->active = 1;
+        $price->save();
 
         Feature::where('service_id', $service->id)->delete();
         foreach($data['feature'] as $key => $name) {
