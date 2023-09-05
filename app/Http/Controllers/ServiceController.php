@@ -398,6 +398,7 @@ class ServiceController extends Controller
             $service->image = $filename;
             $service->save();
         }
+        $price = null;
         if($service->paymentPlan) {
             $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
         }
