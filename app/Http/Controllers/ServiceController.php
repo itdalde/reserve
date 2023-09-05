@@ -398,18 +398,19 @@ class ServiceController extends Controller
             $service->image = $filename;
             $service->save();
         }
-
-        $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
-        $price->occasion_event_id = $service->id;
-        $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
-        $price->service_price = $data['service_price'];
-        $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
-        $price->min_capacity = $data['package_min_capacity'] ?? 0;
-        $price->max_capacity = $data['package_max_capacity'] ?? 0;
-        $price->package_details = $data['package_details'] ?? '-';
-        $price->package_price = $data['service_price'];
-        $price->active = 1;
-        $price->save();
+        if($service->paymentPlan) {
+            $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
+            $price->occasion_event_id = $service->id;
+            $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
+            $price->service_price = $data['service_price'];
+            $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
+            $price->min_capacity = $data['package_min_capacity'] ?? 0;
+            $price->max_capacity = $data['package_max_capacity'] ?? 0;
+            $price->package_details = $data['package_details'] ?? '-';
+            $price->package_price = $data['service_price'];
+            $price->active = 1;
+            $price->save();
+        }
 
         Feature::where('service_id', $service->id)->delete();
         foreach($data['feature'] as $key => $name) {
