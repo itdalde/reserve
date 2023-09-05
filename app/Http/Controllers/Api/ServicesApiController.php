@@ -233,10 +233,11 @@ class ServicesApiController extends Controller
                         ->toArray();
                     if(empty($availabilities) && empty($unavailabilities)) {
                         unset($services[$i]);
+                    } else {
+                        $services[$i]['availabilities'] = $availabilities;
+                        $services[$i]['unavailabilities'] = $unavailabilities;
+                        $services[$i]['service_type'] =  $serviceType;
                     }
-                    $services[$i]['availabilities'] = $availabilities;
-                    $services[$i]['unavailabilities'] = $unavailabilities;
-                    $services[$i]['service_type'] =  $serviceType;
 
                 }
 
