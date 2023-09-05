@@ -263,8 +263,8 @@ class ServiceController extends Controller
             $avail->save();
         }
         if ($request->file('service_gallery')) {
-            foreach ($request->file('service_gallery') as $file) {
-                $this->uploadImage($file, $service);
+            foreach ($request->file('service_gallery') as $k => $file) {
+                $this->uploadImage($file, $service,0,$k);
             }
         }
         if ($request->file('featured_image')) {
@@ -318,11 +318,11 @@ class ServiceController extends Controller
         return redirect()->route('services.index')->with(['message' => 'Service Saved Successfully']);
     }
 
-    public function uploadImage($file, $service, $isFeatured = 0)
+    public function uploadImage($file, $service, $isFeatured = 0,$k = 0)
     {
         $company = auth()->user()->company;
         $image = new EventImages();
-        $imageName = substr(md5("reserve"), 0, 6) .time() . '.' . $file->extension();
+        $imageName = substr(md5("reserve"), 0, 6).$k .microtime(true) . '.' . $file->extension();
         $file->move(public_path("images/company/{$company->id}/services"), $imageName);
         $filename = "images/company/{$company->id}/services/{$imageName}";
         $image->image = $filename;
@@ -394,8 +394,8 @@ class ServiceController extends Controller
         $service->save();
 
         if ($request->file('service_gallery')) {
-            foreach ($request->file('service_gallery') as $file) {
-                $this->uploadImage($file, $service);
+            foreach ($request->file('service_gallery') as $k => $file) {
+                $this->uploadImage($file, $service,0,$k);
             }
         }
         if ($request->file('featured_image')) {
