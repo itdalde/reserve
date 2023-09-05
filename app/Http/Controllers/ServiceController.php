@@ -90,10 +90,17 @@ class ServiceController extends Controller
                 $avail->status = 0;
                 $avail->save();
             }
-            if ($request->file('images')) {
-                foreach ($request->file('images') as $file) {
+            if ($request->file('service_gallery')) {
+                foreach ($request->file('service_gallery') as $file) {
                     $this->uploadImage($file, $service);
                 }
+            }
+            if ($request->file('featured_image')) {
+                $file = $request->file('featured_image');
+                $filename = $this->uploadImage($file, $service);
+                $service = OccasionEvent::where('id',$service->id)->first();
+                $service->image = $filename;
+                $service->save();
             }
             $service->save();
             if(isset($data['price']) && $data['price']) {
