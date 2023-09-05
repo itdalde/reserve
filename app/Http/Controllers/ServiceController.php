@@ -362,7 +362,6 @@ class ServiceController extends Controller
         //
         $service = OccasionEvent::where('id',$id)->first();
         $data = $request->all();
-        dd($data);
         $service->name = $data['service_name'];
         $service->name_arabic = $data['locale'] == 'ar' ? $data['service_name_arabic'] : '-';
         $service->occasion_type = 0;
