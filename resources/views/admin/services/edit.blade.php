@@ -81,10 +81,10 @@
                             <label for="service_images" class="form-label field-label label-color">Service
                                 Images&nbsp;&nbsp;<span class="text-danger">*</span></label>
                             <div class="d-flex">
-                                
+
                                 <div id="service-image-gallery-holder1"
                                     class="d-flex justify-content-between service-image-gallery-holder1 flex-row gallery">
-                                    
+
                                     @foreach($service->images as $key => $image)
                                     <div class="image-container" style="position: relative;">
                                         <img src="{{ asset($image->image) }}" alt="service-gallery-{{$image->id}}" class="gallery-image" data-bs-toggle="modal" data-bs-target="#service-gallery-modal" data-preview="{{ asset($image->image) }}" style="width: 250px; height: 180px; object-fit: contain;"/>
@@ -120,12 +120,12 @@
                             <div class="mb-3">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
-                                        id="per_guest" value="1" {{ $service->paymentPlan->plan_id == 1 ? 'checked' : '' }}>
+                                        id="per_guest" value="1" {{ $service->paymentPlan &&  $service->paymentPlan->plan_id == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="per_guest">Per Guest</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input pricing_type" name="plan_id" type="checkbox"
-                                        id="per_package" value="2" {{ $service->paymentPlan->plan_id == 2 ? 'checked' : '' }}>
+                                        id="per_package" value="2" {{ $service->paymentPlan && $service->paymentPlan->plan_id == 2 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="per_package">Per Package</label>
                                 </div>
                             </div>
@@ -541,7 +541,7 @@
         $('.remove-img-button').click(function() {
             $(this).closest('.image-container').remove();
             let eventImageId = $(this).attr('data-id');
-            
+
             $.ajax({
                 url: "{{ route('delete-event-image') }}",
                 method: 'DELETE',
@@ -559,7 +559,7 @@
                 window.HIDE_LOADING();
                 $('.image-event-deleted').addClass('alert alert-success').text(response.replace(/['"]+/g, ''));
             })
-            
+
         });
 
         const imageContainer = document.getElementById("service-image-gallery-holder1");
