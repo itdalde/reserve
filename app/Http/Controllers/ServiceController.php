@@ -22,7 +22,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;    
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
@@ -187,9 +187,9 @@ class ServiceController extends Controller
     {
         //
         if (
-            Auth::user()->company->logo == null || 
+            Auth::user()->company->logo == null ||
             Auth::user()->company->phone_number == null ||
-            Auth::user()->company->open_at == null || 
+            Auth::user()->company->open_at == null ||
             Auth::user()->company->close_at == null
         ) {
             return view('admin.settings.index');
@@ -373,7 +373,7 @@ class ServiceController extends Controller
         $service->max_capacity = $data['max_capacity'] ?? 0;
         $service->min_capacity = $data['min_capacity'] ?? 0;
         $service->availability_slot = $data['available_slot'] ?? 0;
-      
+
         $service->availability_time_in = $availabilityTimeIn ?? date('H:i');
         $service->availability_time_out = $availabilityTimeOut ?? date('H:i');
 
@@ -401,9 +401,9 @@ class ServiceController extends Controller
 
         $price = OccasionEventPrice::where('plan_id', $service->paymentPlan->plan_id)->first();
         $price->occasion_event_id = $service->id;
-        $price->plan_id = $data['plan_id'] ?? 1;
+        $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
         $price->service_price = $data['service_price'];
-        $price->package = $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
+        $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
         $price->min_capacity = $data['package_min_capacity'] ?? 0;
         $price->max_capacity = $data['package_max_capacity'] ?? 0;
         $price->package_details = $data['package_details'] ?? '-';
@@ -440,7 +440,7 @@ class ServiceController extends Controller
                 $occasionEventAddon->save();
             }
         }
-        
+
         return redirect()->route('services.index')->with(['message' => 'Service Updated Successfully']);
     }
 
