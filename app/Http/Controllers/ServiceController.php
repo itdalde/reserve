@@ -222,8 +222,7 @@ class ServiceController extends Controller
         $service->occasion_type = 0;
         $service->price = $data['service_price'];
         $service->description = $data['service_description'];
-        $service->description_arabic = $data['locale'] == 'ar
-        ' ? $data['service_description_arabic'] : '-';
+        $service->description_arabic = $data['locale'] == 'ar' ? $data['service_description_arabic'] : '-';
         $service->address_1 = $data['location'] ?? '';
         $service->max_capacity = $data['max_capacity'] ?? 0;
         $service->min_capacity = $data['min_capacity'] ?? 0;
@@ -279,8 +278,8 @@ class ServiceController extends Controller
         $price->plan_id = $data['plan_id'] ?? 1;
         $price->service_price = $data['service_price'];
         $price->package = $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package'; // $data['package_name'] ?? 'Per person';
-        $price->min_capacity = $data['package_min_capacity'] ?? 0;
-        $price->max_capacity = $data['package_max_capacity'] ?? 0;
+        $price->min_capacity = $data['package_min_capacity'] ?? 1;
+        $price->max_capacity = $data['package_max_capacity'] ?? 10;
         $price->package_details = $data['package_details'] ?? '-';
         $price->package_price = $data['service_price'];
         $price->active = 1;
@@ -377,8 +376,8 @@ class ServiceController extends Controller
         $service->description_arabic = $data['locale'] == 'ar
         ' ? $data['service_description_arabic'] : '-';
         $service->address_1 = $data['location'] ?? '';
-        $service->max_capacity = $data['max_capacity'] ?? 0;
-        $service->min_capacity = $data['min_capacity'] ?? 0;
+        $service->max_capacity = $data['max_capacity'] ?? 10;
+        $service->min_capacity = $data['min_capacity'] ?? 1;
         $service->availability_slot = $data['available_slot'] ?? 0;
 
         $service->availability_time_in = $availabilityTimeIn ?? date('H:i');
@@ -416,8 +415,8 @@ class ServiceController extends Controller
         $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
         $price->service_price = $data['service_price'];
         $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
-        $price->min_capacity = $data['package_min_capacity'] ?? 0;
-        $price->max_capacity = $data['package_max_capacity'] ?? 0;
+        $price->min_capacity = $data['package_min_capacity'] ?? 1;
+        $price->max_capacity = $data['package_max_capacity'] ?? 10;
         $price->package_details = $data['package_details'] ?? '-';
         $price->package_price = $data['service_price'];
         $price->active = 1;
