@@ -196,6 +196,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors']], function() {
             ->addTag('Reviews')
             ->setDescription('getReviewsByUserId')
             ->setProduces(['application/json']);
+        Api::get('check/{user_id}/{service_id}', [ServicesApiController::class, 'checkReviewByUserIdAndService'])
+            ->addTag('Reviews')
+            ->setDescription('this is for checking if the user is already reviewed the service')
+            ->setProduces(['application/json']);
 
         Api::post('/', [ServicesApiController::class, 'addReviewToService'])
             ->addTag('Reviews')

@@ -77,6 +77,20 @@ class ServicesApiController extends Controller
         return sendResponse($services, 'Fetch all reviews by service ID');
     }
 
+    public function checkReviewByUserIdAndService(Request $request)
+    {
+        $data = $request->all();
+        $hasComment = false;
+        $review = OccasionEventReviews::where('user_id', $data['user_id'])
+            ->where('occasion_event_id', $data['service_id'])->first();
+        if ($review) {
+            $hasComment = true;
+        }
+        return sendResponse([
+            'has_comment' => $hasComment,
+        ], 'Fetch all reviews by service ID');
+    }
+
     /**
      * @return JsonResponse
      */
@@ -121,6 +135,11 @@ class ServicesApiController extends Controller
             if(!$service) {
                 return sendError('Something went wrong','Service is not found on system',422);
             }
+            $review = OccasionEventReviews::where('user_id', $data['user_id'])
+                ->where('occasion_event_id', $data['service_id'])->first();
+            if($review) {
+                return sendError('Something went wrong','User already commented this service',422);
+            }
         }
         if($data['provider_id']) {
             $service= Company::where('id', $data['provider_id'])->first();
@@ -128,6 +147,7 @@ class ServicesApiController extends Controller
                 return sendError('Something went wrong','Provider is not found on system',422);
             }
         }
+
         $user = User::where('id', $data['user_id'])->first();
         if(!$user) {
             return sendError('Something went wrong','User is not found on system',422);
