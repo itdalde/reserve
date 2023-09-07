@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Illuminate\Mail\Message;
 use Illuminate\Auth\AuthenticationException;
@@ -50,6 +51,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        switch (class_basename($exception)) {
+            case 'NotFoundHttpException':
+            case 'ModelNotFoundException':
+                $exception = new NotFoundHttpException('Not found');
+                break;
+        }
         return parent::render($request, $exception);
     }
 
