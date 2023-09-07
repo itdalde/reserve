@@ -56,14 +56,16 @@ class DashboardController extends Controller
         $userIds = $orders ? $orders->pluck('user_id'): [];
         $users = User::whereIn('id',$userIds)->sortable(['email' => 'asc'])->offset(0)->limit(10)->get();
         $orders = OrderItems::whereIn('service_id',$serviceIds)
-            ->whereDate('created_at','>=', Carbon::today())
             ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
+        $completedOrders = OrderItems::whereIn('service_id',$serviceIds)
+        ->where('status', 'completed')
+        ->with('service','service.price','service.price.planType','order','order.paymentMethod','order.user')->get()->toArray();
         $totalOrder = 0;
         foreach ($orders as $k => $order) {
             $total = OrderSplit::where('order_id', $order['order']['id'])->where('status', 'paid')->sum('amount');
             $totalOrder += $total ;
         }
-        return view('admin.dashboard',compact('orders','occasionTypes','plan','users','services','totalOrder' ));
+        return view('admin.dashboard',compact('orders','occasionTypes','plan','users','services','totalOrder', 'completedOrders' ));
     }
 
 
