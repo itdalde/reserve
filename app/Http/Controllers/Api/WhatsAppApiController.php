@@ -12,15 +12,23 @@ class WhatsAppApiController extends Controller
 
     public function sendWhatsAppMessage(Request $request)
     {
-        $res = WhatsAppUtility::sendWhatsAppMessage();
+        try {
 
-        return sendResponse($res, "OPK");
+            $res = WhatsAppUtility::sendWhatsAppMessage();
+
+            return sendResponse($res, "OPK");
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     public function sendWithTemplate(Request $request)
     {
-
-        $response = WhatsAppUtility::sendWithTemplate();
-        return sendResponse($response, "OK");
+        try {
+            $response = WhatsAppUtility::sendWithTemplate();
+            return sendResponse($response, "OK");
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 }

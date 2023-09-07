@@ -12,8 +12,12 @@ class OccasionsApiController extends Controller
 
     public function getOccasions(): JsonResponse
     {
-        $occasion = Occasion::select(['id', 'name', 'logo', 'active'])->where('active', 1)->get();
-        return sendResponse($occasion, 'Get Occasions');
+        try {
+            $occasion = Occasion::select(['id', 'name', 'logo', 'active'])->where('active', 1)->get();
+            return sendResponse($occasion, 'Get Occasions');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     /**
@@ -22,7 +26,11 @@ class OccasionsApiController extends Controller
      */
     public function getOccasion(Request $request): JsonResponse
     {
-        $occasion = Occasion::select(['id', 'name', 'logo', 'active'])->where('id', $request->id)->get();
-        return sendResponse($occasion, 'Get occasion with id :' . $request->id);
+        try {
+            $occasion = Occasion::select(['id', 'name', 'logo', 'active'])->where('id', $request->id)->get();
+            return sendResponse($occasion, 'Get occasion with id :' . $request->id);
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 }

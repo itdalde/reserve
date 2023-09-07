@@ -25,16 +25,20 @@ class ServicesApiController extends Controller
      */
     public function findOccasionByProvider(OccasionServiceByProviderRequest $request): JsonResponse
     {
-        $search = $request->search;
-        $serviceId = $request->service_type_id;
-        $servicesQuery = OccasionEvent::with('paymentPlan', 'occasionEventsReviews','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->leftJoin('companies', 'companies.id', '=', 'services.company_id');
-        if($search && $search != '') {
-            $servicesQuery->where('companies.name', 'like', '%' . $search . '%');
+        try {
+            $search = $request->search;
+            $serviceId = $request->service_type_id;
+            $servicesQuery = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->leftJoin('companies', 'companies.id', '=', 'services.company_id');
+            if ($search && $search != '') {
+                $servicesQuery->where('companies.name', 'like', '%' . $search . '%');
+            }
+            $services = $servicesQuery->where('services.service_type', '=', $serviceId)
+                ->get();
+            return sendResponse($services, 'Search providers by wildcard {name} under service type');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        $services = $servicesQuery->where('services.service_type', '=', $serviceId)
-            ->get();
-        return sendResponse($services, 'Search providers by wildcard {name} under service type');
     }
 
     /**
@@ -43,13 +47,17 @@ class ServicesApiController extends Controller
      */
     public function findOccasionServiceByProvider(OccasionServiceByProviderRequest $request): JsonResponse
     {
-        $search = $request->search;
-        $serviceId = $request->service_type_id;
-        $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->where('services.name', 'like', '%' . $search . '%')
-            ->where('services.service_type', '=', $serviceId)
-            ->get();
-        return sendResponse($services, 'Search occasion events by wildcard {name} under service type');
+        try {
+            $search = $request->search;
+            $serviceId = $request->service_type_id;
+            $services = OccasionEvent::with('paymentPlan', 'occasionEventsReviews', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->where('services.name', 'like', '%' . $search . '%')
+                ->where('services.service_type', '=', $serviceId)
+                ->get();
+            return sendResponse($services, 'Search occasion events by wildcard {name} under service type');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     /**
@@ -57,38 +65,51 @@ class ServicesApiController extends Controller
      */
     public function getReviewsByServiceId(Request $request, $service_id): JsonResponse
     {
-        $services = OccasionEventReviews::where('occasion_event_id', $service_id)->with('user', 'occasionEvent')
-            ->orderBy('rate', 'DESC')->get()->toArray();
-        usort($services, function ($a, $b) {
-            return $a['rate'] <=> $b['rate'];
-        });
-        return sendResponse($services, 'Fetch all reviews by service ID');
+        try {
+            $services = OccasionEventReviews::where('occasion_event_id', $service_id)->with('user', 'occasionEvent')
+                ->orderBy('rate', 'DESC')->get()->toArray();
+            usort($services, function ($a, $b) {
+                return $a['rate'] <=> $b['rate'];
+            });
+            return sendResponse($services, 'Fetch all reviews by service ID');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
+
     /**
      * @return JsonResponse
      */
     public function getReviewsByUserId(Request $request, $user_id): JsonResponse
     {
-        $services = OccasionEventReviews::where('user_id', $user_id)->with('user', 'occasionEvent')
-            ->orderBy('rate', 'DESC')->get()->toArray();
-        usort($services, function ($a, $b) {
-            return $a['rate'] <=> $b['rate'];
-        });
-        return sendResponse($services, 'Fetch all reviews by service ID');
+        try {
+            $services = OccasionEventReviews::where('user_id', $user_id)->with('user', 'occasionEvent')
+                ->orderBy('rate', 'DESC')->get()->toArray();
+            usort($services, function ($a, $b) {
+                return $a['rate'] <=> $b['rate'];
+            });
+            return sendResponse($services, 'Fetch all reviews by service ID');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     public function checkReviewByUserIdAndService(Request $request)
     {
-        $data = $request->all();
-        $hasComment = false;
-        $review = OccasionEventReviews::where('user_id', $data['user_id'])
-            ->where('occasion_event_id', $data['service_id'])->first();
-        if ($review) {
-            $hasComment = true;
+        try {
+            $data = $request->all();
+            $hasComment = false;
+            $review = OccasionEventReviews::where('user_id', $data['user_id'])
+                ->where('occasion_event_id', $data['service_id'])->first();
+            if ($review) {
+                $hasComment = true;
+            }
+            return sendResponse([
+                'has_comment' => $hasComment,
+            ], 'Fetch all reviews by service ID');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        return sendResponse([
-            'has_comment' => $hasComment,
-        ], 'Fetch all reviews by service ID');
     }
 
     /**
@@ -96,71 +117,86 @@ class ServicesApiController extends Controller
      */
     public function getReviewsByProviderId(Request $request, $provider_id): JsonResponse
     {
-        $response = OccasionEventReviews::whereIn('provider_id', $provider_id)->with('user', 'occasionEvent')
-            ->orderBy('rate', 'DESC')->get()->toArray();
-        usort($response, function ($a, $b) {
-            return $a['rate'] <=> $b['rate'];
-        });
-        return sendResponse($response, 'Fetch all reviews by provider ID');
+        try {
+            $response = OccasionEventReviews::whereIn('provider_id', $provider_id)->with('user', 'occasionEvent')
+                ->orderBy('rate', 'DESC')->get()->toArray();
+            usort($response, function ($a, $b) {
+                return $a['rate'] <=> $b['rate'];
+            });
+            return sendResponse($response, 'Fetch all reviews by provider ID');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
-    public function updateReviewToService(Request $request) : JsonResponse {
-        $data = $request->all();
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'rate' => 'required|integer',
-        ]);
-        if ($validator->fails())  {
-            return sendError('Something went wrong',$validator->errors()->all(),422);
+    public function updateReviewToService(Request $request): JsonResponse
+    {
+        try {
+            $data = $request->all();
+            $validator = Validator::make($request->all(), [
+                'id' => 'required',
+                'rate' => 'required|integer',
+            ]);
+            if ($validator->fails()) {
+                return sendError('Something went wrong', $validator->errors()->all(), 422);
+            }
+            $review = OccasionEventReviews::whereIn('id', $data['id'])->first();
+            $review->title = $data['title'] ?? '';
+            $review->description = $data['description'] ?? '';
+            $review->rate = (int)$data['rate'];
+            $review->save();
+            return sendResponse($review, 'Review is Updated');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        $review = OccasionEventReviews::whereIn('id', $data['id'])->first();
-        $review->title = $data['title'] ?? '';
-        $review->description = $data['description'] ?? '';
-        $review->rate = (int)$data['rate'];
-        $review->save();
-        return sendResponse($review, 'Review is Updated');
     }
-    public function addReviewToService(Request $request) : JsonResponse {
-        $data = $request->all();
-        $validator = Validator::make($request->all(), [
-            'provider_id' => 'required',
-            'user_id' =>  'required',
-            'rate' => 'required|integer',
-        ]);
-        if ($validator->fails())  {
-            return sendError('Something went wrong',$validator->errors()->all(),422);
-        }
-        if(isset($data['service_id'])) {
-            $service= OccasionEvent::where('id', $data['service_id'])->first();
-            if(!$service) {
-                return sendError('Something went wrong','Service is not found on system',422);
-            }
-            $review = OccasionEventReviews::where('user_id', $data['user_id'])
-                ->where('occasion_event_id', $data['service_id'])->first();
-            if($review) {
-                return sendError('Something went wrong','User already commented this service',422);
-            }
-        }
-        if($data['provider_id']) {
-            $service= Company::where('id', $data['provider_id'])->first();
-            if(!$service) {
-                return sendError('Something went wrong','Provider is not found on system',422);
-            }
-        }
 
-        $user = User::where('id', $data['user_id'])->first();
-        if(!$user) {
-            return sendError('Something went wrong','User is not found on system',422);
+    public function addReviewToService(Request $request): JsonResponse
+    {
+        try {
+            $data = $request->all();
+            $validator = Validator::make($request->all(), [
+                'provider_id' => 'required',
+                'user_id' => 'required',
+                'rate' => 'required|integer',
+            ]);
+            if ($validator->fails()) {
+                return sendError('Something went wrong', $validator->errors()->all(), 422);
+            }
+            if (isset($data['service_id'])) {
+                $service = OccasionEvent::where('id', $data['service_id'])->first();
+                if (!$service) {
+                    return sendError('Something went wrong', 'Service is not found on system', 422);
+                }
+                $review = OccasionEventReviews::where('user_id', $data['user_id'])
+                    ->where('occasion_event_id', $data['service_id'])->first();
+                if ($review) {
+                    return sendError('Something went wrong', 'User already commented this service', 422);
+                }
+            }
+            if ($data['provider_id']) {
+                $service = Company::where('id', $data['provider_id'])->first();
+                if (!$service) {
+                    return sendError('Something went wrong', 'Provider is not found on system', 422);
+                }
+            }
+
+            $user = User::where('id', $data['user_id'])->first();
+            if (!$user) {
+                return sendError('Something went wrong', 'User is not found on system', 422);
+            }
+            $review = new OccasionEventReviews();
+            $review->occasion_event_id = $data['service_id'] ?? null;
+            $review->provider_id = $data['provider_id'];
+            $review->user_id = $data['user_id'];
+            $review->title = $data['title'] ?? '';
+            $review->description = $data['description'] ?? '';
+            $review->rate = (int)$data['rate'];
+            $review->save();
+            return sendResponse($review, 'Review is added');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        $review = new OccasionEventReviews();
-        $review->occasion_event_id = $data['service_id'] ?? null;
-        $review->provider_id = $data['provider_id'];
-        $review->user_id = $data['user_id'];
-        $review->title = $data['title'] ?? '';
-        $review->description = $data['description'] ?? '';
-        $review->rate = (int)$data['rate'];
-        $review->save();
-        return sendResponse($review, 'Review is added');
     }
 
     /**
@@ -168,119 +204,131 @@ class ServicesApiController extends Controller
      */
     public function getProviders(): JsonResponse
     {
-        $providers = Company::all();
-        foreach($providers as $provider) {
-            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+        try {
+            $providers = Company::all();
+            foreach ($providers as $provider) {
+                $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+            }
+            return sendResponse($providers, 'Event Providers');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        return sendResponse($providers, 'Event Providers');
     }
 
     public function getProvidersByServiceType(ProviderByServiceTypeRequest $request, $service_type_id): JsonResponse
     {
-        $companies = [];
-        $service_type_id = (int) $service_type_id;
-        $providers = [];
-        $total = 0;
-        if($service_type_id) {
-            $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();
-            $usersIds = [];
-            foreach ($users as $user) {
-                if((!$user->hasRole('superadmin'))) {
-                    $usersIds[] = $user->company->id;
+        try {
+            $companies = [];
+            $service_type_id = (int)$service_type_id;
+            $providers = [];
+            $total = 0;
+            if ($service_type_id) {
+                $users = User::whereHas('company')->with('roles')->sortable(['email' => 'asc'])->get();
+                $usersIds = [];
+                foreach ($users as $user) {
+                    if ((!$user->hasRole('superadmin'))) {
+                        $usersIds[] = $user->company->id;
+                    }
                 }
-            }
-            $providers = Company::with('tags', 'serviceType', 'reviews')
-                ->whereIn('id',$usersIds)
-                ->where('service_type_id',(int) $service_type_id)
-                ->get()
-                ->toArray();
-            foreach($providers as $k => $provider) {
-                $services = OccasionEvent::where('company_id', $provider['id'])
-                    ->where(function ($query) {
-                        $query->has('availabilities')->orWhereHas('unavailabilities');
-                    })
-                    ->with(
-                        'serviceReviews',
-                        'paymentPlan',
-                        'serviceType',
-                        'ratings',
-                        'gallery',
-                        'availabilities',
-                        'unavailabilities',
-                        'totalCompletedOrders',
-                        'company',
-                        'adOns'
-                    )
-                    ->where('active', 1)
+                $providers = Company::with('tags', 'serviceType', 'reviews')
+                    ->whereIn('id', $usersIds)
+                    ->where('service_type_id', (int)$service_type_id)
                     ->get()
                     ->toArray();
-                $serviceType = $provider['service_type'];
-                foreach ($services as $i => $service) {
-                    if(isset($service['total_completed_orders']) && $service['total_completed_orders']) {
-                        foreach ($service['total_completed_orders'] as $x => $r) {
-                            $total += (float) $r['total'];
+                foreach ($providers as $k => $provider) {
+                    $services = OccasionEvent::where('company_id', $provider['id'])
+                        ->where(function ($query) {
+                            $query->has('availabilities')->orWhereHas('unavailabilities');
+                        })
+                        ->with(
+                            'serviceReviews',
+                            'paymentPlan',
+                            'serviceType',
+                            'ratings',
+                            'gallery',
+                            'availabilities',
+                            'unavailabilities',
+                            'totalCompletedOrders',
+                            'company',
+                            'adOns'
+                        )
+                        ->where('active', 1)
+                        ->get()
+                        ->toArray();
+                    $serviceType = $provider['service_type'];
+                    foreach ($services as $i => $service) {
+                        if (isset($service['total_completed_orders']) && $service['total_completed_orders']) {
+                            foreach ($service['total_completed_orders'] as $x => $r) {
+                                $total += (float)$r['total'];
+                            }
                         }
+                        $availableDates = AvailableDates::where('service_id', $service['id'])
+                            ->where('status', 1)
+                            ->where('date_obj', '<>', null)
+                            ->selectRaw('DATE(date_obj) as date')
+                            ->get()
+                            ->toArray();
+                        $unavailableDates = AvailableDates::where('service_id', $service['id'])
+                            ->where('status', 2)
+                            ->where('date_obj', '<>', null)
+                            ->selectRaw('DATE(date_obj) as date')
+                            ->get()
+                            ->toArray();
+                        $availabilities = [];
+                        if ($availableDates) {
+                            $availabilities = array_map(function ($item) {
+                                return $item['date'];
+                            }, $availableDates);
+                        }
+                        $unavailabilities = [];
+                        if ($unavailableDates) {
+                            $unavailabilities = array_map(function ($item) {
+                                return $item['date'];
+                            }, $unavailableDates);
+                        }
+                        $services[$i]['features'] = Feature::where('service_id', $service['id'])
+                            ->get()
+                            ->toArray();
+                        $services[$i]['conditions'] = Condition::where('service_id', $service['id'])
+                            ->get()
+                            ->toArray();
+                        if (empty($availabilities) && empty($unavailabilities)) {
+                            unset($services[$i]);
+                        } else {
+                            $services[$i]['availabilities'] = $availabilities;
+                            $services[$i]['unavailabilities'] = $unavailabilities;
+                            $services[$i]['service_type'] = $serviceType;
+                        }
+
                     }
-                    $availableDates = AvailableDates::where('service_id', $service['id'])
-                        ->where('status', 1)
-                        ->where('date_obj', '<>', null)
-                        ->selectRaw('DATE(date_obj) as date')
-                        ->get()
-                        ->toArray();
-                    $unavailableDates = AvailableDates::where('service_id', $service['id'])
-                        ->where('status', 2)
-                        ->where('date_obj', '<>', null)
-                        ->selectRaw('DATE(date_obj) as date')
-                        ->get()
-                        ->toArray();
-                    $availabilities = [];
-                    if ($availableDates) {
-                        $availabilities = array_map(function ($item) {
-                            return $item['date'];
-                        }, $availableDates);
-                    }
-                    $unavailabilities = [];
-                    if ($unavailableDates) {
-                        $unavailabilities = array_map(function ($item) {
-                            return $item['date'];
-                        }, $unavailableDates);
-                    }
-                    $services[$i]['features'] = Feature::where('service_id', $service['id'])
-                        ->get()
-                        ->toArray();
-                    $services[$i]['conditions'] = Condition::where('service_id', $service['id'])
-                        ->get()
-                        ->toArray();
-                    if(empty($availabilities) && empty($unavailabilities)) {
-                        unset($services[$i]);
+
+                    $provider['total_orders'] = $total;
+                    if ($services) {
+                        $provider['services'] = $services;
+                        $provider['base_price'] = (double)$provider['base_price'];
+                        $companies[] = $provider;
                     } else {
-                        $services[$i]['availabilities'] = $availabilities;
-                        $services[$i]['unavailabilities'] = $unavailabilities;
-                        $services[$i]['service_type'] =  $serviceType;
+                        unset($providers[$k]);
                     }
-
-                }
-
-                $provider['total_orders'] = $total;
-                if($services) {
-                    $provider['services'] = $services;
-                    $provider['base_price'] = (double) $provider['base_price'];
-                    $companies[] = $provider;
-                } else {
-                    unset( $providers[$k] );
                 }
             }
+            $response = $companies;
+            return sendResponse($response, 'Get providers by service type');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        $response = $companies;
-        return sendResponse($response, 'Get providers by service type');
     }
 
     public function getServicesByProviders(Request $request, $provider_id)
     {
-        $services = OccasionEvent::with('occasionEventsReviews','features','conditions', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->where('company_id', $provider_id)
-            ->get();
-        return sendResponse($services, 'Get all services by provider');
+        try {
+            $services = OccasionEvent::with('occasionEventsReviews', 'features', 'conditions', 'paymentPlan', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->where('company_id', $provider_id)
+                ->get();
+            return sendResponse($services, 'Get all services by provider');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     /**
@@ -291,14 +339,18 @@ class ServicesApiController extends Controller
      */
     public function getServicesByCompanyAndServiceType(Request $request, $company_id, $service_type): JsonResponse
     {
-        $providers = Company::with('serviceType', 'services')
+        try {
+            $providers = Company::with('serviceType', 'services')
                 ->where('id', $company_id)
                 ->where('service_type_id', $service_type)
                 ->get();
-        foreach($providers as $provider) {
-            $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+            foreach ($providers as $provider) {
+                $provider->base_price = OccasionEvent::where('company_id', $provider->id)->min('price');
+            }
+            return sendResponse($providers, "Get services by company group by service-type");
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
         }
-        return sendResponse($providers, "Get services by company group by service-type");
     }
 
 }

@@ -23,25 +23,33 @@ class OccasionEventsApiController extends Controller
 
     public function getOccasionEvents(): JsonResponse
     {
-        $occasions = OccasionEvent::with('company', 'paymentPlan', 'occasionEventsReviews','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->where('services.active', '=', 1)->get();
-        return sendResponse($occasions, 'Occasion Events');
+        try {
+            $occasions = OccasionEvent::with('company', 'paymentPlan', 'occasionEventsReviews', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->where('services.active', '=', 1)->get();
+            return sendResponse($occasions, 'Occasion Events');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     public function getOccasionEventsByFromToDate(EventsByOccasionRequest $request)
     {
-        $occasionEventId = $request->occasion_event_id;
-        $fromDate = Carbon::createFromFormat('Y-m-d', $request->date_from);
-        $toDate = Carbon::createFromFormat('Y-m-d', $request->date_to);
+        try {
+            $occasionEventId = $request->occasion_event_id;
+            $fromDate = Carbon::createFromFormat('Y-m-d', $request->date_from);
+            $toDate = Carbon::createFromFormat('Y-m-d', $request->date_to);
 
-        $occasions = OccasionEvent::with('company', 'paymentPlan', 'occasionEventsReviews','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->leftJoin('services_pivots as oep', 'services.id', '=', 'oep.occasion_event_id')
-            ->where('oep.occasion_id', '=', $occasionEventId)
-            ->where('services.availability_start_date', '>=', $fromDate)
-            ->where('services.availability_end_date', '<=', $toDate)
-            ->get();
+            $occasions = OccasionEvent::with('company', 'paymentPlan', 'occasionEventsReviews', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->leftJoin('services_pivots as oep', 'services.id', '=', 'oep.occasion_event_id')
+                ->where('oep.occasion_id', '=', $occasionEventId)
+                ->where('services.availability_start_date', '>=', $fromDate)
+                ->where('services.availability_end_date', '<=', $toDate)
+                ->get();
 
-        return sendResponse($occasions, "Occasion Events By Occasion Date");
+            return sendResponse($occasions, "Occasion Events By Occasion Date");
+        } catch (\Google\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     /**
@@ -50,29 +58,41 @@ class OccasionEventsApiController extends Controller
      */
     public function getOccasionByServiceType(EventsByEventTypeRequest $request): JsonResponse
     {
-        $request->validated();
-        $serviceType = $request->id;
-        $occasions = OccasionEvent::with('company', 'occasionEventsReviews', 'paymentPlan','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->where('service_type', $serviceType)
-            ->get();
-        return sendResponse($occasions, 'Occasion By Event Type');
+        try {
+            $request->validated();
+            $serviceType = $request->id;
+            $occasions = OccasionEvent::with('company', 'occasionEventsReviews', 'paymentPlan', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->where('service_type', $serviceType)
+                ->get();
+            return sendResponse($occasions, 'Occasion By Event Type');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
 
     public function getOccasionEventById(Request $request)
     {
-        $event = OccasionEvent::with('company', 'occasionEventsReviews', 'paymentPlan','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->where('id', $request->id)
-            ->first();
-        return sendResponse($event, 'Get occasion event by id');
+        try {
+            $event = OccasionEvent::with('company', 'occasionEventsReviews', 'paymentPlan', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->where('id', $request->id)
+                ->first();
+            return sendResponse($event, 'Get occasion event by id');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     public function getOccasionServiceByOccasionId(Request $request, $occasion_event_id)
     {
-        $event = OccasionEvent::with('company', 'paymentPlan', 'occasionEventsReviews','features','conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
-            ->where('services.id', $occasion_event_id)
-            ->where('services.active', '=', 1)->get();
-        return sendResponse($event, 'Get service occasion event by occasion Id');
+        try {
+            $event = OccasionEvent::with('company', 'paymentPlan', 'occasionEventsReviews', 'features', 'conditions', 'occasionEventsReviewsAverage', 'gallery', 'adOns')
+                ->where('services.id', $occasion_event_id)
+                ->where('services.active', '=', 1)->get();
+            return sendResponse($event, 'Get service occasion event by occasion Id');
+        } catch (\Exception $exception) {
+            return sendError('Something went wrong', $exception->getMessage(), 422);
+        }
     }
 
     public function getPreferences(Request $request)
@@ -85,7 +105,7 @@ class OccasionEventsApiController extends Controller
 
             foreach ($events as $event) {
                 $company = Company::where('id', $event->company_id)->first();
-                if($company) {
+                if ($company) {
                     $event['company'] = $company;
                     $event['payment_plan'] = OccasionEventPrice::where('occasion_event_id', $event->id)->first();
                     $event['services_reviews'] = OccasionEventReviews::where('occasion_event_id', $event->id)->get();
@@ -104,12 +124,13 @@ class OccasionEventsApiController extends Controller
         }
     }
 
-    public function getOccasionEventsByCompany(Request $request) {
+    public function getOccasionEventsByCompany(Request $request)
+    {
         try {
             $services = OccasionEvent::where('company_id', $request->company_id)->orderby('id', 'ASC')->get();
             return sendResponse($services, 'Occasion Events');
         } catch (Exception $ex) {
-            return sendError($ex,'Exception Error', 400);
+            return sendError($ex, 'Exception Error', 400);
         }
     }
 
