@@ -29,10 +29,7 @@ class PaymentApiController extends Controller
             if ($orderSplit == null) {
                 return sendError('There is no transaction under the reference no. provided.', 'Unable to process payment');
             }
-            $result = SkipCashUtility::postPayment($orderSplit);
-            if (!$result) {
-                return sendError('Skip Cash Error', 'Unable to process payment');
-            }
+            $promotion = null;
             if (isset($data['promo_code']) && $data['promo_code']) {
                 $promotion = Promotions::where('promotions.code', '=', $data['promo_code'])->first();
                 if (!$promotion) {
@@ -44,6 +41,15 @@ class PaymentApiController extends Controller
                         return sendError('Promo code is already use', 'Unable to process payment');
                     }
                 }
+                if($promotion->percent) {
+                    $orderSplit->amount = ($promotion->percent / 100) * $orderSplit->amount;
+                } else {
+                    $orderSplit->amount =  $promotion->price <= $orderSplit->amount ?  (float)$orderSplit->amount - (float)$promotion->price : 0;
+                }
+            }
+            $result = SkipCashUtility::postPayment($orderSplit);
+            if (!$result) {
+                return sendError('Skip Cash Error', 'Unable to process payment');
             }
             if (isset($result['returnCode']) && $result['returnCode'] == 200) {
                 $paymentDetails = new PaymentDetails();
@@ -52,7 +58,7 @@ class PaymentApiController extends Controller
                 $paymentDetails->order_id = $orderSplit->order->id;
                 $paymentDetails->total = $result['resultObj']['amount'];
                 $paymentDetails->sub_total = $result['resultObj']['amount']; // without vat
-                $paymentDetails->discount = 0; // deduction from promo_code
+                $paymentDetails->discount =  $promotion ? $orderSplit->amount : 0; // deduction from promo_code
                 $paymentDetails->promo_code = isset($data['promo_code']) ? $data['promo_code'] : '';
                 $paymentDetails->payment_id = $result['resultObj']['id'];
                 $paymentDetails->payment_url = $result['resultObj']['payUrl'];
