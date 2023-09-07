@@ -95,8 +95,13 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex">
-                                            <img src="{{$order['order']['user']['profile_picture']}}" alt="..."
+                                            @if ($order['order']['user']['profile_picture'])
+                                                <img src="{{$order['order']['user']['profile_picture']}}" alt="..."
                                                 style="width: 36px; height: 36px;" class="rounded-circle" />
+                                            @else
+                                                <img src="https://ui-avatars.com/api/?name={{ $order['order']['user']['first_name'] ? $order['order']['user']['first_name'] : $order['order']['user']['email'] }}" alt="..."
+                                                style="width: 36px; height: 36px;" class="rounded-circle" />
+                                            @endif
                                             <p style="color: #586981" class="m-auto fs-5 fw-bold">
                                                 {{ isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : '' }}
                                             </p>
