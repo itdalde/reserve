@@ -29,6 +29,7 @@ class PaymentApiController extends Controller
             if ($orderSplit == null) {
                 return sendError('There is no transaction under the reference no. provided.', 'Unable to process payment');
             }
+            $amount =  $orderSplit->amount;
             $promotion = null;
             if (isset($data['promo_code']) && $data['promo_code']) {
                 $promotion = Promotions::where('promotions.code', '=', $data['promo_code'])->first();
@@ -56,8 +57,8 @@ class PaymentApiController extends Controller
                 $paymentDetails->payment_method_id = $data['payment_method'];
                 $paymentDetails->reference_no = $result['resultObj']['transactionId'];
                 $paymentDetails->order_id = $orderSplit->order->id;
-                $paymentDetails->total = $result['resultObj']['amount'];
-                $paymentDetails->sub_total = $result['resultObj']['amount']; // without vat
+                $paymentDetails->total = $amount;
+                $paymentDetails->sub_total = $amount; // without vat
                 $paymentDetails->discount =  $promotion ? $orderSplit->amount : 0; // deduction from promo_code
                 $paymentDetails->promo_code = isset($data['promo_code']) ? $data['promo_code'] : '';
                 $paymentDetails->payment_id = $result['resultObj']['id'];
