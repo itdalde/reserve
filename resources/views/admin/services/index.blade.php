@@ -953,7 +953,7 @@
 
                         <div class="d-flex">
                             <div class="mr-auto p-2 w-100">
-                                <a class="btn btn-warning edit-trigger-display text-white edit-service-action" href="/services/edit/{{$service->id}}">Edit Service</a>
+                                <a class="btn btn-warning edit-trigger-display text-white edit-service-action d-none" href="/services/edit/{{$service->id}}">Edit Service</a>
                                 <button class="btn btn-warning edit-trigger-display text-white d-none" id="edit-service-btn"
                                     type="button">Edit
                                 </button>
@@ -1380,6 +1380,7 @@
 
         if (serviceStatus == '2') {
             $('.added-elem').remove();
+            $('.edit-service-action').removeClass('d-none')
             $('.service-action').append('<div class="added-elem">'
                 + '<p class="bg-warning text-white px-4">This service has been paused</p>'
                 + '</div>'
