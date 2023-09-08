@@ -77,6 +77,7 @@
                         <div class="mb-3">
                             <label for="service_images" class="form-label field-label label-color">Service
                                 Images&nbsp;&nbsp;<span class="text-danger">*</span></label>
+                            <p class="text-danger fs-6 fw-bolder mt-0 mb-0 image-dimension-error d-none">Error: <span class="fw-light fst-italic">Invalid image dimension. Please choose another image.</span></p>
                             <div class="d-flex">
                                 <div id="service-image-gallery-holder1"
                                     class="d-flex justify-content-between service-image-gallery-holder1 flex-wrap">
@@ -89,6 +90,7 @@
                                     accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
                                     class="d-none" required>
                             </div>
+                            <p class="fs-6 fw-bolder">Important!:<span class="fst-italic fw-light"> Please use image with 500x350 dimension below.</span></p>
                         </div>
 
                     </div>
@@ -482,6 +484,7 @@
         }
 
         const imageContainer = document.getElementById("service-image-gallery-holder1");
+        let isApproved = false;
         $('body').on('change', '#add-gallery-data-file', function () {
             // $('.new-added-mg-temp').remove();
             var files = this.files;
@@ -492,31 +495,56 @@
         function renderImage(file) {
             const reader = new FileReader();
             reader.onload = function (event) {
+                
                 // In-progress
                 const imgContainer = document.createElement("div");
                 imgContainer.classList.add("image-container");
                 imgContainer.style.position = "relative";
-
-                const img = document.createElement("img");
-                img.src = event.target.result;
-                img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
-                img.setAttribute('data-bs-toggle', 'modal')
-                img.setAttribute('data-bs-target', '#service-gallery-modal')
-                imgContainer.appendChild(img);
-
                 let btnContainer = document.createElement("div");
-                btnContainer.style.position = "absolute";
-                btnContainer.style.top = "5px";
-                btnContainer.style.right = "20px";
-                // remove button
                 const removeButton = document.createElement("button");
-                removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' style='filter: brightness(0.5)'/>";
-                removeButton.classList.add("remove-img-button");
-                removeButton.style.border = 0;
-                removeButton.style.background = "transparent";
-                removeButton.addEventListener("click", function() {
-                    imgContainer.remove();
-                });
+
+                // const img = document.createElement("img");
+                let img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    if (img.width > 500 && img.height > 350) {
+                       $('.image-dimension-error').removeClass('d-none')
+                    } else {
+                        $('.image-dimension-error').addClass('d-none')
+                        isApproved = true;
+                        img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
+                        img.setAttribute('data-bs-toggle', 'modal')
+                        img.setAttribute('data-bs-target', '#service-gallery-modal')
+                        imgContainer.appendChild(img);
+
+                        
+                        btnContainer.style.position = "absolute";
+                        btnContainer.style.top = "5px";
+                        btnContainer.style.right = "20px";
+                        // remove button
+                        removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' style='filter: brightness(0.5)'/>";
+                        removeButton.classList.add("remove-img-button");
+                        removeButton.style.border = 0;
+                        removeButton.style.background = "transparent";
+                        removeButton.addEventListener("click", function() {
+                            imgContainer.remove();
+                        });
+
+                        
+                        img.addEventListener('click', function() {
+                            $('body #service-gallery-carousel #service-gallery-images').empty().append(`
+                                <div class="carousel-item active" data-bs-interval="false">
+                                    <img src="${event.target.result}" alt="service-image" role="img" class="w-100 h-auto"/>
+                                </div>
+                            `);
+                        });
+
+                        btnContainer.appendChild(removeButton)
+                        imgContainer.appendChild(btnContainer);
+                        imageContainer.appendChild(imgContainer);
+                    }
+                }
+                
 
                 // const viewImage = document.createElement("button");
                 // viewImage.innerHTML = "<img src='{{ asset('/assets/images/icons/preview.png') }}' alt='delete-img' />";
@@ -533,17 +561,6 @@
 
 
                 // btnContainer.appendChild(viewImage)
-
-                img.addEventListener('click', function() {
-                    $('body #service-gallery-carousel #service-gallery-images').empty().append(`
-                        <div class="carousel-item active" data-bs-interval="false">
-                            <img src="${event.target.result}" alt="service-image" role="img" class="w-100 h-auto"/>
-                        </div>
-                    `);
-                });
-                btnContainer.appendChild(removeButton)
-                imgContainer.appendChild(btnContainer);
-                imageContainer.appendChild(imgContainer);
             };
             reader.readAsDataURL(file);
         }
