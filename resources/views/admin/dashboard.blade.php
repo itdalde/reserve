@@ -256,7 +256,7 @@
             success: function(response) {
                 var yValues = response.data;
                 var max_of_array = Math.max.apply(Math, yValues);
-                max_of_array = Math.ceil(max_of_array / 5) * 5;
+                max_of_array = Math.ceil(max_of_array / 10) * 10;
                 var xValues = response.month;
                 $('.pecent-last-month').css('width', response.percentageChange+'%')
                     .attr('aria-valuenow',response.percentageChange)
