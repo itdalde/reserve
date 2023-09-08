@@ -7,13 +7,13 @@
                     <h5 class="card-title">Statistics</h5>
                     <small>Sales summary</small>
 
-                    <div class="row pt-5">
+                    <div class="row pt-4">
                         <div class="col-sm-12 col-md-3 pb-5">
                             <div class="card card-bg-green ">
                                 <div class="card-body">
                                     <img src="{{ asset('assets/images/icons/sales.png') }}" alt="..">
                                     <h2>QAR {{ $totalOrder }}</h2>
-                                    <p>Total sales</p>
+                                    <p class="fs-6">Total sales</p>
                                     {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
@@ -23,7 +23,7 @@
                                 <div class="card-body">
                                     <img src="{{ asset('assets/images/icons/customers.png') }}" alt="..">
                                     <h2>{{ count($users) }}</h2>
-                                    <p>Customers</p>
+                                    <p class="fs-6">Customers</p>
                                     {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
@@ -32,8 +32,8 @@
                             <div class="card card-bg-blue">
                                 <div class="card-body">
                                     <img src="{{ asset('assets/images/icons/cart.png') }}" alt="..">
-                                    <h2>{{ count($orders) }}</h2>
-                                    <p>Total orders</p>
+                                    <h2>{{ count($completedOrders) }}</h2>
+                                    <p class="fs-6">Completed orders</p>
                                     {{--                                    <small class="error-message"> 0% from last week</small> --}}
                                 </div>
                             </div>
@@ -43,8 +43,26 @@
                                 <div class="card-body">
                                     <img src="{{ asset('assets/images/icons/orders.png') }}" alt="..">
                                     <h2>{{ count($orders) }}</h2>
-                                    <p>Total orders</p>
+                                    <p class="fs-6">Total orders</p>
                                     {{--                                    <small class="error-message"> 0% from last week</small> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-2 d-none">
+                        <div class="col-sm-12 col-md-6 pb-5">
+                            <div class="card card-bg-green ">
+                                <div class="card-body py-2">
+                                    <h2 class="fs-3">{{ $totalOrder }}</h2>
+                                    <p class="fs-6">Total cancelled orders</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 pb-5">
+                            <div class="card card-bg-orange ">
+                                <div class="card-body py-2">
+                                    <h2 class="fs-3">{{ $totalOrder }}</h2>
+                                    <p class="fs-6">Total pending orders</p>
                                 </div>
                             </div>
                         </div>
@@ -95,23 +113,28 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex">
-                                            <img src="https://via.placeholder.com/60" alt="..."
+                                            @if ($order['order']['user']['profile_picture'])
+                                                <img src="{{$order['order']['user']['profile_picture']}}" alt="..."
                                                 style="width: 36px; height: 36px;" class="rounded-circle" />
+                                            @else
+                                                <img src="https://ui-avatars.com/api/?name={{ $order['order']['user']['first_name'] ? $order['order']['user']['first_name'] : $order['order']['user']['email'] }}" alt="..."
+                                                style="width: 36px; height: 36px;" class="rounded-circle" />
+                                            @endif
                                             <p style="color: #586981" class="m-auto fs-5 fw-bold">
                                                 {{ isset($order['order']) && isset($order['order']['user']) ? $order['order']['user']['first_name'] . ' ' . $order['order']['user']['last_name'] : '' }}
                                             </p>
                                         </div>
                                     </td>
-                                    <p class="fs-5 fw-bold mb-0">
-                                        {{ isset($order['order']) ? $order['order']['reference_no'] : '' }}</p>
-                                    <label class="fs-6 fw-bolder opacity-75">{{ count($order['order']) }} items</label>
+                                    <td>
+                                        <p class="fs-5 fw-bold mb-0">
+                                            {{ isset($order['order']) ? $order['order']['reference_no'] : '' }}</p>
+                                        <label class="fs-6 fw-bolder opacity-75">{{ count($order['order']) }} items</label>
                                     </td>
                                     <td>
-                                        <p class="fs-5 fw-bold mb-0">{{ $order['status'] }}</p>
+                                        <p class="fs-5 fw-bold mb-0">{{ ucfirst($order['status']) }}</p>
                                     </td>
                                     <td>
-                                        {{-- TODO: implement redirection to order --}}
-                                        <a href="#" class="btn btn-warning text-light rounded-3">View Order</a>
+                                        <a href="{{route('orders.show',['order'=>$order['order']['id'] , 'from' => 'orders'])}}" class="btn btn-warning text-light rounded-3">View Order</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -145,18 +168,18 @@
                                 @foreach ($services as $service)
                                     <tr>
                                         <td>
-                                            <div>
+                                            <div class="d-flex">
                                                 <img style="height: 35px;width: 35px;object-fit: cover;"
                                                     src="{{ asset($service->image) }}"
                                                     onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
-                                                    alt="..." class="rounded">
-                                                <p style="color: #586981" class="m-auto fs-5 fw-bold mt-2">
+                                                    alt="..." class="rounded" />
+                                                <p style="color: #586981; padding-left: 10px;" class="m-auto fs-6 fw-bolder ml-2">
                                                     {{ $service->name }}
                                                 </p>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="fw-5 fw-bold mb-0">{{ count($service->orders) }}</p>
+                                            <p class="fw-5 fw-bold mb-0 m-auto h-100 d-flex justify-content-center">{{ count($service->orders) }}</p>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -183,20 +206,22 @@
                                 @foreach ($users as $customer)
                                     <tr>
                                         <td>
+                                         <div class="d-flex">
                                             @if ($customer->profile_picture)
-                                                <img style="width: 35px;" class="rounded-circle"
-                                                    src="{{ asset($customer->profile_picture) }}" alt="...." />
+                                            <img style="width: 35px;" class="rounded-circle"
+                                                src="{{ asset($customer->profile_picture) }}" alt="...." />
                                             @else
                                                 <img style="width: 35px;" class="rounded-circle"
                                                     src="https://ui-avatars.com/api/?name={{ $customer->first_name ? $customer->first_name : $customer->email }}"
                                                     alt="...">
                                             @endif
-                                            <p style="color: #586981" class="m-auto fs-5 fw-bold mt-2">
+                                            <p style="color: #586981; padding-left: 10px;" class="m-auto fs-6 fw-bolder ml-2">
                                                 {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
                                             </p>
+                                         </div>
                                         </td>
                                         <td>
-                                            <p class="fw-5 fw-bold mb-0">{{ count($customer->orders) }}</p>
+                                            <p class="fw-5 fw-bold mb-0 h-100 d-flex justify-content-center">{{ count($customer->customer_orders) }}</p>
                                         </td>
                                     </tr>
                                 @endforeach
