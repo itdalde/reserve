@@ -90,7 +90,7 @@
                                     accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
                                     class="d-none" required>
                             </div>
-                            <p class="fs-6 fw-bolder">Important!:<span class="fst-italic fw-light"> Please use image with 500x350 dimension below.</span></p>
+                            <p class="fs-6 fw-bolder">Important!:<span class="fst-italic fw-light"> Please use image with 500x500 dimension below.</span></p>
                         </div>
 
                     </div>
