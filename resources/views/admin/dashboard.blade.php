@@ -49,12 +49,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-2">
+                    <div class="row pt-2 d-none">
                         <div class="col-sm-12 col-md-6 pb-5">
                             <div class="card card-bg-green ">
                                 <div class="card-body py-2">
                                     <h2 class="fs-3">{{ $totalOrder }}</h2>
-                                    <p class="fs-6">Total sales</p>
+                                    <p class="fs-6">Total cancelled orders</p>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <div class="card card-bg-orange ">
                                 <div class="card-body py-2">
                                     <h2 class="fs-3">{{ $totalOrder }}</h2>
-                                    <p class="fs-6">Total sales</p>
+                                    <p class="fs-6">Total pending orders</p>
                                 </div>
                             </div>
                         </div>
