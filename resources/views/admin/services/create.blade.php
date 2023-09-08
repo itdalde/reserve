@@ -506,7 +506,7 @@
                 let img = new Image();
                 img.src = event.target.result;
                 img.onload = function() {
-                    if (img.width > 500 && img.height > 350) {
+                    if (img.width > 500 && img.height > 500) {
                        $('.image-dimension-error').removeClass('d-none')
                     } else {
                         $('.image-dimension-error').addClass('d-none')
