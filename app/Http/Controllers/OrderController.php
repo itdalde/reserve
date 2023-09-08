@@ -100,6 +100,30 @@ class OrderController extends Controller
                     break;
             }
         }
+
+        $months = $response['month'];
+        $values = $response['data'];
+
+        $currentMonthIndex = date('n') - 1; // Get the index of the current month (0-11)
+        $currentMonth = $months[$currentMonthIndex];
+        $currentValue = $values[$currentMonthIndex];
+
+        $previousMonthIndex = $currentMonthIndex - 1;
+        if ($previousMonthIndex < 0) {
+            $previousMonthIndex = 11; // Wrap around to December if current month is January
+        }
+        $previousMonth = $months[$previousMonthIndex];
+        $previousValue = $values[$previousMonthIndex];
+
+        if ($previousValue === 0 && $currentValue !== 0) {
+            $percentageChange = "100";
+        } elseif ($previousValue === 0 && $currentValue === 0) {
+            $percentageChange = "0";
+        } else {
+            $changePercentage = (($currentValue - $previousValue) / abs($previousValue)) * 100;
+            $percentageChange = number_format($changePercentage, 2) . "%";
+        }
+        $response['percentageChange'] = $percentageChange;
         return response()->json($response);
     }
 

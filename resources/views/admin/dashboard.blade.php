@@ -74,10 +74,10 @@
                     <div class="d-flex bd-highlight mb-3">
                         <div class="mr-auto p-2 bd-highlight w-25"><img
                                 src="{{ asset('assets/images/icons/calendar.png') }}" alt="..."></div>
-                        <div class="p-2 bd-highlight w-50">Recent activity<br> 0% from last month</div>
-                        <div class="p-2 bd-highlight w-25">0% <br>
+                        <div class="p-2 bd-highlight w-50">Recent activity<br> <span class="percent-last-month">0%</span> from last month</div>
+                        <div class="p-2 bd-highlight w-25"><span class="percent-last-month">0%</span><br>
                             <div class="progress">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                <div class="progress-bar bg-warning pecent-last-month" role="progressbar" style="width: 0%" aria-valuenow="0"
                                     aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
@@ -256,8 +256,11 @@
             success: function(response) {
                 var yValues = response.data;
                 var max_of_array = Math.max.apply(Math, yValues);
-                max_of_array = Math.ceil(max_of_array / 10) * 10;
+                max_of_array = Math.ceil(max_of_array / 5) * 5;
                 var xValues = response.month;
+                $('.pecent-last-month').css('width', response.percentageChange+'%')
+                    .attr('aria-valuenow',response.percentageChange)
+                $('.percent-last-month').html(response.percentageChange+'%')
                 new Chart("myChart", {
                     type: "line",
                     data: {
