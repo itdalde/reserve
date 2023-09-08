@@ -484,7 +484,6 @@
         }
 
         const imageContainer = document.getElementById("service-image-gallery-holder1");
-        let isApproved = false;
         $('body').on('change', '#add-gallery-data-file', function () {
             // $('.new-added-mg-temp').remove();
             var files = this.files;
@@ -511,7 +510,6 @@
                        $('.image-dimension-error').removeClass('d-none')
                     } else {
                         $('.image-dimension-error').addClass('d-none')
-                        isApproved = true;
                         img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
                         img.setAttribute('data-bs-toggle', 'modal')
                         img.setAttribute('data-bs-target', '#service-gallery-modal')
@@ -544,23 +542,6 @@
                         imageContainer.appendChild(imgContainer);
                     }
                 }
-                
-
-                // const viewImage = document.createElement("button");
-                // viewImage.innerHTML = "<img src='{{ asset('/assets/images/icons/preview.png') }}' alt='delete-img' />";
-                // viewImage.classList.add("view-img-button");
-                // viewImage.style.border = 0;
-                // viewImage.style.background = "transparent";
-                // viewImage.style.filter = "brightness(2)";
-                // viewImage.style.scale = 2;
-                // viewImage.style.paddingRight = "17px";
-                // viewImage.addEventListener("click", function() {
-                //     // imgContainer.remove();
-                //     // review image
-                // });
-
-
-                // btnContainer.appendChild(viewImage)
             };
             reader.readAsDataURL(file);
         }
