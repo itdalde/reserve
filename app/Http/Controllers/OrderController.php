@@ -53,6 +53,7 @@ class OrderController extends Controller
         $services = OccasionEvent::where('company_id',auth()->user()->company->id)->get()->pluck( 'id')->toArray();
         $data = OrderItems::select(DB::raw('count(service_id) as `data`'),DB::raw("DATE_FORMAT(schedule_start_datetime, '%m') month") )
             ->whereIn('service_id',$services)
+            ->where('status','completed')
             ->whereYear('schedule_start_datetime', date('Y'))
             ->groupBy('month')->orderBy('month')->get()->toArray();
         $response = [
