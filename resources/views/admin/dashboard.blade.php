@@ -256,6 +256,7 @@
             success: function(response) {
                 var yValues = response.data;
                 var max_of_array = Math.max.apply(Math, yValues);
+                max_of_array = Math.ceil(max_of_array / 10) * 10;
                 var xValues = response.month;
                 new Chart("myChart", {
                     type: "line",
