@@ -12,6 +12,7 @@ use App\Models\PaymentEvents;
 use App\Models\Promotions;
 use App\Models\UserPromotions;
 use App\Utility\SkipCashUtility;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentApiController extends Controller
@@ -36,12 +37,24 @@ class PaymentApiController extends Controller
                 if (!$promotion) {
                     return sendError('Invalid promo code', 'Unable to process payment');
                 }
+
                 if ($promotion->single_use) {
                     $hasUsePromotion = UserPromotions::where('promotion_id', '=', $promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->first();
                     if ($hasUsePromotion) {
                         return sendError('Promo code is already use', 'Unable to process payment');
                     }
                 } else {
+                    $start_date = Carbon::parse($promotion->start_date);
+                    $end_date = Carbon::parse($promotion->end_date);
+                    $date_to_check = Carbon::now();
+                    if (!$date_to_check->between($start_date, $end_date)) {
+                        $date_to_check = Carbon::parse($promotion->end_date);
+                        if ($date_to_check->isPast()) {
+                            return sendError('Promo code is already expired', 'Unable to process payment');
+                        } else {
+                            return sendError('Promo is not started yet', 'Unable to process payment');
+                        }
+                    }
                     if ($promotion->quantity < 1) {
                         return sendError('Promo code is fully redeemed', 'Unable to process payment');
                     }
@@ -74,7 +87,7 @@ class PaymentApiController extends Controller
                     $userPromo->user_id = $orderSplit->order->user_id;
                     $userPromo->promotion_id = $promotion->id;
                     $userPromo->save();
-                    $promotion->quantity =  $promotion->quantity - 1;
+                    $promotion->quantity = $promotion->quantity < 0 ?  $promotion->quantity - 1 : 0;
                     $promotion->save();
                 }
             }
