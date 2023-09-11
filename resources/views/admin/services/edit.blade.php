@@ -158,7 +158,7 @@
                                             <span class="input-group-text hours_label" id="hours">Hours</span>
                                             <input type="number" class="form-control price_per_hour"
                                                 name="price_per_hour" placeholder="Hours" aria-label="hours"
-                                                aria-describedby="hours" value="{{ $service->duration != 0 ? $service->duration : 24 }}" disabled="{{ $service->duration == 0}}" required>
+                                                aria-describedby="hours" value="{{ $service->duration != 0 ? $service->duration : 24 }}" {{ $service->duration == 0 ? 'required' : ''}} required>
                                         </div>
                                         <span class="badge_hour" style="border: 1px solid #e7e7e7;
                                         padding: 0 4px;
@@ -173,7 +173,7 @@
                                     <div class="form-check form-check-inline w-100 pl-5 mt-2">
                                         <div class="">
                                             <input class="form-check-input" type="checkbox" id="price-not-applicable"
-                                                name="not_applicable" value="not-applicable" checked="{{ $service->duration == 0}}">
+                                                name="not_applicable" value="not-applicable" {{ $service->duration == 0 ? 'checked' : ''}}>
                                             <label class="form-check-label" for="price_not_applicable">Not
                                                 Applicable</label>
                                         </div>
@@ -187,19 +187,19 @@
                                 <div class="mb-3">
                                     <label for="minimum_guests" class="form-label">Minimum guests</label>
                                     <input type="number" min="0" value="{{ $service->min_capacity }}" class="form-control guests_field float-end"
-                                        id="minimum-guest" name="min_capacity" placeholder="0.00" disabled="{{ $service->max_capacity == 0 || $service->min_capacity == 0}}" required>
+                                        id="minimum-guest" name="min_capacity" placeholder="0.00" {{ $service->min_capacity == 0 ? 'disabled' : ''}} required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="maximum_guests" class="form-label">Maximum guests</label>
                                     <input type="number" min="0" value="{{ $service->max_capacity }}" class="form-control guests_field float-start"
-                                        id="maximum-guests" name="max_capacity" placeholder="0.00" disabled="{{ $service->max_capacity == 0 || $service->min_capacity == 0}}" required>
+                                        id="maximum-guests" name="max_capacity" placeholder="0.00" {{ $service->max_capacity == 0 ? 'disabled' : ''}} required>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline" style="margin-left: 16px;">
                                 <input class="form-check-input" type="checkbox" id="allowed_guests"
-                                    name="not_allowed_guests" value="not-applicable" checked="{{ $service->max_capacity == 0 || $service->min_capacity == 0}}">
+                                    name="not_allowed_guests" value="not-applicable" {{ $service->max_capacity == 0 || $service->min_capacity == 0 ? 'checked' : ''}}>
                                 <label class="form-check-label" for="allowed_guests">Not Applicable</label>
                             </div>
                         </div>

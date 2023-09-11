@@ -173,7 +173,7 @@
                                                     src="{{ asset($service->image) }}"
                                                     onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
                                                     alt="..." class="rounded" />
-                                                <p style="color: #586981; padding-left: 10px;" class="m-auto fs-6 fw-bolder ml-2">
+                                                <p style="color: #586981; padding-left: 10px;" class="my-auto fs-6 fw-bolder ml-2">
                                                     {{ $service->name }}
                                                 </p>
                                             </div>
@@ -215,7 +215,7 @@
                                                     src="https://ui-avatars.com/api/?name={{ $customer->first_name ? $customer->first_name : $customer->email }}"
                                                     alt="...">
                                             @endif
-                                            <p style="color: #586981; padding-left: 10px;" class="m-auto fs-6 fw-bolder ml-2">
+                                            <p style="color: #586981; padding-left: 10px;" class="my-auto fs-6 fw-bolder ml-2">
                                                 {{ $customer->name ? $customer->name : $customer->first_name . ' ' . $customer->last_name }}
                                             </p>
                                          </div>
