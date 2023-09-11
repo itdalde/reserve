@@ -63,7 +63,7 @@ class PromotionsApiController extends Controller
             if(!$hasPromo) {
                 return sendError('Promo not found', 'Promo code invalid', 422);
             }
-            $response['promo_data'] = $hasPromo;
+            $response['data'] = $hasPromo;
             $response['user_promo'] = Promotions::leftJoin('user_promotions as up', 'promotions.id', '=', 'up.promotion_id')
                 ->where('promotions.code', '=', $promotion_code)
                 ->where('up.user_id', '=', $user_id)
