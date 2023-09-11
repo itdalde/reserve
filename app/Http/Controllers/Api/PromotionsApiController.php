@@ -19,7 +19,18 @@ class PromotionsApiController extends Controller
     public function getPromotionsList(Request $request): JsonResponse
     {
         try {
-            $promotions = Promotions::all();
+            $data = $request->all();
+            $promoSql = Promotions::where('status', 1);
+            if (isset($data['from']) && isset($data['to'])) {
+                $dateTime = \DateTime::createFromFormat('m/d/Y', $data['from']);
+                $data['from'] = $dateTime->format('Y-m-d');
+                $dateTime = \DateTime::createFromFormat('m/d/Y', $data['to']);
+                $data['to'] = $dateTime->format('Y-m-d');
+                $promoSql->whereBetween('start_date', [$data['from'], $data['to']])
+                    ->whereBetween('end_date', [$data['from'], $data['to']]);
+            }
+
+            $promotions = $promoSql->get();
             return sendResponse($promotions, "Get promotions list");
         } catch (Exception $exception) {
             return sendError('Something went wrong', $exception->getMessage(), 422);
