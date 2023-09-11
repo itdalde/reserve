@@ -61,14 +61,29 @@ class PromotionsApiController extends Controller
             $response = [];
             $hasPromo = Promotions::where('code', $promotion_code)->first();
             if(!$hasPromo) {
-                return sendError('Promo not found', 'Promo code invalid', 422);
+                $response = [
+                    'success' => false,
+                    'status' => 'fail',
+                    'data' => null,
+                    'message' => 'Promo not found'
+                ];
+                return response()->json($response, 422);
             }
-            $response['data'] = $hasPromo;
-            $response['user_promo'] = Promotions::leftJoin('user_promotions as up', 'promotions.id', '=', 'up.promotion_id')
+
+            $userPromo = Promotions::leftJoin('user_promotions as up', 'promotions.id', '=', 'up.promotion_id')
                 ->where('promotions.code', '=', $promotion_code)
                 ->where('up.user_id', '=', $user_id)
                 ->first();
-            return sendResponse($response, 'Fetch promotion by code and user id');
+
+            $response = [
+                'success' => true,
+                'status' => 'success',
+                'data' => $hasPromo,
+                'user_promo' => $userPromo,
+                'message' => 'Fetch promotion by code and user id'
+            ];
+
+            return response()->json($response, 200);
         } catch (Exception $exception) {
             return sendError('Something went wrong', $exception->getMessage(), 422);
         }
