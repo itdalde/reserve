@@ -37,6 +37,9 @@ class PaymentApiController extends Controller
                 if (!$promotion) {
                     return sendError('Invalid promo code', 'Unable to process payment');
                 }
+                if ($promotion->status == 0) {
+                    return sendError('Promo code is not active', 'Unable to process payment');
+                }
 
                 if ($promotion->single_use) {
                     $hasUsePromotion = UserPromotions::where('promotion_id', '=', $promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->first();
