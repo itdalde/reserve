@@ -41,6 +41,10 @@ class PaymentApiController extends Controller
                     if ($hasUsePromotion) {
                         return sendError('Promo code is already use', 'Unable to process payment');
                     }
+                } else {
+                    if ($promotion->quantity < 1) {
+                        return sendError('Promo code is fully redeemed', 'Unable to process payment');
+                    }
                 }
                 if($promotion->percent) {
                     $orderSplit->amount = ($promotion->percent / 100) * $orderSplit->amount;
@@ -70,6 +74,8 @@ class PaymentApiController extends Controller
                     $userPromo->user_id = $orderSplit->order->user_id;
                     $userPromo->promotion_id = $promotion->id;
                     $userPromo->save();
+                    $promotion->quantity =  $promotion->quantity - 1;
+                    $promotion->save();
                 }
             }
             return sendResponse($result, isset($result['returnCode']) && $result['returnCode'] == 200 ? "Success" : "Failed");
