@@ -192,6 +192,7 @@
                                         @endforeach
                                         @endif
                                         data-conditions="{{$conditions}}"
+                                        data-package="{{ $service->paymentPlan->package }} "
                                         >
                                         <td width="20%">
                                             <img width="100" height="100" src="{{ asset($service->image) }}"
@@ -329,6 +330,7 @@
                                         @endforeach
                                         @endif
                                         data-conditions="{{$conditions}}"
+                                        data-package="{{ $service->paymentPlan->package }} "
                                         >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -454,6 +456,7 @@
                                         @endforeach
                                         @endif
                                         data-conditions="{{$conditions}}"
+                                        data-package="{{ $service->paymentPlan->package }} "
                                         >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -577,6 +580,7 @@
                                         @endforeach
                                         @endif
                                         data-conditions="{{$conditions}}"
+                                        data-package="{{ $service->paymentPlan->package }} "
                                         >
                                         <td width="20%"><img width="100" height="100" src="{{ asset($service->image) }}"
                                                 onerror="this.onerror=null; this.src='{{ asset('images/no-image.jpg') }}'"
@@ -1181,6 +1185,7 @@
         let serviceAdOns = $(this).closest('tr').attr('data-adOns');
         let serviceFeatures = $(this).closest('tr').attr('data-features');
         let serviceConditions = $(this).closest('tr').attr('data-conditions');
+        let packageName = $(this).closest('tr').attr('data-package');
         $('#service-no-of-orders').text(totalOrders);
         let id = $(this).closest('tr').attr('data-id');
         $.ajax({
@@ -1232,19 +1237,20 @@
         $("#service-id").val(id);
         paymentPlans = paymentPlans.split(',')
         $('.appended-payment-plans').remove();
-        paymentPlans.forEach(function (e) {
-            if (e != '') {
-                let plan = e.split(':')
-                let planType = plan[0]?.split('id')
-                if (planType[1] !== undefined) {
-                    $('.service-available-payment-plans').empty().append(`
-                        <div class="appended-payment-plans p-2 bd-highlight">
-                            <p>${planType[1]}</p>
-                        </div>
-                    `);
-                }
-            }
-        });
+        // paymentPlans.forEach(function (e) {
+        //     if (e != '') {
+        //         let plan = e.split(':')
+        //         console.log('plan', plan)
+        //         let planType = plan[0]?.split('id')
+        //         if (planType[1] !== undefined) {
+        //             $('.service-available-payment-plans').empty().append(`
+        //                 <div class="appended-payment-plans p-2 bd-highlight">
+        //                     <p>${planType[1]}</p>
+        //                 </div>
+        //             `);
+        //         }
+        //     }
+        // });
         
 
         $('#edit-service-available_slot-input').val(availableSlot);
@@ -1262,6 +1268,7 @@
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
         $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
         // $('.service-adOns').text(serviceAdOns);
+        $('.service-available-payment-plans').text(packageName)
 
         $('.edit-service-action').attr('href', '/services/edit/' + serviceId);
         $('.fcs-listing').remove();

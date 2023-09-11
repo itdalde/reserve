@@ -11,6 +11,11 @@
                 {{ session('success') }}
             </div>
             @endif
+            @if(session('error'))
+            <div class="alert alert-warning" style="margin-top: 20px;">
+                <span class="text-default">Important: </span> {{ session('error') }}
+            </div>
+            @endif
             <div class="card-body">
                 @if(Auth::user()->company && (Auth::user()->company->logo == null || Auth::user()->company->phone_number == null || Auth::user()->company->open_at == null || Auth::user()->company->close_at == null))
                 <div class="alert alert-info fw-bold">

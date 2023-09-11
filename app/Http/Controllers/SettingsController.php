@@ -229,6 +229,10 @@ class SettingsController extends Controller
     {
         try {
             $data = $request->all();
+            $hourPattern = '/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/';
+            if (!preg_match($hourPattern, $data['open_at']) || !preg_match($hourPattern, $data['close_at'])) {
+                return redirect()->back()->with('error', 'Business hours invalid format. Valid format should be (08:00) - (21:00)');
+            }
             $user = auth()->user();
             $company = $user->company;
             if ($request->file('company_image')) {
