@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
         switch (class_basename($exception)) {
             case 'NotFoundHttpException':
             case 'ModelNotFoundException':
-                $exception = new NotFoundHttpException('Not found');
+                return response()->json(['error' =>'Page not found'], 404);
                 break;
         }
         return parent::render($request, $exception);

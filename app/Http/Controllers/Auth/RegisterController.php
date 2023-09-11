@@ -99,6 +99,10 @@ class RegisterController extends Controller
         $company->registration_number = $data['registration_number'];
         $company->service_type_id = 0;
         $company->service_offered = $data['service_type'];
+        $company->business_day = 'Mondays-Fridays';
+        $company->open_at = '08:00';
+        $company->closed_at = '18:00';
+        $company->service_offered = $data['service_type'];
         $company->save();
         $user->roles()->attach(Role::firstOrCreate(['name' => 'administrator']));
 
