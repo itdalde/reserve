@@ -80,6 +80,7 @@
                         <div class="mb-3">
                             <label for="service_images" class="form-label field-label label-color">Service
                                 Images&nbsp;&nbsp;<span class="text-danger">*</span></label>
+                                <p class="text-danger fs-6 fw-bolder mt-0 mb-0 image-dimension-error d-none">Error: <span class="fw-light fst-italic">Invalid image dimension. Please choose another image.</span></p>
                             <div class="d-flex">
 
                                 <div id="service-image-gallery-holder1"
@@ -107,6 +108,7 @@
                                     accept="image/png, image/gif, image/jpeg" type="file" multiple="multiple"
                                     class="d-none">
                             </div>
+                            <p class="fs-6 fw-bolder">Important!:<span class="fst-italic fw-light"> Please use image with 500x500 dimension below.</span></p>
                         </div>
 
                     </div>
@@ -571,54 +573,46 @@
             }
         })
         function renderImage(file) {
-            const reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = function (event) {
 
               // In-progress
-              const imgContainer = document.createElement("div");
+              let imgContainer = document.createElement("div");
                 imgContainer.classList.add("image-container");
                 imgContainer.style.position = "relative";
-
-                const img = document.createElement("img");
-                img.src = event.target.result;
-                img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
-                img.style.filter = "blur(1.5px)"
-                imgContainer.appendChild(img);
-
                 let btnContainer = document.createElement("div");
-                btnContainer.style.position = "absolute";
-                btnContainer.style.top = "50px";
-                btnContainer.style.left = "55px";
-                // remove button
-                const removeButton = document.createElement("button");
-                removeButton.type = "button";
-                removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' />";
-                removeButton.classList.add("remove-img-button");
-                removeButton.style.border = 0;
-                removeButton.style.background = "transparent";
-                removeButton.addEventListener("click", function() {
-                    imgContainer.remove();
-                    alert("REMOVED IMAGE");
-                });
-
-                const viewImage = document.createElement("button");
-                viewImage.innerHTML = "<img src='{{ asset('/assets/images/icons/preview.png') }}' alt='delete-img' />";
-                viewImage.classList.add("view-img-button");
-                viewImage.style.border = 0;
-                viewImage.style.background = "transparent";
-                viewImage.style.filter = "brightness(2)";
-                viewImage.style.scale = 2;
-                viewImage.style.paddingRight = "17px";
-                viewImage.addEventListener("click", function() {
-                    // imgContainer.remove();
-                    // review image
-                });
+                let removeButton = document.createElement("button");
 
 
-                btnContainer.appendChild(viewImage)
-                btnContainer.appendChild(removeButton)
-                imgContainer.appendChild(btnContainer);
-                imageContainer.appendChild(imgContainer);
+
+                let img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    if (img.width > 500 && img.height > 500) {
+                        $('.image-dimension-error').removeClass('d-none')
+                    } else {
+                        $('.image-dimension-error').addClass('d-none')
+                        img.classList.add("new-added-mg-temp", "figure-img", "img-fluid", "img-thumbnail", "service-image-gallery");
+                        img.style.filter = "blur(1.5px)"
+                        imgContainer.appendChild(img);
+
+                        btnContainer.style.position = "absolute";
+                        btnContainer.style.top = "50px";
+                        btnContainer.style.left = "55px";
+                        // remove button
+                        removeButton.type = "button";
+                        removeButton.innerHTML = "<img src='{{ asset('/assets/images/icons/trash.png') }}' alt='delete-img' />";
+                        removeButton.classList.add("remove-img-button");
+                        removeButton.style.border = 0;
+                        removeButton.style.background = "transparent";
+                        removeButton.addEventListener("click", function() {
+                            imgContainer.remove();
+                        });
+                        btnContainer.appendChild(removeButton)
+                        imgContainer.appendChild(btnContainer);
+                        imageContainer.appendChild(imgContainer);
+                    }
+                }
             };
             reader.readAsDataURL(file);
         }

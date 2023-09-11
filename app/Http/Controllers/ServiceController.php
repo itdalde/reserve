@@ -366,8 +366,8 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $service = OccasionEvent::where('id',$id)->first();
         $data = $request->all();
+        $service = OccasionEvent::where('id',$id)->first();
         $service->name = $data['service_name'];
         $service->name_arabic = $data['locale'] == 'ar' ? $data['service_name_arabic'] : '-';
         $service->occasion_type = 0;
@@ -414,7 +414,7 @@ class ServiceController extends Controller
         $price->occasion_event_id = $service->id;
         $price->plan_id = isset($data['plan_id']) ? $data['plan_id'] : 1;
         $price->service_price = $data['service_price'];
-        $price->package =  isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
+        $price->package = isset($data['plan_id']) && $data['plan_id'] == 1 ? 'Per Guest' : 'Per Package';
         $price->min_capacity = $data['package_min_capacity'] ?? 1;
         $price->max_capacity = $data['package_max_capacity'] ?? 10;
         $price->package_details = $data['package_details'] ?? '-';
