@@ -798,12 +798,11 @@
                         </div>
                         <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
-                            <div class="p-2 bd-highlight fw-bold">Details</div>
+                            <div class="p-2 bd-highlight fw-bold">Capacity</div>
                             <div class="p-2 bd-highlight edit-trigger-display">
                                 <div class="d-flex flex-row bd-highlight mb-3">
                                     <div class="p-2 bd-highlight">
-                                        <p>Capacity</p>
-                                        <div class="badge bg-secondary d-inline-flex">
+                                        <div class="badge bg-secondary d-inline-flex capacity-highlight">
                                             <img src="{{ asset('assets/images/icons/capacity.png') }}" alt="..">
                                             <span
                                                 class="service-hall-features-capacity badge bg-secondary  px-2 mt-1"></span>
@@ -909,8 +908,8 @@
                         <hr>
                         <div class="d-flex flex-column bd-highlight mb-3">
                             <div class="p-2 bd-highlight fw-bold">Price</div>
-                            <div class="p-2 bd-highlight ">
-                                <div class="d-flex flex-row bd-highlight mb-3 service-price">
+                            <div class="p-2 bd-highlight">
+                                <div class="bd-highlight mb-3 service-price legend-value">
                                 </div>
                             </div>
                         </div>
@@ -918,7 +917,7 @@
                         <div class="d-flex flex-column bd-highlight mb-3">
                             <div class="p-2 bd-highlight fw-bold">Pricing Type</div>
                             <div class="p-2 bd-highlight ">
-                                <div class="d-flex flex-row bd-highlight mb-3 service-available-payment-plans">
+                                <div class="bd-highlight mb-3 service-available-payment-plans legend-value">
                                 </div>
                             </div>
                         </div>
@@ -926,7 +925,7 @@
                         <div class="d-flex flex-column bd-highlight mb-3">
                             <div class="p-2 bd-highlight fw-bold">Service Timed</div>
                             <div class="p-2 bd-highlight ">
-                                <div class="d-flex flex-row bd-highlight mb-3 service-timed">
+                                <div class="bd-highlight mb-3 service-timed">
                                 </div>
                             </div>
                         </div>
@@ -1204,7 +1203,6 @@
             window.HIDE_LOADING();
 
             let data = JSON.parse(response);
-            console.log('data', data);
             let availablehtml = "";
             let unavailablehtml = "";
             let availableDates = [];
@@ -1262,11 +1260,23 @@
         $('#edit-service-title-input').val(name);
         $('#edit-service-description-input').val(description);
         $('.service-hall-features-capacity').text(hallCapacity)
+
+        if (minCapacity == 0 && maxCapacity == 0) {
+            $('.capacity-highlight').addClass('d-none')
+        } else {
+            $('.capacity-highlight').removeClass('d-none')
+        }
         $('.service-hall-features-available-time').text(availableTime)
         $('.service-hall-features-available-date').text(availableDate)
         $('.rating-total').text(rating.toFixed(1))
         $('.service-price').text(`QAR ${servicePrice.toFixed(2)}`);
-        $('.service-timed').text(`Hours ${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed}`);
+        let serviceDuration = serviceTimed != 0 && serviceTimed < 10 ? (`${serviceTimed < 10 ? '0' + serviceTimed : serviceTimed} Hours`) : '';
+        $('.service-timed').text(serviceDuration);
+        if (serviceDuration != 0) {
+            $('.service-timed').addClass('legend-value');
+        } else {
+            $('.service-timed').removeClass('legend-value');
+        }
         // $('.service-adOns').text(serviceAdOns);
         $('.service-available-payment-plans').text(packageName)
 
