@@ -66,7 +66,7 @@ class ServicesApiController extends Controller
     public function getReviewsByServiceId(Request $request, $service_id): JsonResponse
     {
         try {
-            $services = OccasionEventReviews::where('occasion_event_id', $service_id)->with('user', 'occasionEvent')
+            $services = OccasionEventReviews::where('occasion_event_id', $service_id)->where('status', 1)->with('user', 'occasionEvent')
                 ->orderBy('rate', 'DESC')->get()->toArray();
             usort($services, function ($a, $b) {
                 return $a['rate'] <=> $b['rate'];
@@ -83,7 +83,7 @@ class ServicesApiController extends Controller
     public function getReviewsByUserId(Request $request, $user_id): JsonResponse
     {
         try {
-            $services = OccasionEventReviews::where('user_id', $user_id)->with('user', 'occasionEvent')
+            $services = OccasionEventReviews::where('user_id', $user_id)->where('status', 1)->with('user', 'occasionEvent')
                 ->orderBy('rate', 'DESC')->get()->toArray();
             usort($services, function ($a, $b) {
                 return $a['rate'] <=> $b['rate'];
@@ -99,7 +99,7 @@ class ServicesApiController extends Controller
         try {
             $data = $request->all();
             $hasComment = false;
-            $review = OccasionEventReviews::where('user_id', $data['user_id'])
+            $review = OccasionEventReviews::where('user_id', $data['user_id'])->where('status', 1)
                 ->where('occasion_event_id', $data['service_id'])->first();
             if ($review) {
                 $hasComment = true;
@@ -118,7 +118,7 @@ class ServicesApiController extends Controller
     public function getReviewsByProviderId(Request $request, $provider_id): JsonResponse
     {
         try {
-            $response = OccasionEventReviews::whereIn('provider_id', $provider_id)->with('user', 'occasionEvent')
+            $response = OccasionEventReviews::whereIn('provider_id', $provider_id)->where('status', 1)->with('user', 'occasionEvent')
                 ->orderBy('rate', 'DESC')->get()->toArray();
             usort($response, function ($a, $b) {
                 return $a['rate'] <=> $b['rate'];
@@ -140,7 +140,7 @@ class ServicesApiController extends Controller
             if ($validator->fails()) {
                 return sendError('Something went wrong', $validator->errors()->all(), 422);
             }
-            $review = OccasionEventReviews::whereIn('id', $data['id'])->first();
+            $review = OccasionEventReviews::whereIn('id', $data['id'])->where('status', 1)->first();
             $review->title = $data['title'] ?? '';
             $review->description = $data['description'] ?? '';
             $review->rate = (int)$data['rate'];
@@ -168,7 +168,7 @@ class ServicesApiController extends Controller
                 if (!$service) {
                     return sendError('Something went wrong', 'Service is not found on system', 422);
                 }
-                $review = OccasionEventReviews::where('user_id', $data['user_id'])
+                $review = OccasionEventReviews::where('user_id', $data['user_id'])->where('status', 1)
                     ->where('occasion_event_id', $data['service_id'])->first();
                 if ($review) {
                     return sendError('Something went wrong', 'User already commented this service', 422);

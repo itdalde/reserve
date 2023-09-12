@@ -14,7 +14,7 @@ class PromotionsController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.promotions.index');
     }
 
     /**

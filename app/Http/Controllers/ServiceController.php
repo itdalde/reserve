@@ -138,7 +138,7 @@ class ServiceController extends Controller
         try {
             $id = $request->all()['occasion_event_id'];
             $sort = $request->all()['sort'] ?? 'DESC';
-            $services = OccasionEventReviews::where('occasion_event_id', $id)->with('user', 'occasionEvent')
+            $services = OccasionEventReviews::where('occasion_event_id', $id)->where('status', 1)->with('user', 'occasionEvent')
                 ->orderBy('rate', $sort)->get()->toArray();
             usort($services, function ($a, $b) {
                 return $a['rate'] <=> $b['rate'];

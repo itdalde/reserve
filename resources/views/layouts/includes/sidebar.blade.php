@@ -67,6 +67,15 @@
                         Help
                     </a>
                 </li>
+                <li class="nav-item py-2 d-none">
+                    <a class="nav-link {{ Request::is('promotions*') ? ' active' : '' }}"
+                       href="{{ route('promotions.index') }}">
+                        <img class="ml-15px "
+                             src="{{ Request::is('promotions*') ? asset('assets/images/icons/event-active.png') : asset('assets/images/icons/event-inactive.png') }}"
+                             alt="....">
+                        Promotions
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link px-4 d-flex align-items-center custom-tooltip customers-side-tab"
                         data-bs-toggle="collapse" href="#settings" role="button" aria-expanded="false"
@@ -130,6 +139,15 @@
                              src="{{ Request::is('occasions-services*') ? asset('assets/images/icons/event-active.png') : asset('assets/images/icons/event-inactive.png') }}"
                              alt="....">
                         Occassions/services
+                    </a>
+                </li>
+                <li class="nav-item py-2">
+                    <a class="nav-link {{ Request::is('reviews*') ? ' active' : '' }}"
+                       href="{{ route('reviews.index') }}">
+                        <img class="ml-15px "
+                             src="{{ Request::is('reviews*') ? asset('assets/images/icons/Group active.svg') : asset('assets/images/icons/Group.svg') }}"
+                               alt="....">
+                        Reviews
                     </a>
                 </li>
                 <li class="nav-item py-2 d-none">

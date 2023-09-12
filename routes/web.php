@@ -22,7 +22,9 @@ use App\Http\Controllers\HelpController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\OccasionController;
+use App\Http\Controllers\OccasionEventReviewsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PromotionsController;
 use App\Http\Controllers\SchedulesController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -37,8 +39,12 @@ Route::get('/admin/orders/view', [OrderController::class, 'superListView'])->nam
 Route::delete('/delete-event-image', [ServiceController::class, 'deleteEventImage'])->name('delete-event-image');
 
 Route::group(['middleware' => 'auth'], function(){
+    Route::get('/reviews', [OccasionEventReviewsController::class, 'index'])->name('reviews.index');
+    Route::get('/reviews/remove', [OccasionEventReviewsController::class, 'delete'])->name('reviews.delete');
+    Route::get('/reviews/accept_declined', [OccasionEventReviewsController::class, 'acceptDeclined'])->name('reviews.accept_declined');
+    Route::get('/promotions', [PromotionsController::class, 'index'])->name('promotions.index');
     Route::get('/get-average-order', [OrderController::class, 'getAverageOrder'])->name('orders.getAverageOrder');
-    Route::get('/calendar', [\App\Http\Controllers\SchedulesController::class, 'list'])->name('schedules.calendar');
+    Route::get('/calendar', [SchedulesController::class, 'list'])->name('schedules.calendar');
     Route::post('/update-schedule', [SchedulesController::class, 'updateSchedule'])->name('schedules-update')->middleware('audit:post');
 
     Route::get('/settings/manage-orders', [SettingsController::class, 'manageOrders'])->name('settings.manage_orders');

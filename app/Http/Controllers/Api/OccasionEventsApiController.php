@@ -108,8 +108,8 @@ class OccasionEventsApiController extends Controller
                 if ($company) {
                     $event['company'] = $company;
                     $event['payment_plan'] = OccasionEventPrice::where('occasion_event_id', $event->id)->first();
-                    $event['services_reviews'] = OccasionEventReviews::where('occasion_event_id', $event->id)->get();
-                    $event['services_reviews_average'] = OccasionEventReviews::where('occasion_event_id', $event->id)->selectRaw('avg(rate) as aggregate, occasion_event_id')->groupBy('occasion_even_id');
+                    $event['services_reviews'] = OccasionEventReviews::where('occasion_event_id', $event->id)->where('status', 1)->get();
+                    $event['services_reviews_average'] = OccasionEventReviews::where('occasion_event_id', $event->id)->where('status', 1)->selectRaw('avg(rate) as aggregate, occasion_event_id')->groupBy('occasion_even_id');
                     $event['gallery'] = EventImages::where('occasion_event_id', $event->id)->get();
                     $event['availability'] = AvailableDates::where('service_id', $event->id)
                         ->whereBetween('date', [$data->from, $data->to])

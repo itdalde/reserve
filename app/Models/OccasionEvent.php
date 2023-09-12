@@ -68,7 +68,7 @@ class OccasionEvent extends Model
     {
         return $this->hasMany(OccasionEventReviews::class)->with(
                 'user',
-            );
+            )->where('status', 1);
     }
     public function ratings() {
         return $this->hasMany(OccasionEventReviews::class)
