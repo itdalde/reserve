@@ -42,7 +42,7 @@ class PaymentApiController extends Controller
                 }
 
                 if ($promotion->single_use) {
-                    $hasUsePromotion = UserPromotions::where('promotion_id', '=', $promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->first();
+                    $hasUsePromotion = UserPromotions::where('promotion_id', '=', $promotion->id)->where('user_id', '=', $orderSplit->order->user_id)->where('is_used', '=', 1)->first();
                     if ($hasUsePromotion) {
                         return sendError('Promo code is already use', 'Unable to process payment');
                     }
@@ -89,6 +89,7 @@ class PaymentApiController extends Controller
                     $userPromo = new UserPromotions();
                     $userPromo->user_id = $orderSplit->order->user_id;
                     $userPromo->promotion_id = $promotion->id;
+                    $userPromo->is_used = 1;
                     $userPromo->save();
                     $promotion->quantity = $promotion->quantity < 0 ?  $promotion->quantity - 1 : 0;
                     $promotion->save();
