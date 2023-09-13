@@ -643,4 +643,95 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="create-promotion-modal" tabindex="-1" aria-labelledby="create-promotion-modal"
+    data-id="promotion-modal" >
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">New Promo Code</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="">
+                    @csrf
+                    <div class="mb-3 row">
+                        <label for="promo-name" class="col-sm-4 col-form-label">Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="name" class="form-control" id="promo-name" placeholder="Enter Promo Name">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="promo-code" class="col-sm-4 col-form-label">Code</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="code" class="form-control" id="promo-code" placeholder="Enter Promo Code">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="promo-description" class="col-sm-4 col-form-label">Description</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="description" class="form-control" id="promo-description" placeholder="Enter Promo Description">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="form-check-label col-sm-4" for="for_total_price">
+                            Apply for percent?
+                        </label>
+                        <div class="col-sm-8">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  id="for_total_price">
+                            </div>
+                        </div>
+                   </div>
+
+                    <div class="mb-3 row price-field">
+                        <label for="promo-price" class="col-sm-4 col-form-label">Price</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="price" class="form-control" id="promo_price" placeholder="Enter price">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row percent-field d-none">
+                        <label for="promo-percent" class="col-sm-4 col-form-label">Percentage</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="percent" class="form-control" id="promo_percent" placeholder="Enter percent">
+                        </div>
+                    </div>
+
+                   <div class="mb-3 row">
+                        <label class="form-check-label col-sm-4" for="single_use">
+                            Is Single Use
+                        </label>
+                        <div class="col-sm-8">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"  id="single_use">
+                            </div>
+                        </div>
+                   </div>
+
+                    <div class="mb-3 row">
+                        <label for="promo-start_date" class="col-sm-4 col-form-label">Promo Start date</label>
+                        <div class="col-sm-8">
+                            <input type="date" name="start_date" class="form-control" id="promo-start_date" placeholder="Enter promotion start date">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="promo-end_date" class="col-sm-4 col-form-label">Promo End Date</label>
+                        <div class="col-sm-8">
+                            <input type="date" name="end_date" class="form-control" id="promo-end_date" placeholder="Enter promotion end date">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-warning text-white">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endif
