@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Promotions;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class PromotionsController extends Controller
 {
     /**
@@ -51,7 +51,7 @@ class PromotionsController extends Controller
         $promotion->status = 0;
         $promotion->company_id = auth()->user()->company->id;
         $promotion->save();
-        
+
         $promotions = Promotions::where('company_id', auth()->user()->company->id)->get();
         return view('admin.promotions.index', compact('promotions'));
     }

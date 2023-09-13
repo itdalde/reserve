@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         // $schedule->command('daily:order_status')->cron('*/30 * * * *');
         $schedule->command('daily:completed_order')->cron('*/30 * * * *');
+        $schedule->command('daily:promotions')->cron('0 1 * * * *');
     }
 
     /**
