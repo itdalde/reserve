@@ -14,7 +14,8 @@ class PromotionsController extends Controller
      */
     public function index()
     {
-        return view('admin.promotions.index');
+        $promotions = Promotions::where('company_id', auth()->user()->company->id)->get();
+        return view('admin.promotions.index', compact('promotions'));
     }
 
     /**

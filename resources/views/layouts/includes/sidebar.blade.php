@@ -67,7 +67,7 @@
                         Help
                     </a>
                 </li>
-                <li class="nav-item py-2 d-none">
+                <li class="nav-item py-2">
                     <a class="nav-link {{ Request::is('promotions*') ? ' active' : '' }}"
                        href="{{ route('promotions.index') }}">
                         <img class="ml-15px "
