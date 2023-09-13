@@ -7,7 +7,7 @@
                     <div class="p-2 bd-highlight">
                         <div class="d-flex justify-content-between">
                             <h3>Promotions</h3>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-promotion-modal">New</button>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-promotion-modal">New Promo Code</button>
                         </div>
                     </div>
                 </div>
@@ -48,9 +48,14 @@
                                                     </div>
                                                </td>
                                                <td>
-                                                <button class="btn btn-sm btn-info text-white">View</button>
-                                                <button class="btn btn-sm btn-primary">Edit</button>
-                                                <button class="btn btn-sm btn-warning text-white">Delete</button>
+                                                <button class="btn btn-sm btn-info text-white d-none">View</button>
+                                                <button class="btn btn-sm btn-primary d-none">Edit</button>
+                                                <form action="{{ route('promotions.destroy',  $promotion->id) }}" method="DELETE">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-warning text-white d-none">
+                                                        Delete
+                                                    </button>
+                                                </form>
                                                </td>
                                             </tr>
                                         @endforeach

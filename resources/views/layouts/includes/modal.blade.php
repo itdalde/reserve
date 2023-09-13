@@ -652,7 +652,7 @@
                 <h5 class="modal-title" id="staticBackdropLabel">New Promo Code</h5>
             </div>
             <div class="modal-body">
-                <form method="post" action="">
+                <form method="post" action="{{ route('promotions.store') }}">
                     @csrf
                     <div class="mb-3 row">
                         <label for="promo-name" class="col-sm-4 col-form-label">Name</label>
@@ -689,14 +689,14 @@
                     <div class="mb-3 row price-field">
                         <label for="promo-price" class="col-sm-4 col-form-label">Price</label>
                         <div class="col-sm-8">
-                            <input type="text" name="price" class="form-control" id="promo_price" placeholder="Enter price">
+                            <input type="number" min="0" name="price" class="form-control" id="promo_price" placeholder="Enter price">
                         </div>
                     </div>
 
                     <div class="mb-3 row percent-field d-none">
                         <label for="promo-percent" class="col-sm-4 col-form-label">Percentage</label>
                         <div class="col-sm-8">
-                            <input type="text" name="percent" class="form-control" id="promo_percent" placeholder="Enter percent">
+                            <input type="number" min="0" name="percent" class="form-control" id="promo_percent" placeholder="Enter percent">
                         </div>
                     </div>
 
@@ -706,7 +706,7 @@
                         </label>
                         <div class="col-sm-8">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox"  id="single_use">
+                                <input class="form-check-input" name="single_use" type="checkbox"  id="single_use">
                             </div>
                         </div>
                    </div>

@@ -37,6 +37,23 @@ class PromotionsController extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->all();
+        $promotion = new Promotions();
+        $promotion->name = $data['name'];
+        $promotion->code = $data['code'];
+        $promotion->description = $data['description'];
+        $promotion->price = $data['price'];
+        $promotion->percent = $data['percent'];
+        $promotion->qty = 0;
+        $promotion->single_use = isset($data['single_use']) && $data['single_use'] ? 1 : 0;
+        $promotion->start_date = $data['start_date'];
+        $promotion->end_date = $data['end_date'];
+        $promotion->status = 0;
+        $promotion->company_id = auth()->user()->company->id;
+        $promotion->save();
+        
+        $promotions = Promotions::where('company_id', auth()->user()->company->id)->get();
+        return view('admin.promotions.index', compact('promotions'));
     }
 
     /**
@@ -79,8 +96,10 @@ class PromotionsController extends Controller
      * @param  \App\Models\Promotions  $promotions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Promotions $promotions)
+    public function destroy(Promotions $promotion)
     {
         //
+        Promotions::destroy($promotion->id);
+        return view('admin.promotions.index');
     }
 }

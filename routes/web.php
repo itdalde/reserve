@@ -112,6 +112,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::middleware('audit:resource')->resource('orders', 'OrderController');
     Route::middleware('audit:resource')->resource('helps', 'HelpController');
     Route::middleware('audit:resource')->resource('audit', 'AuditTrailController');
+
+    Route::resource('promotions', 'PromotionsController');
 });
 
 Route::get('confirm/{user_by_code}',  [ConfirmController::class, 'confirm'])->name('confirm');
