@@ -734,4 +734,15 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="edit-promotion-modal" tabindex="-1" aria-labelledby="edit-promotion-modal" data-id="edit-promo-modal">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Promo Code</h5>
+            </div>
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>
 @endif
