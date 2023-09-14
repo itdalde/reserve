@@ -100,6 +100,7 @@ class PromotionsController extends Controller
     {
         //
         Promotions::destroy($promotion->id);
-        return view('admin.promotions.index');
+        $promotions = Promotions::where('company_id', auth()->user()->company->id)->get();
+        return view('admin.promotions.index', compact('promotions'));
     }
 }

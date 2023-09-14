@@ -48,14 +48,15 @@
                                                     </div>
                                                </td>
                                                <td>
-                                                <button class="btn btn-sm btn-info text-white d-none">View</button>
-                                                <button class="btn btn-sm btn-primary d-none">Edit</button>
-                                                <form action="{{ route('promotions.destroy',  $promotion->id) }}" method="DELETE">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-warning text-white d-none">
-                                                        Delete
-                                                    </button>
-                                                </form>
+                                                <div class="d-flex">
+                                                    <button class="btn btn-sm btn-info text-white d-none">View</button>
+                                                    <button class="btn btn-sm btn-primary d-none" data-bs-toggle="modal" data-bs-target="#edit-promotion-modal">Edit</button>
+                                                    <form method="POST" action="{{ route('promotions.destroy', $promotion) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
                                                </td>
                                             </tr>
                                         @endforeach
@@ -86,6 +87,8 @@
                     $('.price-field').removeClass('d-none');
                 }
             });
+
+            // $('#edit-promotion-modal .modal-body').append('<>WELCOME</>')
         });
     </script>
 @endsection
