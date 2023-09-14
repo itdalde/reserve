@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         //
         Commands\OrderScheduler::class,
-        Commands\CompletedOrder::class
+        Commands\CompletedOrder::class,
+        Commands\Promotions::class,
     ];
 
     /**
