@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         //
         Commands\OrderScheduler::class,
         Commands\CompletedOrder::class,
-        Commands\Promotions::class,
+        Commands\PromotionCommand::class,
     ];
 
     /**

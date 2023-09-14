@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Promotions;
 use Carbon\Carbon;
-class Promotions extends Command
+class PromotionCommand extends Command
 {
     /**
      * The name and signature of the console command.
