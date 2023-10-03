@@ -44,7 +44,7 @@ class PromotionsController extends Controller
         $promotion->description = $data['description'];
         $promotion->price = $data['price'];
         $promotion->percent = $data['percent'];
-        $promotion->qty = 0;
+        $promotion->qty = $data['quantity'];
         $promotion->single_use = isset($data['single_use']) && $data['single_use'] ? 1 : 0;
         $promotion->start_date = $data['start_date'];
         $promotion->end_date = $data['end_date'];

@@ -711,6 +711,13 @@
                         </div>
                    </div>
 
+                   <div class="mb-3 row quantity-field">
+                    <label for="promo-quantity" class="col-sm-4 col-form-label">Quantity</label>
+                    <div class="col-sm-8">
+                        <input type="number" min="0" value="0" name="quantity" class="form-control" id="promo_quantity" placeholder="Enter quantity">
+                    </div>
+                </div>
+
                     <div class="mb-3 row">
                         <label for="promo-start_date" class="col-sm-4 col-form-label">Promo Start date</label>
                         <div class="col-sm-8">
