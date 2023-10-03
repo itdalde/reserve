@@ -27,6 +27,7 @@
                                             <th scope="col" style="background: #F2F1F0;">percentage</th>
                                             <th scope="col" style="background: #F2F1F0;">single use</th>
                                             <th scope="col" style="background: #F2F1F0;">is used</th>
+                                            <th scope="col" style="background: #F2F1F0;">Qty</th>
                                             <th scope="col" style="background: #F2F1F0;">Duration</th>
                                             <th scope="col" style="border-top-right-radius: 11px;background: #F2F1F0;">Action</th>
                                         </tr>
@@ -41,6 +42,7 @@
                                                <td>{{number_format($promotion->percent, 2)}}</td>
                                                <td>{{$promotion->single_use == 1 ? 'Single Use' : 'Multiple Use'}}</td>
                                                <td>{{$promotion->status == 1 ? 'Used' : 'Unused'}}</td>
+                                               <td>{{$promotion->qty}}</td>
                                                <td>
                                                     <div>
                                                         From: {{Carbon\Carbon::parse($promotion->start_date)->format('F d, Y H:m')}}<br />
